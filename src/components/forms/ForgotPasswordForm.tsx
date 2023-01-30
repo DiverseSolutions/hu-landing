@@ -16,7 +16,9 @@ export default function ForgotPasswordForm({ ...props }: Props) {
 
     const [callForgotPassword, { isLoading: isForgotPasswordLoading }] = useForgotPasswordMutation()
 
-    const { register, handleSubmit } = useForm<ForgotPasswordFormData>({
+    const { register, handleSubmit, formState: {
+        errors
+    } } = useForm<ForgotPasswordFormData>({
         defaultValues: {
             username: '',
         }
@@ -39,10 +41,13 @@ export default function ForgotPasswordForm({ ...props }: Props) {
                     <label className="label">
                         <span className="label-text">Username</span>
                     </label>
-                    <input type="text" placeholder="Enter your username" className="w-full input input-bordered" {...register('username')} />
-                    {/* <label className="label">
-            <span className="label-text-alt">This will be used for login</span>
-          </label> */}
+                    <input type="text" placeholder="Enter your username" className="w-full input input-bordered"
+                        {...register('username', {
+                            validate: (v) => v?.length < 4 ? "Invalid username" : undefined
+                        })} />
+                    <label className="label">
+                        <span className="label-text-alt text-error-content">{errors.username?.message}</span>
+                    </label>
                 </div>
             </div>
             <div className="flex items-center justify-between mt-8">

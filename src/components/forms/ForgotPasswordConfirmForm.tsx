@@ -1,3 +1,4 @@
+import { PASSWORD_MIN_ERROR, PASSWORD_MIN_REGEX } from '@/lib/consts';
 import { useConfirmForgotPasswordMutation } from '@/store/rtk-query/cognito/cognito-api';
 import classNames from 'classnames';
 import React, { useState } from 'react'
@@ -20,7 +21,9 @@ export default function ForgotPasswordConfirmForm({ ...props }: Props) {
 
     const [callConfirmForgotPassword, { isLoading: isConfirmForgotLoading }] = useConfirmForgotPasswordMutation()
 
-    const { register, handleSubmit } = useForm<ForgotPasswordConfirmFormData>({
+    const { register, handleSubmit, watch, formState: {
+        errors
+    } } = useForm<ForgotPasswordConfirmFormData>({
         defaultValues: {
             username: props.username,
             code: '',
@@ -28,6 +31,8 @@ export default function ForgotPasswordConfirmForm({ ...props }: Props) {
             password2: '',
         }
     })
+
+    const password = watch('password')
 
     const onSubmit = async (d: ForgotPasswordConfirmFormData) => {
         const r = await callConfirmForgotPassword({
@@ -48,10 +53,14 @@ export default function ForgotPasswordConfirmForm({ ...props }: Props) {
                     <label className="label">
                         <span className="label-text">Confirmation code</span>
                     </label>
-                    <input type="text" placeholder="Type here" className="w-full input input-bordered" {...register('code')} />
-                    {/* <label className="label">
-            <span className="label-text-alt">This will be used for login</span>
-          </label> */}
+                    <input type="text" placeholder="Type here" className="w-full input input-bordered"
+                        {...register('code', {
+                            required: true,
+                            validate: (v) => v.match(/^[0-9]{6}/) ? undefined : "Invalid code"
+                        })} />
+                    <label className="label">
+                        <span className="label-text-alt text-error-content">{errors.code?.message}</span>
+                    </label>
                 </div>
             </div>
             <div className="mb-4">
@@ -59,10 +68,16 @@ export default function ForgotPasswordConfirmForm({ ...props }: Props) {
                     <label className="label">
                         <span className="label-text">New password</span>
                     </label>
-                    <input type="password" placeholder="Type here" className="w-full input input-bordered" {...register('password')} />
-                    {/* <label className="label">
-            <span className="label-text-alt">This will be used for login</span>
-          </label> */}
+                    <input type="password" placeholder="Type here" className="w-full input input-bordered"
+                        {...register('password', {
+                            pattern: {
+                                value: PASSWORD_MIN_REGEX,
+                                message: PASSWORD_MIN_ERROR
+                            }
+                        })} />
+                    <label className="label">
+                        <span className="label-text-alt text-error-content">{errors.password?.message}</span>
+                    </label>
                 </div>
             </div>
             <div className="mb-4">
@@ -70,10 +85,13 @@ export default function ForgotPasswordConfirmForm({ ...props }: Props) {
                     <label className="label">
                         <span className="label-text">Confirm New password</span>
                     </label>
-                    <input type="password" placeholder="Type here" className="w-full input input-bordered" {...register('password2')} />
-                    {/* <label className="label">
-            <span className="label-text-alt">This will be used for login</span>
-          </label> */}
+                    <input type="password" placeholder="Type here" className="w-full input input-bordered"
+                        {...register('password2', {
+                            validate: (v) => v === password ? undefined : "Password does not match"
+                        })} />
+                    <label className="label">
+                        <span className="label-text-alt text-error-content">{errors.password2?.message}</span>
+                    </label>
                 </div>
             </div>
             <div className="flex items-center justify-between mt-8">

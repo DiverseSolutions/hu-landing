@@ -1,3 +1,4 @@
+import { EMAIL_REGEX, PASSWORD_MIN_ERROR, PASSWORD_MIN_REGEX } from '@/lib/consts';
 import { useSignupMutation } from '@/store/rtk-query/cognito/cognito-api';
 import classNames from 'classnames';
 import React from 'react'
@@ -19,7 +20,9 @@ export default function SignupForm({ ...props }: Props) {
 
   const [callSignup, { data: signupResp, isLoading: isSignupLoading, }] = useSignupMutation()
 
-  const { register, handleSubmit } = useForm<SignupFormData>({
+  const { register, handleSubmit, watch, formState: {
+    errors
+  } } = useForm<SignupFormData>({
     defaultValues: {
       username: '',
       password: '',
@@ -27,6 +30,8 @@ export default function SignupForm({ ...props }: Props) {
       email: '',
     }
   })
+
+  const password = watch('password')
 
   const onSubmit = async (d: SignupFormData) => {
     try {
@@ -65,10 +70,14 @@ export default function SignupForm({ ...props }: Props) {
           <div className="w-full form-control">
             <label className="label">
               <span className="label-text">Username</span>
-            </label>
-            <input type="text" placeholder="Type here" className="w-full input input-bordered" {...register('username')} />
-            <label className="label">
               <span className="label-text-alt">This will be used for login</span>
+            </label>
+            <input type="text" placeholder="Type here" className="w-full input input-bordered" {...register('username', {
+              required: true,
+              validate: (v) => v?.length < 4 ? 'Minimum length 4' : undefined
+            })} />
+            <label className="label">
+              <span className="label-text-alt text-error-content">{errors.username?.message}</span>
             </label>
           </div>
         </div>
@@ -77,7 +86,17 @@ export default function SignupForm({ ...props }: Props) {
             <label className="label">
               <span className="label-text">Email</span>
             </label>
-            <input type="text" placeholder="Type here" className="w-full input input-bordered" {...register('email')} />
+            <input type="text" placeholder="Type here" className="w-full input input-bordered"
+              {...register('email', {
+                required: true,
+                pattern: {
+                  value: EMAIL_REGEX,
+                  message: "Invalid email"
+                }
+              })} />
+            <label className="label">
+              <span className="label-text-alt text-error-content">{errors.email?.message}</span>
+            </label>
           </div>
         </div>
         <div className="mb-4">
@@ -85,7 +104,16 @@ export default function SignupForm({ ...props }: Props) {
             <label className="label">
               <span className="label-text">Password</span>
             </label>
-            <input type="password" placeholder="Type here" className="w-full input input-bordered" {...register('password')} />
+            <input type="password" placeholder="Type here" className="w-full input input-bordered"
+              {...register('password', {
+                pattern: {
+                  value: PASSWORD_MIN_REGEX,
+                  message: PASSWORD_MIN_ERROR
+                }
+              })} />
+            <label className="label">
+              <span className="label-text-alt text-error-content">{errors.password?.message}</span>
+            </label>
           </div>
         </div>
         <div className="mb-4">
@@ -93,7 +121,13 @@ export default function SignupForm({ ...props }: Props) {
             <label className="label">
               <span className="label-text">Confirm password</span>
             </label>
-            <input type="password" placeholder="Type here" className="w-full input input-bordered" {...register('password2')} />
+            <input type="password" placeholder="Type here" className="w-full input input-bordered"
+              {...register('password2', {
+                validate: (v) => v === password ? undefined : 'Password does not match'
+              })} />
+            <label className="label">
+              <span className="label-text-alt text-error-content">{errors.password2?.message}</span>
+            </label>
           </div>
         </div>
         <div className="flex items-center justify-between mt-8">

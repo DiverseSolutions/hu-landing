@@ -53,9 +53,11 @@ export default function AuthFeature({
                         {formType === 'login' ? (
                             <>
                                 <h2 className='mb-4 text-lg font-bold'>Login to an existing account</h2>
-                                <LoginForm />
+                                <LoginForm onSuccess={() => {
+                                    hideModal()
+                                }} />
                                 <div className="mt-2">
-                                    <p className="my-4 font-normal text-center">Don't have an account?</p>
+                                    <p className="my-4 font-normal text-center">Don&apos;t have an account?</p>
                                     <div className="flex justify-center w-full">
                                         <button onClick={() => {
                                             setFormType('register')
@@ -91,7 +93,7 @@ export default function AuthFeature({
                             <>
                                 <h2 className='mb-4 text-lg font-bold'>Reset Password</h2>
                                 <ForgotPasswordConfirmForm username={currentUsername} onSuccess={() => {
-
+                                    hideModal()
                                 }} />
                             </>
                         ) : (<></>)}

@@ -1,0 +1,38 @@
+import { Canvas } from '@react-three/fiber';
+import { OrbitControls } from '@react-three/drei';
+import dynamic from 'next/dynamic';
+import { Suspense, useEffect } from 'react';
+
+type Props = {
+  modelId: string;
+}
+
+export default function ModelPage(props: Props) {
+  const Model = dynamic<any>(() => import(`./models/${props.modelId}`).then((mod) => mod.Model), { ssr: false })
+  useEffect(() => {
+    console.log(`MODEL:`)
+    console.log(Model)
+    console.log(`MODEL TYPE:`)
+    console.log(typeof Model)
+  }, [Model])
+
+  return (
+    <div style={{ height: '100%', width: '100%', }}>
+      <Canvas
+        camera={{ position: [2, 0, 12.25], fov: 15 }}
+        style={{
+          width: '100%',
+          height: '100%',
+        }}
+      >
+        <ambientLight intensity={1.25} />
+        <ambientLight intensity={0.1} />
+        <directionalLight intensity={0.4} />
+        <Suspense fallback={null}>
+          <Model position={[0.025, -0.9, 0]} />
+        </Suspense>
+        <OrbitControls />
+      </Canvas>
+    </div>
+  )
+}

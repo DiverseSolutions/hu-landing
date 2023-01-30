@@ -1,6 +1,6 @@
 import Head from 'next/head'
 
-import HomePage from '@/components/ModelPage'
+import ModelScene from '@/components/ModelScene'
 
 export default function Home() {
   return (
@@ -12,7 +12,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <HomePage modelId='Model2' />
+        <ModelScene modelId='Model2' />
       </main>
     </>
   )

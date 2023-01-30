@@ -1,3 +1,5 @@
+import ForgotPasswordConfirmForm from '@/components/forms/ForgotPasswordConfirmForm'
+import ForgotPasswordForm from '@/components/forms/ForgotPasswordForm'
 import LoginForm from '@/components/forms/LoginForm'
 import SignupForm from '@/components/forms/SignupForm'
 import SignupOtpForm from '@/components/forms/SignupOtpForm'
@@ -5,7 +7,7 @@ import React, { useState } from 'react'
 
 type Props = {}
 
-type FormType = 'login' | 'register' | 'register-otp'
+type FormType = 'login' | 'register' | 'register-otp' | 'forgot-password' | 'forgot-password-confirm'
 
 const DEFAULT_MODAL = 'login';
 
@@ -13,7 +15,12 @@ export default function AuthFeature({
 
 }: Props) {
     const [formType, setFormType] = useState<FormType>(DEFAULT_MODAL)
-    const [signupUsername, setSignupUsername] = useState('')
+    const [currentUsername, setCurrentUsername] = useState('')
+
+    const hideModal = () => {
+        document.getElementById('auth-modal')?.click();
+    }
+
     return (
         <>
             <input type="checkbox" id="auth-modal" className="modal-toggle" onChange={(v) => {
@@ -31,7 +38,7 @@ export default function AuthFeature({
                                 <h2 className='mb-4 text-lg font-bold'>Create an account</h2>
                                 <SignupForm onSuccess={(d) => {
                                     setFormType('register-otp');
-                                    setSignupUsername(d.username)
+                                    setCurrentUsername(d.username)
                                 }} />
                                 <div className="mt-2">
                                     <p className="my-4 font-normal text-center">Already registered?</p>
@@ -56,16 +63,35 @@ export default function AuthFeature({
                                     </div>
                                 </div>
                                 <div className="mt-4 text-center">
-                                    <button className="mt-2 underline">Forgot password</button>
+                                    <button onClick={() => {
+                                        setFormType('forgot-password')
+                                    }} className="mt-2 underline">Forgot password</button>
                                 </div>
                             </>
                         ) : <></>}
                         {formType === 'register-otp' ? (
                             <>
                                 <h2 className='mb-4 text-lg font-bold'>Confirm Email</h2>
-                                <SignupOtpForm username={signupUsername} onSuccess={() => {
-                                    document.getElementById('auth-modal')?.click();
+                                <SignupOtpForm username={currentUsername} onSuccess={() => {
+                                    hideModal()
                                     setFormType('login')
+                                }} />
+                            </>
+                        ) : (<></>)}
+                        {formType === 'forgot-password' ? (
+                            <>
+                                <h2 className='mb-4 text-lg font-bold'>Forgot Password</h2>
+                                <ForgotPasswordForm onSuccess={(v) => {
+                                    setCurrentUsername(v)
+                                    setFormType('forgot-password-confirm')
+                                }} />
+                            </>
+                        ) : (<></>)}
+                        {formType === 'forgot-password-confirm' ? (
+                            <>
+                                <h2 className='mb-4 text-lg font-bold'>Reset Password</h2>
+                                <ForgotPasswordConfirmForm username={currentUsername} onSuccess={() => {
+
                                 }} />
                             </>
                         ) : (<></>)}

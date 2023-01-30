@@ -7,15 +7,8 @@ type Props = {
   modelId: string;
 }
 
-export default function ModelPage(props: Props) {
+export default function ModelScene(props: Props) {
   const Model = dynamic<any>(() => import(`./models/${props.modelId}`).then((mod) => mod.Model), { ssr: false })
-  useEffect(() => {
-    console.log(`MODEL:`)
-    console.log(Model)
-    console.log(`MODEL TYPE:`)
-    console.log(typeof Model)
-  }, [Model])
-
   return (
     <div style={{ height: '100%', width: '100%', }}>
       <Canvas

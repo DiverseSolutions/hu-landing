@@ -125,5 +125,8 @@ export const {
     useSignupMutation,
     useSignupConfirmMutation,
     useSignupResendMutation,
-    useGetUserMutation
+    useGetUserMutation,
+    useForgotPasswordMutation,
+    useConfirmForgotPasswordMutation,
+    useRefreshTokenMutation,
 } = cognitoApi;

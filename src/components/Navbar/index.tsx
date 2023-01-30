@@ -1,18 +1,12 @@
 import Link from 'next/link'
 import React, { useState } from 'react'
-import LoginForm from '../forms/LoginForm';
-import SignupForm from '../forms/SignupForm'
+import AuthFeature from '@/features/auth/AuthFeature'
 
 type Props = {}
 
-type FormType = 'login' | 'register';
-
 export default function Navbar({ }: Props) {
 
-    const [formType, setFormType] = useState<FormType>('register')
-
     const [isLoggedIn, setIsLoggedIn] = useState(false)
-    const [isRegisterModalVisible, setIsRegisterModalVisible] = useState(false)
 
     return (
         <>
@@ -21,7 +15,7 @@ export default function Navbar({ }: Props) {
                     <div className="flex-1">
                         <Link href="/" className="text-xl normal-case btn btn-ghost">hu.rocks</Link>
                     </div>
-                    <div className="flex-none">
+                    <div className="flex items-center">
                         <div className="dropdown dropdown-end">
                             <label tabIndex={0} className="btn btn-ghost btn-circle">
                                 <div className="indicator">
@@ -56,55 +50,16 @@ export default function Navbar({ }: Props) {
                                 </ul>
                             </div>
                         ) : (
-                            <label className="ml-2 btn" htmlFor='auth-modal'>
-                                Бүртгүүлэх
-                            </label>
+                            <>
+                                <label className="ml-2 btn btn-primary btn-wide max-w-[200px]" htmlFor='auth-modal'>
+                                    Login
+                                </label>
+                            </>
                         )}
                     </div>
                 </div>
-                <input type="checkbox" id="auth-modal" className="modal-toggle" />
-                <div className="modal">
-                    <div className="modal-box">
-                        <label htmlFor="auth-modal" className="absolute btn btn-sm btn-circle right-2 top-2">✕</label>
-                        <label htmlFor=''></label>
-                        <div className='px-8 pt-6 mb-4'>
-                            {formType === 'register' ? (
-                                <>
-                                    <h2 className='mb-4 text-lg font-bold'>Create an account</h2>
-                                    <SignupForm />
-                                    <div className="mt-2">
-                                        <p className="my-4 font-normal text-center">Already registered?</p>
-                                        <div className="flex justify-center w-full">
-                                            <button onClick={() => {
-                                                setFormType('login')
-                                            }} className="btn btn-secondary btn-wide">Login</button>
-                                        </div>
-                                    </div>
-                                </>
-                            ) : <></>}
-
-                            {formType === 'login' ? (
-                                <>
-                                    <h2 className='mb-4 text-lg font-bold'>Login to an existing account</h2>
-                                    <LoginForm />
-                                    <div className="mt-2">
-                                        <p className="my-4 font-normal text-center">Don't have an account?</p>
-                                        <div className="flex justify-center w-full">
-                                            <button onClick={() => {
-                                                setFormType('register')
-                                            }} className="btn btn-secondary btn-wide">Register</button>
-                                        </div>
-                                    </div>
-                                    <div className="mt-4 text-center">
-                                        <button className="mt-2 underline">Forgot password</button>
-                                    </div>
-                                </>
-                            ) : <></>}
-
-                        </div>
-                    </div>
-                </div>
             </div>
+            <AuthFeature />
         </>
     )
 }

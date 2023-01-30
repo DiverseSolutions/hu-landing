@@ -1,12 +1,31 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { CognitoConfirmSignup, CognitoSignupRequest, CognitoSignupResponse, CognitoGetUser, CognitoUser, CognitoRefreshTokenResponse, CognitoRefreshToken, CognitoForgotPasswordResponse, CognitoForgotPassword, CognitoConfirmForgotPassword, CognitoSignupResend } from './types';
+import { CognitoConfirmSignup, CognitoSignupRequest, CognitoSignupResponse, CognitoGetUser, CognitoUser, CognitoRefreshTokenResponse, CognitoRefreshToken, CognitoForgotPasswordResponse, CognitoForgotPassword, CognitoConfirmForgotPassword, CognitoSignupResend, CognitoLoginResponse, CognitoLoginRequest } from './types';
+
+const cognitoClientId = process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID;
 
 export const cognitoApi = createApi({
     reducerPath: 'cognito',
-    baseQuery: fetchBaseQuery({ baseUrl: 'https://cognito-idp.ap-northeast-1.amazonaws.com', headers: {
-        'Content-Type': 'application/x-amz-json-1.1'
-    } }),
+    baseQuery: fetchBaseQuery({
+        baseUrl: 'https://cognito-idp.ap-northeast-1.amazonaws.com',
+        prepareHeaders(headers, api) {
+            headers.set('Content-Type', 'application/x-amz-json-1.1')
+        },
+    }),
     endpoints: (builder) => ({
+        login: builder.mutation<CognitoLoginResponse, CognitoLoginRequest>({
+            query: (d) => ({
+                url: '/',
+                method: 'POST',
+                headers: {
+                    'X-Amz-Target': 'AWSCognitoIdentityProviderService.InitiateAuth',
+                },
+                body: JSON.stringify({
+                    AuthFlow: 'USER_PASSWORD_AUTH',
+                    ClientId: cognitoClientId,
+                    ...d,
+                })
+            })
+        }),
         signup: builder.mutation<CognitoSignupResponse, CognitoSignupRequest>({
             query: (d) => ({
                 url: '/',
@@ -14,7 +33,10 @@ export const cognitoApi = createApi({
                 headers: {
                     'X-Amz-Target': 'AWSCognitoIdentityProviderService.SignUp',
                 },
-                body: d
+                body: JSON.stringify({
+                    ClientId: cognitoClientId,
+                    ...d,
+                })
             })
         }),
         signupResend: builder.mutation<{}, CognitoSignupResend>({
@@ -24,7 +46,10 @@ export const cognitoApi = createApi({
                 headers: {
                     'X-Amz-Target': 'AWSCognitoIdentityProviderService.ResendConfirmationCode',
                 },
-                body: d
+                body: JSON.stringify({
+                    ClientId: cognitoClientId,
+                    ...d
+                })
             })
         }),
         forgotPassword: builder.mutation<CognitoForgotPasswordResponse, CognitoForgotPassword>({
@@ -34,7 +59,10 @@ export const cognitoApi = createApi({
                 headers: {
                     'X-Amz-Target': 'AWSCognitoIdentityProviderService.ForgotPassword',
                 },
-                body: d
+                body: JSON.stringify({
+                    ClientId: cognitoClientId,
+                    ...d
+                })
             })
         }),
         confirmForgotPassword: builder.mutation<{}, CognitoConfirmForgotPassword>({
@@ -44,7 +72,10 @@ export const cognitoApi = createApi({
                 headers: {
                     'X-Amz-Target': 'AWSCognitoIdentityProviderService.ConfirmForgotPassword',
                 },
-                body: d
+                body: JSON.stringify({
+                    ClientId: cognitoClientId,
+                    ...d
+                })
             })
         }),
         refreshToken: builder.mutation<CognitoRefreshTokenResponse, CognitoRefreshToken>({
@@ -54,7 +85,10 @@ export const cognitoApi = createApi({
                 headers: {
                     'X-Amz-Target': 'AWSCognitoIdentityProviderService.InitiateAuth',
                 },
-                body: d
+                body: JSON.stringify({
+                    ClientId: cognitoClientId,
+                    ...d
+                })
             })
         }),
         signupConfirm: builder.mutation<{}, CognitoConfirmSignup>({
@@ -64,7 +98,10 @@ export const cognitoApi = createApi({
                 headers: {
                     'X-Amz-Target': 'AWSCognitoIdentityProviderService.ConfirmSignUp',
                 },
-                body: d
+                body: JSON.stringify({
+                    ClientId: cognitoClientId,
+                    ...d
+                })
             })
         }),
         getUser: builder.mutation<CognitoUser, CognitoGetUser>({
@@ -74,14 +111,19 @@ export const cognitoApi = createApi({
                 headers: {
                     'X-Amz-Target': 'AWSCognitoIdentityProviderService.GetUser',
                 },
-                body: d
+                body: JSON.stringify({
+                    ClientId: cognitoClientId,
+                    ...d
+                })
             })
         }),
     }),
 })
 
 export const {
+    useLoginMutation,
     useSignupMutation,
     useSignupConfirmMutation,
+    useSignupResendMutation,
     useGetUserMutation
 } = cognitoApi;

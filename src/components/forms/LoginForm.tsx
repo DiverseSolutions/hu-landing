@@ -33,12 +33,14 @@ export default function LoginForm({ }: Props) {
     }).unwrap();
     const metalandResp = await callMetalandLogin({
       token: cognitoResp.AuthenticationResult.AccessToken,
-    })
-    console.log(`metaland resp:`)
-    console.log(metalandResp)
-    toast('Logged In Successfully.', {
-      type: 'success'
-    })
+    }).unwrap()
+    if (metalandResp.status === 'success') {
+      console.log(`metaland resp:`)
+      console.log(metalandResp)
+      toast('Logged In Successfully.', {
+        type: 'success'
+      })
+    }
   }
 
   const onSubmit = async (d: LoginFormData) => {

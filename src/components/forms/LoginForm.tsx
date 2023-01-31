@@ -37,7 +37,7 @@ export default function LoginForm({ ...props }: Props) {
       }
     }).unwrap();
     const metalandResp = await callMetalandLogin({
-      token: cognitoResp.AuthenticationResult.AccessToken,
+      token: cognitoResp.AuthenticationResult.IdToken,
     }).unwrap()
     if (metalandResp.status === 'success') {
       console.log(`metaland resp:`)

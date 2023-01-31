@@ -1,12 +1,18 @@
 import Link from 'next/link'
 import React, { useState } from 'react'
 import AuthFeature from '@/features/auth/AuthFeature'
+import { useAppDispatch, useAppSelector } from '@/store/hooks'
+import { ClipLoader } from 'react-spinners'
+import { logoutSuccess } from '@/store/reducer/auth-reducer/actions'
 
 type Props = {}
 
 export default function Navbar({ }: Props) {
 
-    const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const dispatch = useAppDispatch()
+    const isAuthLoading = useAppSelector(state => state.auth.isLoading)
+    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+    const profile = useAppSelector(state => state.auth.profile)
 
     return (
         <>
@@ -16,7 +22,7 @@ export default function Navbar({ }: Props) {
                         <Link href="/" className="text-xl normal-case btn btn-ghost">hu.rocks</Link>
                     </div>
                     <div className="flex items-center">
-                        <div className="dropdown dropdown-end">
+                        <div className="mr-4 dropdown dropdown-end">
                             <label tabIndex={0} className="btn btn-ghost btn-circle">
                                 <div className="indicator">
                                     <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
@@ -33,10 +39,24 @@ export default function Navbar({ }: Props) {
                                 </div>
                             </div>
                         </div>
-                        {isLoggedIn ? (
-                            <div className="dropdown dropdown-end">
+                        {isAuthLoading ? (
+                            <ClipLoader
+                                color={"black"}
+                                loading={true}
+                                cssOverride={{
+                                    display: "block",
+                                    margin: "0 auto",
+                                    borderColor: "#fff",
+                                }}
+                                size={32}
+                                aria-label="Loading Spinner"
+                                data-testid="loader"
+                            />
+                        ) : (<></>)}
+                        {!isAuthLoading && isLoggedIn ? (
+                            <div className="dropdown dropdown-en">
                                 <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-                                    <img src="/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                                    {profile.username || profile.email || "User"}
                                 </label>
                                 <ul tabIndex={0} className="p-2 mt-3 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52">
                                     <li>
@@ -46,16 +66,22 @@ export default function Navbar({ }: Props) {
                                         </a>
                                     </li>
                                     <li><a>Settings</a></li>
-                                    <li><a>Logout</a></li>
+                                    <li onClick={() => {
+                                        dispatch(logoutSuccess())
+                                    }}><a>Logout</a></li>
                                 </ul>
                             </div>
                         ) : (
+                            <>
+                            </>
+                        )}
+                        {!isAuthLoading && !isLoggedIn ? (
                             <>
                                 <label className="ml-2 btn btn-primary btn-wide max-w-[200px]" htmlFor='auth-modal'>
                                     Login
                                 </label>
                             </>
-                        )}
+                        ) : (<></>)}
                     </div>
                 </div>
             </div>

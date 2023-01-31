@@ -3,7 +3,11 @@ import ForgotPasswordForm from '@/components/forms/ForgotPasswordForm'
 import LoginForm from '@/components/forms/LoginForm'
 import SignupForm from '@/components/forms/SignupForm'
 import SignupOtpForm from '@/components/forms/SignupOtpForm'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import Cookies from 'js-cookie'
+import { useAppDispatch } from '@/store/hooks'
+import { authNotLoggedIn, sessionRestored } from '@/store/reducer/auth-reducer/actions'
+import { useGetUserMutation } from '@/store/rtk-query/cognito/cognito-api'
 
 type Props = {}
 
@@ -14,11 +18,59 @@ const DEFAULT_MODAL = 'login';
 export default function AuthFeature({
 
 }: Props) {
+
+    const [callGetUser, { isLoading: isGetUserLoading }] = useGetUserMutation()
+    const dispatch = useAppDispatch()
     const [formType, setFormType] = useState<FormType>(DEFAULT_MODAL)
     const [currentUsername, setCurrentUsername] = useState('')
 
     const hideModal = () => {
         document.getElementById('auth-modal')?.click();
+    }
+
+    useEffect(() => {
+        try {
+            syncSession()
+        } catch (e) {
+            console.warn('Restore session err:')
+            console.warn(e);
+        }
+    }, [])
+
+    const syncSession = async () => {
+        const cognitoIdToken = Cookies.get('cognitoIdToken');
+        const cognitoAccessToken = Cookies.get('cognitoAccessToken');
+        const ardArtAccessToken = Cookies.get('ardArtAccessToken');
+        const ardArtAccountId = Cookies.get('ardArtAccountId');
+        if (!cognitoIdToken || !cognitoAccessToken || !ardArtAccessToken || !ardArtAccountId) {
+            dispatch(authNotLoggedIn())
+        } else {
+            const cognitoUserResp = await callGetUser({
+                AccessToken: cognitoAccessToken,
+            }).unwrap();
+            dispatch(sessionRestored({
+                ardArt: {
+                    accessToken: {
+                        value: ardArtAccessToken,
+                    },
+                    accountId: {
+                        value: parseInt(ardArtAccountId),
+                    }
+                },
+                cognito: {
+                    idToken: {
+                        value: cognitoIdToken,
+                    },
+                    accessToken: {
+                        value: cognitoAccessToken,
+                    },
+                },
+                profile: {
+                    email: cognitoUserResp.UserAttributes.find((a) => a.Name === 'email')!.Value,
+                    username: cognitoUserResp.Username,
+                },
+            }))
+        }
     }
 
     return (

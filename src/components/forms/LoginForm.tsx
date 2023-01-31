@@ -1,6 +1,8 @@
 import { PASSWORD_MIN_REGEX } from '@/lib/consts';
+import { useAppDispatch } from '@/store/hooks';
+import { authSuccess } from '@/store/reducer/auth-reducer/actions';
 import { useMetalandLoginMutation } from '@/store/rtk-query/ard-art/ard-art-api';
-import { useLoginMutation } from '@/store/rtk-query/cognito/cognito-api';
+import { useGetUserMutation, useLoginMutation } from '@/store/rtk-query/cognito/cognito-api';
 import classNames from 'classnames';
 import React, { useState } from 'react'
 import { useForm } from "react-hook-form";
@@ -16,6 +18,8 @@ type LoginFormData = {
 }
 export default function LoginForm({ ...props }: Props) {
 
+  const dispatch = useAppDispatch();
+  const [callGetUser, { isLoading: isGetUserLoading }] = useGetUserMutation()
   const [isLoginLoading, setIsLoginLoading] = useState(false)
   const [callMetalandLogin, { isLoading: isMetalandLoginLoading }] = useMetalandLoginMutation()
   const [callLogin, { isLoading: isCognitoLoginLoading }] = useLoginMutation()
@@ -36,12 +40,39 @@ export default function LoginForm({ ...props }: Props) {
         PASSWORD: d.password
       }
     }).unwrap();
+    const cognitoUserResp = await callGetUser({
+      AccessToken: cognitoResp.AuthenticationResult.AccessToken
+    }).unwrap()
     const metalandResp = await callMetalandLogin({
       token: cognitoResp.AuthenticationResult.IdToken,
     }).unwrap()
+    dispatch(authSuccess({
+      ardArt: {
+        accessToken: {
+          value: metalandResp.result.jwtToken,
+          expiresIn: 3600, // TODO:: find ard art jwt expiration
+        },
+        accountId: {
+          value: metalandResp.result.accountId,
+          expiresIn: 3600,
+        }
+      },
+      cognito: {
+        idToken: {
+          value: cognitoResp.AuthenticationResult.IdToken,
+          expiresIn: cognitoResp.AuthenticationResult.ExpiresIn,
+        },
+        accessToken: {
+          value: cognitoResp.AuthenticationResult.AccessToken,
+          expiresIn: cognitoResp.AuthenticationResult.ExpiresIn,
+        },
+      },
+      profile: {
+        email: cognitoUserResp.UserAttributes.find((a) => a.Name === 'email')!.Value,
+        username: cognitoUserResp.Username,
+      },
+    }))
     if (metalandResp.status === 'success') {
-      console.log(`metaland resp:`)
-      console.log(metalandResp)
       toast('Logged In Successfully.', {
         type: 'success'
       })
@@ -55,6 +86,7 @@ export default function LoginForm({ ...props }: Props) {
       await handleLogin(d);
     } catch (e) {
       console.log(e)
+      toast(`${e}`, { type: 'error' })
     }
     setIsLoginLoading(false);
   }

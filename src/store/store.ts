@@ -7,6 +7,7 @@ import { nextjsApi } from './rtk-query/nextjs/nextjs-api';
 import { ardArtApi } from './rtk-query/ard-art/ard-art-api';
 import { cognitoApi } from './rtk-query/cognito/cognito-api';
 
+import authReducer from './reducer/auth-reducer';
 import { rtkErrorAlert } from './rtk-query/middleware/rtk-error-alert';
 
 export const store = configureStore({
@@ -14,6 +15,7 @@ export const store = configureStore({
     [nextjsApi.reducerPath]: nextjsApi.reducer,
     [ardArtApi.reducerPath]: ardArtApi.reducer,
     [cognitoApi.reducerPath]: cognitoApi.reducer,
+    auth: authReducer,
   },
   middleware(getDefaultMiddleware) {
     return getDefaultMiddleware().concat(nextjsApi.middleware, ardArtApi.middleware, cognitoApi.middleware, rtkErrorAlert)

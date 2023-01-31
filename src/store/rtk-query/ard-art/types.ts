@@ -16,6 +16,7 @@ export interface ArdArtResponse<T> {
 
 export type ArdArtMetalandLoginResponse = ArdArtResponse<{
     jwtToken: string;
+    accountId: number;
 }>
 
 export type ArdArtBalanceResponse = ArdArtResponse<any[]>

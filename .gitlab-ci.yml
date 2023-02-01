@@ -51,5 +51,3 @@ deploy:
 # RUN aws s3 sync /builded s3://$BUCKET_NAME/ --delete --cache-control max-age=36288000
 # RUN aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --paths '/*'
 
-
-AWS_ACCESS_KEY_ID=AKIAYV44LKYRSCH3PWHY AWS_SECRET_ACCESS_KEY=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

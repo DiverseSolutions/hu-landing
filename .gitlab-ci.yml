@@ -28,7 +28,7 @@ deploy:
   # dependencies:
   #   - build
   only:
-    - master
+    - main
 # FROM mhart/alpine-node:14 as builder
 # WORKDIR /app/node/react
 # COPY . .

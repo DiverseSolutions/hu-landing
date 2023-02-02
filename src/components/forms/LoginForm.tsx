@@ -87,7 +87,6 @@ export default function LoginForm({ ...props }: Props) {
       await handleLogin(d);
     } catch (e) {
       console.log(e)
-      toast(`${e}`, { type: 'error' })
     }
     setIsLoginLoading(false);
   }

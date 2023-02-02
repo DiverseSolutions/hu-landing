@@ -1,4 +1,4 @@
-import { ArdArtTicketResponse, ArdArtBundleResponse, ArdArtBundleInvoiceResponse, ArdArtSingleInvoiceResponse, ArdArtCheckInvoiceResponse, ArdArtTicketOrAssetResponse } from './types';
+import { ArdArtTicketResponse, ArdArtBundleResponse, ArdArtBundleInvoiceResponse, ArdArtSingleInvoiceResponse, ArdArtCheckInvoiceResponse, ArdArtTicketOrAssetResponse, ArdArtMyOwnedNftResponse } from './types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const huxArdArtApi = createApi({
@@ -6,7 +6,8 @@ export const huxArdArtApi = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: `${process.env.NEXT_PUBLIC_HUX_ARD_ART_API_HOST_URL}` }),
     endpoints: (builder) => ({
         getTicketOrAsset: builder.query<ArdArtTicketOrAssetResponse, {
-            type: "asset" | "ticket"
+            type: "asset" | "ticket",
+            ownerId?: number;
         }>({
             query: (d) => ({
                 url: '/api/v1/asset/get',
@@ -55,6 +56,15 @@ export const huxArdArtApi = createApi({
                 body: d
             })
         }),
+        myOwnedNft: builder.query<ArdArtMyOwnedNftResponse, {
+            ownerId?: number;
+        }>({
+            query: (d) => ({
+                url: '/api/v1/asset/get',
+                method: 'POST',
+                body: d
+            })
+        }),
     }),
 })
 
@@ -64,5 +74,6 @@ export const {
     useInvoiceBundleMutation,
     useInvoiceSingleMutation,
     useCheckInvoiceQuery,
-    useLazyCheckInvoiceQuery
+    useLazyCheckInvoiceQuery,
+    useMyOwnedNftQuery
 } = huxArdArtApi;

@@ -60,10 +60,10 @@ export default function Navbar({ }: Props) {
                                 </label>
                                 <ul tabIndex={0} className="p-2 mt-3 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52">
                                     <li>
-                                        <a className="justify-between">
+                                        <Link href="/profile" className="justify-between">
                                             Profile
                                             <span className="badge">New</span>
-                                        </a>
+                                        </Link>
                                     </li>
                                     <li><a>Settings</a></li>
                                     <li onClick={() => {

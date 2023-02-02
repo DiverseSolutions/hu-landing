@@ -3,6 +3,7 @@ import { showAuthModal } from '@/store/reducer/auth-reducer/actions'
 import { useCheckInvoiceQuery, useInvoiceSingleMutation, useLazyCheckInvoiceQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
 import { ArdArtTicketOrAssetRecord } from '@/store/rtk-query/hux-ard-art/types'
 import classNames from 'classnames'
+import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 
@@ -18,7 +19,7 @@ export default function TicketCard({ ticket: t }: Props) {
     const accountId = useAppSelector(state => state.auth.ardArt.accountId)
     const [callInvoiceSingle, { isLoading: isInvoiceLoading }] = useInvoiceSingleMutation()
     const [callCheckInvoice, { isLoading: isCheckInvoiceLoading }] = useLazyCheckInvoiceQuery()
-
+    const router = useRouter()
     const handlePurchase = async () => {
         if (!isLoggedIn || !accountId) {
             dispatch(showAuthModal())
@@ -36,7 +37,10 @@ export default function TicketCard({ ticket: t }: Props) {
             }).unwrap()
             if (invoiceResp.status.toUpperCase() === 'SUCCESS') {
                 toast("Purchase Successful.", {
-                    type: 'success'
+                    type: 'success',
+                    onClick: () => {
+                        router.push('/profile')
+                    }
                 })
             }
         } catch (e) {

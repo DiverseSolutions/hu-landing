@@ -3,6 +3,7 @@ import { showAuthModal } from '@/store/reducer/auth-reducer/actions'
 import { useInvoiceBundleMutation, useLazyCheckInvoiceQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
 import { ArdArtBundleRecord } from '@/store/rtk-query/hux-ard-art/types'
 import classNames from 'classnames'
+import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 
@@ -19,6 +20,7 @@ export default function BundleCard({ bundle: b }: Props) {
     const [callInvoiceBundle, { isLoading: isBundleInvoiceLoading }] = useInvoiceBundleMutation()
     const [callCheckInvoice, { isLoading: isCheckInvoiceLoading }] = useLazyCheckInvoiceQuery()
     const [currentImg, setCurrentImg] = useState(0)
+    const router = useRouter()
 
     const handlePurchase = async () => {
         if (!isLoggedIn || !accountId) {
@@ -36,7 +38,10 @@ export default function BundleCard({ bundle: b }: Props) {
             }).unwrap();
             if (invoiceResp.status.toUpperCase() === 'SUCCESS') {
                 toast("Purchase successful.", {
-                    type: 'success'
+                    type: 'success',
+                    onClick: () => {
+                        router.push('/profile')
+                    }
                 })
             }
         } catch (e) {

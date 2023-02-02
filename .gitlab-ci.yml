@@ -1,0 +1,53 @@
+variables:
+  S3_BUCKET_NAME: "hu.rocks"
+
+stages:
+  # - build
+  - deploy
+
+# build:
+#   image: node:alpine
+#   stage: build
+#   script:
+#     - npm i
+#     - npm run export
+#   artifacts:
+#     expire_in: 30 days
+#     paths:
+#       - out
+#   only:
+#     - master
+
+deploy:
+  image: python:latest
+  stage: deploy
+  script:
+    - pip install awscli
+    - AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+    - aws s3 cp ./out/ s3://$S3_BUCKET_NAME/ --recursive --include "*"
+  # dependencies:
+  #   - build
+  only:
+    - main
+# FROM mhart/alpine-node:14 as builder
+# WORKDIR /app/node/react
+# COPY . .
+# RUN yarn
+# RUN yarn lint
+# RUN yarn stylelint
+# RUN yarn test --watchAll=false
+# RUN yarn build
+
+# FROM amazon/aws-cli:latest
+# ARG ACCESS_KEY
+# ARG SECRET_KEY
+# ARG REGION
+# ARG BUCKET_NAME
+# ARG DISTRIBUTION_ID
+# ENV AWS_ACCESS_KEY_ID=$ACCESS_KEY
+# ENV AWS_SECRET_ACCESS_KEY=$SECRET_KEY
+# ENV AWS_DEFAULT_REGION=$REGION
+# COPY --from=builder /app/node/react/build /builded
+# RUN aws s3 sync /builded s3://$BUCKET_NAME/ --delete --cache-control max-age=36288000
+# RUN aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --paths '/*'
+

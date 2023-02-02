@@ -1,5 +1,7 @@
 import Head from 'next/head'
 import ModelScene from '@/components/ModelScene';
+import TicketFeature from '@/features/ticket/TicketFeature';
+import BundleFeature from '@/features/bundle/BundleFeature';
 
 export default function Home() {
 
@@ -12,12 +14,9 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <div className='flex w-full h-full bg-gray-400'>
-          <div className="relative flex justify-center w-full">
-            <div className='w-full h-[100vh] items-center flex bg-gray-900'>
-              <ModelScene modelId='Model' />
-            </div>
-          </div>
+        <div className="pb-16">
+          <TicketFeature />
+          <BundleFeature />
         </div>
       </main>
     </>

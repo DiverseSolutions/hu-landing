@@ -6,13 +6,17 @@ import Navbar from '@/components/Navbar';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { ToastContainer } from 'react-toastify';
+import AuthLoader from '@/components/AuthLoader';
 
 export default function App({ Component, pageProps, ...rest }: AppProps) {
   const { store, props } = wrapper.useWrappedStore(rest);
+
   return (
     <Provider store={store}>
       <Navbar />
-      <Component {...props.pageProps} />
+      <AuthLoader>
+        <Component {...props.pageProps} />
+      </AuthLoader>
       <ToastContainer />
     </Provider>
   )

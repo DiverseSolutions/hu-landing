@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import AuthFeature from '@/features/auth/AuthFeature'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { ClipLoader } from 'react-spinners'
-import { logoutSuccess } from '@/store/reducer/auth-reducer/actions'
+import { logoutSuccess, showAuthModal } from '@/store/reducer/auth-reducer/actions'
 
 type Props = {}
 
@@ -16,7 +16,7 @@ export default function Navbar({ }: Props) {
 
     return (
         <>
-            <div className="fixed z-50 flex justify-center w-full navbar bg-base-100">
+            <div className="z-50 flex justify-center w-full navbar bg-base-100">
                 <div className="container">
                     <div className="flex-1">
                         <Link href="/" className="text-xl normal-case btn btn-ghost">hu.rocks</Link>
@@ -55,7 +55,7 @@ export default function Navbar({ }: Props) {
                         ) : (<></>)}
                         {!isAuthLoading && isLoggedIn ? (
                             <div className="dropdown dropdown-en">
-                                <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+                                <label tabIndex={0} className="ml-4 btn btn-ghost btn-circle avatar">
                                     {profile.username || profile.email || "User"}
                                 </label>
                                 <ul tabIndex={0} className="p-2 mt-3 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52">
@@ -77,7 +77,9 @@ export default function Navbar({ }: Props) {
                         )}
                         {!isAuthLoading && !isLoggedIn ? (
                             <>
-                                <label className="ml-2 btn btn-primary btn-wide max-w-[200px]" htmlFor='auth-modal'>
+                                <label onClick={() => {
+                                    dispatch(showAuthModal())
+                                }} className="ml-2 btn btn-primary btn-wide max-w-[200px]">
                                     Login
                                 </label>
                             </>

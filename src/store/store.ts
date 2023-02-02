@@ -5,6 +5,7 @@ import { setupListeners } from '@reduxjs/toolkit/query'
 
 import { nextjsApi } from './rtk-query/nextjs/nextjs-api';
 import { ardArtApi } from './rtk-query/ard-art/ard-art-api';
+import { huxArdArtApi } from './rtk-query/hux-ard-art/hux-ard-art-api';
 import { cognitoApi } from './rtk-query/cognito/cognito-api';
 
 import authReducer from './reducer/auth-reducer';
@@ -15,10 +16,11 @@ export const store = configureStore({
     [nextjsApi.reducerPath]: nextjsApi.reducer,
     [ardArtApi.reducerPath]: ardArtApi.reducer,
     [cognitoApi.reducerPath]: cognitoApi.reducer,
+    [huxArdArtApi.reducerPath]: huxArdArtApi.reducer,
     auth: authReducer,
   },
   middleware(getDefaultMiddleware) {
-    return getDefaultMiddleware().concat(nextjsApi.middleware, ardArtApi.middleware, cognitoApi.middleware, rtkErrorAlert)
+    return getDefaultMiddleware().concat(nextjsApi.middleware, ardArtApi.middleware, cognitoApi.middleware, rtkErrorAlert, huxArdArtApi.middleware)
   },
 })
 

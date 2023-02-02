@@ -34,6 +34,7 @@ export default function LoginForm({ ...props }: Props) {
   })
 
   const handleLogin = async (d: LoginFormData) => {
+    console.log(`handle login`)
     const cognitoResp = await callLogin({
       AuthParameters: {
         USERNAME: d.username,

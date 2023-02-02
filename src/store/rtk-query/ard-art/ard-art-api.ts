@@ -1,4 +1,4 @@
-import { ArdArtBalanceResponse, ArdArtMetalandLogin, ArdArtMetalandLoginResponse } from './types';
+import { ArdArtBalanceResponse, ArdArtMetalandLogin, ArdArtMetalandLoginResponse, ArdArtTicketResponse } from './types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const ardArtApi = createApi({
@@ -17,11 +17,11 @@ export const ardArtApi = createApi({
                 url: '/api/v1/balance',
                 method: 'GET',
             })
-        })
+        }),
     }),
 })
 
 export const {
     useMetalandLoginMutation,
-    useBalanceQuery
+    useBalanceQuery,
 } = ardArtApi;

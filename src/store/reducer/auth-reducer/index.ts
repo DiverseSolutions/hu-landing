@@ -1,10 +1,11 @@
 import { clearAuthcookie, storeAuthCookie } from "@/lib/cookie";
 import { createSlice } from "@reduxjs/toolkit"
-import { authNotLoggedIn, authSuccess, logoutSuccess, sessionExpired, sessionRestored } from "./actions"
+import { authNotLoggedIn, authSuccess, hideAuthModal, logoutSuccess, sessionExpired, sessionRestored, showAuthModal } from "./actions"
 
 type AuthState = {
     isLoading: boolean;
     isLoggedIn: boolean;
+    isAuthModalVisible: boolean;
     cognito: {
         idToken?: string;
         accessToken?: string;
@@ -22,6 +23,7 @@ type AuthState = {
 const initialState: AuthState = {
     isLoggedIn: false,
     isLoading: true,
+    isAuthModalVisible: false,
     cognito: {},
     ardArt: {},
     profile: {
@@ -77,6 +79,12 @@ const authSlice = createSlice({
             };
             clearAuthcookie();
             return state;
+        })
+        builder.addCase(showAuthModal, (state, action) => {
+            state.isAuthModalVisible = true;
+        })
+        builder.addCase(hideAuthModal, (state, action) => {
+            state.isAuthModalVisible = false;
         })
     },
 })

@@ -3,10 +3,10 @@ import ForgotPasswordForm from '@/components/forms/ForgotPasswordForm'
 import LoginForm from '@/components/forms/LoginForm'
 import SignupForm from '@/components/forms/SignupForm'
 import SignupOtpForm from '@/components/forms/SignupOtpForm'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Cookies from 'js-cookie'
-import { useAppDispatch } from '@/store/hooks'
-import { authNotLoggedIn, sessionRestored } from '@/store/reducer/auth-reducer/actions'
+import { useAppDispatch, useAppSelector } from '@/store/hooks'
+import { authNotLoggedIn, hideAuthModal, sessionRestored } from '@/store/reducer/auth-reducer/actions'
 import { useGetUserMutation } from '@/store/rtk-query/cognito/cognito-api'
 
 type Props = {}
@@ -19,13 +19,15 @@ export default function AuthFeature({
 
 }: Props) {
 
+    const isAuthModalVisible = useAppSelector(state => state.auth.isAuthModalVisible)
     const [callGetUser, { isLoading: isGetUserLoading }] = useGetUserMutation()
     const dispatch = useAppDispatch()
     const [formType, setFormType] = useState<FormType>(DEFAULT_MODAL)
     const [currentUsername, setCurrentUsername] = useState('')
 
+    const authModalRef = useRef<HTMLInputElement>(null)
     const hideModal = () => {
-        document.getElementById('auth-modal')?.click();
+        dispatch(hideAuthModal())
     }
 
     useEffect(() => {
@@ -36,6 +38,19 @@ export default function AuthFeature({
             console.warn(e);
         }
     }, [])
+
+    useEffect(() => {
+        if (isAuthModalVisible) {
+            if (!authModalRef.current?.checked) {
+                authModalRef.current?.click();
+            }
+        } else {
+            if (authModalRef.current?.checked) {
+                authModalRef.current?.click();
+            }
+        }
+    }, [isAuthModalVisible])
+
 
     const syncSession = async () => {
         const cognitoIdToken = Cookies.get('cognitoIdToken');
@@ -75,14 +90,18 @@ export default function AuthFeature({
 
     return (
         <>
-            <input type="checkbox" id="auth-modal" className="modal-toggle" onChange={(v) => {
+            <input ref={authModalRef} type="checkbox" id="auth-modal" className="modal-toggle" onChange={(v) => {
                 if (!v.target.checked) {
                     setFormType(DEFAULT_MODAL)
                 }
             }} />
-            <div className="modal">
-                <div className="modal-box">
-                    <label htmlFor="auth-modal" className="absolute btn btn-sm btn-circle right-2 top-2">✕</label>
+            <div className="modal" onClick={() => {
+                dispatch(hideAuthModal())
+            }}>
+                <div className="modal-box" onClick={(e) => {
+                    e.stopPropagation()
+                }}>
+                    <label onClick={hideModal} className="absolute btn btn-sm btn-circle right-2 top-2">✕</label>
                     <label htmlFor=''></label>
                     <div className='px-8 pt-6 mb-4'>
                         {formType === 'register' ? (

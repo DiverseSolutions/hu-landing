@@ -53,3 +53,6 @@ export const sessionRestored = createAction<{
 export const authNotLoggedIn = createAction<void>("NOT_LOGGED_IN");
 export const logoutSuccess = createAction<void>('LOGOUT_SUCCESS');
 export const sessionExpired = createAction<void>('SESSION_EXPIRED');
+
+export const showAuthModal = createAction<void>("SHOW_AUTH_MODAL")
+export const hideAuthModal = createAction<void>("HIDE_AUTH_MODAL")

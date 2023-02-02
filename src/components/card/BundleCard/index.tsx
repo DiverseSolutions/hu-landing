@@ -53,7 +53,7 @@ export default function BundleCard({ bundle: b }: Props) {
     return (
         <div className="shadow-xl card w-96 bg-base-100">
             <div className='max-w-md space-x-2 bg-slate-100 carousel carousel-center rounded-box'>{b.items.map((item, idx) => (
-                <img onClick={() => {
+                <img key={item.id} onClick={() => {
                     if (b.items.length) {
                         setCurrentImg((currentImg + 1) % b.items.length)
                     }

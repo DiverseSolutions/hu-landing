@@ -54,7 +54,7 @@ export default function Navbar({ }: Props) {
                             />
                         ) : (<></>)}
                         {!isAuthLoading && isLoggedIn ? (
-                            <div className="dropdown dropdown-en">
+                            <div className="dropdown dropdown-left">
                                 <label tabIndex={0} className="ml-4 btn btn-ghost btn-circle avatar">
                                     {profile.username || profile.email || "User"}
                                 </label>

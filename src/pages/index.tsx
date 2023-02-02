@@ -14,7 +14,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <div className="pb-16">
+        <div className="px-4 pb-16 md:px-0">
           <TicketFeature />
           <BundleFeature />
         </div>

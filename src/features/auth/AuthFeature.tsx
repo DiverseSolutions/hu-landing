@@ -19,13 +19,14 @@ export default function AuthFeature({
 
 }: Props) {
 
-    const isAuthModalVisible = useAppSelector(state => state.auth.isAuthModalVisible)
+    const authModal = useAppSelector(state => state.auth.authModal)
     const [callGetUser] = useLazyGetUserQuery()
     const dispatch = useAppDispatch()
     const [formType, setFormType] = useState<FormType>(DEFAULT_MODAL)
     const [currentUsername, setCurrentUsername] = useState('')
 
     const authModalRef = useRef<HTMLInputElement>(null)
+
     const hideModal = () => {
         dispatch(hideAuthModal())
     }
@@ -40,7 +41,8 @@ export default function AuthFeature({
     }, [])
 
     useEffect(() => {
-        if (isAuthModalVisible) {
+        if (authModal) {
+            setFormType(authModal)
             if (!authModalRef.current?.checked) {
                 authModalRef.current?.click();
             }
@@ -49,7 +51,7 @@ export default function AuthFeature({
                 authModalRef.current?.click();
             }
         }
-    }, [isAuthModalVisible])
+    }, [authModal])
 
 
     const syncSession = async () => {

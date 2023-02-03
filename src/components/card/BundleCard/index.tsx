@@ -24,7 +24,9 @@ export default function BundleCard({ bundle: b }: Props) {
 
     const handlePurchase = async () => {
         if (!isLoggedIn || !accountId) {
-            dispatch(showAuthModal())
+            dispatch(showAuthModal({
+                type: 'login'
+            }))
             return;
         }
         setIsPurchaseLoading(true)

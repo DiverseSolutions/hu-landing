@@ -1,12 +1,17 @@
+import { withAuthLoader } from '@/components/AuthLoader';
+import Navbar from '@/components/Navbar';
 import PorfileFeature from '@/features/profile/PorfileFeature';
 import React, { useEffect } from 'react';
 
 type Props = {}
 
-export default function Profile({ }: Props) {
-
-
+const Profile = ({ }: Props) => {
     return (
-        <PorfileFeature />
+        <>
+            <Navbar />
+            <PorfileFeature />
+        </>
     )
 }
+
+export default withAuthLoader(Profile)

@@ -1,6 +1,5 @@
 import Link from 'next/link'
-import React, { useState } from 'react'
-import AuthFeature from '@/features/auth/AuthFeature'
+import React from 'react'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { ClipLoader } from 'react-spinners'
 import { logoutSuccess, showAuthModal } from '@/store/reducer/auth-reducer/actions'
@@ -78,7 +77,9 @@ export default function Navbar({ }: Props) {
                         {!isAuthLoading && !isLoggedIn ? (
                             <>
                                 <label onClick={() => {
-                                    dispatch(showAuthModal())
+                                    dispatch(showAuthModal({
+                                        type: 'login'
+                                    }))
                                 }} className="ml-2 btn btn-primary btn-wide max-w-[200px]">
                                     Login
                                 </label>
@@ -87,7 +88,6 @@ export default function Navbar({ }: Props) {
                     </div>
                 </div>
             </div>
-            <AuthFeature />
         </>
     )
 }

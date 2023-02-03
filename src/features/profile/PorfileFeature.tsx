@@ -19,7 +19,9 @@ export default function PorfileFeature({ }: Props) {
 
     useEffect(() => {
         if (!isLoggedIn) {
-            dispatch(showAuthModal())
+            dispatch(showAuthModal({
+                type: 'login'
+            }))
         }
     }, [isLoggedIn])
 
@@ -27,7 +29,9 @@ export default function PorfileFeature({ }: Props) {
     if (!isLoggedIn) {
         return (
             <div className="flex items-center justify-center w-full min-h-[600px]">
-                <p onClick={() => dispatch(showAuthModal())} className="text-xl font-medium">Please sign in to continue.</p>
+                <p onClick={() => dispatch(showAuthModal({
+                    type: 'login'
+                }))} className="text-xl font-medium">Please sign in to continue.</p>
             </div>
         )
     }

@@ -1,7 +1,5 @@
 import Head from 'next/head'
-import ModelScene from '@/components/ModelScene';
-import TicketFeature from '@/features/ticket/TicketFeature';
-import BundleFeature from '@/features/bundle/BundleFeature';
+import LandingWithComingSoon from '@/features/LandingWithComingSoon';
 
 export default function Home() {
 
@@ -14,10 +12,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <div className="px-4 pb-16 md:px-0">
-          <TicketFeature />
-          <BundleFeature />
-        </div>
+        <LandingWithComingSoon />
       </main>
     </>
   )

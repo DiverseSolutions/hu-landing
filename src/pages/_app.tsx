@@ -7,16 +7,14 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import { ToastContainer } from 'react-toastify';
 import AuthLoader from '@/components/AuthLoader';
+import AuthFeature from '@/features/auth/AuthFeature';
 
 export default function App({ Component, pageProps, ...rest }: AppProps) {
   const { store, props } = wrapper.useWrappedStore(rest);
-
   return (
     <Provider store={store}>
-      <Navbar />
-      <AuthLoader>
-        <Component {...props.pageProps} />
-      </AuthLoader>
+      <Component {...props.pageProps} />
+      <AuthFeature />
       <ToastContainer />
     </Provider>
   )

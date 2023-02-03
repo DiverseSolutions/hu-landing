@@ -45,6 +45,7 @@
     "xtendui": "^1.2.0"
   },
   "devDependencies": {
+    "@svgr/webpack": "^6.5.1",
     "@types/next-redux-wrapper": "^3.0.0",
     "@types/react-redux": "^7.1.25",
     "@types/three": "^0.148.1",

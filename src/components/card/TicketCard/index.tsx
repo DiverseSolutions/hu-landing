@@ -22,7 +22,9 @@ export default function TicketCard({ ticket: t }: Props) {
     const router = useRouter()
     const handlePurchase = async () => {
         if (!isLoggedIn || !accountId) {
-            dispatch(showAuthModal())
+            dispatch(showAuthModal({
+                type: 'login'
+            }))
             return;
         }
         setIsPurchaseLoading(true)

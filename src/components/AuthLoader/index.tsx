@@ -23,4 +23,15 @@ const AuthLoader: React.FC<Props> = ({ children }) => {
     )
 }
 
+export function withAuthLoader<T extends JSX.IntrinsicAttributes>(Component: React.ComponentType<T>) {
+    const ComponentWithAuthLoader = (props: T) => {
+        return (
+            <AuthLoader>
+                <Component {...props} />
+            </AuthLoader>
+        )
+    }
+    return ComponentWithAuthLoader;
+}
+
 export default AuthLoader;

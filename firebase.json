@@ -12,6 +12,18 @@
         "destination": "/spline.html"
       },
       {
+        "source": "/profile**",
+        "destination": "/profile.html"
+      },
+      {
+        "source": "/login**",
+        "destination": "/login.html"
+      },
+      {
+        "source": "/signup**",
+        "destination": "/signup.html"
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }

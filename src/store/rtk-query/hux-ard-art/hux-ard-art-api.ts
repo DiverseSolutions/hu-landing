@@ -1,4 +1,4 @@
-import { ArdArtTicketResponse, ArdArtBundleResponse, ArdArtBundleInvoiceResponse, ArdArtSingleInvoiceResponse, ArdArtCheckInvoiceResponse, ArdArtTicketOrAssetResponse, ArdArtMyOwnedNftResponse } from './types';
+import { ArdArtBundleResponse, ArdArtBundleInvoiceResponse, ArdArtSingleInvoiceResponse, ArdArtCheckInvoiceResponse, ArdArtTicketOrAssetResponse, ArdArtMyOwnedNftResponse } from './types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const huxArdArtApi = createApi({
@@ -76,5 +76,5 @@ export const {
     useInvoiceSingleMutation,
     useCheckInvoiceQuery,
     useLazyCheckInvoiceQuery,
-    useMyOwnedNftQuery
+    useMyOwnedNftQuery,
 } = huxArdArtApi;

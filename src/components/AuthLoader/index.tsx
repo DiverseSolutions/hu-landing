@@ -13,7 +13,7 @@ const AuthLoader: React.FC<Props> = ({ children }) => {
 
     if (isAuthLoading) {
         return (
-            <div className="flex items-center justify-center w-full h-full min-h-[60vh]">
+            <div className="flex items-center justify-center w-full h-[100vh]">
                 <ClipLoader />
             </div>
         )

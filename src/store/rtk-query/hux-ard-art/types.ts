@@ -170,4 +170,3 @@ export interface ArdArtMyOwnedNftRecord {
 }
 
 export type ArdArtMyOwnedNftResponse = ArdArtResponse<ArdArtMyOwnedNftResult>
-

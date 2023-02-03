@@ -88,17 +88,7 @@ function TicketSection({ ticket, priceToUsdRate }: Props) {
                 productId: ticket.id,
                 amount: 1,
             }).unwrap()
-            const invoiceResp = await callCheckInvoice({
-                invoiceId: r.result.invoiceId
-            }).unwrap()
-            if (invoiceResp.status.toUpperCase() === 'SUCCESS') {
-                toast("Purchase Successful.", {
-                    type: 'success',
-                    onClick: () => {
-                        router.push('/profile')
-                    }
-                })
-            }
+            router.push(`/payment?invoiceId=${r.result.invoiceId}`)
         } catch (e) {
             console.log(e)
         }

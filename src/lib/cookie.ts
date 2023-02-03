@@ -36,3 +36,5 @@ export const clearAuthcookie = () => {
     Cookies.remove('ardArtAccessToken');
     Cookies.remove('ardArtAccountId');
 }
+
+export const getArdArdAccessToken = () => Cookies.get('ardArtAccessToken')

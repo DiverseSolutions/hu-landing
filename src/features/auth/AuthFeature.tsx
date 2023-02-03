@@ -7,7 +7,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import Cookies from 'js-cookie'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { authNotLoggedIn, hideAuthModal, sessionRestored } from '@/store/reducer/auth-reducer/actions'
-import { useGetUserMutation } from '@/store/rtk-query/cognito/cognito-api'
+import { useLazyGetUserQuery } from '@/store/rtk-query/cognito/cognito-api'
 
 type Props = {}
 
@@ -20,7 +20,7 @@ export default function AuthFeature({
 }: Props) {
 
     const isAuthModalVisible = useAppSelector(state => state.auth.isAuthModalVisible)
-    const [callGetUser, { isLoading: isGetUserLoading }] = useGetUserMutation()
+    const [callGetUser] = useLazyGetUserQuery()
     const dispatch = useAppDispatch()
     const [formType, setFormType] = useState<FormType>(DEFAULT_MODAL)
     const [currentUsername, setCurrentUsername] = useState('')

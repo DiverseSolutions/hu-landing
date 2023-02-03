@@ -104,7 +104,7 @@ export const cognitoApi = createApi({
                 })
             })
         }),
-        getUser: builder.mutation<CognitoUser, CognitoGetUser>({
+        getUser: builder.query<CognitoUser, CognitoGetUser>({
             query: (d) => ({
                 url: '/',
                 method: 'POST',
@@ -125,7 +125,7 @@ export const {
     useSignupMutation,
     useSignupConfirmMutation,
     useSignupResendMutation,
-    useGetUserMutation,
+    useLazyGetUserQuery,
     useForgotPasswordMutation,
     useConfirmForgotPasswordMutation,
     useRefreshTokenMutation,

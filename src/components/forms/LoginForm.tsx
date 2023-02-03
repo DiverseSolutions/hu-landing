@@ -2,7 +2,7 @@ import { PASSWORD_MIN_REGEX } from '@/lib/consts';
 import { useAppDispatch } from '@/store/hooks';
 import { authSuccess } from '@/store/reducer/auth-reducer/actions';
 import { useMetalandLoginMutation } from '@/store/rtk-query/ard-art/ard-art-api';
-import { useGetUserMutation, useLoginMutation } from '@/store/rtk-query/cognito/cognito-api';
+import { useLazyGetUserQuery, useLoginMutation } from '@/store/rtk-query/cognito/cognito-api';
 import classNames from 'classnames';
 import React, { useState } from 'react'
 import { useForm } from "react-hook-form";
@@ -19,7 +19,7 @@ type LoginFormData = {
 export default function LoginForm({ ...props }: Props) {
 
   const dispatch = useAppDispatch();
-  const [callGetUser, { isLoading: isGetUserLoading }] = useGetUserMutation()
+  const [callGetUser] = useLazyGetUserQuery()
   const [isLoginLoading, setIsLoginLoading] = useState(false)
   const [callMetalandLogin, { isLoading: isMetalandLoginLoading }] = useMetalandLoginMutation()
   const [callLogin, { isLoading: isCognitoLoginLoading }] = useLoginMutation()
@@ -34,7 +34,6 @@ export default function LoginForm({ ...props }: Props) {
   })
 
   const handleLogin = async (d: LoginFormData) => {
-    console.log(`handle login`)
     const cognitoResp = await callLogin({
       AuthParameters: {
         USERNAME: d.username,

@@ -1,8 +1,11 @@
 import { isRejectedWithValue } from '@reduxjs/toolkit'
 import type { MiddlewareAPI, Middleware } from '@reduxjs/toolkit'
 import { toast } from 'react-toastify'
+import { sessionExpired } from '@/store/reducer/auth-reducer/actions'
 
 const COGNITO_OTP_ALREADY_SENT = 'PreSignUp failed with error Email address exists and UNCONFIRMED.'
+const COGNITO_TOKEN_EXPIRED = 'Access Token has expired'
+const COGNITO_INVALID_TOKEN = 'Could not verify signature for Access Token'
 
 /**
  * Log a warning and show a toast!
@@ -15,9 +18,16 @@ export const rtkErrorAlert: Middleware =
         if (isRejectedWithValue(action)) {
             const cognitoErr = action.payload?.data?.message;
             if (cognitoErr && (cognitoErr !== COGNITO_OTP_ALREADY_SENT)) {
-                toast(cognitoErr, {
-                    type: 'error'
-                })
+                if (cognitoErr === COGNITO_TOKEN_EXPIRED || cognitoErr === COGNITO_INVALID_TOKEN) {
+                    toast('Session Expired', {
+                        type: 'warning'
+                    })
+                    api.dispatch(sessionExpired())
+                } else {
+                    toast(cognitoErr, {
+                        type: 'error'
+                    })
+                }
             }
         }
         if (action.payload?.status === 'error') {

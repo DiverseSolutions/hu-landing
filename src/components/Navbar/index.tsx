@@ -25,10 +25,9 @@ export default function Navbar({ }: Props) {
                         <Link href="/" className="text-xl normal-case btn btn-ghost">
                             <TheHuBlackSvg />
                         </Link>
-
                     </div>
                     <div className="flex items-center">
-                        <div className="p-3 mr-4 rounded-[8px] disabled dropdown dropdown-end bg-black bg-opacity-[0.04]">
+                        <div className="p-3 mr-4 rounded-lg disabled dropdown dropdown-end bg-black bg-opacity-[0.04]">
                             <label tabIndex={0} className="">
                                 <div className="indicator">
                                     <CartBlackSvg />
@@ -62,7 +61,7 @@ export default function Navbar({ }: Props) {
                             <>
                                 <div className="flex items-center">
                                     <div className="dropdown dropdown-bottom">
-                                        <label tabIndex={0} className=" text-white btn btn-primary rounded-[8px]">
+                                        <label tabIndex={0} className=" text-white btn btn-primary rounded-lg">
                                             {profile.username || profile.email || "User"}
                                             <div className="w-4 h-4 mx-2 bg-green-400 rounded-full"></div>
                                             <ChevronDownSvg />
@@ -79,7 +78,7 @@ export default function Navbar({ }: Props) {
                                 </div>
                                 <button onClick={() => {
                                     dispatch(logoutSuccess())
-                                }} className='bg-black bg-opacity-[0.04] p-3 rounded-[8px] ml-4'>
+                                }} className='btn bg-opacity-[0.04] p-3 btn-black ml-4'>
                                     <ExitBlackSvg />
                                 </button>
                             </>
@@ -93,7 +92,7 @@ export default function Navbar({ }: Props) {
                                     dispatch(showAuthModal({
                                         type: 'login'
                                     }))
-                                }} className="ml-2 btn btn-primary btn-wide max-w-[200px]">
+                                }} className="ml-2 btn btn-black btn-wide max-w-[200px]">
                                     Login
                                 </label>
                             </>

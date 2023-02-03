@@ -7,6 +7,8 @@ import { nextjsApi } from './rtk-query/nextjs/nextjs-api';
 import { ardArtApi } from './rtk-query/ard-art/ard-art-api';
 import { huxArdArtApi } from './rtk-query/hux-ard-art/hux-ard-art-api';
 import { cognitoApi } from './rtk-query/cognito/cognito-api';
+import { idaxApi } from './rtk-query/idax/idax-api'
+import { monxanshApi } from './rtk-query/monxansh/monxansh-api';
 
 import authReducer from './reducer/auth-reducer';
 import { rtkErrorAlert } from './rtk-query/middleware/rtk-error-alert';
@@ -17,10 +19,20 @@ export const store = configureStore({
     [ardArtApi.reducerPath]: ardArtApi.reducer,
     [cognitoApi.reducerPath]: cognitoApi.reducer,
     [huxArdArtApi.reducerPath]: huxArdArtApi.reducer,
+    [idaxApi.reducerPath]: idaxApi.reducer,
+    [monxanshApi.reducerPath]: monxanshApi.reducer,
     auth: authReducer,
   },
   middleware(getDefaultMiddleware) {
-    return getDefaultMiddleware().concat(nextjsApi.middleware, ardArtApi.middleware, cognitoApi.middleware, rtkErrorAlert, huxArdArtApi.middleware)
+    return getDefaultMiddleware().concat(
+      rtkErrorAlert,
+      nextjsApi.middleware,
+      ardArtApi.middleware,
+      cognitoApi.middleware,
+      huxArdArtApi.middleware,
+      idaxApi.middleware,
+      monxanshApi.middleware,
+    )
   },
 })
 

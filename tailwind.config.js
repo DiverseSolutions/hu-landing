@@ -40,4 +40,26 @@ module.exports = {
   plugins: [
     require('daisyui'),
   ],
+  daisyui: {
+    themes: [
+      {
+        'the-hu': {
+          ...require('daisyui/src/colors/themes')['[data-theme=lofi]'],
+          '.btn': {
+            'border': 'none'
+          },
+          '.btn-black': {
+            'background-color': '#000',
+            'border-radius': '8px'
+          },
+          '.btn-primary': {
+            'border-radius': '8px'
+          },
+          '.btn-secondary': {
+            'border-radius': '8px'
+          }
+        }
+      }
+    ]
+  }
 }

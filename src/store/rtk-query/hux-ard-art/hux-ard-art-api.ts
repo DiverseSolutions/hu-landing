@@ -6,8 +6,9 @@ export const huxArdArtApi = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: `${process.env.NEXT_PUBLIC_HUX_ARD_ART_API_HOST_URL}` }),
     endpoints: (builder) => ({
         getTicketOrAsset: builder.query<ArdArtTicketOrAssetResponse, {
-            type: "asset" | "ticket",
-            ownerId?: number;
+            type?: "asset" | "ticket",
+            tag?: string,
+            ownerId?: number,
         }>({
             query: (d) => ({
                 url: '/api/v1/asset/get',

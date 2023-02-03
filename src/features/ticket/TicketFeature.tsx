@@ -1,32 +1,65 @@
-import TicketCard from '@/components/card/TicketCard';
+import TicketSection from '@/components/section/TicketSection';
 import { useGetTicketOrAssetQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api';
-import React, { useState } from 'react';
+import { useLazyIdaxTickerQuery } from '@/store/rtk-query/idax/idax-api';
+import { useLazyMonxanshRateQuery } from '@/store/rtk-query/monxansh/monxansh-api';
+import React, { useState, useMemo, useEffect } from 'react';
 import { ClipLoader } from 'react-spinners';
 
 type Props = {}
 
 export default function TicketFeature({ }: Props) {
 
-    const { data: ticketData, isLoading: isTicketsLoading } = useGetTicketOrAssetQuery({ type: 'ticket' })
+    const [ardxToUsdRate, setArdxToUsdRate] = useState(0)
+    const [isLoading, setIsLoading] = useState(true)
+    const [callMonxanshRate] = useLazyMonxanshRateQuery()
+    const [callIdaxTicker] = useLazyIdaxTickerQuery()
+    const { data: ticketData, isLoading: isTicketsLoading } = useGetTicketOrAssetQuery({ tag: 'early' })
+    const ticket = useMemo(() => ticketData?.result?.records[0], [ticketData])
+
+    useEffect(() => {
+        if (!ticket) {
+            return;
+        }
+        (async () => {
+            setIsLoading(true)
+            try {
+                await fetchArdxToUsdRate()
+            } catch (e) {
+                console.log(`rate error:`)
+                console.log(e)
+            }
+            setIsLoading(false)
+        })()
+    }, [ticket])
+
+    const fetchArdxToUsdRate = async () => {
+        const [usdMntRate, ardxMntRate] = await Promise.all([
+            callMonxanshRate({ currency: 'USD|MNT' }).unwrap(),
+            callIdaxTicker({ symbol: 'ardx1557mont' }).unwrap()
+        ]);
+        const usdRate = usdMntRate.find((r) => r.code === 'USD');
+        if (usdRate) {
+            const ardxToUsd = parseFloat(ardxMntRate.last) / usdRate.rate_float
+            setArdxToUsdRate(ardxToUsd)
+        }
+    }
+
+    if (isLoading) {
+        return (
+            <div className="justify-center w-full flex items-center h-[70vh]">
+                <ClipLoader />
+            </div>
+        )
+    }
+    if (!ticket) {
+        return <p>No Ticket found</p>
+    }
+    if (!ardxToUsdRate) {
+        return <p>An error occured. Please try reload the page.</p>
+    }
     return (
         <div>
-            <div className="flex justify-center w-full">
-                <div className="container">
-                    <div className='my-8 mt-16'>
-                        <h4 className='text-4xl font-bold'>Buy Ticket</h4>
-                    </div>
-                    {isTicketsLoading ? <ClipLoader /> : <></>}
-                    <div className="flex flex-wrap space-x-4 space-y-4">
-                        {ticketData?.result.records?.length ? (
-                            ticketData.result.records.map((t) => {
-                                return (
-                                    <TicketCard key={t.id} ticket={t} />
-                                )
-                            })
-                        ) : (<></>)}
-                    </div>
-                </div>
-            </div>
+            <TicketSection ticket={ticket} priceToUsdRate={ardxToUsdRate} />
         </div>
     )
 }

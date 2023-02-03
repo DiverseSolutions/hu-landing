@@ -12,6 +12,10 @@
         "destination": "/spline.html"
       },
       {
+        "source": "/ticket**",
+        "destination": "/ticket.html"
+      },
+      {
         "source": "/profile**",
         "destination": "/profile.html"
       },

@@ -47,19 +47,23 @@ export default function LandingWithComingSoon({ }: Props) {
                     <div className='h-full'>
                         <div className="flex items-center justify-center w-full h-full">
                             <div className="flex flex-col items-center">
-                                <TheHu />
+                                <div className="max-w-full">
+                                    <TheHu />
+                                </div>
                                 <div className="mt-8 text-center">
                                     <div className="max-w-[576px]">
                                         <p className='text-white text-[16px] uppercase'>“A band from <span className='font-bold'>Mongolia</span> that blends the screaming guitars of heavy metal and traditional Mongolian guttural singing,”</p>
                                     </div>
                                 </div>
                                 <div className="mt-8">
-                                    <button className='uppercase bg-white flex justify-center items-center px-4 py-3 rounded-[500px] text-sm font-bold'>
-                                        Buy Early Bird Ticket
-                                        <span className="p-2 ml-2 bg-black rounded-full">
-                                            <CartSvg />
-                                        </span>
-                                    </button>
+                                    <Link href="/ticket">
+                                        <button className='uppercase bg-white flex justify-center items-center px-4 py-3 rounded-[500px] text-sm font-bold'>
+                                            Buy Early Bird Ticket
+                                            <span className="p-2 ml-2 bg-black rounded-full">
+                                                <CartSvg />
+                                            </span>
+                                        </button>
+                                    </Link>
                                 </div>
                             </div>
                         </div>
@@ -75,19 +79,21 @@ export default function LandingWithComingSoon({ }: Props) {
                                     </button>
                                 </div>
                                 <div className="flex items-center justify-center">
-                                    <button className="btn cursor-pointer rounded-l-[500px] border-none  bg-black bg-opacity-[0.65] text-sm w-[110px]">METALAND</button>
-                                    <button className="btn cursor-pointer rounded-r-[500px] border-none  bg-black bg-opacity-[0.65] text-sm w-[110px]">ARDCOIN</button>
+                                    <div className="flex">
+                                        <button className="btn rounded-l-[500px] bg-black bg-opacity-[0.65] cursor-pointer border-none text-sm w-[110px] rounded-r-none">METALAND</button>
+                                        <button className="btn rounded-r-[500px] bg-black bg-opacity-[0.65] cursor-pointer border-none text-sm w-[110px] rounded-l-none">ARDCOIN</button>
+                                    </div>
                                 </div>
                                 <div className="flex justify-end w-full">
                                     {isLoggedIn && username ? (
                                         <>
-                                            <div className="bg-black dropdown dropdown-down rounded-[8px]">
+                                            <div className="bg-black rounded-lg dropdown dropdown-down">
                                                 <label tabIndex={0} className="text-white btn btn-ghost">
                                                     {username || "User"}
                                                     <div className="w-4 h-4 mx-2 bg-green-400 rounded-full"></div>
                                                     <ChevronDownSvg />
                                                 </label>
-                                                s                                                <ul tabIndex={0} className="p-2 mt-3 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52">
+                                                <ul tabIndex={0} className="p-2 mt-3 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52">
                                                     <li>
                                                         <Link href="/profile" className="justify-between">
                                                             Profile

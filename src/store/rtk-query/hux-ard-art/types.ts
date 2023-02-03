@@ -135,6 +135,8 @@ export interface ArdArtTicketOrAssetRecord {
     category: number;
     ownerAmount: null;
     price: number;
+    finishDate: string;
+    tag: string;
 }
 
 export type ArdArtTicketOrAssetResponse = ArdArtResponse<{

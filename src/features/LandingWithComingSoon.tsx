@@ -8,6 +8,7 @@ import DiscordSvg from '@/assets/svg/discord.svg'
 import heroLeft from '@/assets/img/hero-left.png'
 import CopyRightSvg from '@/assets/svg/copyright.svg'
 import CartSvg from '@/assets/svg/cart.svg'
+import ChevronDownSvg from '@/assets/svg/chevron-down.svg'
 import heroRight from '@/assets/img/hero-right.png'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -80,18 +81,18 @@ export default function LandingWithComingSoon({ }: Props) {
                                 <div className="flex justify-end w-full">
                                     {isLoggedIn && username ? (
                                         <>
-                                            <div className="dropdown dropdown-left">
-                                                <label tabIndex={0} className="text-white btn btn-ghost btn-circle">
+                                            <div className="bg-black dropdown dropdown-down rounded-[8px]">
+                                                <label tabIndex={0} className="text-white btn btn-ghost">
                                                     {username || "User"}
+                                                    <div className="w-4 h-4 mx-2 bg-green-400 rounded-full"></div>
+                                                    <ChevronDownSvg />
                                                 </label>
-                                                <ul tabIndex={0} className="p-2 mt-3 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52">
+                                                s                                                <ul tabIndex={0} className="p-2 mt-3 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52">
                                                     <li>
                                                         <Link href="/profile" className="justify-between">
                                                             Profile
-                                                            <span className="badge">New</span>
                                                         </Link>
                                                     </li>
-                                                    <li><a>Settings</a></li>
                                                     <li onClick={() => {
                                                         dispatch(logoutSuccess())
                                                     }}><a>Logout</a></li>

@@ -1,3 +1,4 @@
+import { withAuthLoader } from '@/components/AuthLoader'
 import MyNftCard from '@/components/card/MyNftCard'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { showAuthModal } from '@/store/reducer/auth-reducer/actions'
@@ -8,9 +9,10 @@ import { ClipLoader } from 'react-spinners'
 
 type Props = {}
 
-export default function PorfileFeature({ }: Props) {
+const PorfileFeature = ({ }: Props) => {
 
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+    const isLoginLoading = useAppSelector(state => state.auth.isLoading)
     const accountId = useAppSelector(state => state.auth.ardArt.accountId)
     const dispatch = useAppDispatch()
     const { data: myNftData, isLoading: isMyNftLoading } = useMyOwnedNftQuery({ ownerId: accountId }, { skip: !isLoggedIn || !accountId, refetchOnMountOrArgChange: true })
@@ -18,15 +20,14 @@ export default function PorfileFeature({ }: Props) {
     const router = useRouter()
 
     useEffect(() => {
-        if (!isLoggedIn) {
+        if (!isLoggedIn && !isLoginLoading) {
             dispatch(showAuthModal({
                 type: 'login'
             }))
         }
-    }, [isLoggedIn])
+    }, [isLoggedIn, isLoginLoading])
 
-
-    if (!isLoggedIn) {
+    if (!isLoggedIn && !isLoginLoading) {
         return (
             <div className="flex items-center justify-center w-full min-h-[600px]">
                 <p onClick={() => dispatch(showAuthModal({
@@ -57,3 +58,5 @@ export default function PorfileFeature({ }: Props) {
         </div>
     )
 }
+
+export default withAuthLoader(PorfileFeature)

@@ -34,16 +34,18 @@ export default function TicketCard({ ticket: t }: Props) {
                 productId: t.id,
                 amount: 1,
             }).unwrap()
-            const invoiceResp = await callCheckInvoice({
-                invoiceId: r.result.invoiceId
-            }).unwrap()
-            if (invoiceResp.status.toUpperCase() === 'SUCCESS') {
-                toast("Purchase Successful.", {
-                    type: 'success',
-                    onClick: () => {
-                        router.push('/profile')
-                    }
-                })
+            if (r.result) {
+                const invoiceResp = await callCheckInvoice({
+                    invoiceId: r.result.invoiceId
+                }).unwrap()
+                if (invoiceResp.status.toUpperCase() === 'SUCCESS') {
+                    toast("Purchase Successful.", {
+                        type: 'success',
+                        onClick: () => {
+                            router.push('/profile')
+                        }
+                    })
+                }
             }
         } catch (e) {
             console.log(e)

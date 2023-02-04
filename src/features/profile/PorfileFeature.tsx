@@ -41,7 +41,7 @@ const PorfileFeature = ({ }: Props) => {
         <div className="w-full px-4 pb-16 md:px-0">
             <div className="flex justify-center w-full">
                 <div className="container">
-                    <div className="mt-32">
+                    <div className="mt-16">
                         {isMyNftLoading ? <ClipLoader /> : <></>}
                         {myNftData?.result?.records?.length ? <p className='mb-8 text-4xl font-bold'>Purchase History</p> : <></>}
                         <div className="flex flex-wrap items-start space-x-4 space-y-4">

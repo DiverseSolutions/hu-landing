@@ -99,11 +99,11 @@ function TicketSection({ ticket, priceToUsdRate }: Props) {
         <>
             <div>
                 <div className="flex justify-center w-full pb-16 mt-4">
-                    <div className="container md:max-w-[1024px]">
-                        <div className="flex justify-between w-full">
-                            <div className="w-[60%]">
+                    <div className="container md:max-w-[1024px] mw-md:px-4">
+                        <div className="flex flex-col justify-between w-full">
+                            <div className="md:w-[60%] mw-md:order-2 mw-md:mt-8">
                                 <div className="relative w-full">
-                                    <img src={ticket.imageUrl} alt={ticket.name} className="object-cover w-full h-auto" />
+                                    <img src={ticket.imageUrl} alt={ticket.name} className="object-cover w-full h-auto rounded-lg" />
                                 </div>
                                 <div className="mt-6">
                                     <p className="text-2xl font-bold">Description</p>
@@ -134,7 +134,7 @@ function TicketSection({ ticket, priceToUsdRate }: Props) {
                                     </div>
                                 </div>
                             </div>
-                            <div className='ml-[50px] w-[40%]'>
+                            <div className='md:ml-[50px] md:w-[40%] mw-md:order-1'>
                                 <div className="rounded-lg border-[1px] border-black border-opacity-[0.1] p-6">
                                     <div className="flex justify-between w-full">
                                         <div className='p-3 rounded-lg cursor-pointer bg-black bg-opacity-[0.04]'>
@@ -151,26 +151,26 @@ function TicketSection({ ticket, priceToUsdRate }: Props) {
                                     <div className="mt-4">
                                         <p className='text-black text-opacity-[0.65] mb-3'>Countdown</p>
                                         <div className="mt-4 bg-black bg-opacity-[0.04] p-4 rounded-lg flex w-full justify-center">
-                                            <div className="grid grid-flow-col gap-5 text-center auto-cols-max">
-                                                <div className="flex items-center justify-center min-w-[44px] min-h-[44px] p-3 rounded-lg space-x-1 text-black bg-white">
+                                            <div className="grid grid-flow-col gap-2 text-center md:gap-5 auto-cols-max">
+                                                <div className="flex items-center justify-center md:min-w-[44px] md:min-h-[44px] p-3 rounded-lg space-x-1 text-black bg-white">
                                                     <span className="font-mono text-xl countdown">
                                                         <span className='font-bold' style={{ "--value": countDownValue?.days() || 0 } as any}></span>
                                                     </span>
                                                     <span className='text-sm'>d</span>
                                                 </div>
-                                                <div className="flex items-center justify-center min-w-[44px] min-h-[44px] p-3 rounded-lg space-x-1 text-black bg-white">
+                                                <div className="flex items-center justify-center md:min-w-[44px] md:min-h-[44px] p-3 rounded-lg space-x-1 text-black bg-white">
                                                     <span className="font-mono text-xl countdown">
                                                         <span className='font-bold' style={{ "--value": countDownValue?.hours() || 0 } as any}></span>
                                                     </span>
                                                     <span className='text-sm'>h</span>
                                                 </div>
-                                                <div className="flex items-center justify-center min-w-[44px] min-h-[44px] p-3 rounded-lg space-x-1 text-black bg-white">
+                                                <div className="flex items-center justify-center md:min-w-[44px] md:min-h-[44px] p-3 rounded-lg space-x-1 text-black bg-white">
                                                     <span className="font-mono text-xl countdown">
                                                         <span className='font-bold' style={{ "--value": countDownValue?.minutes() || 0 } as any}></span>
                                                     </span>
                                                     <span className='text-sm'>m</span>
                                                 </div>
-                                                <div className="flex items-center justify-center min-w-[44px] min-h-[44px] p-3 rounded-lg space-x-1 text-black bg-white">
+                                                <div className="flex items-center justify-center md:min-w-[44px] md:min-h-[44px] p-3 rounded-lg space-x-1 text-black bg-white">
                                                     <span className="font-mono text-xl countdown">
                                                         <span className='font-bold' style={{ "--value": countDownValue?.seconds() || 0 } as any}></span>
                                                     </span>

@@ -105,7 +105,7 @@ export default function AuthFeature({
                 }}>
                     <label onClick={hideModal} className="absolute btn btn-sm btn-circle right-2 top-2">✕</label>
                     <label htmlFor=''></label>
-                    <div className='px-8 pt-6 mb-4'>
+                    <div className='pt-6 mb-4 md:px-8'>
                         {formType === 'register' ? (
                             <>
                                 <h2 className='mb-4 text-lg font-bold'>Create an account</h2>

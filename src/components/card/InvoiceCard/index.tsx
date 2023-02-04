@@ -43,7 +43,7 @@ function InvoiceCard({ invoice }: Props) {
     }
 
     return (
-        <div className="shadow-xl card w-96 bg-base-100 text-[14px]">
+        <div className="md:shadow-xl card shadow-none w-96 bg-base-100 text-[14px]">
             <div className="card-body">
                 <h2 className="card-title">Invoice Id: {invoice.id}</h2>
                 <div className="flex flex-col w-full">

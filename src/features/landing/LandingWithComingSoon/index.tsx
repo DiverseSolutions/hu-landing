@@ -84,7 +84,7 @@ export default function LandingWithComingSoon({ }: Props) {
                                     </div>
                                 </div>
                             </div>
-                            <div className="grid w-full grid-cols-2 md:grid-cols-3 md:mt-0 mt-[1rem]">
+                            <div className="grid w-full grid-cols-2 md:grid-cols-3 md:mt-0 mt-[1rem] px-2 md:px-0">
                                 <div className="justify-start w-full md:flex">
                                     <button className="rounded-[500px] border-none px-4 py-3 font-bold h-[48px] bg-black bg-opacity-[0.35] text-white text-opacity-[0.35] uppercase">
                                         Coming Soon
@@ -99,7 +99,7 @@ export default function LandingWithComingSoon({ }: Props) {
                                 <div className="flex justify-end w-full">
                                     {isLoggedIn && username ? (
                                         <>
-                                            <div className="bg-black rounded-lg dropdown dropdown-down">
+                                            <div className="bg-black rounded-lg dropdown dropdown-end">
                                                 <label tabIndex={0} className="text-white btn btn-ghost">
                                                     {username || "User"}
                                                     <div className="w-4 h-4 mx-2 bg-green-400 rounded-full"></div>

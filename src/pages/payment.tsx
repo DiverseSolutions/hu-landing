@@ -52,8 +52,8 @@ const Payment = (props: Props) => {
         <>
             <div className="w-full h-screen">
                 <div className="relative w-full h-full">
-                    <div className="absolute inset-0 overflow-auto">
-                        <div className="relative w-full h-full">
+                    <div className="absolute inset-0 hidden overflow-auto md:block">
+                        <div className="relative hidden w-full h-full">
                             <div className="w-[512px] h-full relative">
                                 <img src={invoiceLeft.src} className="object-contain w-full h-auto mix-blend-darken" />
 
@@ -68,7 +68,7 @@ const Payment = (props: Props) => {
                             </div>
                         </div>
                     </div>
-                    <div className="absolute inset-0">
+                    <div className="absolute inset-0 hidden md:block">
                         <div className="relative w-full h-full ">
                             <div className="absolute top-0 bottom-0 right-0">
                                 <div className="min-w-[33vw] h-full relative flex justify-end">
@@ -84,7 +84,7 @@ const Payment = (props: Props) => {
                         {invoiceData?.result ? (
                             <>
                                 <div className="flex justify-center w-full">
-                                    <div className="flex mt-32">
+                                    <div className="flex mt-8 md:mt-32">
                                         <InvoiceFeature invoice={invoiceData.result} />
                                     </div>
                                 </div>

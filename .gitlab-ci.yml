@@ -5,18 +5,19 @@ stages:
   # - build
   - deploy
 
-# build:
-#   image: node:alpine
-#   stage: build
-#   script:
-#     - npm i
-#     - npm run export
-#   artifacts:
-#     expire_in: 30 days
-#     paths:
-#       - out
-#   only:
-#     - master
+build:
+  image: node:alpine
+  stage: build
+  script:
+    - npm i
+    - npm run build
+    - npm run export
+  artifacts:
+    expire_in: 30 days
+    paths:
+      - out
+  only:
+    - main
 
 deploy:
   image: python:latest

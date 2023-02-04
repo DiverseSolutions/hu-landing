@@ -46,6 +46,9 @@ export default function LoginForm({ ...props }: Props) {
     const metalandResp = await callMetalandLogin({
       token: cognitoResp.AuthenticationResult.IdToken,
     }).unwrap()
+    if (!metalandResp.result) {
+      return;
+    }
     dispatch(authSuccess({
       ardArt: {
         accessToken: {

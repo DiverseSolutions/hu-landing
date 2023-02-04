@@ -1,4 +1,4 @@
-import TicketSection from '@/components/section/TicketSection';
+import EarlyTicketSection from '@/components/section/EarlyTicketSection';
 import { useGetTicketOrAssetQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api';
 import { useLazyIdaxTickerQuery } from '@/store/rtk-query/idax/idax-api';
 import { useLazyMonxanshRateQuery } from '@/store/rtk-query/monxansh/monxansh-api';
@@ -7,7 +7,7 @@ import { ClipLoader } from 'react-spinners';
 
 type Props = {}
 
-export default function TicketFeature({ }: Props) {
+export default function EarlyTicketFeature({ }: Props) {
 
     const [ardxToUsdRate, setArdxToUsdRate] = useState(0)
     const [isLoading, setIsLoading] = useState(true)
@@ -59,7 +59,7 @@ export default function TicketFeature({ }: Props) {
     }
     return (
         <div>
-            <TicketSection ticket={ticket} priceToUsdRate={ardxToUsdRate} />
+            <EarlyTicketSection ticket={ticket} priceToUsdRate={ardxToUsdRate} />
         </div>
     )
 }

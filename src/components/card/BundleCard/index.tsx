@@ -35,6 +35,9 @@ export default function BundleCard({ bundle: b }: Props) {
                 bundleId: b.id,
                 accountId: accountId,
             }).unwrap()
+            if (!r.result) {
+                return;
+            }
             const invoiceResp = await callCheckInvoice({
                 invoiceId: r.result.invoiceId,
             }).unwrap();

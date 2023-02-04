@@ -1,4 +1,5 @@
-import { ArdArtBundleResponse, ArdArtBundleInvoiceResponse, ArdArtSingleInvoiceResponse, ArdArtCheckInvoiceResponse, ArdArtTicketOrAssetResponse, ArdArtMyOwnedNftResponse } from './types';
+import { ArdArtResponse } from './../ard-art/types';
+import { ArdArtBundleResponse, ArdArtBundleInvoiceResponse, ArdArtSingleInvoiceResponse, ArdArtAssetDetailByIDResult, ArdArtCheckInvoiceResponse, ArdArtTicketOrAssetResponse, ArdArtMyOwnedNftResponse } from './types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const huxArdArtApi = createApi({
@@ -16,6 +17,14 @@ export const huxArdArtApi = createApi({
                 body: {
                     type: d.type
                 }
+            })
+        }),
+        getAssetDetailById: builder.query<ArdArtResponse<ArdArtAssetDetailByIDResult>, {
+            id: number
+        }>({
+            query: (d) => ({
+                url: `/api/v1/asset/detail/${d.id}`,
+                method: 'GET',
             })
         }),
         getBundle: builder.query<ArdArtBundleResponse, void>({
@@ -77,4 +86,6 @@ export const {
     useCheckInvoiceQuery,
     useLazyCheckInvoiceQuery,
     useMyOwnedNftQuery,
+    useGetAssetDetailByIdQuery,
+    useLazyGetAssetDetailByIdQuery
 } = huxArdArtApi;

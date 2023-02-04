@@ -17,8 +17,8 @@ export default function TicketListFeature({ }: Props) {
                     </div>
                     {isTicketsLoading ? <ClipLoader /> : <></>}
                     <div className="flex flex-wrap space-x-4 space-y-4">
-                        {ticketData?.result.records?.length ? (
-                            ticketData.result.records.map((t) => {
+                        {ticketData?.result?.records?.length ? (
+                            ticketData.result?.records.map((t) => {
                                 return (
                                     <TicketCard key={t.id} ticket={t} />
                                 )

@@ -6,7 +6,6 @@ import { useDispatch } from 'react-redux'
 import { useAppSelector } from '@/store/hooks'
 import { showAuthModal } from '@/store/reducer/auth-reducer/actions'
 import { useInvoiceSingleMutation, useLazyCheckInvoiceQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
-import { toast } from 'react-toastify'
 import { useRouter } from 'next/router'
 import classNames from 'classnames'
 import moment from 'moment'
@@ -21,12 +20,9 @@ type Props = {
 
 function TicketSection({ ticket, priceToUsdRate }: Props) {
 
-    const [callCheckInvoice] = useLazyCheckInvoiceQuery()
-    const [callInvoiceSingle] = useInvoiceSingleMutation()
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
     const accountId = useAppSelector(state => state.auth.ardArt.accountId);
     const dispatch = useDispatch()
-    const [isPurchaseLoading, setIsPurchaseLoading] = useState(false)
     const router = useRouter()
 
     const [isCountdownFinished, setIsCountdownFinished] = useState(() => {
@@ -81,18 +77,11 @@ function TicketSection({ ticket, priceToUsdRate }: Props) {
             }))
             return;
         }
-        setIsPurchaseLoading(true)
         try {
-            const r = await callInvoiceSingle({
-                accountId,
-                productId: ticket.id,
-                amount: 1,
-            }).unwrap()
-            router.push(`/payment?invoiceId=${r.result.invoiceId}`)
+            router.push(`/payment?productId=${ticket.id}`)
         } catch (e) {
             console.log(e)
         }
-        setIsPurchaseLoading(false)
     }
 
     return (
@@ -189,7 +178,7 @@ function TicketSection({ ticket, priceToUsdRate }: Props) {
                                         </div>
                                     </div>
                                     <div className="mt-4">
-                                        <button onClick={handlePurchase} className={classNames("btn btn-primary rounded-lg btn-block", { 'loading': isPurchaseLoading })}>Buy now for {priceUsd}</button>
+                                        <button onClick={handlePurchase} className={classNames("btn btn-primary rounded-lg btn-block")}>Buy now for {priceUsd}</button>
                                     </div>
                                 </div>
                             </div>

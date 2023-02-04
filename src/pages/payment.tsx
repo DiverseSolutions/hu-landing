@@ -1,37 +1,133 @@
 import PageLoader from '@/components/loader/PageLoader'
 import { useAppSelector } from '@/store/hooks'
 import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 import invoiceLeft from '@/assets/img/invoice-left.png'
 import invoiceRight from '@/assets/img/invoice-right.png'
-import { useGetInvoiceQuery, useUpdateInvoiceSocialPayMutation } from '@/store/rtk-query/ard-art/ard-art-api'
+import { useLazyGetInvoiceQuery } from '@/store/rtk-query/ard-art/ard-art-api'
 import InvoiceFeature from '@/features/payment/InvoiceFeature'
+import { useGetAssetDetailByIdQuery, useInvoiceSingleMutation, useLazyGetAssetDetailByIdQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
+import { ArdArtInvoiceResult } from '@/store/rtk-query/ard-art/types'
+import { ArdArtAssetDetailByIDResult } from '@/store/rtk-query/hux-ard-art/types'
+import { useLazyMonxanshRateQuery } from '@/store/rtk-query/monxansh/monxansh-api'
+import { useLazyIdaxTickerQuery } from '@/store/rtk-query/idax/idax-api'
 
 type Props = {}
 
 
 const Payment = (props: Props) => {
 
+    const [ardxToUsdRate, setArdxToUsdRate] = useState(0)
+    const [callMonxanshRate] = useLazyMonxanshRateQuery()
+    const [callIdaxTicker] = useLazyIdaxTickerQuery()
+
+    const [pageErrorMessage, setPageErrorMessage] = useState<string>()
+    const [callInvoiceSingle] = useInvoiceSingleMutation()
+    const [callGetInvoice] = useLazyGetInvoiceQuery()
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
     const isAuthLoading = useAppSelector(state => state.auth.isLoading)
     const accountId = useAppSelector(state => state.auth.ardArt.accountId)
     const router = useRouter()
-    const { data: invoiceData, isLoading: isInvoiceLoading } = useGetInvoiceQuery({ invoiceId: parseInt(router.query.invoiceId as string) }, {
-        skip: !(accountId && router.query.invoiceId)
-    })
 
-    const [isLoading, setIsLoading] = useState(!(isLoggedIn && !isInvoiceLoading && invoiceData))
+    const [invoiceData, setInvoiceData] = useState<ArdArtInvoiceResult>()
+    const [assetData, setAssetData] = useState<ArdArtAssetDetailByIDResult>()
+    const [isLoading, setIsLoading] = useState(true)
+
+    const [callAssetDetailById] = useLazyGetAssetDetailByIdQuery()
 
     useEffect(() => {
-        if (!isAuthLoading && invoiceData && !isInvoiceLoading) {
+        (async () => {
+            if (!isAuthLoading && accountId) {
+                try {
+                    await loadData()
+                } catch (e) {
+                    console.log(e)
+                    setPageErrorMessage("An Error Eccoured. Please try reload the page.")
+                }
+            }
+            if (!isAuthLoading && !accountId) {
+                setPageErrorMessage("Account not found.")
+            }
+        })()
+    }, [isAuthLoading, accountId])
+
+    const fetchArdxToUsdRate = async () => {
+        const [usdMntRate, ardxMntRate] = await Promise.all([
+            callMonxanshRate({ currency: 'USD|MNT' }).unwrap(),
+            callIdaxTicker({ symbol: 'ardx1557mont' }).unwrap()
+        ]);
+        const usdRate = usdMntRate.find((r) => r.code === 'USD');
+        if (usdRate) {
+            const ardxToUsd = parseFloat(ardxMntRate.last) / usdRate.rate_float
+            setArdxToUsdRate(ardxToUsd)
+            return ardxToUsd;
+        }
+        return undefined;
+    }
+
+    const loadData = async () => {
+        const productId = parseInt(router.query.productId as string);
+        if (!productId) {
+            setPageErrorMessage("Product not found.")
+            return;
+        }
+        if (!accountId) {
+            console.log(`accountId not found`)
+            setPageErrorMessage("Account not found.")
+            return;
+        }
+        const asset = await callAssetDetailById({
+            id: productId,
+        })
+        if (asset.data?.result) {
+            setAssetData(asset.data?.result)
+        } else {
+            setPageErrorMessage("Product not found")
+            return;
+        }
+        const ardxToUsdRate = await fetchArdxToUsdRate()
+        if (ardxToUsdRate) {
+            setArdxToUsdRate(ardxToUsdRate)
+        } else {
+            setPageErrorMessage("A currency error occured. Please try reload the page")
+            return;
+        }
+
+        const createdInvoice = await callInvoiceSingle({
+            productId,
+            accountId,
+            amount: 1,
+        }).unwrap()
+        if (!createdInvoice?.result) {
+            return;
+        }
+        const invoice = await callGetInvoice({
+            invoiceId: createdInvoice.result.invoiceId
+        })
+
+        if (invoice.data?.result) {
+            setInvoiceData(invoice.data?.result)
+        } else {
+            setPageErrorMessage("Invoice not found")
+        }
+        if (asset.data?.result && invoice.data?.result && ardxToUsdRate) {
             setIsLoading(false)
         } else {
-            setIsLoading(true)
+            setPageErrorMessage("An unknown error occured. Please try reload the page.")
+            console.log(asset.data?.result)
+            console.log(invoice.data?.result)
+            console.log(ardxToUsdRate)
         }
-    }, [isAuthLoading, invoiceData, isInvoiceLoading])
+    }
 
-    const handleConfirm = async () => {
-
+    if (pageErrorMessage) {
+        return (
+            <>
+                <div className="flex items-center justify-center h-screen w-scree">
+                    {pageErrorMessage}
+                </div>
+            </>
+        )
     }
 
     if (isLoading) {
@@ -56,9 +152,7 @@ const Payment = (props: Props) => {
                         <div className="relative w-full h-full">
                             <div className="w-[512px] h-full relative">
                                 <img src={invoiceLeft.src} className="object-contain w-full h-auto mix-blend-darken" />
-
                             </div>
-
                         </div>
                         <div className="absolute inset-0 transform rounded-full aspect-square">
                             <div className="h-[120vh] transform translate-x-[-50%] rounded-full aspect-square" style={{
@@ -81,15 +175,17 @@ const Payment = (props: Props) => {
                         </div>
                     </div>
                     <div className="absolute inset-0">
-                        {invoiceData?.result ? (
+                        {invoiceData && assetData ? (
                             <>
                                 <div className="flex justify-center w-full">
-                                    <div className="flex mt-8 md:mt-32">
-                                        <InvoiceFeature invoice={invoiceData.result} />
+                                    <div className="flex md:mt-32">
+                                        <InvoiceFeature invoice={invoiceData} product={assetData} priceToUsdRate={ardxToUsdRate} />
                                     </div>
                                 </div>
                             </>
-                        ) : <p>Invoice not found</p>}
+                        ) : <></>}
+                        {!assetData ? <p>Asset not found</p> : <></>}
+                        {!invoiceData ? <p>Invoice not found</p> : <></>}
                     </div>
                 </div>
             </div>

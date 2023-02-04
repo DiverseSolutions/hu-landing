@@ -60,7 +60,7 @@ export default function LandingWithComingSoon({ }: Props) {
                                     </div>
                                 </div>
                                 <div className="mt-8">
-                                    <Link href="/ticket">
+                                    <Link href="/early">
                                         <button className='uppercase bg-white flex justify-center items-center px-4 py-3 rounded-[500px] text-sm font-bold'>
                                             Buy Early Bird Ticket
                                             <span className="p-2 ml-2 bg-black rounded-full">

@@ -1,5 +1,5 @@
-import { ArdArtInvoiceResult, ArdArtResponse, ArdArtUpdateInvoiceQPayResult, ArdArtUpdateInvoiceSocialPayResult } from './types';
-import { ArdArtBalanceResponse, ArdArtMetalandLogin, ArdArtMetalandLoginResponse, ArdArtTicketResponse } from './types';
+import { ArdArtInvoiceResult, ArdArtResponse, ArdArtUpdateInvoiceQPayResult, ArdArtUpdateInvoiceQPosResult, ArdArtUpdateInvoiceSocialPayResult } from './types';
+import { ArdArtBalanceResponse, ArdArtMetalandLogin, ArdArtMetalandLoginResponse } from './types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { getArdArdAccessToken } from '@/lib/cookie'
 
@@ -40,7 +40,7 @@ export const ardArtApi = createApi({
             query: (d) => ({
                 url: '/api/v1/balance/invoice/update',
                 method: 'POST',
-                params: {
+                body: {
                     ...d,
                     callback: `https://hu.rocks/payment-success.html=${d.invoiceId}`,
                     method: 'qpay'
@@ -57,6 +57,16 @@ export const ardArtApi = createApi({
                 }
             })
         }),
+        updateInvoiceQPos: builder.mutation<ArdArtResponse<ArdArtUpdateInvoiceQPosResult>, { invoiceId: number }>({
+            query: (d) => ({
+                url: '/api/v1/balance/invoice/update',
+                method: 'POST',
+                body: {
+                    ...d,
+                    method: 'qpos'
+                }
+            })
+        }),
     }),
 })
 
@@ -66,5 +76,6 @@ export const {
     useGetInvoiceQuery,
     useLazyGetInvoiceQuery,
     useUpdateInvoiceQPayMutation,
-    useUpdateInvoiceSocialPayMutation
+    useUpdateInvoiceSocialPayMutation,
+    useUpdateInvoiceQPosMutation,
 } = ardArtApi;

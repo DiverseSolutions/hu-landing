@@ -1,0 +1,5 @@
+@media only screen and (max-width: 1024px) {
+    .hu {
+        transform: scale(calc((100vw - 300px) / 100vw));
+    }
+}

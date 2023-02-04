@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import LandingWithComingSoon from '@/features/LandingWithComingSoon';
+import LandingWithComingSoon from '@/features/landing/LandingWithComingSoon';
 
 export default function Home() {
 

@@ -15,6 +15,7 @@ import Link from 'next/link'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { logoutSuccess, showAuthModal } from '@/store/reducer/auth-reducer/actions'
 
+import styles from './styles.module.css'
 
 type Props = {}
 
@@ -48,7 +49,11 @@ export default function LandingWithComingSoon({ }: Props) {
                         <div className="flex items-center justify-center w-full h-full">
                             <div className="flex flex-col items-center">
                                 <div className="max-w-full">
-                                    <TheHu />
+                                    <div className="flex justify-center w-full">
+                                        <div className={styles.hu}>
+                                            <TheHu />
+                                        </div>
+                                    </div>
                                 </div>
                                 <div className="mt-8 text-center">
                                     <div className="max-w-[576px]">

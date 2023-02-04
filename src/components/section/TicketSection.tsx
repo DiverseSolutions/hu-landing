@@ -100,7 +100,7 @@ function TicketSection({ ticket, priceToUsdRate }: Props) {
             <div>
                 <div className="flex justify-center w-full pb-16 mt-4">
                     <div className="container md:max-w-[1024px] mw-md:px-4">
-                        <div className="flex flex-col justify-between w-full">
+                        <div className="flex flex-col justify-between w-full md:flex-row">
                             <div className="md:w-[60%] mw-md:order-2 mw-md:mt-8">
                                 <div className="relative w-full">
                                     <img src={ticket.imageUrl} alt={ticket.name} className="object-cover w-full h-auto rounded-lg" />

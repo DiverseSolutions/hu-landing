@@ -53,7 +53,7 @@ const Payment = (props: Props) => {
             <div className="w-full h-screen">
                 <div className="relative w-full h-full">
                     <div className="absolute inset-0 hidden overflow-auto md:block">
-                        <div className="relative hidden w-full h-full">
+                        <div className="relative w-full h-full">
                             <div className="w-[512px] h-full relative">
                                 <img src={invoiceLeft.src} className="object-contain w-full h-auto mix-blend-darken" />
 

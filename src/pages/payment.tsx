@@ -3,6 +3,7 @@ import { useAppSelector } from '@/store/hooks'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import invoiceLeft from '@/assets/img/invoice-left.png'
+import invoiceRight from '@/assets/img/invoice-right.png'
 import { useGetInvoiceQuery, useUpdateInvoiceSocialPayMutation } from '@/store/rtk-query/ard-art/ard-art-api'
 import InvoiceFeature from '@/features/payment/InvoiceFeature'
 
@@ -52,13 +53,31 @@ const Payment = (props: Props) => {
             <div className="w-full h-screen">
                 <div className="relative w-full h-full">
                     <div className="absolute inset-0 overflow-auto">
-                        <div className="w-[512px] h-full">
-                            <img src={invoiceLeft.src} className="object-contain w-full h-auto mix-blend-darken" />
+                        <div className="relative w-full h-full">
+                            <div className="w-[512px] h-full relative">
+                                <img src={invoiceLeft.src} className="object-contain w-full h-auto mix-blend-darken" />
+
+                            </div>
+
                         </div>
-                        <div className="absolute inset-0" style={{
-                            background: 'radial-gradient(50% 50% at 50% 50%, rgba(255, 255, 255, 0) 48.23%, #FFFFFF 83.12%)',
-                            transform: 'rotateX()'
-                        }}>
+                        <div className="absolute inset-0 transform rounded-full aspect-square">
+                            <div className="h-[120vh] transform translate-x-[-50%] rounded-full aspect-square" style={{
+                                background: 'radial-gradient(50% 50% at 50% 50%, rgba(255, 255, 255, 0) 20.23%, #FFFFFF 80.12%)',
+                            }}>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div className="absolute inset-0">
+                        <div className="relative w-full h-full ">
+                            <div className="absolute top-0 bottom-0 right-0">
+                                <div className="min-w-[33vw] h-full relative flex justify-end">
+                                    <img src={invoiceRight.src} className="object-cover w-full h-auto mix-blend-darken" />
+                                    <div className="absolute inset-0" style={{ background: 'radial-gradient(50% 50% at 50% 50%, rgba(255, 255, 255, 0) 48.23%, #FFFFFF 150%)' }}>
+
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div className="absolute inset-0">

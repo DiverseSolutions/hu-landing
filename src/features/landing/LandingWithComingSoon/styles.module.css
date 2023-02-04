@@ -1,5 +1,23 @@
+@media only screen and (max-width: 1500px) {
+    .hu {
+        transform: scale(calc(0.5));
+    }
+}
+
+@media only screen and (max-width: 1300px) {
+    .hu {
+        transform: scale(calc(0.3));
+    }
+}
+
 @media only screen and (max-width: 1024px) {
     .hu {
-        transform: scale(calc((100vw - 300px) / 100vw));
+        transform: scale(calc(0.4));
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .hu {
+        transform: scale(calc(0.2));
     }
 }

@@ -46,7 +46,8 @@ module.exports = {
         'the-hu': {
           ...require('daisyui/src/colors/themes')['[data-theme=lofi]'],
           '.btn': {
-            'border': 'none'
+            'border': 'none',
+            'text-transform': 'none'
           },
           '.btn-black': {
             'background-color': '#000',
@@ -57,6 +58,16 @@ module.exports = {
           },
           '.btn-secondary': {
             'border-radius': '8px'
+          },
+          '.input': {
+            'border-radius': '8px'
+          },
+          '.text-dark-secondary': {
+            'color': 'rgba(39, 41, 55, 0.75)',
+            'font-weight': 400,
+          },
+          '.text-terteriary': {
+            'color': 'rgba(39, 41, 55, 0.35)'
           }
         }
       }

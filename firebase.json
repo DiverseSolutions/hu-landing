@@ -16,6 +16,10 @@
         "destination": "/ticket.html"
       },
       {
+        "source": "/payment-status**",
+        "destination": "/payment-status.html"
+      },
+      {
         "source": "/payment**",
         "destination": "/payment.html"
       },

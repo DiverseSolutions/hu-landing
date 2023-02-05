@@ -31,9 +31,9 @@ export interface ArdArtInvoiceResult {
     isTicket: null;
     prevAmount: number;
     tan: string;
-    qrCode: null;
+    qrCode: string | null;
     desc: string;
-    successResponse: null;
+    successResponse: null | string;
     errorResponse: null;
     type: string;
     swapType: null;

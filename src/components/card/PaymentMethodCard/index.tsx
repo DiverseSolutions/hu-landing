@@ -29,9 +29,11 @@ type Props = {
 
 type PaymentType = 'card' | 'socialpay' | 'ardapp' | 'socialpay' | 'mongolian-banks'
 
+
+
 function PaymentMethodCard({ invoice, item, priceToUsdrate }: Props) {
 
-    const [qrCode, setQrCode] = useState('')
+    const [qrCode, setQrCode] = useState<string>()
     const [selectedMongolianBank, setSelectedMongolianBank] = useState<MongolianBank>()
     const [isInvoiceUpdateLoading, setIsInvoiceUpdateLoading] = useState(false)
     const router = useRouter()
@@ -65,6 +67,7 @@ function PaymentMethodCard({ invoice, item, priceToUsdrate }: Props) {
         if (selected === 'socialpay' || selected === 'card') {
             const r = await callUpdateInvoiceSocialPay({
                 invoiceId: invoice.id,
+                productId: item.id,
             }).unwrap()
             if (r.result) {
                 if (r.result?.response?.invoice) {
@@ -79,7 +82,8 @@ function PaymentMethodCard({ invoice, item, priceToUsdrate }: Props) {
                 if (isMobile) {
                     window.location.href = `ard://q?qPay_QRcode=${r.result.response.qrCode}`
                 } else {
-                    setQrCode(r.result.response.qrCode)
+                    // setQrCode(r.result.response.qrCode)
+                    router.push(`/payment-status?productId=${item.id}&invoiceId=${invoice.id}&type=ardapp`)
                 }
             }
         } else if (selectedMongolianBank) {
@@ -103,7 +107,8 @@ function PaymentMethodCard({ invoice, item, priceToUsdrate }: Props) {
                     if (isMobile) {
                         window.location.href = `${selectedMongolianBank.link}${r.result.response.qrCode}`
                     } else {
-                        setQrCode(r.result.response.qrCode)
+                        // setQrCode(r.result.response.qrCode)
+                        router.push(`/payment-status?productId=${item.id}&invoiceId=${invoice.id}&type=${selected}&bank=${encodeURIComponent(selectedMongolianBank.name)}`)
                     }
                 }
                 return;
@@ -115,7 +120,8 @@ function PaymentMethodCard({ invoice, item, priceToUsdrate }: Props) {
                 if (isMobile) {
                     window.location.href = `${selectedMongolianBank.link}${r.result.response.qr_text}`
                 } else {
-                    setQrCode(r.result.response.qr_text)
+                    // setQrCode(r.result.response.qr_text)
+                    router.push(`/payment-status?productId=${item.id}&invoiceId=${invoice.id}&type=${selected}&bank=${encodeURIComponent(selectedMongolianBank.name)}`)
                 }
             }
 
@@ -167,7 +173,7 @@ function PaymentMethodCard({ invoice, item, priceToUsdrate }: Props) {
                         <div className="mt-4">
                             <div className="flex justify-center w-full">
                                 <div className="flex flex-col items-center justify-center w-full">
-                                    <div className="flex w-full h-auto aspect-square">
+                                    <div className="flex w-full max-w-[200px] h-auto aspect-square">
                                         <QRImage background='#fff' transparent text={qrCode} color="black">{qrCode}</QRImage>
                                     </div>
                                     <div className="mt-2">
@@ -208,7 +214,7 @@ function PaymentMethodCard({ invoice, item, priceToUsdrate }: Props) {
                                     {isBanksExpanded ? <MdExpandLess size={24} color="black" /> : <MdExpandMore size={24} color="black" />}
                                 </div>
                             </div>
-                            <div className="w-full dropdown-content max-h-[400px] overflow-y-auto">
+                            <div className="w-full dropdown-content max-h-[300px] overflow-y-auto">
                                 <div className="flex flex-col w-full mt-4 space-y-4 bg-white">
                                     {visibleMongolianBanks.map((mb) => (
                                         <PaymentTypeCard key={mb.name}
@@ -278,7 +284,7 @@ function PaymentTypeCard(props: PaymentTypeCardProps) {
     return (
         <div onClick={props.onClick} className={classNames('cursor-pointer rounded-lg  p-[14px] w-full flex items-center', {
             [props.activeClass || 'border-black bg-black bg-opacity-[0.04] border-[1px]']: props.active,
-            [props.inactiveClass || 'text-dark-secondary border-transparent bg-black bg-opacity-[0.04]']: !props.active,
+            [props.inactiveClass || 'text-dark-secondary border-transparent border-[1px] bg-black bg-opacity-[0.04]']: !props.active,
         })}>
             <div className="flex items-center justify-between w-full">
                 <div className="flex items-center">

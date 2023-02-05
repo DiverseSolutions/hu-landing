@@ -42,18 +42,18 @@ export const ardArtApi = createApi({
                 method: 'POST',
                 body: {
                     ...d,
-                    callback: `https://hu.rocks/payment-success.html=${d.invoiceId}`,
                     method: 'qpay'
                 }
             })
         }),
-        updateInvoiceSocialPay: builder.mutation<ArdArtResponse<ArdArtUpdateInvoiceSocialPayResult>, { invoiceId: number }>({
+        updateInvoiceSocialPay: builder.mutation<ArdArtResponse<ArdArtUpdateInvoiceSocialPayResult>, { invoiceId: number, productId: number }>({
             query: (d) => ({
                 url: '/api/v1/balance/invoice/update',
                 method: 'POST',
                 body: {
                     ...d,
-                    method: 'socialpay'
+                    method: 'socialpay',
+                    callback: `https://hu.rocks/payment-status?invoiceId=${d.invoiceId}&productId=${d.productId}&type=socialpay`
                 }
             })
         }),

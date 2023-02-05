@@ -30,7 +30,7 @@ export const rtkErrorAlert: Middleware =
                 }
             }
         }
-        if (action.payload?.status === 'error') {
+        if (`${action.payload?.status}`.toLowerCase() === 'error') {
             const metalandErr = action.payload?.message;
             if (metalandErr) {
                 toast(metalandErr, {

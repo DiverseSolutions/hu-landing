@@ -79,8 +79,8 @@ export default function LandingWithComingSoon({ }: Props) {
                             <div className="flex justify-center w-full md:hidden">
                                 <div className="flex items-center justify-center">
                                     <div className="flex">
-                                        <button className="btn rounded-l-[500px] bg-black bg-opacity-[0.65] cursor-pointer border-none text-sm w-[110px] rounded-r-none">METALAND</button>
-                                        <button className="btn rounded-r-[500px] bg-black bg-opacity-[0.65] cursor-pointer border-none text-sm w-[110px] rounded-l-none">ARDCOIN</button>
+                                        <a href="https://metaland.mn/en" target="_blank" rel="noreferrer" className="btn rounded-l-[500px] bg-black bg-opacity-[0.65] cursor-pointer border-none text-sm w-[110px] rounded-r-none">METALAND</a>
+                                        <a href="https://ardcoin.com/" target="_blank" rel="noreferrer" className="btn rounded-r-[500px] bg-black bg-opacity-[0.65] cursor-pointer border-none text-sm w-[110px] rounded-l-none">ARDCOIN</a>
                                     </div>
                                 </div>
                             </div>
@@ -92,8 +92,8 @@ export default function LandingWithComingSoon({ }: Props) {
                                 </div>
                                 <div className="items-center justify-center hidden md:flex">
                                     <div className="flex">
-                                        <button className="btn rounded-l-[500px] bg-black bg-opacity-[0.65] cursor-pointer border-none text-sm w-[110px] rounded-r-none">METALAND</button>
-                                        <button className="btn rounded-r-[500px] bg-black bg-opacity-[0.65] cursor-pointer border-none text-sm w-[110px] rounded-l-none">ARDCOIN</button>
+                                        <a href="https://metaland.mn/en" target="_blank" rel="noreferrer" className="btn rounded-l-[500px] bg-black bg-opacity-[0.65] cursor-pointer border-none text-sm w-[110px] rounded-r-none">METALAND</a>
+                                        <a href="https://ardcoin.com/" target="_blank" rel="noreferrer" className="btn rounded-r-[500px] bg-black bg-opacity-[0.65] cursor-pointer border-none text-sm w-[110px] rounded-l-none">ARDCOIN</a>
                                     </div>
                                 </div>
                                 <div className="flex justify-end w-full">

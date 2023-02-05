@@ -4,6 +4,7 @@ import LoginForm from '@/components/forms/LoginForm'
 import SignupForm from '@/components/forms/SignupForm'
 import SignupOtpForm from '@/components/forms/SignupOtpForm'
 import React, { useState, useEffect, useRef } from 'react'
+import { MdClose } from 'react-icons/md'
 import Cookies from 'js-cookie'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { authNotLoggedIn, hideAuthModal, sessionRestored } from '@/store/reducer/auth-reducer/actions'
@@ -103,7 +104,9 @@ export default function AuthFeature({
                 <div className="modal-box" onClick={(e) => {
                     e.stopPropagation()
                 }}>
-                    <label onClick={hideModal} className="absolute btn btn-sm btn-circle right-2 top-2">✕</label>
+                    <div onClick={hideModal} className='absolute btn-circle btn btn-sm right-2 top-2 '>
+                        <MdClose size={24} />
+                    </div>
                     <label htmlFor=''></label>
                     <div className='pt-6 mb-4 md:px-8'>
                         {formType === 'register' ? (

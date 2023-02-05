@@ -1,9 +1,17 @@
+const defaultTheme = require('tailwindcss/defaultTheme')
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    fontFamily: {
+      averta: ["Averta CY"],
+      'sans': ['Averta CY', ...defaultTheme.fontFamily.sans],
+      'body': ['Averta CY', ...defaultTheme.fontFamily.sans],
+      'display': ['Averta CY', ...defaultTheme.fontFamily.sans],
+    },
     screens: {
       'sm': '640px',
       // => @media (min-width: 640px) { ... }

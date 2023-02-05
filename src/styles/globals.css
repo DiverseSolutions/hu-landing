@@ -2,127 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
-@import "modern-normalize";
-
-*::selection {
-    background: transparent;
+@font-face {
+    font-family: "Averta CY";
+    src: url("/fonts/averta-cy/AVERTA CYRILLIC REGULAR.OTF") format('opentype');
+    font-weight: 400;
+    font-style: normal;
 }
 
-section {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+@font-face {
+    font-family: "Averta CY";
+    src: url("/fonts/averta-cy/AVERTA CYRILLIC BOLD.OTF") format('opentype');
+    font-weight: bold;
+    font-style: normal;
 }
 
-section p {
-    font-size: 32px;
-    line-height: 38px;
-}
-
-
-header {
-    margin-top: 70px;
-    margin-bottom: 200px;
-    position: relative;
-}
-
-header h1 {
-    font-weight: 600;
-    font-size: 54px;
-    margin: 11px 0;
-    color: var(--color-title);
-}
-
-header strong {
-    color: var(--color-highlight);
-}
-
-header sup {
-    display: inline-block;
-    color: var(--color-cta-text);
-    background: var(--color-cta-bg);
-    border-radius: 4px;
-    font-size: 14px;
-    line-height: 151.5%;
-    padding: 1px 9px;
-    position: relative;
-    top: -48px;
-    left: -25px;
-}
-
-nav {
-    font-size: 32px;
-    line-height: 38px;
-    width: 150px;
-}
-
-nav a {
-    display: block;
-    color: var(--var-color-text-main);
-}
-
-a {
-    text-decoration: none;
-    color: var(--color-highlight);
-}
-
-a:hover {
-    text-decoration: underline;
-    color: var(--color-highlight);
-}
-
-@media only screen and (max-width: 768px) {
-    header {
-        margin-top: 38px;
-        margin-bottom: 200px;
-    }
-
-    header h1 {
-        font-size: 48px;
-    }
-
-    header sup {
-        font-size: 12px;
-        padding: 3px 10px;
-        top: -42px;
-        left: -24px;
-    }
-
-    nav,
-    section p {
-        font-size: 24px;
-        line-height: 28px;
-    }
-
-    .sectionLeft {
-        padding: 0 8vw;
-    }
-
-    .sectionRight {
-        padding: 0 8vw;
-    }
-}
-
-@media only screen and (max-width: 480px) {
-    header {
-        margin-top: 30px;
-        margin-bottom: 50px;
-    }
-
-    header h1 {
-        font-size: 36px;
-    }
-
-    header sup {
-        font-size: 11px;
-        padding: 2px 8px;
-        top: -35px;
-        left: -18px;
-    }
-
-    nav,
-    section p {
-        font-size: 18px;
-        line-height: 23px;
+@layer base {
+    html {
+        font-family: "Averta CY", system-ui, sans-serif;
     }
 }

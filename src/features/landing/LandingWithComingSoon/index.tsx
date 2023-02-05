@@ -107,13 +107,13 @@ export default function LandingWithComingSoon({ }: Props) {
                                                 </label>
                                                 <ul tabIndex={0} className="p-2 mt-3 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52">
                                                     <li>
-                                                        <Link href="/profile" className="justify-between">
+                                                        <Link href="/profile" className="justify-between p-4">
                                                             Profile
                                                         </Link>
                                                     </li>
                                                     <li onClick={() => {
                                                         dispatch(logoutSuccess())
-                                                    }}><a>Logout</a></li>
+                                                    }}><a className='p-4'>Logout</a></li>
                                                 </ul>
                                             </div>
                                         </>

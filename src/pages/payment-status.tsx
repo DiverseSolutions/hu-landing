@@ -24,7 +24,6 @@ const PaymentStatus = (props: Props) => {
 
     const [pageErrorMessage, setPageErrorMessage] = useState<string>()
     const [callGetInvoice] = useLazyGetInvoiceQuery()
-    const [callCheckInvoice] = useLazyCheckInvoiceQuery()
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
     const isAuthLoading = useAppSelector(state => state.auth.isLoading)
     const accountId = useAppSelector(state => state.auth.ardArt.accountId)
@@ -113,14 +112,6 @@ const PaymentStatus = (props: Props) => {
         const invoice = await callGetInvoice({
             invoiceId: invoiceId
         })
-
-        const checkInvoice = await callCheckInvoice({
-            invoiceId: invoiceId,
-        })
-
-        if (checkInvoice.data?.result) {
-            setCheckInvoiceData(checkInvoice.data.result)
-        }
 
         if (invoice.data?.result) {
             setInvoiceData(invoice.data?.result)

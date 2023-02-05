@@ -14,9 +14,10 @@ import QRImage from "react-qr-image"
 import { useLazyGetInvoiceQuery, useUpdateInvoiceQPayMutation, useUpdateInvoiceQPosMutation, useUpdateInvoiceSocialPayMutation } from '@/store/rtk-query/ard-art/ard-art-api'
 import classNames from 'classnames'
 import { toast } from 'react-toastify'
-import { ArdArtAssetDetailByIDResult } from '@/store/rtk-query/hux-ard-art/types'
+import { ArdArtAssetDetailByIDResult, ArdArtCheckInvoiceResult } from '@/store/rtk-query/hux-ard-art/types'
 import { useRouter } from 'next/router'
 import { qpayBanks, qposBanks, QPayBank } from './banks'
+import { useLazyCheckInvoiceQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api';
 
 type MongolianBank = QPayBank
 
@@ -24,7 +25,8 @@ type PaymentType = 'card' | 'socialpay' | 'ardapp' | 'socialpay' | 'mongolian-ba
 
 
 type Props = {
-    invoice: ArdArtInvoiceResult
+    invoice: ArdArtInvoiceResult,
+    checkInvoice?: ArdArtCheckInvoiceResult,
     item: ArdArtAssetDetailByIDResult,
     priceToUsdrate: number,
     bank?: string,
@@ -33,9 +35,10 @@ type Props = {
 }
 
 
-function PaymentStatusCard({ invoice: invoiceData, item, priceToUsdrate, bank, type, ...props }: Props) {
+function PaymentStatusCard({ invoice: invoiceData, checkInvoice, item, priceToUsdrate, bank, type, ...props }: Props) {
 
     const [invoice, setInvoice] = useState(invoiceData)
+    const [checkInvoiceData, setCheckInvoiceData] = useState<ArdArtCheckInvoiceResult | undefined>(checkInvoice)
     const [selectedMongolianBank, setSelectedMongolianBank] = useState<MongolianBank | undefined>(() => {
         if (type === 'mongolian-banks') {
             return qpayBanks.find((q) => q.name === bank)
@@ -54,17 +57,17 @@ function PaymentStatusCard({ invoice: invoiceData, item, priceToUsdrate, bank, t
         return undefined;
     }, [invoice])
 
-    const [callGetInvoice, { isFetching: isGetInvoiceLoading }] = useLazyGetInvoiceQuery()
+    const [callCheckInvoice, { isFetching: isCheckInvoiceLoading }] = useLazyCheckInvoiceQuery()
 
     const router = useRouter()
     const [selected, setSelected] = useState<PaymentType>(type)
 
     const isSuccess = useMemo(() => {
-        if (invoice.status === 'SUCCESS') {
+        if (checkInvoiceData?.invoice?.status === 'SUCCESS') {
             return true;
         }
         return false
-    }, [invoice.status])
+    }, [checkInvoiceData?.invoice?.status])
 
     const priceUsd = useMemo(() => {
         return new Intl.NumberFormat('en-US', {
@@ -81,11 +84,11 @@ function PaymentStatusCard({ invoice: invoiceData, item, priceToUsdrate, bank, t
     }, [item.price, priceToUsdrate])
 
     const handleCheckTransaction = async () => {
-        const f = await callGetInvoice({
+        const f = await callCheckInvoice({
             invoiceId: invoice.id
         }).unwrap()
         if (f.result) {
-            setInvoice(f.result)
+            setCheckInvoiceData(f.result)
         }
     }
 
@@ -181,7 +184,7 @@ function PaymentStatusCard({ invoice: invoiceData, item, priceToUsdrate, bank, t
                 {!isSuccess ? (
                     <div>
                         <div className="justify-end mt-6 card-actions">
-                            <button onClick={handleCheckTransaction} className={classNames("btn btn-primary btn-block", { 'loading': isGetInvoiceLoading })}>Check Transaction</button>
+                            <button onClick={handleCheckTransaction} className={classNames("btn btn-primary btn-block", { 'loading': isCheckInvoiceLoading })}>Check Transaction</button>
                         </div>
                         <div className="mt-4">
                             <div className="flex justify-center w-full cursor-pointer" onClick={() => {

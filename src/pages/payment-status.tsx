@@ -6,9 +6,9 @@ import invoiceLeft from '@/assets/img/invoice-left.png'
 import invoiceRight from '@/assets/img/invoice-right.png'
 import { useLazyGetInvoiceQuery } from '@/store/rtk-query/ard-art/ard-art-api'
 import PaymentStatusFeature from '@/features/payment/PaymentStatusFeature'
-import { useLazyGetAssetDetailByIdQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
+import { useLazyCheckInvoiceQuery, useLazyGetAssetDetailByIdQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
 import { ArdArtInvoiceResult } from '@/store/rtk-query/ard-art/types'
-import { ArdArtAssetDetailByIDResult } from '@/store/rtk-query/hux-ard-art/types'
+import { ArdArtAssetDetailByIDResult, ArdArtCheckInvoiceResult } from '@/store/rtk-query/hux-ard-art/types'
 import { useLazyMonxanshRateQuery } from '@/store/rtk-query/monxansh/monxansh-api'
 import { useLazyIdaxTickerQuery } from '@/store/rtk-query/idax/idax-api'
 
@@ -24,11 +24,13 @@ const PaymentStatus = (props: Props) => {
 
     const [pageErrorMessage, setPageErrorMessage] = useState<string>()
     const [callGetInvoice] = useLazyGetInvoiceQuery()
+    const [callCheckInvoice] = useLazyCheckInvoiceQuery()
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
     const isAuthLoading = useAppSelector(state => state.auth.isLoading)
     const accountId = useAppSelector(state => state.auth.ardArt.accountId)
     const router = useRouter()
 
+    const [checkInvoiceData, setCheckInvoiceData] = useState<ArdArtCheckInvoiceResult>()
     const [invoiceData, setInvoiceData] = useState<ArdArtInvoiceResult>()
     const [assetData, setAssetData] = useState<ArdArtAssetDetailByIDResult>()
     const [isLoading, setIsLoading] = useState(true)
@@ -112,6 +114,14 @@ const PaymentStatus = (props: Props) => {
             invoiceId: invoiceId
         })
 
+        const checkInvoice = await callCheckInvoice({
+            invoiceId: invoiceId,
+        })
+
+        if (checkInvoice.data?.result) {
+            setCheckInvoiceData(checkInvoice.data.result)
+        }
+
         if (invoice.data?.result) {
             setInvoiceData(invoice.data?.result)
         } else {
@@ -186,7 +196,7 @@ const PaymentStatus = (props: Props) => {
                             <>
                                 <div className="flex justify-center w-full">
                                     <div className="flex md:mt-32">
-                                        {paymentType ? <PaymentStatusFeature bank={bank} type={paymentType} invoice={invoiceData} product={assetData} priceToUsdRate={ardxToUsdRate} /> : <><p>Payment type not found.</p></>}
+                                        {paymentType ? <PaymentStatusFeature checkInvoice={checkInvoiceData} bank={bank} type={paymentType} invoice={invoiceData} product={assetData} priceToUsdRate={ardxToUsdRate} /> : <><p>Payment type not found.</p></>}
 
                                     </div>
                                 </div>

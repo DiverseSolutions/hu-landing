@@ -61,7 +61,7 @@ export const huxArdArtApi = createApi({
             invoiceId: number;
         }>({
             query: (d) => ({
-                url: '/api/v1/bundle/check',
+                url: '/api/v1/market/check',
                 method: 'POST',
                 body: d
             })

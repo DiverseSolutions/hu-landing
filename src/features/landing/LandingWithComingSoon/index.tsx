@@ -27,7 +27,7 @@ export default function LandingWithComingSoon({ }: Props) {
 
     return (
         <>
-            <div className='h-[100vh] bg-[#982626] relative md:overflow-hidden overflow-y-auto'>
+            <div className='h-[100vh] bg-[#982626] relative md:overflow-hidden overflow-x-hidden overflow-y-auto'>
                 <div className="absolute top-0">
                     <div className="relative">
                         <Image style={{
@@ -107,13 +107,13 @@ export default function LandingWithComingSoon({ }: Props) {
                                                 </label>
                                                 <ul tabIndex={0} className="p-2 mt-3 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52">
                                                     <li>
-                                                        <Link href="/profile" className="justify-between p-4">
-                                                            Profile
+                                                        <Link href="/profile" className="justify-between p-0">
+                                                            <span className="w-full h-full p-4">Profile</span>
                                                         </Link>
                                                     </li>
                                                     <li onClick={() => {
                                                         dispatch(logoutSuccess())
-                                                    }}><a className='p-4'>Logout</a></li>
+                                                    }}><span className='p-4'>Logout</span></li>
                                                 </ul>
                                             </div>
                                         </>

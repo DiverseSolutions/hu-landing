@@ -100,7 +100,7 @@ export default function ReleaseLandingWithComingSoon({ }: Props) {
     return (
         <>
             <MobileDrawer drawerContent={(
-                <div className='p-4 bg-primary w-[80%]'>
+                <div className='p-4 bg-primary w-[80%] flex h-full justify-between flex-col'>
                     <div className="flex flex-col justify-center w-full">
                         <div>
                             <ul className="w-full rounded-lg menu bg-secondary text-secondary-content">
@@ -109,6 +109,14 @@ export default function ReleaseLandingWithComingSoon({ }: Props) {
                                 <li><a href="https://ardcoin.com/" target="_blank" rel="noreferrer" className='flex items-center justify-between w-full'>ARDCOIN <span><MdArrowRightAlt size={32} /></span></a>
                                 </li>
                             </ul>
+                        </div>
+                    </div>
+                    <div className="flex justify-center w-full align-bottom">
+                        <div className='flex justify-center w-full'>
+                            <div className="flex items-center">
+                                <div className="mr-1 "><CopyRightSvg /></div>
+                                <p className="font-medium text-white uppercase">2023 THE HU</p>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -20,7 +20,7 @@ import { ClipLoader } from 'react-spinners'
 type Props = {}
 
 function TheHuResponsive() {
-    const [sw, setSw] = useState<number>();
+    const [sw, setSw] = useState<number>(1500);
     const onWindowSize = useWindowResize()
 
     useEffect(() => {
@@ -32,8 +32,8 @@ function TheHuResponsive() {
     })
 
     const height = useMemo(() => {
-        if (!sw) {
-            return 0
+        if (!sw || sw > 1384) {
+            return 193
         }
         return Math.max(193 * sw / 1384 * 0.8, 20)
     }, [sw])
@@ -55,7 +55,7 @@ function TheHuResponsive() {
 
 function InTheMetaverseResponsive() {
 
-    const [sw, setSw] = useState<number>();
+    const [sw, setSw] = useState<number>(1500);
     const onWindowSize = useWindowResize()
 
     useEffect(() => {
@@ -67,8 +67,8 @@ function InTheMetaverseResponsive() {
     })
 
     const height = useMemo(() => {
-        if (!sw) {
-            return 0
+        if (!sw || sw > 1384) {
+            return 24
         }
         return Math.max(sw > 1384 ? 1 : 24 * sw / 1384 * 0.8, 12)
     }, [sw])
@@ -82,7 +82,7 @@ function InTheMetaverseResponsive() {
             height,
         }}>
             <InTheMetaverse style={{
-                transform: `scale(${Math.max(sw / 1384 * 0.8, 0.5)})`
+                transform: `scale(${sw > 1384 ? 1 : Math.max(sw / 1384 * 0.8, 0.5)})`
             }} />
         </div>
     )

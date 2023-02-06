@@ -1,27 +1,91 @@
-import React, { useState } from 'react'
+import React, { Suspense, useState, useEffect, useMemo } from 'react'
 
 import TheHu from '@/components/icon/svgr/TheHu'
+import InTheMetaverse from '@/components/icon/svgr/InTheMetaverse'
 import MediumSvg from '@/assets/svg/medium.svg'
 import InstagramSvg from '@/assets/svg/instagram.svg'
 import FacebookSvg from '@/assets/svg/facebook.svg'
 import DiscordSvg from '@/assets/svg/discord.svg'
 import heroLeft from '@/assets/img/hero-left.png'
 import CopyRightSvg from '@/assets/svg/copyright.svg'
-import InTheMetaverseSvg from '@/assets/svg/in-the-metaverse.svg'
 import ChevronDownSvg from '@/assets/svg/chevron-down.svg'
 import heroRight from '@/assets/img/hero-right.png'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { logoutSuccess, showAuthModal } from '@/store/reducer/auth-reducer/actions'
-import { toast } from 'react-toastify'
-import { useWindowSize } from 'react-use'
-import styles from './styles.module.css'
+import useWindowResize from 'beautiful-react-hooks/useWindowResize'
+import { ClipLoader } from 'react-spinners'
+
 type Props = {}
 
 function TheHuResponsive() {
-    const { width: sw } = useWindowSize()
-    return <div className={`transform scale-[${(sw / 1384).toPrecision(2)}]`}><TheHu /></div>
+    const [sw, setSw] = useState<number>();
+    const onWindowSize = useWindowResize()
+
+    useEffect(() => {
+        setSw(window.innerWidth)
+    }, [])
+
+    onWindowSize(() => {
+        setSw(window.innerWidth)
+    })
+
+    const height = useMemo(() => {
+        if (!sw) {
+            return 0
+        }
+        return Math.max(193 * sw / 1384 * 0.8, 20)
+    }, [sw])
+
+    if (!sw) {
+        return <ClipLoader color="white" />
+    }
+
+    return (
+        <div className="flex items-center justify-center w-full mt-8" style={{
+            height,
+        }}>
+            <TheHu style={{
+                transform: `scale(${sw > 1384 ? 1 : sw / 1384 * 0.8})`
+            }} />
+        </div>
+    )
+}
+
+function InTheMetaverseResponsive() {
+
+    const [sw, setSw] = useState<number>();
+    const onWindowSize = useWindowResize()
+
+    useEffect(() => {
+        setSw(window.innerWidth)
+    }, [])
+
+    onWindowSize(() => {
+        setSw(window.innerWidth)
+    })
+
+    const height = useMemo(() => {
+        if (!sw) {
+            return 0
+        }
+        return Math.max(sw > 1384 ? 1 : 24 * sw / 1384 * 0.8, 12)
+    }, [sw])
+
+    if (!sw) {
+        return <></>
+    }
+
+    return (
+        <div className="flex items-center justify-center w-full" style={{
+            height,
+        }}>
+            <InTheMetaverse style={{
+                transform: `scale(${Math.max(sw / 1384 * 0.8, 0.5)})`
+            }} />
+        </div>
+    )
 }
 
 export default function LandingWithComingSoon({ }: Props) {
@@ -53,15 +117,15 @@ export default function LandingWithComingSoon({ }: Props) {
                         <div className="flex items-center justify-center w-full h-full">
                             <div className="relative flex flex-col items-center">
                                 <div className="max-w-full">
-                                    <div className='flex transform scale-[0.5] md:scale-[0.7] 2xl:transform-none xl:translate-y-[-20%] translate-y-[400%] md:translate-y-[200%] justify-center w-full mb-8'>
-                                        <InTheMetaverseSvg />
-                                    </div>
-                                    <div className="flex justify-center w-full mt-4">
-                                        <TheHu className={styles.hu} />
-                                    </div>
+                                    <Suspense>
+                                        <InTheMetaverseResponsive />
+                                    </Suspense>
+                                    <Suspense>
+                                        <TheHuResponsive />
+                                    </Suspense>
                                 </div>
                                 <div className="mt-8 text-center">
-                                    <div className="md:max-w-[576px] max-w-[100vw]">
+                                    <div className="md:max-w-[576px] max-w-[80vw]">
                                         <p className='text-white text-[16px] uppercase break-normal break-words'>Early bird ticket for “Rumble of Thunder V1.1” Coming Soon on 13 February, 2023</p>
                                     </div>
                                 </div>

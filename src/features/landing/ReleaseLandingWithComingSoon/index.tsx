@@ -186,18 +186,18 @@ export default function ReleaseLandingWithComingSoon({ }: Props) {
                                         </>
                                     ) : (<></>)}
                                     {!isLoggedIn && !username ? (
-                                        <div className="flex justify-between space-x-4">
+                                        <div className="justify-between hidden space-x-4">
                                             <button onClick={() => {
-                                                dispatch(showAuthModal({
-                                                    type: 'login'
-                                                }))
+                                                // dispatch(showAuthModal({
+                                                //     type: 'login'
+                                                // }))
                                             }} className="btn btn-disabled border-none hover:bg-white bg-white text-black rounded-[500px]">
                                                 Login
                                             </button>
                                             <button onClick={() => {
-                                                dispatch(showAuthModal({
-                                                    type: 'register'
-                                                }))
+                                                // dispatch(showAuthModal({
+                                                //     type: 'register'
+                                                // }))
                                             }} className="btn btn-disabled text-white bg-black bg-opacity-[0.65] rounded-[500px]">
                                                 Sign Up
                                             </button>

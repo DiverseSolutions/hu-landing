@@ -156,11 +156,11 @@ export default function LandingWithComingSoon({ }: Props) {
                         <div className="flex justify-center w-full h-full">
                             <div className="container h-full">
                                 <div className="flex items-end w-full h-full pb-8">
-                                    <div className="flex-col items-center hidden w-full md:grid md:grid-cols-3 md:gap-x-2">
+                                    <div className="flex-col items-center w-full md:grid md:grid-cols-3 md:gap-x-2">
                                         <div className='flex justify-center w-full md:justify-start'>
                                             <div className="flex flex-col items-center pb-10">
                                                 <p className="hidden mb-4 font-bold text-white uppercase">Connect with us</p>
-                                                <div className="flex hidden space-x-8 jusify-between">
+                                                <div className="hidden space-x-8 jusify-between">
                                                     <span className="cursor-pointer"><MediumSvg /></span>
                                                     <span className="cursor-pointer"><InstagramSvg /></span>
                                                     <span className="cursor-pointer"><FacebookSvg /></span>
@@ -170,8 +170,8 @@ export default function LandingWithComingSoon({ }: Props) {
                                         </div>
                                         <div className='flex justify-center w-full'>
                                             <div className="flex items-center">
-                                                <div className="opacity-[0.65] mr-1"><CopyRightSvg /></div>
-                                                <p className="font-medium text-white uppercase text-opacity-[0.65]">2023 THE HU</p>
+                                                <div className="mr-1 "><CopyRightSvg /></div>
+                                                <p className="font-medium text-white uppercase">2023 THE HU</p>
                                             </div>
                                         </div>
                                         <div className='items-center justify-center hidden w-full md:justify-end'>

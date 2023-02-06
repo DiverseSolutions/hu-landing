@@ -158,8 +158,8 @@ const PaymentStatus = (props: Props) => {
                 <div className="relative w-full h-full">
                     <div className="absolute inset-0 hidden overflow-auto md:block">
                         <div className="relative w-full h-full">
-                            <div className="w-[512px] h-full relative">
-                                <img src={invoiceLeft.src} className="object-contain w-full h-auto mix-blend-darken" />
+                            <div className="w-[512px] h-[120vh] relative">
+                                <img src={invoiceLeft.src} className="object-cover w-auto h-full mix-blend-darken" />
                             </div>
                         </div>
                         <div className="absolute inset-0 transform rounded-full aspect-square">
@@ -185,8 +185,8 @@ const PaymentStatus = (props: Props) => {
                     <div className="absolute inset-0">
                         {invoiceData && assetData ? (
                             <>
-                                <div className="flex justify-center w-full">
-                                    <div className="flex md:mt-32">
+                                <div className="flex items-center justify-center w-full h-full">
+                                    <div className="flex">
                                         {paymentType ? <PaymentStatusFeature checkInvoice={checkInvoiceData} bank={bank} type={paymentType} invoice={invoiceData} product={assetData} priceToUsdRate={ardxToUsdRate} /> : <><p>Payment type not found.</p></>}
 
                                     </div>

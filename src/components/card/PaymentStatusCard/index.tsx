@@ -92,6 +92,13 @@ function PaymentStatusCard({ invoice: invoiceData, checkInvoice, item, priceToUs
         }
     }
 
+    useEffect(() => {
+        const interval = setInterval(() => {
+            handleCheckTransaction()
+        }, 5000)
+        return () => clearInterval(interval)
+    }, [])
+
     return (
         <div className="md:shadow-xl card shadow-none w-96 bg-base-100 text-[14px]">
             <div className="card-body">

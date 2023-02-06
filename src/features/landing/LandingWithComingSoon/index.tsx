@@ -117,16 +117,15 @@ export default function LandingWithComingSoon({ }: Props) {
                         <div className="flex items-center justify-center w-full h-full">
                             <div className="relative flex flex-col items-center">
                                 <div className="max-w-full">
-                                    <Suspense>
-                                        <InTheMetaverseResponsive />
-                                    </Suspense>
+                                    <div><p className="text-lg font-bold text-center text-white uppercase md:text-4xl">Coming Soon</p></div>
                                     <Suspense>
                                         <TheHuResponsive />
                                     </Suspense>
                                 </div>
                                 <div className="mt-8 text-center">
                                     <div className="md:max-w-[576px] max-w-[80vw]">
-                                        <p className='text-white text-[16px] uppercase break-normal break-words'>Early bird ticket for “Rumble of Thunder V1.1” Coming Soon on 13 February, 2023</p>
+                                        <p className='text-white text-[20px] uppercase break-normal break-words'>IN THE METAVERSE
+                                            Early bird ticket for Rumble of Thunder V1.1 on 13 February, 2023</p>
                                     </div>
                                 </div>
                                 <div className="mt-8">
@@ -157,12 +156,7 @@ export default function LandingWithComingSoon({ }: Props) {
                                     </div>
                                 </div>
                             </div>
-                            <div className="grid w-full grid-cols-2 md:grid-cols-3 md:mt-0 mt-[1rem] px-2 md:px-0">
-                                <div className="justify-start w-full md:flex">
-                                    <button className="rounded-[500px] border-none px-4 py-3 font-bold h-[48px] bg-black bg-opacity-[0.35] text-white text-opacity-[0.35] uppercase">
-                                        Coming Soon
-                                    </button>
-                                </div>
+                            <div className="w-full flex justify-between md:mt-0 mt-[1rem] px-2 md:px-0">
                                 <div className="items-center justify-center hidden md:flex">
                                     <div className="flex">
                                         <a href="https://metaland.mn/en" target="_blank" rel="noreferrer" className="btn rounded-l-[500px] bg-black bg-opacity-[0.65] cursor-pointer border-none text-sm w-[110px] rounded-r-none">METALAND</a>

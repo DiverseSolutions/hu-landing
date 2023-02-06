@@ -34,7 +34,7 @@ function TicketSection({ ticket, priceToUsdRate }: Props) {
         type: "ticket"
     })
 
-    const [selectedTicketId, setSelectedTicketId] = useState<number>(null)
+    const [selectedTicketId, setSelectedTicketId] = useState<number>()
 
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
     const accountId = useAppSelector(state => state.auth.ardArt.accountId);

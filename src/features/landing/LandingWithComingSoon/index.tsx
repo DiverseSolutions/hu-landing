@@ -136,7 +136,7 @@ export default function LandingWithComingSoon({ }: Props) {
                                                 dispatch(showAuthModal({
                                                     type: 'register'
                                                 }))
-                                            }} className="btn btn-disabled bg-black bg-opacity-[0.65] rounded-[500px]">
+                                            }} className="btn text-white btn-disabled bg-black bg-opacity-[0.65] rounded-[500px]">
                                                 Signup
                                             </button>
                                         </div>

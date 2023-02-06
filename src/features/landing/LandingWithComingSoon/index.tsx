@@ -3,6 +3,7 @@ import React, { Suspense, useState, useEffect, useMemo } from 'react'
 import TheHu from '@/components/icon/svgr/TheHu'
 import InTheMetaverse from '@/components/icon/svgr/InTheMetaverse'
 import MediumSvg from '@/assets/svg/medium.svg'
+import Cart from '@/components/icon/svgr/Cart'
 import InstagramSvg from '@/assets/svg/instagram.svg'
 import FacebookSvg from '@/assets/svg/facebook.svg'
 import DiscordSvg from '@/assets/svg/discord.svg'
@@ -15,7 +16,6 @@ import Link from 'next/link'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { logoutSuccess, showAuthModal } from '@/store/reducer/auth-reducer/actions'
 import useWindowResize from 'beautiful-react-hooks/useWindowResize'
-import { ClipLoader } from 'react-spinners'
 
 type Props = {}
 
@@ -130,17 +130,14 @@ export default function LandingWithComingSoon({ }: Props) {
                                     </div>
                                 </div>
                                 <div className="mt-8">
-                                    {/* <Link href="/early">
+                                    <Link href="/early">
                                         <button className='uppercase bg-white flex justify-center items-center px-4 py-3 rounded-[500px] text-sm font-bold'>
                                             Buy Early Bird Ticket
                                             <span className="p-2 ml-2 bg-black rounded-full">
-                                                <CartSvg />
+                                                <Cart />
                                             </span>
                                         </button>
-                                    </Link> */}
-                                    <button onClick={() => {
-
-                                    }} className="btn btn-disabled text-white text-base text-opacity-[0.35] rounded-lg bg-black bg-opacity-[0.35] btn-wide font-bold md:min-w-[330px]">PURCHASE</button>
+                                    </Link>
                                 </div>
                             </div>
                         </div>
@@ -197,14 +194,14 @@ export default function LandingWithComingSoon({ }: Props) {
                                                 dispatch(showAuthModal({
                                                     type: 'login'
                                                 }))
-                                            }} className="btn btn-disabled border-none hover:bg-white bg-white text-black rounded-[500px]">
+                                            }} className="btn border-none hover:bg-white bg-white text-black rounded-[500px]">
                                                 Login
                                             </button>
                                             <button onClick={() => {
                                                 dispatch(showAuthModal({
                                                     type: 'register'
                                                 }))
-                                            }} className="btn btn-disabled text-white bg-black bg-opacity-[0.65] rounded-[500px]">
+                                            }} className="btn text-white bg-black bg-opacity-[0.65] rounded-[500px]">
                                                 Sign Up
                                             </button>
                                         </div>

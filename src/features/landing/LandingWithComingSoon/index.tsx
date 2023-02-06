@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-import TheHu from '@/assets/svg/the-hu.svg'
+import TheHu from '@/components/icon/svgr/TheHu'
 import MediumSvg from '@/assets/svg/medium.svg'
 import InstagramSvg from '@/assets/svg/instagram.svg'
 import FacebookSvg from '@/assets/svg/facebook.svg'
@@ -14,11 +14,15 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { logoutSuccess, showAuthModal } from '@/store/reducer/auth-reducer/actions'
-
-import styles from './styles.module.css'
 import { toast } from 'react-toastify'
-
+import { useWindowSize } from 'react-use'
+import styles from './styles.module.css'
 type Props = {}
+
+function TheHuResponsive() {
+    const { width: sw } = useWindowSize()
+    return <div className={`transform scale-[${(sw / 1384).toPrecision(2)}]`}><TheHu /></div>
+}
 
 export default function LandingWithComingSoon({ }: Props) {
 
@@ -53,9 +57,7 @@ export default function LandingWithComingSoon({ }: Props) {
                                         <InTheMetaverseSvg />
                                     </div>
                                     <div className="flex justify-center w-full mt-4">
-                                        <div className={styles.hu}>
-                                            <TheHu />
-                                        </div>
+                                        <TheHu className={styles.hu} />
                                     </div>
                                 </div>
                                 <div className="mt-8 text-center">
@@ -73,10 +75,8 @@ export default function LandingWithComingSoon({ }: Props) {
                                         </button>
                                     </Link> */}
                                     <button onClick={() => {
-                                        toast('Coming Soon', {
-                                            type: 'info'
-                                        })
-                                    }} className="btn text-white text-base text-opacity-[0.35] rounded-lg bg-black bg-opacity-[0.35] btn-wide font-bold md:min-w-[330px]">PURCHASE</button>
+
+                                    }} className="btn btn-disabled text-white text-base text-opacity-[0.35] rounded-lg bg-black bg-opacity-[0.35] btn-wide font-bold md:min-w-[330px]">PURCHASE</button>
                                 </div>
                             </div>
                         </div>
@@ -130,26 +130,18 @@ export default function LandingWithComingSoon({ }: Props) {
                                     {!isLoggedIn && !username ? (
                                         <div className="flex justify-between space-x-4">
                                             <button onClick={() => {
-                                                toast('Coming Soon', {
-                                                    type: 'info'
-                                                })
-                                                return;
                                                 dispatch(showAuthModal({
                                                     type: 'login'
                                                 }))
-                                            }} className="btn border-none hover:bg-white bg-white text-black rounded-[500px]">
+                                            }} className="btn btn-disabled border-none hover:bg-white bg-white text-black rounded-[500px]">
                                                 Login
                                             </button>
                                             <button onClick={() => {
-                                                toast('Coming Soon', {
-                                                    type: 'info'
-                                                })
-                                                return;
                                                 dispatch(showAuthModal({
                                                     type: 'register'
                                                 }))
-                                            }} className="btn text-white bg-black bg-opacity-[0.65] rounded-[500px]">
-                                                Signup
+                                            }} className="btn btn-disabled text-white bg-black bg-opacity-[0.65] rounded-[500px]">
+                                                Sign Up
                                             </button>
                                         </div>
                                     ) : (<></>)}

@@ -11,6 +11,7 @@ import { idaxApi } from './rtk-query/idax/idax-api'
 import { monxanshApi } from './rtk-query/monxansh/monxansh-api';
 
 import authReducer from './reducer/auth-reducer';
+import alertReducer from './reducer/alert-reducer';
 import { rtkErrorAlert } from './rtk-query/middleware/rtk-error-alert';
 
 export const store = configureStore({
@@ -22,6 +23,7 @@ export const store = configureStore({
     [idaxApi.reducerPath]: idaxApi.reducer,
     [monxanshApi.reducerPath]: monxanshApi.reducer,
     auth: authReducer,
+    alert: alertReducer,
   },
   middleware(getDefaultMiddleware) {
     return getDefaultMiddleware().concat(

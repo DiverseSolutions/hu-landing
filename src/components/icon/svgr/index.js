@@ -4,6 +4,7 @@ export { default as CartBlack } from "./CartBlack";
 export { default as Cart } from "./Cart";
 export { default as ChevronDownBlack } from "./ChevronDownBlack";
 export { default as ChevronDown } from "./ChevronDown";
+export { default as Clock } from "./Clock";
 export { default as ConfirmationOutline } from "./ConfirmationOutline";
 export { default as Copyright } from "./Copyright";
 export { default as DateRange } from "./DateRange";

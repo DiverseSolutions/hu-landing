@@ -1,7 +1,6 @@
 import { ArdArtInvoiceResult } from '@/store/rtk-query/ard-art/types'
 import React, { useState, useMemo, useEffect } from 'react'
 import { isMobile } from 'react-device-detect';
-
 import ArdImg from '@/assets/img/ard.jpg'
 import SocialPayImg from '@/assets/img/socialpay.png'
 import VisaSvg from '@/assets/svg/visa.svg'
@@ -57,6 +56,14 @@ function PaymentStatusCard({ invoice: invoiceData, checkInvoice, item, priceToUs
         return undefined;
     }, [invoice])
 
+    useEffect(() => {
+        if (isMobile && selectedMongolianBank && qrCode) {
+            window.location.href = `${selectedMongolianBank.link}${qrCode}`
+        } else if (isMobile && type === 'ardapp' && qrCode) {
+            window.location.href = `ard://q?qPay_QRcode=${qrCode}`
+        }
+    }, [selectedMongolianBank, isMobile, qrCode])
+
     const [callCheckInvoice, { isFetching: isCheckInvoiceLoading }] = useLazyCheckInvoiceQuery()
 
     const router = useRouter()
@@ -91,6 +98,13 @@ function PaymentStatusCard({ invoice: invoiceData, checkInvoice, item, priceToUs
             setCheckInvoiceData(f.result)
         }
     }
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            handleCheckTransaction()
+        }, 5000)
+        return () => clearInterval(interval)
+    }, [])
 
     return (
         <div className="md:shadow-xl card shadow-none w-96 bg-base-100 text-[14px]">
@@ -184,7 +198,7 @@ function PaymentStatusCard({ invoice: invoiceData, checkInvoice, item, priceToUs
                 {!isSuccess ? (
                     <div>
                         <div className="justify-end mt-6 card-actions">
-                            <button onClick={handleCheckTransaction} className={classNames("btn btn-primary btn-block", { 'loading': isCheckInvoiceLoading })}>Check Transaction</button>
+                            <button onClick={handleCheckTransaction} className={classNames("btn btn-disabled btn-primary btn-block", { 'loading': true })}>Check Transaction</button>
                         </div>
                         <div className="mt-4">
                             <div className="flex justify-center w-full cursor-pointer" onClick={() => {

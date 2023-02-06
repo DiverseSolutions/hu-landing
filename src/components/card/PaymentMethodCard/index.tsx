@@ -65,13 +65,14 @@ function PaymentMethodCard({ invoice, item, priceToUsdrate }: Props) {
             return;
         }
         if (selected === 'socialpay' || selected === 'card') {
+            const linkParam = selected === 'card' ? 'payment' : 'socialpay'
             const r = await callUpdateInvoiceSocialPay({
                 invoiceId: invoice.id,
                 productId: item.id,
             }).unwrap()
             if (r.result) {
                 if (r.result?.response?.invoice) {
-                    window.location.href = `https://ecommerce.golomtbank.com/payment/en/${r.result.response.invoice}`
+                    window.location.href = `https://ecommerce.golomtbank.com/${linkParam}/en/${r.result.response.invoice}`
                 }
             }
         } else if (selected === 'ardapp') {
@@ -79,12 +80,7 @@ function PaymentMethodCard({ invoice, item, priceToUsdrate }: Props) {
                 invoiceId: invoice.id,
             }).unwrap()
             if (r.result) {
-                if (isMobile) {
-                    window.location.href = `ard://q?qPay_QRcode=${r.result.response.qrCode}`
-                } else {
-                    // setQrCode(r.result.response.qrCode)
-                    router.push(`/payment-status?productId=${item.id}&invoiceId=${invoice.id}&type=ardapp`)
-                }
+                router.push(`/payment-status?productId=${item.id}&invoiceId=${invoice.id}&type=ardapp`)
             }
         } else if (selectedMongolianBank) {
             let qpayBank: MongolianBank | undefined
@@ -104,12 +100,7 @@ function PaymentMethodCard({ invoice, item, priceToUsdrate }: Props) {
                     invoiceId: invoice.id,
                 }).unwrap()
                 if (r.result) {
-                    if (isMobile) {
-                        window.location.href = `${selectedMongolianBank.link}${r.result.response.qrCode}`
-                    } else {
-                        // setQrCode(r.result.response.qrCode)
-                        router.push(`/payment-status?productId=${item.id}&invoiceId=${invoice.id}&type=${selected}&bank=${encodeURIComponent(selectedMongolianBank.name)}`)
-                    }
+                    router.push(`/payment-status?productId=${item.id}&invoiceId=${invoice.id}&type=${selected}&bank=${encodeURIComponent(selectedMongolianBank.name)}`)
                 }
                 return;
             }
@@ -117,12 +108,7 @@ function PaymentMethodCard({ invoice, item, priceToUsdrate }: Props) {
                 invoiceId: invoice.id,
             }).unwrap()
             if (r.result) {
-                if (isMobile) {
-                    window.location.href = `${selectedMongolianBank.link}${r.result.response.qr_text}`
-                } else {
-                    // setQrCode(r.result.response.qr_text)
-                    router.push(`/payment-status?productId=${item.id}&invoiceId=${invoice.id}&type=${selected}&bank=${encodeURIComponent(selectedMongolianBank.name)}`)
-                }
+                router.push(`/payment-status?productId=${item.id}&invoiceId=${invoice.id}&type=${selected}&bank=${encodeURIComponent(selectedMongolianBank.name)}`)
             }
 
         }

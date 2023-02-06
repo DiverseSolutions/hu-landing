@@ -8,6 +8,7 @@
     "start": "next start",
     "export": "next export",
     "build:export": "next build && next export",
+    "svgr": "npx @svgr/cli --out-dir src/components/icon/svgr src/assets/svg",
     "lint": "next lint"
   },
   "dependencies": {
@@ -18,6 +19,7 @@
     "@splinetool/loader": "^0.9.200",
     "@splinetool/r3f-spline": "^1.0.2",
     "@splinetool/react-spline": "^2.2.5",
+    "@svgr/cli": "^6.5.1",
     "@types/js-cookie": "^3.0.2",
     "@types/node": "18.11.18",
     "@types/react": "18.0.27",
@@ -27,6 +29,7 @@
     "daisyui": "^2.49.0",
     "eslint": "8.32.0",
     "eslint-config-next": "13.1.5",
+    "format-number": "^3.0.0",
     "generate-avatar": "^1.4.10",
     "gltfjsx": "^6.1.4",
     "js-cookie": "^3.0.1",

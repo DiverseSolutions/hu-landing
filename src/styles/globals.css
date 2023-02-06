@@ -16,6 +16,13 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: "Averta CY";
+    src: url("/fonts/averta-cy/AVERTA CYRILLIC LIGHT.OTF") format('opentype');
+    font-weight: 300;
+    font-style: normal;
+}
+
 @layer base {
     html {
         font-family: "Averta CY", system-ui, sans-serif;

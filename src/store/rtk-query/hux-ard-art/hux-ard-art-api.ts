@@ -9,6 +9,7 @@ export const huxArdArtApi = createApi({
         getTicketOrAsset: builder.query<ArdArtTicketOrAssetResponse, {
             type?: "asset" | "ticket",
             tag?: string,
+            subTag?: string,
             ownerId?: number,
         }>({
             query: (d) => ({

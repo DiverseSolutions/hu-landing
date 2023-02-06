@@ -72,7 +72,11 @@ export default function LandingWithComingSoon({ }: Props) {
                                             </span>
                                         </button>
                                     </Link> */}
-                                    <button className="btn btn-disabled text-white text-base text-opacity-[0.35] rounded-lg bg-black bg-opacity-[0.35] btn-wide font-bold md:min-w-[330px]">PURCHASE</button>
+                                    <button onClick={() => {
+                                        toast('Coming Soon', {
+                                            type: 'info'
+                                        })
+                                    }} className="btn text-white text-base text-opacity-[0.35] rounded-lg bg-black bg-opacity-[0.35] btn-wide font-bold md:min-w-[330px]">PURCHASE</button>
                                 </div>
                             </div>
                         </div>
@@ -126,17 +130,25 @@ export default function LandingWithComingSoon({ }: Props) {
                                     {!isLoggedIn && !username ? (
                                         <div className="flex justify-between space-x-4">
                                             <button onClick={() => {
+                                                toast('Coming Soon', {
+                                                    type: 'info'
+                                                })
+                                                return;
                                                 dispatch(showAuthModal({
                                                     type: 'login'
                                                 }))
-                                            }} className="btn btn-disabled border-none hover:bg-white bg-white text-black rounded-[500px]">
+                                            }} className="btn border-none hover:bg-white bg-white text-black rounded-[500px]">
                                                 Login
                                             </button>
                                             <button onClick={() => {
+                                                toast('Coming Soon', {
+                                                    type: 'info'
+                                                })
+                                                return;
                                                 dispatch(showAuthModal({
                                                     type: 'register'
                                                 }))
-                                            }} className="btn text-white btn-disabled bg-black bg-opacity-[0.65] rounded-[500px]">
+                                            }} className="btn text-white bg-black bg-opacity-[0.65] rounded-[500px]">
                                                 Signup
                                             </button>
                                         </div>

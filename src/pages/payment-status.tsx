@@ -1,5 +1,5 @@
 import PageLoader from '@/components/loader/PageLoader'
-import { useAppSelector } from '@/store/hooks'
+import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { useRouter } from 'next/router'
 import React, { use, useEffect, useState } from 'react'
 import invoiceLeft from '@/assets/img/invoice-left.png'
@@ -13,6 +13,7 @@ import { useLazyMonxanshRateQuery } from '@/store/rtk-query/monxansh/monxansh-ap
 import { useLazyIdaxTickerQuery } from '@/store/rtk-query/idax/idax-api'
 
 import { PaymentType } from '@/features/payment/PaymentStatusFeature'
+import { alertVisibility } from '@/store/reducer/alert-reducer/actions'
 type Props = {}
 
 
@@ -28,6 +29,7 @@ const PaymentStatus = (props: Props) => {
     const isAuthLoading = useAppSelector(state => state.auth.isLoading)
     const accountId = useAppSelector(state => state.auth.ardArt.accountId)
     const router = useRouter()
+    const dispatch = useAppDispatch()
 
     const [checkInvoiceData, setCheckInvoiceData] = useState<ArdArtCheckInvoiceResult>()
     const [invoiceData, setInvoiceData] = useState<ArdArtInvoiceResult>()
@@ -38,6 +40,12 @@ const PaymentStatus = (props: Props) => {
     const [bank, setBank] = useState<string | undefined>()
 
     const [callAssetDetailById] = useLazyGetAssetDetailByIdQuery()
+
+    useEffect(() => {
+        dispatch(alertVisibility({
+            isArtArtVisible: false,
+        }))
+    }, [])
 
     useEffect(() => {
         if (!Object.keys(router.query)?.length) {

@@ -1,5 +1,18 @@
 {
   "projects": {
     "default": "hu-landing"
-  }
+  },
+  "targets": {
+    "hu-landing": {
+      "hosting": {
+        "prod": [
+          "hu-landing"
+        ],
+        "dev": [
+          "hu-landing-dev"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }

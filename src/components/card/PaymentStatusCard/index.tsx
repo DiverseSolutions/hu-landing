@@ -191,7 +191,7 @@ function PaymentStatusCard({ invoice: invoiceData, checkInvoice, item, priceToUs
                 {!isSuccess ? (
                     <div>
                         <div className="justify-end mt-6 card-actions">
-                            <button onClick={handleCheckTransaction} className={classNames("btn btn-primary btn-block", { 'loading': isCheckInvoiceLoading })}>Check Transaction</button>
+                            <button onClick={handleCheckTransaction} className={classNames("btn btn-disabled btn-primary btn-block", { 'loading': true })}>Check Transaction</button>
                         </div>
                         <div className="mt-4">
                             <div className="flex justify-center w-full cursor-pointer" onClick={() => {

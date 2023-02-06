@@ -111,13 +111,13 @@ export default function AuthFeature({
                     <div className='pt-6 mb-4 md:px-8'>
                         {formType === 'register' ? (
                             <>
-                                <h2 className='mb-4 text-lg font-bold'>Create an account</h2>
+                                <h2 className='mb-4 text-lg font-bold'>Signup</h2>
                                 <SignupForm onSuccess={(d) => {
                                     setFormType('register-otp');
                                     setCurrentUsername(d.username)
                                 }} />
                                 <div className="mt-2">
-                                    <p className="my-4 font-normal text-center">Already registered?</p>
+                                    <p className="my-4 font-normal text-center">Already have an account?</p>
                                     <div className="flex justify-center w-full">
                                         <button onClick={() => {
                                             setFormType('login')
@@ -137,7 +137,7 @@ export default function AuthFeature({
                                     <div className="flex justify-center w-full">
                                         <button onClick={() => {
                                             setFormType('register')
-                                        }} className="btn btn-secondary btn-wide">Register</button>
+                                        }} className="btn btn-secondary btn-wide">Signup</button>
                                     </div>
                                 </div>
                                 <div className="mt-4 text-center">

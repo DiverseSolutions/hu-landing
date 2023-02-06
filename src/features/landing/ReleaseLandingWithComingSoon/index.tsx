@@ -186,7 +186,7 @@ export default function ReleaseLandingWithComingSoon({ }: Props) {
                                         </>
                                     ) : (<></>)}
                                     {!isLoggedIn && !username ? (
-                                        <div className="justify-between hidden space-x-4">
+                                        <div className="justify-between hidden space-x-4 md:flex">
                                             <button onClick={() => {
                                                 // dispatch(showAuthModal({
                                                 //     type: 'login'

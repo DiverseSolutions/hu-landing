@@ -7,7 +7,7 @@ import FacebookSvg from '@/assets/svg/facebook.svg'
 import DiscordSvg from '@/assets/svg/discord.svg'
 import heroLeft from '@/assets/img/hero-left.png'
 import CopyRightSvg from '@/assets/svg/copyright.svg'
-import CartSvg from '@/assets/svg/cart.svg'
+import InTheMetaverseSvg from '@/assets/svg/in-the-metaverse.svg'
 import ChevronDownSvg from '@/assets/svg/chevron-down.svg'
 import heroRight from '@/assets/img/hero-right.png'
 import Image from 'next/image'
@@ -49,7 +49,10 @@ export default function LandingWithComingSoon({ }: Props) {
                         <div className="flex items-center justify-center w-full h-full">
                             <div className="relative flex flex-col items-center">
                                 <div className="max-w-full">
-                                    <div className="flex justify-center w-full">
+                                    <div className='flex transform scale-[0.5] md:scale-[0.7] 2xl:transform-none xl:translate-y-[-20%] translate-y-[400%] md:translate-y-[200%] justify-center w-full mb-8'>
+                                        <InTheMetaverseSvg />
+                                    </div>
+                                    <div className="flex justify-center w-full mt-4">
                                         <div className={styles.hu}>
                                             <TheHu />
                                         </div>

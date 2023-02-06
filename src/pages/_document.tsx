@@ -11,7 +11,7 @@ export default function Document() {
         <NextScript />
         {GOOGLE_ANALYTICS_ID ? <Script async strategy={'afterInteractive'} src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ANALYTICS_ID}`}></Script> : <></>}
         {GOOGLE_ANALYTICS_ID ? (
-          <Script>
+          <Script id="hu-google-analytics">
             {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}

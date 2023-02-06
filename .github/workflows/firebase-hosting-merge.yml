@@ -12,6 +12,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: "npm install"
+      - name: Provide .env
+        run: echo "${{ secrets.DOTENV_PROD }}" | base64 -d > .env
       - run: "npm run build:export"
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:

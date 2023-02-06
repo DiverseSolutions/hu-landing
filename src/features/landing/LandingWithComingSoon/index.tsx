@@ -16,6 +16,7 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { logoutSuccess, showAuthModal } from '@/store/reducer/auth-reducer/actions'
 
 import styles from './styles.module.css'
+import { toast } from 'react-toastify'
 
 type Props = {}
 
@@ -60,14 +61,15 @@ export default function LandingWithComingSoon({ }: Props) {
                                     </div>
                                 </div>
                                 <div className="mt-8">
-                                    <Link href="/early">
+                                    {/* <Link href="/early">
                                         <button className='uppercase bg-white flex justify-center items-center px-4 py-3 rounded-[500px] text-sm font-bold'>
                                             Buy Early Bird Ticket
                                             <span className="p-2 ml-2 bg-black rounded-full">
                                                 <CartSvg />
                                             </span>
                                         </button>
-                                    </Link>
+                                    </Link> */}
+                                    <button className="btn btn-disabled text-white text-base text-opacity-[0.35] rounded-lg bg-black bg-opacity-[0.35] btn-wide font-bold md:min-w-[330px]">PURCHASE</button>
                                 </div>
                             </div>
                         </div>

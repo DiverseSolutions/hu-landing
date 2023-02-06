@@ -1,7 +1,6 @@
 import { ArdArtInvoiceResult } from '@/store/rtk-query/ard-art/types'
 import React, { useState, useMemo, useEffect } from 'react'
 import { isMobile } from 'react-device-detect';
-
 import ArdImg from '@/assets/img/ard.jpg'
 import SocialPayImg from '@/assets/img/socialpay.png'
 import VisaSvg from '@/assets/svg/visa.svg'
@@ -56,6 +55,14 @@ function PaymentStatusCard({ invoice: invoiceData, checkInvoice, item, priceToUs
         }
         return undefined;
     }, [invoice])
+
+    useEffect(() => {
+        if (isMobile && selectedMongolianBank && qrCode) {
+            window.location.href = `${selectedMongolianBank.link}${qrCode}`
+        } else if (isMobile && type === 'ardapp' && qrCode) {
+            window.location.href = `ard://q?qPay_QRcode=${qrCode}`
+        }
+    }, [selectedMongolianBank, isMobile, qrCode])
 
     const [callCheckInvoice, { isFetching: isCheckInvoiceLoading }] = useLazyCheckInvoiceQuery()
 

@@ -154,7 +154,7 @@ const PaymentStatus = (props: Props) => {
     }
     return (
         <>
-            <div className="w-full h-screen">
+            <div className="w-full h-screen overflow-y-auto">
                 <div className="relative w-full h-full">
                     <div className="absolute inset-0 hidden overflow-auto md:block">
                         <div className="relative w-full h-full">
@@ -182,7 +182,7 @@ const PaymentStatus = (props: Props) => {
                             </div>
                         </div>
                     </div>
-                    <div className="absolute inset-0">
+                    <div className="absolute inset-0 overflow-y-auto">
                         {invoiceData && assetData ? (
                             <>
                                 <div className="flex items-center justify-center w-full h-full">

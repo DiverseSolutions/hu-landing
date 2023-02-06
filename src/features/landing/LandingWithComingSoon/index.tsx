@@ -39,7 +39,7 @@ function TheHuResponsive() {
     }, [sw])
 
     if (!sw) {
-        return <ClipLoader color="white" />
+        return <></>
     }
 
     return (

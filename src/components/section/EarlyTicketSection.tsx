@@ -1,7 +1,8 @@
 import { ArdArtTicketOrAssetRecord } from '@/store/rtk-query/hux-ard-art/types'
 import React, { useState, useMemo, useEffect } from 'react'
-import HeartSvg from '@/assets/svg/heart-black.svg'
-import ShareSvg from '@/assets/svg/share-black.svg'
+import HeartSvg from '@/assets/svg/heart-grey.svg'
+import ShareSvg from '@/assets/svg/share-grey.svg'
+import ZondReloadSvg from '@/assets/svg/zond-reload-grey.svg'
 import { useDispatch } from 'react-redux'
 import { useAppSelector } from '@/store/hooks'
 import { showAuthModal } from '@/store/reducer/auth-reducer/actions'
@@ -9,7 +10,7 @@ import { useGetTicketOrAssetQuery, useInvoiceSingleMutation, useLazyCheckInvoice
 import { useRouter } from 'next/router'
 import classNames from 'classnames'
 import moment from 'moment'
-import formatNumber from 'format-number'
+import PlusGrey from '@/components/icon/svgr/PlusGrey'
 import DateRangeSvg from '@/assets/svg/date-range.svg'
 import StadiumOutlineSvg from '@/assets/svg/stadium-outline.svg'
 import ConfirmationOutlineSvg from '@/assets/svg/confirmation-outline.svg'
@@ -17,6 +18,8 @@ import Clock from '@/components/icon/svgr/Clock'
 import { MdOutlineLocationOn } from 'react-icons/md'
 
 import { formatPrice } from '@/lib/utils'
+import { ClipLoader } from 'react-spinners'
+import { toast } from 'react-toastify'
 
 
 type Props = {
@@ -27,8 +30,11 @@ type Props = {
 function TicketSection({ ticket, priceToUsdRate }: Props) {
 
     const { data: tickets, isLoading: isTicketsLoading } = useGetTicketOrAssetQuery({
-        subTag: ticket.tag
+        subTag: ticket.tag,
+        type: "ticket"
     })
+
+    const [selectedTicketId, setSelectedTicketId] = useState<number>(null)
 
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
     const accountId = useAppSelector(state => state.auth.ardArt.accountId);
@@ -66,6 +72,13 @@ function TicketSection({ ticket, priceToUsdRate }: Props) {
     }, [ticket])
 
     useEffect(() => {
+        if (tickets?.result?.records?.length) {
+            setSelectedTicketId(tickets.result.records[0].id)
+        }
+    }, [tickets])
+
+
+    useEffect(() => {
         const intervalId = setInterval(() => {
             const mFinishDate = moment(ticket.finishDate);
             if (mFinishDate.isValid()) {
@@ -84,8 +97,14 @@ function TicketSection({ ticket, priceToUsdRate }: Props) {
             }))
             return;
         }
+        if (!selectedTicketId) {
+            toast('Please select your ticket', {
+                type: 'warning'
+            })
+            return
+        }
         try {
-            router.push(`/payment?productId=${ticket.id}`)
+            router.push(`/payment?productId=${selectedTicketId}`)
         } catch (e) {
             console.log(e)
         }
@@ -133,17 +152,28 @@ function TicketSection({ ticket, priceToUsdRate }: Props) {
                             <div className='md:ml-[50px] md:w-[40%] mw-md:order-1'>
                                 <div className="flex flex-col w-full">
                                     <div className="rounded-lg border-[1px] border-black border-opacity-[0.1] p-6">
-                                        <div className="flex justify-between w-full">
-                                            <div className='p-3 rounded-lg cursor-pointer bg-black bg-opacity-[0.04]'>
+                                        <div>
+                                            <p className='text-sm opacity-[0.65]'>Hosted by The Hu</p>
+                                            <p className='text-2xl font-bold max-w-[250px]'>
+                                                {ticket.name}
+                                            </p>
+                                            <div className="my-6 border border-black border-opacity-[0.1]">
+                                            </div>
+                                            <div className='flex items-center px-2 space-x-8'>
                                                 <HeartSvg />
+                                                <div className="flex items-center cursor-not-allowed">
+                                                    <ZondReloadSvg />
+                                                    <span className="ml-2 text-xs opacity-[0.65]">
+                                                        Refresh
+                                                    </span>
+                                                </div>
+                                                <div className="flex items-center cursor-not-allowed">
+                                                    <ShareSvg />
+                                                    <span className="ml-2 text-xs opacity-[0.65]">
+                                                        Share
+                                                    </span>
+                                                </div>
                                             </div>
-                                            <div className='p-3 rounded-lg cursor-pointer bg-black bg-opacity-[0.04]'>
-                                                <ShareSvg />
-                                            </div>
-                                        </div>
-                                        <div className="mt-4">
-                                            <p>Hosted by The Hu</p>
-                                            <p className='text-lg font-bold'>{ticket.name}</p>
                                         </div>
                                     </div>
                                     <div className="border border-black rounded-lg border-opacity-[0.1] p-6 mt-4">
@@ -166,20 +196,34 @@ function TicketSection({ ticket, priceToUsdRate }: Props) {
                                             </div>
                                             <div className="mt-4">
                                                 <div className="flex flex-col w-full">
-                                                    <button className="text-sm btn btn-black">
-                                                        Time zone Asia March 4,2023 at 13:00pm GMT +8
-                                                    </button>
-                                                    <button className="px-3 py-3 mt-2 text-sm text-black bg-white border rounded-lg">
-                                                        Time zone Asia March 4,2023 at 13:00pm GMT +8
-                                                    </button>
-                                                    <button className="px-3 py-3 mt-2 text-sm text-black bg-white border rounded-lg">
-                                                        Time zone Asia March 4,2023 at 13:00pm GMT +8
-                                                    </button>
+                                                    {isTicketsLoading ? <ClipLoader color="black" /> : <></>}
+                                                    {!isTicketsLoading && tickets?.result?.records?.length ? (
+                                                        <div className='flex flex-col w-full space-y-4'>
+                                                            {tickets.result.records.map((ticket) => (
+                                                                <button key={ticket.id}
+                                                                    onClick={() => {
+                                                                        setSelectedTicketId(ticket.id)
+                                                                    }}
+                                                                    className={classNames(`text-sm border`, { 'btn btn-black border-transparent p-3': selectedTicketId === ticket.id, 'bg-white hover:bg-black hover:bg-opacity-[0.04] p-3 border rounded-lg text-black': selectedTicketId !== ticket.id })}>
+                                                                    {ticket.name}
+                                                                </button>
+                                                            ))}
+                                                        </div>
+                                                    ) : (<></>)}
                                                 </div>
                                             </div>
                                         </div>
                                         <div className="mt-4">
-                                            <button onClick={handlePurchase} className={classNames("btn btn-primary rounded-lg btn-block")}>Buy now for {priceUsd}</button>
+                                            <div className="flex w-full">
+                                                <div className="flex flex-grow">
+                                                    <button onClick={handlePurchase} className={classNames("btn btn-primary rounded-lg btn-block")}>Buy now for {priceUsd}</button>
+                                                </div>
+                                                <div className="flex ml-2">
+                                                    <div className="btn hover:bg-opacity-[0.12] btn-disabled bg-opacity-[0.2] rounded-lg">
+                                                        <PlusGrey />
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

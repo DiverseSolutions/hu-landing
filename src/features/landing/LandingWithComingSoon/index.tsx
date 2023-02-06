@@ -60,7 +60,7 @@ export default function LandingWithComingSoon({ }: Props) {
                                 </div>
                                 <div className="mt-8 text-center">
                                     <div className="md:max-w-[576px] max-w-[100vw]">
-                                        <p className='text-white text-[16px] uppercase break-normal break-words'>“A band from <span className='font-bold'>Mongolia</span> that blends the screaming guitars of heavy metal and traditional Mongolian guttural singing,”</p>
+                                        <p className='text-white text-[16px] uppercase break-normal break-words'>Early bird ticket for “Rumble of Thunder V1.1” Coming Soon on 13 February, 2023</p>
                                     </div>
                                 </div>
                                 <div className="mt-8">
@@ -147,7 +147,7 @@ export default function LandingWithComingSoon({ }: Props) {
                     </div>
                 </div>
                 <div className="absolute bottom-0 left-0 right-0 z-10">
-                    <div className="h-[300px] w-full" style={{ background: 'linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 81.23%)' }}>
+                    <div className="h-[300px] w-full" >
 
                     </div>
                 </div>
@@ -156,11 +156,11 @@ export default function LandingWithComingSoon({ }: Props) {
                         <div className="flex justify-center w-full h-full">
                             <div className="container h-full">
                                 <div className="flex items-end w-full h-full pb-8">
-                                    <div className="flex flex-col items-center w-full md:grid md:grid-cols-3 md:gap-x-2">
+                                    <div className="flex-col items-center hidden w-full md:grid md:grid-cols-3 md:gap-x-2">
                                         <div className='flex justify-center w-full md:justify-start'>
                                             <div className="flex flex-col items-center pb-10">
-                                                <p className="mb-4 font-bold text-white uppercase">Connect with us</p>
-                                                <div className="flex space-x-8 jusify-between">
+                                                <p className="hidden mb-4 font-bold text-white uppercase">Connect with us</p>
+                                                <div className="flex hidden space-x-8 jusify-between">
                                                     <span className="cursor-pointer"><MediumSvg /></span>
                                                     <span className="cursor-pointer"><InstagramSvg /></span>
                                                     <span className="cursor-pointer"><FacebookSvg /></span>
@@ -174,7 +174,7 @@ export default function LandingWithComingSoon({ }: Props) {
                                                 <p className="font-medium text-white uppercase text-opacity-[0.65]">2023 THE HU</p>
                                             </div>
                                         </div>
-                                        <div className='flex items-center justify-center w-full md:justify-end'>
+                                        <div className='items-center justify-center hidden w-full md:justify-end'>
                                             <div className="flex items-center space-x-4">
                                                 <p className="font-medium text-white uppercase text-opacity-[0.65] cursor-pointer">TERMS & CONDITION</p>
                                                 <p className="font-medium text-white uppercase text-opacity-[0.65] cursor-pointer">PRIVACY POLICY</p>

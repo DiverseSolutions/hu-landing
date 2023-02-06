@@ -53,7 +53,7 @@ export const ardArtApi = createApi({
                 body: {
                     ...d,
                     method: 'socialpay',
-                    callback: `https://hu-landing-dev.web.app/payment-status?invoiceId=${d.invoiceId}&productId=${d.productId}&type=socialpay`
+                    callback: `${process.env.NEXT_PUBLIC_APP_HOST_URL}/payment-status?invoiceId=${d.invoiceId}&productId=${d.productId}&type=socialpay`
                 }
             })
         }),

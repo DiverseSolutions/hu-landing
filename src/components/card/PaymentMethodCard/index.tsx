@@ -65,13 +65,14 @@ function PaymentMethodCard({ invoice, item, priceToUsdrate }: Props) {
             return;
         }
         if (selected === 'socialpay' || selected === 'card') {
+            const linkParam = selected === 'card' ? 'payment' : 'socialpay'
             const r = await callUpdateInvoiceSocialPay({
                 invoiceId: invoice.id,
                 productId: item.id,
             }).unwrap()
             if (r.result) {
                 if (r.result?.response?.invoice) {
-                    window.location.href = `https://ecommerce.golomtbank.com/payment/en/${r.result.response.invoice}`
+                    window.location.href = `https://ecommerce.golomtbank.com/${linkParam}/en/${r.result.response.invoice}`
                 }
             }
         } else if (selected === 'ardapp') {

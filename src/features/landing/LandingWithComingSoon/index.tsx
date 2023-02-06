@@ -129,14 +129,14 @@ export default function LandingWithComingSoon({ }: Props) {
                                                 dispatch(showAuthModal({
                                                     type: 'login'
                                                 }))
-                                            }} className="btn border-none hover:bg-white bg-white text-black rounded-[500px]">
+                                            }} className="btn btn-disabled border-none hover:bg-white bg-white text-black rounded-[500px]">
                                                 Login
                                             </button>
                                             <button onClick={() => {
                                                 dispatch(showAuthModal({
                                                     type: 'register'
                                                 }))
-                                            }} className="btn bg-black bg-opacity-[0.65] rounded-[500px]">
+                                            }} className="btn btn-disabled bg-black bg-opacity-[0.65] rounded-[500px]">
                                                 Signup
                                             </button>
                                         </div>

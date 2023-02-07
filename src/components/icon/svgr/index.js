@@ -18,6 +18,7 @@ export { default as InTheMetaverse } from "./InTheMetaverse";
 export { default as Instagram } from "./Instagram";
 export { default as LoginTheHu } from "./LoginTheHu";
 export { default as Medium } from "./Medium";
+export { default as PlusGrey } from "./PlusGrey";
 export { default as ShareBlack } from "./ShareBlack";
 export { default as StadiumOutline } from "./StadiumOutline";
 export { default as SuccessCheck } from "./SuccessCheck";

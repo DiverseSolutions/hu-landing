@@ -185,17 +185,17 @@ function TicketSection({ ticket, priceToUsdRate }: Props) {
     }, [])
 
     const handlePurchase = async () => {
-        if (!isLoggedIn || !accountId) {
-            dispatch(showAuthModal({
-                type: 'login'
-            }))
-            return;
-        }
         if (!selectedTicketId) {
             toast('Please select your ticket timezone', {
                 type: 'warning'
             })
             return
+        }
+        if (!isLoggedIn || !accountId) {
+            dispatch(showAuthModal({
+                type: 'login'
+            }))
+            return;
         }
         try {
             router.push(`/payment?productId=${selectedTicketId}`)
@@ -328,7 +328,7 @@ function TicketSection({ ticket, priceToUsdRate }: Props) {
                                         <div className="mt-4">
                                             <div className="flex w-full">
                                                 <div className="flex flex-grow">
-                                                    <button onClick={handlePurchase} className={classNames("btn btn-primary rounded-lg btn-block")}>Buy now for {priceUsd}</button>
+                                                    <button onClick={handlePurchase} className={classNames("btn btn-primary rounded-lg btn-block", { 'bg-black bg-opacity-[0.2] text-black text-opacity-[0.2] hover:bg-black hover:bg-opacity-[0.2]': !selectedTicketId })}>Purchase</button>
                                                 </div>
                                                 <div className="flex ml-2">
                                                     <div className="btn hover:bg-opacity-[0.12] btn-disabled bg-opacity-[0.2] rounded-lg">

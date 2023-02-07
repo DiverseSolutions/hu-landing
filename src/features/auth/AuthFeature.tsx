@@ -111,45 +111,58 @@ export default function AuthFeature({
                     <div className='pt-6 mb-4 md:px-8'>
                         {formType === 'register' ? (
                             <>
-                                <h2 className='mb-4 text-lg font-bold'>Signup</h2>
+                                <h2 className='mb-8 text-[32px] font-bold'>Create an account</h2>
                                 <SignupForm onSuccess={(d) => {
                                     setFormType('register-otp');
                                     setCurrentUsername(d.username)
                                 }} />
-                                <div className="mt-2">
-                                    <p className="my-4 font-normal text-center">Already have an account?</p>
-                                    <div className="flex justify-center w-full">
-                                        <button onClick={() => {
-                                            setFormType('login')
-                                        }} className="btn btn-secondary btn-wide">Login</button>
-                                    </div>
+                                <div className="flex justify-center w-full mt-6">
+                                    <p className="text-center max-w-[276px] text-sm">
+                                        <span className='opacity-[0.35]'>By creating an account, I agree to idax</span>
+                                        <span className="ml-2 cursor-pointer">terms of service</span>
+                                        <span className='opacity-[0.35] ml-2 mr-2'>and</span>
+                                        <span className='cursor-pointer'>privacy policy.</span>
+                                    </p>
+                                </div>
+                                <div className="mt-6 cursor-pointer">
+                                    <p onClick={() => {
+                                        setFormType('login')
+                                    }} className="my-4 font-normal text-center text-black">
+                                        <span className='opacity-[0.35]'>Already have an account?</span>
+                                        <span className="ml-2 underline">Login</span>
+                                    </p>
                                 </div>
                             </>
                         ) : <></>}
                         {formType === 'login' ? (
                             <>
-                                <h2 className='mb-4 text-lg font-bold'>Login to an existing account</h2>
-                                <LoginForm onSuccess={() => {
+                                <h2 className='mb-8 text-[32px] font-bold'>Log In</h2>
+                                <LoginForm onForgotPassword={() => {
+                                    setFormType('forgot-password')
+                                }} onSuccess={() => {
                                     hideModal()
                                 }} />
-                                <div className="mt-2">
-                                    <p className="my-4 font-normal text-center">Don&apos;t have an account?</p>
-                                    <div className="flex justify-center w-full">
-                                        <button onClick={() => {
-                                            setFormType('register')
-                                        }} className="btn btn-secondary btn-wide">Signup</button>
-                                    </div>
+                                <div className="flex justify-center w-full mt-6">
+                                    <p className="text-center max-w-[276px] text-sm">
+                                        <span className='opacity-[0.35]'>By creating an account, I agree to idax</span>
+                                        <span className="ml-2 cursor-pointer">terms of service</span>
+                                        <span className='opacity-[0.35] ml-2 mr-2'>and</span>
+                                        <span className='cursor-pointer'>privacy policy.</span>
+                                    </p>
                                 </div>
-                                <div className="mt-4 text-center">
-                                    <button onClick={() => {
-                                        setFormType('forgot-password')
-                                    }} className="mt-2 underline">Forgot password</button>
+                                <div className="mt-6 cursor-pointer">
+                                    <p onClick={() => {
+                                        setFormType('register')
+                                    }} className="my-4 font-normal text-center text-black">
+                                        <span className='opacity-[0.35]'>Don&apos;t have an account?</span>
+                                        <span className="ml-2 underline">Signup</span>
+                                    </p>
                                 </div>
                             </>
                         ) : <></>}
                         {formType === 'register-otp' ? (
                             <>
-                                <h2 className='mb-4 text-lg font-bold'>Confirm Email</h2>
+                                <h2 className='mb-8 text-[32px] font-bold'>Confirm Email</h2>
                                 <SignupOtpForm username={currentUsername} onSuccess={() => {
                                     hideModal()
                                     setFormType('login')
@@ -158,7 +171,7 @@ export default function AuthFeature({
                         ) : (<></>)}
                         {formType === 'forgot-password' ? (
                             <>
-                                <h2 className='mb-4 text-lg font-bold'>Forgot Password</h2>
+                                <h2 className='mb-8 text-[32px] font-bold'>Forgot Password</h2>
                                 <ForgotPasswordForm onSuccess={(v) => {
                                     setCurrentUsername(v)
                                     setFormType('forgot-password-confirm')
@@ -167,7 +180,7 @@ export default function AuthFeature({
                         ) : (<></>)}
                         {formType === 'forgot-password-confirm' ? (
                             <>
-                                <h2 className='mb-4 text-lg font-bold'>Reset Password</h2>
+                                <h2 className='mb-8 text-[32px] font-bold'>Reset Password</h2>
                                 <ForgotPasswordConfirmForm username={currentUsername} onSuccess={() => {
                                     hideModal()
                                 }} />

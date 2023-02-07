@@ -10,6 +10,7 @@ import { toast } from 'react-toastify';
 
 type Props = {
   onSuccess: () => void;
+  onForgotPassword: () => void;
 }
 
 type LoginFormData = {
@@ -100,7 +101,7 @@ export default function LoginForm({ ...props }: Props) {
           <label className="label">
             <span className="label-text">Username</span>
           </label>
-          <input type="text" placeholder="Enter your username" className="w-full input input-bordered"
+          <input type="text" className="w-full input input-bordered"
             {...register('username', {
               validate: (v) => v?.length < 4 ? "Invalid username" : undefined
             })} />
@@ -113,8 +114,9 @@ export default function LoginForm({ ...props }: Props) {
         <div className="w-full form-control">
           <label className="label">
             <span className="label-text">Password</span>
+            <span onClick={props.onForgotPassword} className="border-b label-text-alt text-black text-opacity-[0.35] cursor-pointer">Forgot Password</span>
           </label>
-          <input type="password" placeholder="Enter password" className="w-full input input-bordered"
+          <input type="password" className="w-full input input-bordered"
             {...register('password', {
               pattern: {
                 value: PASSWORD_MIN_REGEX,

@@ -150,8 +150,8 @@ export default function ReleaseLandingWithComingSoon({ }: Props) {
                                     </div>
                                     <div className="mt-8 text-center">
                                         <div className="md:max-w-[576px] max-w-[80vw]">
-                                            <p className='text-white text-[20px] uppercase break-normal break-words'>IN THE METAVERSE
-                                                Early bird ticket for Rumble of Thunder V1.1 on 13 February, 2023</p>
+                                            <p className='text-white text-[20px] uppercase break-normal break-words'>IN THE METAVERSE<br />
+                                                Early bird ticket for Rumble of Thunder V1.1<br /> on 13 February, 2023</p>
                                         </div>
                                     </div>
                                     <div className="mt-8">

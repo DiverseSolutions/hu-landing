@@ -6,6 +6,8 @@ import { useLazyGetUserQuery, useLoginMutation } from '@/store/rtk-query/cognito
 import classNames from 'classnames';
 import React, { useState } from 'react'
 import { useForm } from "react-hook-form";
+import { IoEye, IoEyeOff } from 'react-icons/io5'
+
 import { toast } from 'react-toastify';
 
 type Props = {
@@ -17,8 +19,10 @@ type LoginFormData = {
   username: string;
   password: string;
 }
+
 export default function LoginForm({ ...props }: Props) {
 
+  const [isShowPwd, setIsShowPwd] = useState(false)
   const dispatch = useAppDispatch();
   const [callGetUser] = useLazyGetUserQuery()
   const [isLoginLoading, setIsLoginLoading] = useState(false)
@@ -116,13 +120,20 @@ export default function LoginForm({ ...props }: Props) {
             <span className="label-text">Password</span>
             <span onClick={props.onForgotPassword} className="border-b label-text-alt text-black text-opacity-[0.35] cursor-pointer">Forgot Password</span>
           </label>
-          <input type="password" className="w-full input input-bordered"
-            {...register('password', {
-              pattern: {
-                value: PASSWORD_MIN_REGEX,
-                message: "Invalid password"
-              }
-            })} />
+          <div className="relative w-full">
+            <input type={isShowPwd ? 'text' : 'password'} className="w-full input input-bordered"
+              {...register('password', {
+                pattern: {
+                  value: PASSWORD_MIN_REGEX,
+                  message: "Invalid password"
+                }
+              })} />
+            <div className="absolute top-0 bottom-0 right-2">
+              <div className="flex items-center h-full cursor-pointer">
+                {isShowPwd ? <IoEyeOff onClick={() => setIsShowPwd(false)} color="rgba(39, 41, 55, 0.35)" /> : <IoEye onClick={() => setIsShowPwd(true)} color="rgba(39, 41, 55, 0.35)" />}
+              </div>
+            </div>
+          </div>
           <label className="label">
             <span className="label-text-alt text-error-content">{errors.password?.message}</span>
           </label>

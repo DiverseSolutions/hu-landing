@@ -26,7 +26,9 @@ const LoginPage = (props: Props) => {
                     <div className="flex items-center w-full h-full ml-8">
                         <div className="max-w-[376px]">
                             <h4 className='mb-4 text-xl font-bold'>Log In</h4>
-                            <LoginForm onSuccess={() => {
+                            <LoginForm onForgotPassword={() => {
+
+                            }} onSuccess={() => {
 
                             }} />
                         </div>

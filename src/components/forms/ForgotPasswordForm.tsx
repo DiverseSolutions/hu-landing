@@ -1,37 +1,51 @@
+import { useLazyGetCognitoUserDataQuery } from '@/store/rtk-query/cognito-userdata/cognito-userdata-api';
 import { useForgotPasswordMutation } from '@/store/rtk-query/cognito/cognito-api';
 import classNames from 'classnames';
 import React, { useState } from 'react'
 import { useForm } from "react-hook-form";
 import { toast } from 'react-toastify';
+import { EMAIL_REGEX } from '@/lib/consts';
+
 
 type Props = {
     onSuccess: (v: string) => void;
 }
 
 type ForgotPasswordFormData = {
-    username: string;
+    email: string;
 }
 
 export default function ForgotPasswordForm({ ...props }: Props) {
 
+    const [callCognitoUserData] = useLazyGetCognitoUserDataQuery()
     const [callForgotPassword, { isLoading: isForgotPasswordLoading }] = useForgotPasswordMutation()
 
     const { register, handleSubmit, formState: {
         errors
     } } = useForm<ForgotPasswordFormData>({
         defaultValues: {
-            username: '',
+            email: '',
         }
     })
 
     const onSubmit = async (d: ForgotPasswordFormData) => {
+        const userDataResp = await callCognitoUserData({
+            email: d.email,
+        }).unwrap()
+        if (!userDataResp.Response.Users.length) {
+            toast("User not found", {
+                type: 'error'
+            })
+            return;
+        }
+        const cognitoUserData = userDataResp.Response.Users[0];
         const r = await callForgotPassword({
-            Username: d.username
+            Username: cognitoUserData.Username
         }).unwrap()
         toast('Confirmation code sent successfully. Please check your email.', {
             type: 'success'
         })
-        props.onSuccess(d.username)
+        props.onSuccess(cognitoUserData.Username)
     }
 
     return (
@@ -39,14 +53,17 @@ export default function ForgotPasswordForm({ ...props }: Props) {
             <div className="mb-4">
                 <div className="w-full form-control">
                     <label className="label">
-                        <span className="label-text">Username</span>
+                        <span className="label-text">Email</span>
                     </label>
-                    <input type="text" placeholder="Enter your username" className="w-full input input-bordered"
-                        {...register('username', {
-                            validate: (v) => v?.length < 4 ? "Invalid username" : undefined
+                    <input type="text" placeholder="" className="w-full input input-bordered"
+                        {...register('email', {
+                            pattern: {
+                                value: EMAIL_REGEX,
+                                message: "Invalid Email"
+                            },
                         })} />
                     <label className="label">
-                        <span className="label-text-alt text-error-content">{errors.username?.message}</span>
+                        <span className="label-text-alt text-error-content">{errors.email?.message}</span>
                     </label>
                 </div>
             </div>

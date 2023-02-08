@@ -1,5 +1,5 @@
 import { ArdArtResponse } from './../ard-art/types';
-import { ArdArtBundleResponse, ArdArtBundleInvoiceResponse, ArdArtSingleInvoiceResponse, ArdArtAssetDetailByIDResult, ArdArtTicketOrAssetResponse, ArdArtMyOwnedNftResponse, ArdArtCreateSocialpayInvoiceResult, ArdArtCreateQpayInvoiceResult, ArdArtCreateQposInvoiceResult, ArdArtGetInvoiceByIdResult } from './types';
+import { ArdArtBundleResponse, ArdArtBundleInvoiceResponse, ArdArtSingleInvoiceResponse, ArdArtAssetDetailByIDResult, ArdArtTicketOrAssetResponse, ArdArtMyOwnedNftResponse, ArdArtCreateSocialpayInvoiceResult, ArdArtCreateQpayInvoiceResult, ArdArtCreateQposInvoiceResult, ArdArtGetInvoiceByIdResult, ArdArtCheckInvoiceResult } from './types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const huxArdArtApi = createApi({
@@ -33,6 +33,14 @@ export const huxArdArtApi = createApi({
                 body: {
 
                 }
+            })
+        }),
+        checkInvoice: builder.query<ArdArtResponse<ArdArtCheckInvoiceResult>, {
+            invoiceId: number
+        }>({
+            query: (d) => ({
+                url: `/api/v1/market/invoice/check/${d.invoiceId}`,
+                method: 'GET',
             })
         }),
         invoiceBundle: builder.mutation<ArdArtBundleInvoiceResponse, {
@@ -128,4 +136,6 @@ export const {
     useCreateQposInvoiceMutation,
     useGetInvoiceByIdQuery,
     useLazyGetInvoiceByIdQuery,
+    useCheckInvoiceQuery,
+    useLazyCheckInvoiceQuery
 } = huxArdArtApi;

@@ -1,10 +1,10 @@
 import PaymentStatusCard from '@/components/card/PaymentStatusCard'
-import { ArdArtInvoiceResult } from '@/store/rtk-query/ard-art/types'
-import { ArdArtAssetDetailByIDResult, ArdArtCheckInvoiceResult } from '@/store/rtk-query/hux-ard-art/types'
+import { ArdArtGetInvoiceByIdResult, ArdArtAssetDetailByIDResult } from '@/store/rtk-query/hux-ard-art/types'
+import { ArdArtCheckInvoiceResult } from '@/store/rtk-query/hux-ard-art/types'
 import React from 'react'
 
 type Props = {
-    invoice: ArdArtInvoiceResult,
+    invoice: ArdArtGetInvoiceByIdResult,
     checkInvoice?: ArdArtCheckInvoiceResult,
     product: ArdArtAssetDetailByIDResult,
     priceToUsdRate: number,

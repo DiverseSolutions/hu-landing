@@ -1,4 +1,4 @@
-import { ArdArtBalanceResponse, ArdArtCheckInvoiceResult, ArdArtMetalandLogin, ArdArtMetalandLoginResponse, ArdArtResponse } from './types';
+import { ArdArtBalanceResponse, ArdArtMetalandLogin, ArdArtMetalandLoginResponse, ArdArtResponse } from './types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { getArdArdAccessToken } from '@/lib/cookie'
 
@@ -26,21 +26,10 @@ export const ardArtApi = createApi({
                 method: 'GET',
             })
         }),
-        checkInvoice: builder.query<ArdArtResponse<ArdArtCheckInvoiceResult>, {
-            invoiceId: number;
-        }>({
-            query: (d) => ({
-                url: '/api/v1/balance/check/invoice',
-                method: 'POST',
-                body: d
-            })
-        }),
     }),
 })
 
 export const {
     useMetalandLoginMutation,
     useBalanceQuery,
-    useCheckInvoiceQuery,
-    useLazyCheckInvoiceQuery
 } = ardArtApi;

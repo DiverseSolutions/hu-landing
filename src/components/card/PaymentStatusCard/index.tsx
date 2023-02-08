@@ -11,10 +11,10 @@ import Image from 'next/image'
 import QRImage from "react-qr-image"
 import classNames from 'classnames'
 import { ArdArtAssetDetailByIDResult } from '@/store/rtk-query/hux-ard-art/types'
-import { ArdArtCheckInvoiceResult } from '@/store/rtk-query/ard-art/types'
+import { ArdArtCheckInvoiceResult } from '@/store/rtk-query/hux-ard-art/types'
 import { useRouter } from 'next/router'
 import { qpayBanks, QPayBank } from './banks'
-import { useLazyCheckInvoiceQuery } from '@/store/rtk-query/ard-art/ard-art-api';
+import { useLazyCheckInvoiceQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api';
 
 type MongolianBank = QPayBank
 
@@ -69,11 +69,11 @@ function PaymentStatusCard({ invoice: invoiceData, checkInvoice, item, priceToUs
     const [selected, setSelected] = useState<PaymentType>(type)
 
     const isSuccess = useMemo(() => {
-        if (checkInvoiceData?.status === 'SUCCESS') {
+        if (checkInvoiceData?.invoice?.status === 'SUCCESS') {
             return true;
         }
         return false
-    }, [checkInvoiceData?.status])
+    }, [checkInvoiceData?.invoice?.status])
 
     const priceUsd = useMemo(() => {
         return new Intl.NumberFormat('en-US', {

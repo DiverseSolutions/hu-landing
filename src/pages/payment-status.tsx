@@ -9,7 +9,7 @@ import PaymentStatusFeature from '@/features/payment/PaymentStatusFeature'
 import { useLazyGetAssetDetailByIdQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
 import { ArdArtAssetDetailByIDResult } from '@/store/rtk-query/hux-ard-art/types'
 import { ArdArtGetInvoiceByIdResult } from '@/store/rtk-query/hux-ard-art/types'
-import { ArdArtCheckInvoiceResult } from '@/store/rtk-query/ard-art/types'
+import { ArdArtCheckInvoiceResult } from '@/store/rtk-query/hux-ard-art/types'
 import { useLazyMonxanshRateQuery } from '@/store/rtk-query/monxansh/monxansh-api'
 import { useLazyIdaxTickerQuery } from '@/store/rtk-query/idax/idax-api'
 

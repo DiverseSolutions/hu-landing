@@ -7,6 +7,7 @@ import VisaSvg from '@/assets/svg/visa.svg'
 import SuccessCheckSvg from '@/assets/svg/success-check.svg'
 import { MdChevronLeft } from 'react-icons/md'
 import BxCheck from '@/assets/svg/bx-check.svg'
+import { MdPending } from 'react-icons/md'
 import Image from 'next/image'
 import QRImage from "react-qr-image"
 import classNames from 'classnames'
@@ -15,6 +16,7 @@ import { ArdArtCheckInvoiceResult } from '@/store/rtk-query/hux-ard-art/types'
 import { useRouter } from 'next/router'
 import { qpayBanks, QPayBank } from './banks'
 import { useLazyCheckInvoiceQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api';
+import { BeatLoader, ClipLoader } from 'react-spinners';
 
 type MongolianBank = QPayBank
 
@@ -24,7 +26,6 @@ type PaymentType = 'card' | 'socialpay' | 'ardapp' | 'socialpay' | 'mongolian-ba
 type Props = {
     invoice: ArdArtGetInvoiceByIdResult,
     checkInvoice?: ArdArtCheckInvoiceResult,
-    item: ArdArtAssetDetailByIDResult,
     priceToUsdrate: number,
     bank?: string,
     isCheckLoading?: boolean,
@@ -32,9 +33,14 @@ type Props = {
 }
 
 
-function PaymentStatusCard({ invoice: invoiceData, checkInvoice, item, priceToUsdrate, bank, type, ...props }: Props) {
+function PaymentStatusCard({ invoice: invoiceData, checkInvoice, priceToUsdrate, bank, type, ...props }: Props) {
 
     const [invoice, setInvoice] = useState(invoiceData)
+
+    const item = useMemo(() => {
+        return invoice.product
+    }, [invoice])
+
     const [checkInvoiceData, setCheckInvoiceData] = useState<ArdArtCheckInvoiceResult | undefined>(checkInvoice)
     const [selectedMongolianBank, setSelectedMongolianBank] = useState<MongolianBank | undefined>(() => {
         if (type === 'mongolian-banks') {
@@ -131,7 +137,7 @@ function PaymentStatusCard({ invoice: invoiceData, checkInvoice, item, priceToUs
                     <div className='flex flex-col w-full mt-4'>
                         <div className={classNames('cursor-pointer rounded-lg  p-[14px] w-full flex items-center text-dark-secondary border-transparent bg-black bg-opacity-[0.04]')}>
                             <div className="flex items-center justify-between w-full">
-                                <div className="flex items-center">
+                                <div className="flex items-center w-full">
                                     {selected === 'ardapp' || selectedMongolianBank ? (
                                         <>
                                             <img src={selectedMongolianBank?.logo ? selectedMongolianBank.logo : selected === 'ardapp' ? ArdImg.src : ''} className="w-[32px] h-[32px]" />
@@ -169,6 +175,14 @@ function PaymentStatusCard({ invoice: invoiceData, checkInvoice, item, priceToUs
                         <SuccessCheckSvg />
                         <p className="mt-2 text-2xl font-bold text-center max-w-[200px]">
                             Your Transaction has been made
+                        </p>
+                    </div>
+                ) : (<></>)}
+                {!isSuccess && invoice.paymentMethod === 'socialpay' ? (
+                    <div className="flex flex-col items-center w-full mt-4">
+                        <BeatLoader className='my-8' />
+                        <p className="mt-2 text-2xl font-bold text-center max-w-[200px]">
+                            Processing transaction
                         </p>
                     </div>
                 ) : (<></>)}

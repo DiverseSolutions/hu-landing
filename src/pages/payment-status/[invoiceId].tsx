@@ -35,7 +35,6 @@ const PaymentStatus = (props: Props) => {
 
     const [checkInvoiceData, setCheckInvoiceData] = useState<ArdArtCheckInvoiceResult>()
     const [invoiceData, setInvoiceData] = useState<ArdArtGetInvoiceByIdResult>()
-    const [assetData, setAssetData] = useState<ArdArtAssetDetailByIDResult>()
     const [isLoading, setIsLoading] = useState(true)
 
     const [paymentType, setPaymentType] = useState<PaymentType>()
@@ -83,18 +82,8 @@ const PaymentStatus = (props: Props) => {
     }
 
     const loadData = async () => {
-        const paymentType = router.query.type as PaymentType;
-        if (!paymentType) {
-            setPageErrorMessage("Payment type not found")
-            return;
-        }
-        setPaymentType(paymentType)
-        const productId = parseInt(router.query.productId as string)
-        if (!productId) {
-            setPageErrorMessage("Product not found.")
-            return;
-        }
-        const invoiceId = paymentType === 'socialpay' ? parseInt(`${Cookies.get('socialPayInvoiceId')}`) : parseInt(`${router.query.invoiceId}`);
+
+        const invoiceId = parseInt(`${router.query.invoiceId}`);
         if (!invoiceId) {
             setPageErrorMessage("Invoice not found.")
             return;
@@ -106,15 +95,6 @@ const PaymentStatus = (props: Props) => {
         }
         if (router.query.bank) {
             setBank(decodeURIComponent(router.query.bank as string))
-        }
-        const asset = await callAssetDetailById({
-            id: productId,
-        })
-        if (asset.data?.result) {
-            setAssetData(asset.data?.result)
-        } else {
-            setPageErrorMessage("Product not found")
-            return;
         }
         const ardxToUsdRate = await fetchArdxToUsdRate()
         if (ardxToUsdRate) {
@@ -130,14 +110,19 @@ const PaymentStatus = (props: Props) => {
 
         if (invoice.data?.result) {
             setInvoiceData(invoice.data?.result)
+            const paymentType = (router.query.type || invoice.data?.result.paymentMethod) as PaymentType;
+            if (!paymentType) {
+                setPageErrorMessage("Payment type not found")
+                return;
+            }
+            setPaymentType(paymentType)
         } else {
             setPageErrorMessage("Invoice not found")
         }
-        if (asset.data?.result && invoice.data?.result && ardxToUsdRate) {
+        if (invoice.data?.result && ardxToUsdRate) {
             setIsLoading(false)
         } else {
             setPageErrorMessage("An unknown error occured. Please try reload the page.")
-            console.log(asset.data?.result)
             console.log(invoice.data?.result)
             console.log(ardxToUsdRate)
         }
@@ -198,17 +183,15 @@ const PaymentStatus = (props: Props) => {
                         </div>
                     </div>
                     <div className="absolute inset-0 overflow-y-auto">
-                        {invoiceData && assetData ? (
+                        {invoiceData ? (
                             <>
                                 <div className="flex items-center justify-center w-full h-full">
                                     <div className="flex">
-                                        {paymentType ? <PaymentStatusFeature checkInvoice={checkInvoiceData} bank={bank} type={paymentType} invoice={invoiceData} product={assetData} priceToUsdRate={ardxToUsdRate} /> : <><p>Payment type not found.</p></>}
-
+                                        {paymentType ? <PaymentStatusFeature checkInvoice={checkInvoiceData} bank={bank} type={paymentType} invoice={invoiceData} priceToUsdRate={ardxToUsdRate} /> : <><p>Payment type not found.</p></>}
                                     </div>
                                 </div>
                             </>
                         ) : <></>}
-                        {!assetData ? <p>Asset not found</p> : <></>}
                         {!invoiceData ? <p>Invoice not found</p> : <></>}
                     </div>
                 </div>

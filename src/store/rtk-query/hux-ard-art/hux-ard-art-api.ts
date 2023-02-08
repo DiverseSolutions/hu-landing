@@ -75,7 +75,7 @@ export const huxArdArtApi = createApi({
                 body: {
                     ...d,
                     method: 'socialpay',
-                    callback: `${process.env.NEXT_PUBLIC_APP_HOST_URL}/payment-status?type=socialpay&productId=${d.productId}`
+                    callback: `${process.env.NEXT_PUBLIC_APP_HOST_URL}/payment-status`
                 }
             })
         }),

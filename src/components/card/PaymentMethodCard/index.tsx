@@ -77,9 +77,6 @@ function PaymentMethodCard({ item, priceToUsdrate }: Props) {
             }).unwrap()
             if (r.result) {
                 if (r.result?.response?.invoice) {
-                    if (r.result.invoiceId) {
-                        Cookies.set('socialPayInvoiceId', r.result.invoiceId.toString())
-                    }
                     window.location.href = `https://ecommerce.golomtbank.com/${linkParam}/en/${r.result.response.invoice}`
                 }
             }
@@ -91,7 +88,7 @@ function PaymentMethodCard({ item, priceToUsdrate }: Props) {
                 accountId,
             }).unwrap()
             if (r.result) {
-                router.push(`/payment-status?productId=${item.id}&invoiceId=${r.result.invoiceId}&type=ardapp`)
+                router.push(`/payment-status/${r.result.invoiceId}?&type=${selected}`)
             }
         } else if (selectedMongolianBank) {
             let qpayBank: MongolianBank | undefined
@@ -114,7 +111,7 @@ function PaymentMethodCard({ item, priceToUsdrate }: Props) {
                     amount: 1,
                 }).unwrap()
                 if (r.result) {
-                    router.push(`/payment-status?productId=${item.id}&invoiceId=${r.result.invoiceId}&type=${selected}&bank=${encodeURIComponent(selectedMongolianBank.name)}`)
+                    router.push(`/payment-status/${r.result.invoiceId}?type=${selected}&bank=${encodeURIComponent(selectedMongolianBank.name)}`)
                 }
                 return;
             }
@@ -125,7 +122,7 @@ function PaymentMethodCard({ item, priceToUsdrate }: Props) {
                 amount: 1,
             }).unwrap()
             if (r.result) {
-                router.push(`/payment-status?productId=${item.id}&invoiceId=${r.result.invoiceId}&type=${selected}&bank=${encodeURIComponent(selectedMongolianBank.name)}`)
+                router.push(`/payment-status/${r.result.invoiceId}?&type=${selected}&bank=${encodeURIComponent(selectedMongolianBank.name)}`)
             }
 
         }

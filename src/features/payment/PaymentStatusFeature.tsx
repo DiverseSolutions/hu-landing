@@ -6,7 +6,6 @@ import React from 'react'
 type Props = {
     invoice: ArdArtGetInvoiceByIdResult,
     checkInvoice?: ArdArtCheckInvoiceResult,
-    product: ArdArtAssetDetailByIDResult,
     priceToUsdRate: number,
     type: PaymentType,
     bank?: string
@@ -14,10 +13,10 @@ type Props = {
 
 export type PaymentType = 'card' | 'socialpay' | 'ardapp' | 'socialpay' | 'mongolian-banks'
 
-function PaymentStatusFeature({ invoice, product, priceToUsdRate, type, ...props }: Props) {
+function PaymentStatusFeature({ invoice, priceToUsdRate, type, ...props }: Props) {
     return (
         <div className="flex w-full h-full">
-            <PaymentStatusCard checkInvoice={props.checkInvoice} type={type} bank={props.bank} priceToUsdrate={priceToUsdRate} invoice={invoice} item={product} />
+            <PaymentStatusCard checkInvoice={props.checkInvoice} type={type} bank={props.bank} priceToUsdrate={priceToUsdRate} invoice={invoice} />
         </div>
     )
 }

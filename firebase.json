@@ -18,6 +18,10 @@
           "destination": "/early.html"
         },
         {
+          "source": "/model**",
+          "destination": "/model.html"
+        },
+        {
           "source": "/ticket**",
           "destination": "/ticket.html"
         },

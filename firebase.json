@@ -77,8 +77,8 @@
           "destination": "/ticket.html"
         },
         {
-          "source": "/payment-status**",
-          "destination": "/payment-status.html"
+          "source": "/payment-status/**",
+          "destination": "/payment-status/[invoiceId].html"
         },
         {
           "source": "/payment**",

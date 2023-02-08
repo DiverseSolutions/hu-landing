@@ -67,6 +67,16 @@ const PaymentStatus = (props: Props) => {
         })()
     }, [isAuthLoading, accountId, router.query])
 
+    useEffect(() => {
+        if (pageErrorMessage) {
+            setIsLoading(false)
+        }
+        if (accountId && !isAuthLoading && invoiceData) {
+            setIsLoading(false)
+        }
+    }, [accountId, isAuthLoading, pageErrorMessage, invoiceData])
+
+
     const fetchArdxToUsdRate = async () => {
         const [usdMntRate, ardxMntRate] = await Promise.all([
             callMonxanshRate({ currency: 'USD|MNT' }).unwrap(),
@@ -119,12 +129,11 @@ const PaymentStatus = (props: Props) => {
         } else {
             setPageErrorMessage("Invoice not found")
         }
-        if (invoice.data?.result && ardxToUsdRate) {
-            setIsLoading(false)
-        } else {
-            setPageErrorMessage("An unknown error occured. Please try reload the page.")
-            console.log(invoice.data?.result)
-            console.log(ardxToUsdRate)
+        if (!ardxToUsdRate) {
+            setPageErrorMessage("Currency rate error. Please try reload the page.")
+        }
+        if (!invoice.data?.result) {
+            setPageErrorMessage("Invoice not found.")
         }
     }
 

@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react'
-
+import Cookies from 'js-cookie'
 import ArdImg from '@/assets/img/ard.jpg'
 import SocialPayImg from '@/assets/img/socialpay.png'
 import VisaSvg from '@/assets/svg/visa.svg'
@@ -77,6 +77,9 @@ function PaymentMethodCard({ item, priceToUsdrate }: Props) {
             }).unwrap()
             if (r.result) {
                 if (r.result?.response?.invoice) {
+                    if (r.result.invoiceId) {
+                        Cookies.set('socialPayInvoiceId', r.result.invoiceId.toString())
+                    }
                     window.location.href = `https://ecommerce.golomtbank.com/${linkParam}/en/${r.result.response.invoice}`
                 }
             }

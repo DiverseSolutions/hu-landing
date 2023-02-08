@@ -1,5 +1,6 @@
 import PageLoader from '@/components/loader/PageLoader'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
+import Cookies from 'js-cookie'
 import { useRouter } from 'next/router'
 import React, { use, useEffect, useState } from 'react'
 import invoiceLeft from '@/assets/img/invoice-left.png'
@@ -82,12 +83,18 @@ const PaymentStatus = (props: Props) => {
     }
 
     const loadData = async () => {
-        const productId = parseInt(router.query.productId as string);
+        const paymentType = router.query.type as PaymentType;
+        if (!paymentType) {
+            setPageErrorMessage("Payment type not found")
+            return;
+        }
+        setPaymentType(paymentType)
+        const productId = parseInt(router.query.productId as string)
         if (!productId) {
             setPageErrorMessage("Product not found.")
             return;
         }
-        const invoiceId = parseInt(router.query.invoiceId as string);
+        const invoiceId = paymentType === 'socialpay' ? parseInt(`${Cookies.get('socialPayInvoiceId')}`) : parseInt(`${router.query.invoiceId}`);
         if (!invoiceId) {
             setPageErrorMessage("Invoice not found.")
             return;
@@ -97,7 +104,6 @@ const PaymentStatus = (props: Props) => {
             setPageErrorMessage("Account not found.")
             return;
         }
-        setPaymentType(router.query.type as PaymentType)
         if (router.query.bank) {
             setBank(decodeURIComponent(router.query.bank as string))
         }

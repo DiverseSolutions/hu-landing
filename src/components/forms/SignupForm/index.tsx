@@ -132,7 +132,7 @@ export default function SignupForm({ ...props }: Props) {
         </div>
         <div className="flex items-center justify-between mt-8">
           <button className={classNames("w-full btn btn-primary", { 'loading': isSignupLoading })} type="submit">
-            Register
+            Sign Up
           </button>
         </div>
       </form>

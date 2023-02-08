@@ -1,22 +1,20 @@
-import { ArdArtInvoiceResult } from '@/store/rtk-query/ard-art/types'
+import { ArdArtGetInvoiceByIdResult } from '@/store/rtk-query/hux-ard-art/types'
 import React, { useState, useMemo, useEffect } from 'react'
 import { isMobile } from 'react-device-detect';
 import ArdImg from '@/assets/img/ard.jpg'
 import SocialPayImg from '@/assets/img/socialpay.png'
 import VisaSvg from '@/assets/svg/visa.svg'
 import SuccessCheckSvg from '@/assets/svg/success-check.svg'
-import BankLineSvg from '@/assets/svg/bank-line.svg'
-import { MdExpandMore, MdExpandLess, MdChevronLeft } from 'react-icons/md'
+import { MdChevronLeft } from 'react-icons/md'
 import BxCheck from '@/assets/svg/bx-check.svg'
 import Image from 'next/image'
 import QRImage from "react-qr-image"
-import { useLazyGetInvoiceQuery, useUpdateInvoiceQPayMutation, useUpdateInvoiceQPosMutation, useUpdateInvoiceSocialPayMutation } from '@/store/rtk-query/ard-art/ard-art-api'
 import classNames from 'classnames'
-import { toast } from 'react-toastify'
-import { ArdArtAssetDetailByIDResult, ArdArtCheckInvoiceResult } from '@/store/rtk-query/hux-ard-art/types'
+import { ArdArtAssetDetailByIDResult } from '@/store/rtk-query/hux-ard-art/types'
+import { ArdArtCheckInvoiceResult } from '@/store/rtk-query/ard-art/types'
 import { useRouter } from 'next/router'
-import { qpayBanks, qposBanks, QPayBank } from './banks'
-import { useLazyCheckInvoiceQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api';
+import { qpayBanks, QPayBank } from './banks'
+import { useLazyCheckInvoiceQuery } from '@/store/rtk-query/ard-art/ard-art-api';
 
 type MongolianBank = QPayBank
 
@@ -24,7 +22,7 @@ type PaymentType = 'card' | 'socialpay' | 'ardapp' | 'socialpay' | 'mongolian-ba
 
 
 type Props = {
-    invoice: ArdArtInvoiceResult,
+    invoice: ArdArtGetInvoiceByIdResult,
     checkInvoice?: ArdArtCheckInvoiceResult,
     item: ArdArtAssetDetailByIDResult,
     priceToUsdrate: number,
@@ -46,10 +44,11 @@ function PaymentStatusCard({ invoice: invoiceData, checkInvoice, item, priceToUs
     })
 
     const qrCode = useMemo(() => {
-        if (invoice.method === 'qpos') {
-            return invoice.qrCode
+        if (invoice.paymentMethod === 'qpos' && invoice.successResponse) {
+            const qposResp = JSON.parse(invoice.successResponse)
+            return qposResp.qrCode || undefined
         }
-        if (invoice.method === 'qpay' && invoice.successResponse) {
+        if (invoice.paymentMethod === 'qpay' && invoice.successResponse) {
             const qpayResp = JSON.parse(invoice.successResponse)
             return qpayResp.qr_text || undefined
         }
@@ -70,11 +69,11 @@ function PaymentStatusCard({ invoice: invoiceData, checkInvoice, item, priceToUs
     const [selected, setSelected] = useState<PaymentType>(type)
 
     const isSuccess = useMemo(() => {
-        if (checkInvoiceData?.invoice?.status === 'SUCCESS') {
+        if (checkInvoiceData?.status === 'SUCCESS') {
             return true;
         }
         return false
-    }, [checkInvoiceData?.invoice?.status])
+    }, [checkInvoiceData?.status])
 
     const priceUsd = useMemo(() => {
         return new Intl.NumberFormat('en-US', {
@@ -151,7 +150,7 @@ function PaymentStatusCard({ invoice: invoiceData, checkInvoice, item, priceToUs
                         </div>
                         <div className="mt-4">
                             <div className="flex justify-center w-full">
-                                {invoice.method === 'qpay' || invoice.method === 'qpos' && qrCode ? (
+                                {invoice.paymentMethod === 'qpay' || invoice.paymentMethod === 'qpos' && qrCode ? (
                                     <div className="flex flex-col items-center justify-center w-full">
                                         <div className="flex w-full max-w-[200px] h-auto aspect-square">
                                             <QRImage background='#fff' transparent text={qrCode} color="black">{qrCode}</QRImage>

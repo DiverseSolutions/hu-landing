@@ -4,11 +4,12 @@ import { useRouter } from 'next/router'
 import React, { use, useEffect, useState } from 'react'
 import invoiceLeft from '@/assets/img/invoice-left.png'
 import invoiceRight from '@/assets/img/invoice-right.png'
-import { useLazyGetInvoiceQuery } from '@/store/rtk-query/ard-art/ard-art-api'
+import { useLazyGetInvoiceByIdQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
 import PaymentStatusFeature from '@/features/payment/PaymentStatusFeature'
-import { useLazyCheckInvoiceQuery, useLazyGetAssetDetailByIdQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
-import { ArdArtInvoiceResult } from '@/store/rtk-query/ard-art/types'
-import { ArdArtAssetDetailByIDResult, ArdArtCheckInvoiceResult } from '@/store/rtk-query/hux-ard-art/types'
+import { useLazyGetAssetDetailByIdQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
+import { ArdArtAssetDetailByIDResult } from '@/store/rtk-query/hux-ard-art/types'
+import { ArdArtGetInvoiceByIdResult } from '@/store/rtk-query/hux-ard-art/types'
+import { ArdArtCheckInvoiceResult } from '@/store/rtk-query/ard-art/types'
 import { useLazyMonxanshRateQuery } from '@/store/rtk-query/monxansh/monxansh-api'
 import { useLazyIdaxTickerQuery } from '@/store/rtk-query/idax/idax-api'
 
@@ -24,7 +25,7 @@ const PaymentStatus = (props: Props) => {
     const [callIdaxTicker] = useLazyIdaxTickerQuery()
 
     const [pageErrorMessage, setPageErrorMessage] = useState<string>()
-    const [callGetInvoice] = useLazyGetInvoiceQuery()
+    const [callGetInvoice] = useLazyGetInvoiceByIdQuery()
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
     const isAuthLoading = useAppSelector(state => state.auth.isLoading)
     const accountId = useAppSelector(state => state.auth.ardArt.accountId)
@@ -32,7 +33,7 @@ const PaymentStatus = (props: Props) => {
     const dispatch = useAppDispatch()
 
     const [checkInvoiceData, setCheckInvoiceData] = useState<ArdArtCheckInvoiceResult>()
-    const [invoiceData, setInvoiceData] = useState<ArdArtInvoiceResult>()
+    const [invoiceData, setInvoiceData] = useState<ArdArtGetInvoiceByIdResult>()
     const [assetData, setAssetData] = useState<ArdArtAssetDetailByIDResult>()
     const [isLoading, setIsLoading] = useState(true)
 

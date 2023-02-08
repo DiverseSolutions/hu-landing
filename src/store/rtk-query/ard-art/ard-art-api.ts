@@ -1,5 +1,4 @@
-import { ArdArtInvoiceResult, ArdArtResponse, ArdArtUpdateInvoiceQPayResult, ArdArtUpdateInvoiceQPosResult, ArdArtUpdateInvoiceSocialPayResult } from './types';
-import { ArdArtBalanceResponse, ArdArtMetalandLogin, ArdArtMetalandLoginResponse } from './types';
+import { ArdArtBalanceResponse, ArdArtCheckInvoiceResult, ArdArtMetalandLogin, ArdArtMetalandLoginResponse, ArdArtResponse } from './types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { getArdArdAccessToken } from '@/lib/cookie'
 
@@ -27,44 +26,13 @@ export const ardArtApi = createApi({
                 method: 'GET',
             })
         }),
-        getInvoice: builder.query<ArdArtResponse<ArdArtInvoiceResult>, { invoiceId: number }>({
+        checkInvoice: builder.query<ArdArtResponse<ArdArtCheckInvoiceResult>, {
+            invoiceId: number;
+        }>({
             query: (d) => ({
-                url: '/api/v1/balance/invoice/get',
-                method: 'GET',
-                params: {
-                    invoiceId: d.invoiceId
-                }
-            })
-        }),
-        updateInvoiceQPay: builder.mutation<ArdArtResponse<ArdArtUpdateInvoiceQPayResult>, { invoiceId: number }>({
-            query: (d) => ({
-                url: '/api/v1/balance/invoice/update',
+                url: '/api/v1/balance/check/invoice',
                 method: 'POST',
-                body: {
-                    ...d,
-                    method: 'qpay'
-                }
-            })
-        }),
-        updateInvoiceSocialPay: builder.mutation<ArdArtResponse<ArdArtUpdateInvoiceSocialPayResult>, { invoiceId: number, productId: number }>({
-            query: (d) => ({
-                url: '/api/v1/balance/invoice/update',
-                method: 'POST',
-                body: {
-                    ...d,
-                    method: 'socialpay',
-                    callback: `${process.env.NEXT_PUBLIC_APP_HOST_URL}/payment-status?invoiceId=${d.invoiceId}&productId=${d.productId}&type=socialpay`
-                }
-            })
-        }),
-        updateInvoiceQPos: builder.mutation<ArdArtResponse<ArdArtUpdateInvoiceQPosResult>, { invoiceId: number }>({
-            query: (d) => ({
-                url: '/api/v1/balance/invoice/update',
-                method: 'POST',
-                body: {
-                    ...d,
-                    method: 'qpos'
-                }
+                body: d
             })
         }),
     }),
@@ -73,9 +41,6 @@ export const ardArtApi = createApi({
 export const {
     useMetalandLoginMutation,
     useBalanceQuery,
-    useGetInvoiceQuery,
-    useLazyGetInvoiceQuery,
-    useUpdateInvoiceQPayMutation,
-    useUpdateInvoiceSocialPayMutation,
-    useUpdateInvoiceQPosMutation,
+    useCheckInvoiceQuery,
+    useLazyCheckInvoiceQuery
 } = ardArtApi;

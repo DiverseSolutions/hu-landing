@@ -1,5 +1,5 @@
 import { ArdArtResponse } from './../ard-art/types';
-import { ArdArtBundleResponse, ArdArtBundleInvoiceResponse, ArdArtSingleInvoiceResponse, ArdArtAssetDetailByIDResult, ArdArtCheckInvoiceResponse, ArdArtTicketOrAssetResponse, ArdArtMyOwnedNftResponse } from './types';
+import { ArdArtBundleResponse, ArdArtBundleInvoiceResponse, ArdArtSingleInvoiceResponse, ArdArtAssetDetailByIDResult, ArdArtTicketOrAssetResponse, ArdArtMyOwnedNftResponse, ArdArtCreateSocialpayInvoiceResult, ArdArtCreateQpayInvoiceResult, ArdArtCreateQposInvoiceResult, ArdArtGetInvoiceByIdResult } from './types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const huxArdArtApi = createApi({
@@ -15,9 +15,7 @@ export const huxArdArtApi = createApi({
             query: (d) => ({
                 url: '/api/v1/asset/get',
                 method: 'POST',
-                body: {
-                    type: d.type
-                }
+                body: d
             })
         }),
         getAssetDetailById: builder.query<ArdArtResponse<ArdArtAssetDetailByIDResult>, {
@@ -47,26 +45,6 @@ export const huxArdArtApi = createApi({
                 body: d
             })
         }),
-        invoiceSingle: builder.mutation<ArdArtSingleInvoiceResponse, {
-            accountId: number;
-            productId: number;
-            amount: number;
-        }>({
-            query: (d) => ({
-                url: '/api/v1/market/product/invoice/create',
-                method: 'POST',
-                body: d
-            })
-        }),
-        checkInvoice: builder.query<ArdArtCheckInvoiceResponse, {
-            invoiceId: number;
-        }>({
-            query: (d) => ({
-                url: '/api/v1/market/check',
-                method: 'POST',
-                body: d
-            })
-        }),
         myOwnedNft: builder.query<ArdArtMyOwnedNftResponse, {
             ownerId?: number;
         }>({
@@ -76,6 +54,65 @@ export const huxArdArtApi = createApi({
                 body: d
             })
         }),
+        createSocialpayInvoice: builder.mutation<ArdArtResponse<ArdArtCreateSocialpayInvoiceResult>, {
+            type: 'single' | 'bundle';
+            productId?: number;
+            bundleId?: number;
+            amount: number;
+            accountId: number;
+        }>({
+            query: (d) => ({
+                url: '/api/v1/market/invoice/create',
+                method: 'POST',
+                body: {
+                    ...d,
+                    method: 'socialpay',
+                    callback: 'https://www.ard.art'
+                }
+            })
+        }),
+        createQpayInvoice: builder.mutation<ArdArtResponse<ArdArtCreateQpayInvoiceResult>, {
+            type: 'single' | 'bundle';
+            productId?: number;
+            bundleId?: number;
+            amount: number;
+            accountId: number;
+        }>({
+            query: (d) => ({
+                url: '/api/v1/market/invoice/create',
+                method: 'POST',
+                body: {
+                    ...d,
+                    method: 'qpay',
+                    callback: 'https://www.ard.art'
+                }
+            })
+        }),
+        createQposInvoice: builder.mutation<ArdArtResponse<ArdArtCreateQposInvoiceResult>, {
+            type: 'single' | 'bundle';
+            productId?: number;
+            bundleId?: number;
+            amount: number;
+            accountId: number;
+        }>({
+            query: (d) => ({
+                url: '/api/v1/market/invoice/create',
+                method: 'POST',
+                body: {
+                    ...d,
+                    method: 'qpos',
+                    callback: 'https://www.ard.art'
+                }
+            })
+        }),
+        getInvoiceById: builder.query<ArdArtResponse<ArdArtGetInvoiceByIdResult>, {
+            invoiceId?: number;
+        }>({
+            query: (d) => ({
+                url: `/api/v1/market/invoice/${d.invoiceId}`,
+                method: 'GET',
+            })
+        }),
     }),
 })
 
@@ -83,10 +120,12 @@ export const {
     useGetTicketOrAssetQuery,
     useGetBundleQuery,
     useInvoiceBundleMutation,
-    useInvoiceSingleMutation,
-    useCheckInvoiceQuery,
-    useLazyCheckInvoiceQuery,
     useMyOwnedNftQuery,
     useGetAssetDetailByIdQuery,
-    useLazyGetAssetDetailByIdQuery
+    useLazyGetAssetDetailByIdQuery,
+    useCreateSocialpayInvoiceMutation,
+    useCreateQpayInvoiceMutation,
+    useCreateQposInvoiceMutation,
+    useGetInvoiceByIdQuery,
+    useLazyGetInvoiceByIdQuery,
 } = huxArdArtApi;

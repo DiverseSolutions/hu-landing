@@ -1,6 +1,4 @@
-import { ArdArtInvoiceResult } from '@/store/rtk-query/ard-art/types'
 import React, { useState, useMemo } from 'react'
-import { isMobile } from 'react-device-detect';
 
 import ArdImg from '@/assets/img/ard.jpg'
 import SocialPayImg from '@/assets/img/socialpay.png'
@@ -10,19 +8,19 @@ import { MdExpandMore, MdExpandLess, MdChevronLeft } from 'react-icons/md'
 import BxCheck from '@/assets/svg/bx-check.svg'
 import Image from 'next/image'
 import QRImage from "react-qr-image"
-import { useUpdateInvoiceQPayMutation, useUpdateInvoiceQPosMutation, useUpdateInvoiceSocialPayMutation } from '@/store/rtk-query/ard-art/ard-art-api'
+import { useCreateQpayInvoiceMutation, useCreateQposInvoiceMutation, useCreateSocialpayInvoiceMutation } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
 import classNames from 'classnames'
 import { toast } from 'react-toastify'
 import { ArdArtAssetDetailByIDResult } from '@/store/rtk-query/hux-ard-art/types'
 import { useRouter } from 'next/router'
 import { qpayBanks, qposBanks, QPayBank } from './banks'
+import { useAppSelector } from '@/store/hooks';
 
 type MongolianBank = QPayBank
 
 const visibleMongolianBanks = qpayBanks.filter((qb) => qb.name !== 'Ard App')
 
 type Props = {
-    invoice: ArdArtInvoiceResult
     item: ArdArtAssetDetailByIDResult,
     priceToUsdrate: number,
 }
@@ -31,16 +29,17 @@ type PaymentType = 'card' | 'socialpay' | 'ardapp' | 'socialpay' | 'mongolian-ba
 
 
 
-function PaymentMethodCard({ invoice, item, priceToUsdrate }: Props) {
+function PaymentMethodCard({ item, priceToUsdrate }: Props) {
 
+    const accountId = useAppSelector(state => state.auth.ardArt.accountId)
     const [qrCode, setQrCode] = useState<string>()
     const [selectedMongolianBank, setSelectedMongolianBank] = useState<MongolianBank>()
     const [isInvoiceUpdateLoading, setIsInvoiceUpdateLoading] = useState(false)
     const router = useRouter()
     const [selected, setSelected] = useState<PaymentType>('card')
-    const [callUpdateInvoiceSocialPay, { isLoading: isUpdateInvoiceSocialPayLoading }] = useUpdateInvoiceSocialPayMutation()
-    const [callUpdateInvoiceQPay, { isLoading: isUpdateInvoiceQpayLoading }] = useUpdateInvoiceQPayMutation()
-    const [callUpdateInvoiceQPos, { isLoading: isUpdateInvoiceQPosLoading }] = useUpdateInvoiceQPosMutation()
+    const [callCreateInvoiceSocialPay, { isLoading: isCreateInvoiceSocialPayLoading }] = useCreateSocialpayInvoiceMutation()
+    const [callCreateInvoiceQPay, { isLoading: isCreateInvoiceQpayLoading }] = useCreateQpayInvoiceMutation()
+    const [callCreateInvoiceQPos, { isLoading: isCreateInvoiceQPosLoading }] = useCreateQposInvoiceMutation()
     const [isBanksExpanded, setIsBanksExpanded] = useState(false)
 
     const priceUsd = useMemo(() => {
@@ -64,11 +63,17 @@ function PaymentMethodCard({ invoice, item, priceToUsdrate }: Props) {
             })
             return;
         }
+        if (!accountId) {
+            toast("Account not found")
+            return;
+        }
         if (selected === 'socialpay' || selected === 'card') {
             const linkParam = selected === 'card' ? 'payment' : 'socialpay'
-            const r = await callUpdateInvoiceSocialPay({
-                invoiceId: invoice.id,
+            const r = await callCreateInvoiceSocialPay({
+                type: 'single',
                 productId: item.id,
+                amount: 1,
+                accountId,
             }).unwrap()
             if (r.result) {
                 if (r.result?.response?.invoice) {
@@ -76,11 +81,14 @@ function PaymentMethodCard({ invoice, item, priceToUsdrate }: Props) {
                 }
             }
         } else if (selected === 'ardapp') {
-            const r = await callUpdateInvoiceQPos({
-                invoiceId: invoice.id,
+            const r = await callCreateInvoiceQPos({
+                type: 'single',
+                productId: item.id,
+                amount: 1,
+                accountId,
             }).unwrap()
             if (r.result) {
-                router.push(`/payment-status?productId=${item.id}&invoiceId=${invoice.id}&type=ardapp`)
+                router.push(`/payment-status?productId=${item.id}&invoiceId=${r.result.invoiceId}&type=ardapp`)
             }
         } else if (selectedMongolianBank) {
             let qpayBank: MongolianBank | undefined
@@ -96,19 +104,25 @@ function PaymentMethodCard({ invoice, item, priceToUsdrate }: Props) {
                 return;
             }
             if (qPosBank) {
-                const r = await callUpdateInvoiceQPos({
-                    invoiceId: invoice.id,
+                const r = await callCreateInvoiceQPos({
+                    productId: item.id,
+                    accountId,
+                    type: 'single',
+                    amount: 1,
                 }).unwrap()
                 if (r.result) {
-                    router.push(`/payment-status?productId=${item.id}&invoiceId=${invoice.id}&type=${selected}&bank=${encodeURIComponent(selectedMongolianBank.name)}`)
+                    router.push(`/payment-status?productId=${item.id}&invoiceId=${r.result.invoiceId}&type=${selected}&bank=${encodeURIComponent(selectedMongolianBank.name)}`)
                 }
                 return;
             }
-            const r = await callUpdateInvoiceQPay({
-                invoiceId: invoice.id,
+            const r = await callCreateInvoiceQPay({
+                productId: item.id,
+                accountId,
+                type: 'single',
+                amount: 1,
             }).unwrap()
             if (r.result) {
-                router.push(`/payment-status?productId=${item.id}&invoiceId=${invoice.id}&type=${selected}&bank=${encodeURIComponent(selectedMongolianBank.name)}`)
+                router.push(`/payment-status?productId=${item.id}&invoiceId=${r.result.invoiceId}&type=${selected}&bank=${encodeURIComponent(selectedMongolianBank.name)}`)
             }
 
         }

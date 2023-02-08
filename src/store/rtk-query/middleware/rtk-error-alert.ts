@@ -30,6 +30,14 @@ export const rtkErrorAlert: Middleware =
                 }
             }
         }
+        if (action.payload?.code === 500) {
+            const err = action.payload?.message || "Service Unavailable"
+            if (err) {
+                toast(err, {
+                    type: 'error'
+                })
+            }
+        }
         if (`${action.payload?.status}`.toLowerCase() === 'error') {
             const metalandErr = action.payload?.message;
             if (metalandErr) {

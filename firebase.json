@@ -65,6 +65,10 @@
           "destination": "/spline.html"
         },
         {
+          "source": "/model**",
+          "destination": "/model.html"
+        },
+        {
           "source": "/early**",
           "destination": "/early.html"
         },

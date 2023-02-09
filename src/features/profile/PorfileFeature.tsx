@@ -229,7 +229,7 @@ const PorfileFeature = ({ }: Props) => {
                                         <div tabIndex={0} className="dropdown-content">
                                             <div className='flex mt-8 mb-4 mr-8'>
                                                 <div className="flex flex-col">
-                                                    <div className="bg-white border rounded-lg card w-96">
+                                                    <div className="bg-white border rounded-lg card w-96 min-h-[450px]">
                                                         <div className="card-body">
                                                             <MyAssetSearchForm isLoading={isMyNftFetching} onSubmit={async (d) => {
                                                                 await callMyOwnedNft({

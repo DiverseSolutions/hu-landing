@@ -65,6 +65,10 @@
           "destination": "/spline.html"
         },
         {
+          "source": "/auth**",
+          "destination": "/auth.html"
+        },
+        {
           "source": "/model**",
           "destination": "/model.html"
         },

@@ -14,7 +14,6 @@ const AuthPage = (props: Props) => {
             <MobileDrawer>
                 <Navbar />
                 <AuthFormsFeature />
-                <Footer />
             </MobileDrawer>
         </>
     )

@@ -37,14 +37,18 @@ const AuthFormsFeature = (props: Props) => {
 
     return (
         <>
-            <div className="flex w-full">
-                <div className="hidden md:block w-[50%] h-[100vh]">
+            <div className="flex w-full overflow-y-hidden">
+                <div className="hidden md:block w-[50%]" style={{
+                    height: `calc(100vh - 100px)`
+                }}>
                     <div className="relative w-full h-full">
                         <Image src={loginLeftImg} fill alt="login" style={{ objectFit: 'cover', mixBlendMode: 'darken' }} />
                         <div className="absolute inset-0" style={{}}></div>
                     </div>
                 </div>
-                <div className="w-full h-[100vh] md:ml-12">
+                <div className="w-full md:ml-12" style={{
+                    height: `calc(100vh - 100px)`
+                }}>
                     <div className='h-full px-6 pt-6 mb-4 md:px-8'>
                         <div className="flex items-center justify-center w-full h-full">
                             <div className="w-[90vw] md:w-[500px]">

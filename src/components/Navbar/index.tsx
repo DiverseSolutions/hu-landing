@@ -25,7 +25,7 @@ export default function Navbar({ }: Props) {
 
     return (
         <>
-            <div className="z-50 flex justify-center w-full py-6 border-b-2 navbar bg-base-100">
+            <div className="z-50 h-[100px] flex justify-center w-full py-6 border-b-2 navbar bg-base-100">
                 <div className="container">
                     <div className="flex items-center w-full">
                         <div className="flex-1">

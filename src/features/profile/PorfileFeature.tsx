@@ -2,7 +2,7 @@ import MyNftCard from '@/components/card/MyNftCard'
 import { times as _times } from 'lodash'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { showAuthModal } from '@/store/reducer/auth-reducer/actions'
-import { useLazyMyOwnedNftQuery, useMyOwnedNftQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
+import { useLazyMyOwnedNftQuery, useLazyMonxanshRateQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
 import { IoFilter, IoReload } from 'react-icons/io5'
 import ZondReloadSvg from '@/assets/svg/zond-reload.svg'
 import { BiHide } from 'react-icons/bi'
@@ -15,7 +15,6 @@ import React, { useEffect, useState, useMemo } from 'react'
 import { ClipLoader } from 'react-spinners'
 import { generateFromString } from 'generate-avatar'
 import Avatar from '@/components/avatar/Avatar'
-import { useLazyMonxanshRateQuery } from '@/store/rtk-query/monxansh/monxansh-api'
 import { useLazyIdaxTickerQuery } from '@/store/rtk-query/idax/idax-api'
 import PageLoader from '@/components/loader/PageLoader'
 import { useForm, UseFormHandleSubmit } from 'react-hook-form'
@@ -138,7 +137,10 @@ const PorfileFeature = ({ }: Props) => {
             callMonxanshRate({ currency: 'USD|MNT' }).unwrap(),
             callIdaxTicker({ symbol: 'ardx1557mont' }).unwrap()
         ]);
-        const usdRate = usdMntRate.find((r) => r.code === 'USD');
+        if (!usdMntRate.result) {
+            return undefined
+        }
+        const usdRate = usdMntRate.result.find((r) => r.code === 'USD');
         if (usdRate) {
             const ardxToUsd = parseFloat(ardxMntRate.last) / usdRate.rate_float
             setArdxToUsdRate(ardxToUsd)

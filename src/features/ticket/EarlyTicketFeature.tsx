@@ -1,7 +1,6 @@
 import EarlyTicketSection from '@/components/section/EarlyTicketSection';
-import { useAssetDetailEarlyQuery, useGetTicketOrAssetQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api';
+import { useAssetDetailEarlyQuery, useLazyMonxanshRateQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api';
 import { useLazyIdaxTickerQuery } from '@/store/rtk-query/idax/idax-api';
-import { useLazyMonxanshRateQuery } from '@/store/rtk-query/monxansh/monxansh-api';
 import React, { useState, useMemo, useEffect } from 'react';
 import { ClipLoader } from 'react-spinners';
 
@@ -37,7 +36,10 @@ export default function EarlyTicketFeature({ }: Props) {
             callMonxanshRate({ currency: 'USD|MNT' }).unwrap(),
             callIdaxTicker({ symbol: 'ardx1557mont' }).unwrap()
         ]);
-        const usdRate = usdMntRate.find((r) => r.code === 'USD');
+        if (!usdMntRate.result) {
+            return;
+        }
+        const usdRate = usdMntRate.result.find((r) => r.code === 'USD');
         if (usdRate) {
             const ardxToUsd = parseFloat(ardxMntRate.last) / usdRate.rate_float
             setArdxToUsdRate(ardxToUsd)

@@ -5,13 +5,12 @@ import { useRouter } from 'next/router'
 import React, { use, useEffect, useState } from 'react'
 import invoiceLeft from '@/assets/img/invoice-left.png'
 import invoiceRight from '@/assets/img/invoice-right.png'
-import { useLazyGetInvoiceByIdQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
+import { useLazyGetInvoiceByIdQuery, useLazyMonxanshRateQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
 import PaymentStatusFeature from '@/features/payment/PaymentStatusFeature'
 import { useLazyGetAssetDetailByIdQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
 import { ArdArtAssetDetailByIDResult } from '@/store/rtk-query/hux-ard-art/types'
 import { ArdArtGetInvoiceByIdResult } from '@/store/rtk-query/hux-ard-art/types'
 import { ArdArtCheckInvoiceResult } from '@/store/rtk-query/hux-ard-art/types'
-import { useLazyMonxanshRateQuery } from '@/store/rtk-query/monxansh/monxansh-api'
 import { useLazyIdaxTickerQuery } from '@/store/rtk-query/idax/idax-api'
 
 import { PaymentType } from '@/features/payment/PaymentStatusFeature'
@@ -82,7 +81,10 @@ const PaymentStatus = (props: Props) => {
             callMonxanshRate({ currency: 'USD|MNT' }).unwrap(),
             callIdaxTicker({ symbol: 'ardx1557mont' }).unwrap()
         ]);
-        const usdRate = usdMntRate.find((r) => r.code === 'USD');
+        if (!usdMntRate.result) {
+            return undefined
+        }
+        const usdRate = usdMntRate.result.find((r) => r.code === 'USD');
         if (usdRate) {
             const ardxToUsd = parseFloat(ardxMntRate.last) / usdRate.rate_float
             setArdxToUsdRate(ardxToUsd)

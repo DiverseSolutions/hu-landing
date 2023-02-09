@@ -66,6 +66,15 @@ export default function ForgotPasswordConfirmForm({ ...props }: Props) {
             <div className="mb-4">
                 <div className="w-full form-control">
                     <label className="label">
+                        <span className="label-text">Username (use this for login)</span>
+                    </label>
+                    <input type="text" placeholder="Type here" className="w-full bg-base-100 input input-bordered"
+                        value={props.username} readOnly />
+                </div>
+            </div>
+            <div className="mb-4">
+                <div className="w-full form-control">
+                    <label className="label">
                         <span className="label-text">New password</span>
                     </label>
                     <input type="password" placeholder="Type here" className="w-full input input-bordered"

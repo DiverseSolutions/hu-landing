@@ -19,6 +19,5 @@ export const monxanshApi = createApi({
 })
 
 export const {
-    useMonxanshRateQuery,
-    useLazyMonxanshRateQuery
+
 } = monxanshApi;

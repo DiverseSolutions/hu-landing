@@ -7,7 +7,7 @@ import VisaSvg from '@/assets/svg/visa.svg'
 import SuccessCheckSvg from '@/assets/svg/success-check.svg'
 import { MdChevronLeft } from 'react-icons/md'
 import BxCheck from '@/assets/svg/bx-check.svg'
-import { MdPending } from 'react-icons/md'
+import Cookies from 'js-cookie'
 import Image from 'next/image'
 import QRImage from "react-qr-image"
 import classNames from 'classnames'
@@ -72,7 +72,12 @@ function PaymentStatusCard({ invoice: invoiceData, checkInvoice, priceToUsdrate,
     const [callCheckInvoice, { isFetching: isCheckInvoiceLoading }] = useLazyCheckInvoiceQuery()
 
     const router = useRouter()
-    const [selected, setSelected] = useState<PaymentType>(type)
+    const [selected, setSelected] = useState<PaymentType>(() => {
+        if (type === 'socialpay') {
+            return (Cookies.get('socialPaymethod') || type) as PaymentType
+        }
+        return type as PaymentType
+    })
 
     const isSuccess = useMemo(() => {
         if (checkInvoiceData?.invoice?.status === 'SUCCESS') {

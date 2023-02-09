@@ -76,6 +76,7 @@ function PaymentMethodCard({ item, priceToUsdrate }: Props) {
                 accountId,
             }).unwrap()
             if (r.result) {
+                Cookies.set('socialPayMethod', selected)
                 if (r.result?.response?.invoice) {
                     window.location.href = `https://ecommerce.golomtbank.com/${linkParam}/en/${r.result.response.invoice}`
                 }

@@ -1,5 +1,6 @@
-import { ArdArtTicketOrAssetRecord } from '@/store/rtk-query/hux-ard-art/types'
+import { ArdArtAssetDetailEarlyResult } from '@/store/rtk-query/hux-ard-art/types'
 import React, { useState, useMemo, useEffect } from 'react'
+import { sortBy as _sortBy } from 'lodash'
 import HeartSvg from '@/assets/svg/heart-grey.svg'
 import ShareSvg from '@/assets/svg/share-grey.svg'
 import ZondReloadSvg from '@/assets/svg/zond-reload-grey.svg'
@@ -28,104 +29,9 @@ import { toast } from 'react-toastify'
 
 
 type Props = {
-    ticket: ArdArtTicketOrAssetRecord,
+    ticket: ArdArtAssetDetailEarlyResult,
     priceToUsdRate: number,
 }
-
-const systemRequirementSpecs = [
-    {
-        name: 'Windows',
-        fields: [
-            {
-                name: 'OS',
-                value: <span className="font-bold text-sm opacity-[0.65]">Windows® 7/Vista/XP</span>,
-            },
-            {
-                name: 'Processor',
-                value: <span className="font-bold text-sm opacity-[0.65] text-right">Intel® Core™ 2 Duo E6600 or<br />AMD Phenom™ X3 8750 <br />processor or better</span>
-            },
-            {
-                name: 'Memory',
-                value: <span className="font-bold text-sm opacity-[0.65]">2GB RAM</span>
-            },
-            {
-                name: 'Graphics',
-                value: <span className="font-bold text-sm opacity-[0.65] text-right">Video card must be 256 MB or<br />more and should be a DirectX 9-<br />compatible with support for Pixel<br />Shader 3.0</span>
-            },
-            {
-                name: 'DirectX',
-                value: <span className="font-bold text-sm opacity-[0.65]">Version 9.0c</span>
-            },
-            {
-                name: 'Storage',
-                value: <span className="font-bold text-sm opacity-[0.65]">15 GB available space</span>
-            },
-        ]
-    },
-    {
-        name: 'macOS',
-    },
-    {
-        name: 'Linux',
-    },
-]
-
-function SystemRequirementsSection() {
-
-    const [activeIndex, setActiveIndex] = useState(systemRequirementSpecs[0].name)
-    const [isRequirementsVisible, setIsRequirementsVisible] = useState(true)
-    const fields = useMemo(() => {
-        const spec = systemRequirementSpecs.find((spec) => spec.name === activeIndex)
-        return spec?.fields || []
-    }, [activeIndex, systemRequirementSpecs])
-
-    return (
-        <div>
-            <div className="flex items-center mt-6 ml-4">
-                <p className="text-2xl font-bold">System Requirements</p>
-                <span className="ml-2"><AlertWarningSvg /></span>
-            </div>
-            <div className="mt-6">
-                <div className="border-2 p-6 rounded-xl border-black border-opacity-[0.2] space-y-4">
-                    <div className="flex justify-between w-full">
-                        <div className="flex">
-                            <div className="mb-4 tabs">
-                                {systemRequirementSpecs.map((spec) => (
-                                    <a key={spec.name} onClick={() => setActiveIndex(spec.name)} className={classNames('text-base tab', { 'tab-active tab-bordered border-b': activeIndex === spec.name })}>{spec.name}</a>
-                                ))}
-                            </div>
-                        </div>
-                        <div className="flex cursor-pointer">
-                            {isRequirementsVisible ? <MdExpandMore onClick={() => setIsRequirementsVisible(false)} size={24} /> : <MdExpandLess onClick={() => setIsRequirementsVisible(true)} size={24} />}
-                        </div>
-                    </div>
-                    {isRequirementsVisible ? (
-                        <div>
-                            {fields.map((field, idx) => (
-                                <div key={field.name} className={classNames("flex w-full justify-between border-b border-black border-opacity-[0.1] pb-1", { 'mt-6': idx !== 0 })}>
-                                    <span className="text-sm opacity-[0.65]">{field.name}:</span>
-                                    {field.value}
-                                </div>
-                            ))}
-                        </div>
-                    ) : (<></>)}
-                </div>
-            </div>
-            <div className="mt-6">
-                <div className="px-8">
-                    <div className="grid w-full grid-cols-2 gap-x-4">
-                        <img src={EarlyGallery1Img.src} className="w-full h-auto rounded-lg" />
-                        <img src={EarlyGallery2Img.src} className="w-full h-auto rounded-lg" />
-                    </div>
-                    <div className="mt-4">
-                        <img src={EarlyGallery3Img.src} className="w-full h-auto rounded-lg" />
-                    </div>
-                </div>
-            </div>
-        </div>
-    )
-}
-
 function TicketSection({ ticket, priceToUsdRate }: Props) {
 
     const { data: tickets, isLoading: isTicketsLoading } = useGetTicketOrAssetQuery({
@@ -221,7 +127,7 @@ function TicketSection({ ticket, priceToUsdRate }: Props) {
                                         </div>
                                         <div className="absolute bottom-4 right-4">
                                             <div className="flex p-4 px-8 bg-white cursor-pointer rounded-xl">
-                                                <span className="text-base font-bold">Show all photos(0)</span>
+                                                <span className="text-base font-bold">Show all photos({ticket.medias?.length || 0})</span>
                                             </div>
                                         </div>
                                     </div>
@@ -249,6 +155,11 @@ function TicketSection({ ticket, priceToUsdRate }: Props) {
                                 </div>
                                 <div className="mt-6">
                                     <SystemRequirementsSection />
+                                    <div className="mt-6">
+                                        <div className="px-8">
+                                            <MediaSection ticket={ticket} />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div className='md:ml-[50px] md:w-[40%] mw-md:order-1'>
@@ -349,3 +260,111 @@ function TicketSection({ ticket, priceToUsdRate }: Props) {
 }
 
 export default TicketSection
+
+
+
+const systemRequirementSpecs = [
+    {
+        name: 'Windows',
+        fields: [
+            {
+                name: 'OS',
+                value: <span className="font-bold text-sm opacity-[0.65]">Windows® 7/Vista/XP</span>,
+            },
+            {
+                name: 'Processor',
+                value: <span className="font-bold text-sm opacity-[0.65] text-right">Intel® Core™ 2 Duo E6600 or<br />AMD Phenom™ X3 8750 <br />processor or better</span>
+            },
+            {
+                name: 'Memory',
+                value: <span className="font-bold text-sm opacity-[0.65]">2GB RAM</span>
+            },
+            {
+                name: 'Graphics',
+                value: <span className="font-bold text-sm opacity-[0.65] text-right">Video card must be 256 MB or<br />more and should be a DirectX 9-<br />compatible with support for Pixel<br />Shader 3.0</span>
+            },
+            {
+                name: 'DirectX',
+                value: <span className="font-bold text-sm opacity-[0.65]">Version 9.0c</span>
+            },
+            {
+                name: 'Storage',
+                value: <span className="font-bold text-sm opacity-[0.65]">15 GB available space</span>
+            },
+        ]
+    },
+    {
+        name: 'macOS',
+    },
+    {
+        name: 'Linux',
+    },
+]
+
+function SystemRequirementsSection() {
+
+    const [activeIndex, setActiveIndex] = useState(systemRequirementSpecs[0].name)
+    const [isRequirementsVisible, setIsRequirementsVisible] = useState(true)
+    const fields = useMemo(() => {
+        const spec = systemRequirementSpecs.find((spec) => spec.name === activeIndex)
+        return spec?.fields || []
+    }, [activeIndex, systemRequirementSpecs])
+
+    return (
+        <div>
+            <div className="flex items-center mt-6 ml-4">
+                <p className="text-2xl font-bold">System Requirements</p>
+                <span className="ml-2"><AlertWarningSvg /></span>
+            </div>
+            <div className="mt-6">
+                <div className="border-2 p-6 rounded-xl border-black border-opacity-[0.2] space-y-4">
+                    <div className="flex justify-between w-full">
+                        <div className="flex">
+                            <div className="mb-4 tabs">
+                                {systemRequirementSpecs.map((spec) => (
+                                    <a key={spec.name} onClick={() => setActiveIndex(spec.name)} className={classNames('text-base tab', { 'tab-active tab-bordered border-b': activeIndex === spec.name })}>{spec.name}</a>
+                                ))}
+                            </div>
+                        </div>
+                        <div className="flex cursor-pointer">
+                            {isRequirementsVisible ? <MdExpandMore onClick={() => setIsRequirementsVisible(false)} size={24} /> : <MdExpandLess onClick={() => setIsRequirementsVisible(true)} size={24} />}
+                        </div>
+                    </div>
+                    {isRequirementsVisible ? (
+                        <div>
+                            {fields.map((field, idx) => (
+                                <div key={field.name} className={classNames("flex w-full justify-between border-b border-black border-opacity-[0.1] pb-1", { 'mt-6': idx !== 0 })}>
+                                    <span className="text-sm opacity-[0.65]">{field.name}:</span>
+                                    {field.value}
+                                </div>
+                            ))}
+                        </div>
+                    ) : (<></>)}
+                </div>
+            </div>
+        </div>
+    )
+}
+
+type MediaSectionProps = {
+    ticket: ArdArtAssetDetailEarlyResult
+}
+function MediaSection({ ticket }: MediaSectionProps) {
+    const sorted = useMemo(() => {
+        return _sortBy(ticket.medias, 'order')
+    }, [ticket?.medias])
+
+    return (
+        <div>
+            <div className="grid w-full grid-cols-2 gap-x-4">
+                {sorted[0] ? <img src={sorted[0].url} className="w-full h-auto rounded-lg" /> : <></>}
+                {sorted[1] ? <img src={sorted[1].url} className="w-full h-auto rounded-lg" /> : <></>}
+            </div>
+            {sorted[2] ? (
+                <div className="mt-4">
+                    <img src={sorted[2].url} className="w-full h-auto rounded-lg" />
+                </div>
+            ) : (<></>)}
+        </div>
+    )
+}

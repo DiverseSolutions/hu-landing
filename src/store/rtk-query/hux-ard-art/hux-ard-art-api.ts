@@ -1,5 +1,5 @@
 import { ArdArtResponse } from './../ard-art/types';
-import { ArdArtBundleResponse, ArdArtBundleInvoiceResponse, ArdArtSingleInvoiceResponse, ArdArtAssetDetailByIDResult, ArdArtTicketOrAssetResponse, ArdArtMyOwnedNftResponse, ArdArtCreateSocialpayInvoiceResult, ArdArtCreateQpayInvoiceResult, ArdArtCreateQposInvoiceResult, ArdArtGetInvoiceByIdResult, ArdArtCheckInvoiceResult } from './types';
+import { ArdArtBundleResponse, ArdArtBundleInvoiceResponse, ArdArtSingleInvoiceResponse, ArdArtAssetDetailByIDResult, ArdArtTicketOrAssetResponse, ArdArtMyOwnedNftResponse, ArdArtCreateSocialpayInvoiceResult, ArdArtCreateQpayInvoiceResult, ArdArtCreateQposInvoiceResult, ArdArtGetInvoiceByIdResult, ArdArtCheckInvoiceResult, ArdArtAssetDetailEarlyResult } from './types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const huxArdArtApi = createApi({
@@ -127,6 +127,12 @@ export const huxArdArtApi = createApi({
                 method: 'GET',
             })
         }),
+        assetDetailEarly: builder.query<ArdArtResponse<ArdArtAssetDetailEarlyResult>, void>({
+            query: () => ({
+                url: `/api/v1/asset/detail/early`,
+                method: 'GET',
+            })
+        }),
     }),
 })
 
@@ -144,5 +150,7 @@ export const {
     useGetInvoiceByIdQuery,
     useLazyGetInvoiceByIdQuery,
     useCheckInvoiceQuery,
-    useLazyCheckInvoiceQuery
+    useLazyCheckInvoiceQuery,
+    useAssetDetailEarlyQuery,
+    useLazyAssetDetailEarlyQuery
 } = huxArdArtApi;

@@ -1,5 +1,5 @@
 import EarlyTicketSection from '@/components/section/EarlyTicketSection';
-import { useGetTicketOrAssetQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api';
+import { useAssetDetailEarlyQuery, useGetTicketOrAssetQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api';
 import { useLazyIdaxTickerQuery } from '@/store/rtk-query/idax/idax-api';
 import { useLazyMonxanshRateQuery } from '@/store/rtk-query/monxansh/monxansh-api';
 import React, { useState, useMemo, useEffect } from 'react';
@@ -13,8 +13,8 @@ export default function EarlyTicketFeature({ }: Props) {
     const [isLoading, setIsLoading] = useState(true)
     const [callMonxanshRate] = useLazyMonxanshRateQuery()
     const [callIdaxTicker] = useLazyIdaxTickerQuery()
-    const { data: ticketData, isLoading: isTicketsLoading } = useGetTicketOrAssetQuery({ tag: 'early' })
-    const ticket = useMemo(() => ticketData?.result?.records[0], [ticketData])
+    const { data: ticketData, isLoading: isTicketsLoading } = useAssetDetailEarlyQuery()
+    const ticket = useMemo(() => ticketData?.result, [ticketData])
 
     useEffect(() => {
         if (!ticket) {

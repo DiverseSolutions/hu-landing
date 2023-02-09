@@ -11,6 +11,9 @@ export const huxArdArtApi = createApi({
             tag?: string,
             subTag?: string,
             ownerId?: number,
+            category?: number,
+            minPrice?: number,
+            maxPrice?: number
         }>({
             query: (d) => ({
                 url: '/api/v1/asset/get',
@@ -55,6 +58,9 @@ export const huxArdArtApi = createApi({
         }),
         myOwnedNft: builder.query<ArdArtMyOwnedNftResponse, {
             ownerId?: number;
+            category?: number,
+            minPrice?: number,
+            maxPrice?: number
         }>({
             query: (d) => ({
                 url: '/api/v1/asset/get',
@@ -129,6 +135,7 @@ export const {
     useGetBundleQuery,
     useInvoiceBundleMutation,
     useMyOwnedNftQuery,
+    useLazyMyOwnedNftQuery,
     useGetAssetDetailByIdQuery,
     useLazyGetAssetDetailByIdQuery,
     useCreateSocialpayInvoiceMutation,

@@ -24,8 +24,8 @@ export default function MyNftCard({ nft, priceToUsdRate }: Props) {
     }, [nft.price, priceToUsdRate])
 
     return (
-        <div className="relative shadow-none card border-[1px] border-black border-opacity-[0.2] p-2 w-96">
-            <figure><img src={nft.imageUrl} className="object-cover w-full h-auto max-h-[300px]" alt="Shoes" /></figure>
+        <div className="relative shadow-none rounded-xl card border-[1px] border-black border-opacity-[0.2] p-6 w-96">
+            <figure><img src={nft.imageUrl} className="object-cover rounded-xl w-full h-[300px]" alt="Shoes" /></figure>
             <div className="relative w-full h-auto px-2 pb-0 card-body">
                 <div className='px-2'>
                     <p className="text-xs text-terteriary">Hosted by the hu</p>

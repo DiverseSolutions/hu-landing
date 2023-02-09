@@ -34,7 +34,6 @@ const Payment = (props: Props) => {
 
     useEffect(() => {
         (async () => {
-            setIsLoading(true)
             if (!isAuthLoading && accountId) {
                 try {
                     await loadData()
@@ -46,9 +45,17 @@ const Payment = (props: Props) => {
             if (!isAuthLoading && !accountId) {
                 setPageErrorMessage("Account not found.")
             }
-            setIsLoading(false)
         })()
     }, [isAuthLoading, accountId])
+
+    useEffect(() => {
+        if (pageErrorMessage) {
+            setIsLoading(false)
+        }
+        if (accountId && !isAuthLoading && ardxToUsdRate && assetData) {
+            setIsLoading(false)
+        }
+    }, [accountId, isAuthLoading, pageErrorMessage, ardxToUsdRate, assetData])
 
     const fetchArdxToUsdRate = async () => {
         const [usdMntRate, ardxMntRate] = await Promise.all([

@@ -5,6 +5,7 @@ import { showAuthModal } from '@/store/reducer/auth-reducer/actions'
 import { useLazyMyOwnedNftQuery, useMyOwnedNftQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
 import { IoFilter, IoReload } from 'react-icons/io5'
 import ZondReloadSvg from '@/assets/svg/zond-reload.svg'
+import { BiHide } from 'react-icons/bi'
 import { BiSearchAlt } from 'react-icons/bi'
 import { CgLayoutGrid } from 'react-icons/cg'
 import { CgLayoutGridSmall } from 'react-icons/cg'
@@ -196,99 +197,145 @@ const PorfileFeature = ({ }: Props) => {
     }
 
     return (
-        <div className="w-full px-4 pb-16 md:px-0">
+        <div className="relative w-full">
             <div className="flex justify-center w-full">
-                <div className="container">
-                    <div className="mt-16">
-                        <div className="flex justify-center w-full">
-                            <div className="flex flex-col items-center">
-                                <div className="w-32">
-                                    <Avatar />
-                                </div>
-                                <div className="mt-4">
-                                    <p className="text-[56px] max-w-[100%] font-bold">{profile.username}</p>
+                <div className="container mt-6 h-[300px] bg-[#D9D9D9] rounded-xl">
+
+                </div>
+            </div>
+            <div className="w-full px-4 pb-16 md:px-0 transform translate-y-[-150px]">
+                <div className="flex justify-center w-full">
+                    <div className="container">
+                        <div className="mt-16">
+                            <div className="flex justify-start w-full">
+                                <div className="flex items-end h-full">
+                                    <div className="flex">
+                                        <div className="flex flex-col items-center">
+                                            <div className="w-32">
+                                                <Avatar />
+                                            </div>
+                                            <div className="mt-4">
+                                                <p className="text-[56px] max-w-[100%] font-bold">{profile.username}</p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="mt-16">
-                        <div>
-                            <div>
-                                <div className="tabs border-b-[1px] border-black border-opacity-[0.2]">
-                                    <a className="text-base tab tab-bordered border-black border-b-[1px] tab-active">My Assets</a>
-                                    <a className="text-base cursor-not-allowed border-b-[1px] tab tab-bordered border-transparent">Activity</a>
+                        <div className="mt-6">
+                            <div className="flex items-center justify-between w-full">
+                                <div className="flex space-x-4">
+                                    <div className="rounded-xl cursor-not-allowed font-bold px-5 py-[14px] bg-black bg-opacity-[0.04]">
+                                        <span className='opacity-[0.2]'>Buy More</span>
+                                    </div>
+                                    <div className="rounded-xl cursor-not-allowed font-bold px-5 py-[14px] bg-black bg-opacity-[0.04]">
+                                        <span className='opacity-[0.2]'>Send NFT</span>
+                                    </div>
+                                    <div className="rounded-xl cursor-pointer font-bold px-5 py-[14px] bg-black bg-opacity-[0.04]">
+                                        <span className=''>Edit Profile</span>
+                                    </div>
+                                    <div className="rounded-xl cursor-pointer font-bold px-5 py-[14px] bg-white border-black border-opacity-[0.2] border">
+                                        <div className="flex items-center space-x-4">
+                                            <span>Hide Profile</span>
+                                            <BiHide size={24} />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="flex">
+                                    <div className="px-4 py-3 border rounded-xl">
+                                        <div className="grid grid-cols-2 gap-x-8">
+                                            <div className="flex opacity-[0.65] justify-between w-full">
+                                                <span>Total NFTs</span>
+                                                <span className='ml-8'>{0}</span>
+                                            </div>
+                                            <div className="flex opacity-[0.65] justify-between w-full">
+                                                <span>Sent</span>
+                                                <span className='ml-8'>0</span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div className="mt-6">
-                                <div className="flex items-center cursor-pointer flex-wrap md:flex-row w-full md:h-[48px]">
-                                    <div onClick={() => setIsFilterVisible(!isFilterVisible)} className="flex dropdown dropdown-bottom h-full items-center p-4 rounded-lg bg-black bg-opacity-[0.04]">
-                                        <span tabIndex={0} className="flex items-center">
-                                            <IoFilter size={20} />
-                                            <span className="ml-4 text-sm font-bold">Filters</span>
-                                        </span>
-                                        <div tabIndex={0} className="dropdown-content">
-                                            <div className='flex mt-8 mb-4 mr-8'>
-                                                <div className="flex flex-col">
-                                                    <div className="bg-white border rounded-lg card w-96 min-h-[450px]">
-                                                        <div className="card-body">
-                                                            <MyAssetSearchForm isLoading={isMyNftFetching} onSubmit={async (d) => {
-                                                                await callMyOwnedNft({
-                                                                    ownerId: accountId,
-                                                                    minPrice: d.minPrice,
-                                                                    maxPrice: d.maxPrice,
-                                                                })
-                                                            }} />
+                        </div>
+                        <div className="mt-16">
+                            <div>
+                                <div>
+                                    <div className="tabs border-b-[1px] border-black border-opacity-[0.2]">
+                                        <a className="text-base tab tab-bordered border-black border-b-[1px] tab-active">My Assets</a>
+                                        <a className="text-base cursor-not-allowed border-b-[1px] tab tab-bordered border-transparent">Activity</a>
+                                    </div>
+                                </div>
+                                <div className="mt-6">
+                                    <div className="flex items-center cursor-pointer flex-wrap md:flex-row w-full md:h-[48px]">
+                                        <div onClick={() => setIsFilterVisible(!isFilterVisible)} className="flex dropdown dropdown-bottom h-full items-center p-4 rounded-lg bg-black bg-opacity-[0.04]">
+                                            <span tabIndex={0} className="flex items-center">
+                                                <IoFilter size={20} />
+                                                <span className="ml-4 text-sm font-bold">Filters</span>
+                                            </span>
+                                            <div tabIndex={0} className="dropdown-content">
+                                                <div className='flex mt-8 mb-4 mr-8'>
+                                                    <div className="flex flex-col">
+                                                        <div className="bg-white border rounded-lg card w-96 min-h-[450px]">
+                                                            <div className="card-body">
+                                                                <MyAssetSearchForm isLoading={isMyNftFetching} onSubmit={async (d) => {
+                                                                    await callMyOwnedNft({
+                                                                        ownerId: accountId,
+                                                                        minPrice: d.minPrice,
+                                                                        maxPrice: d.maxPrice,
+                                                                    })
+                                                                }} />
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div className="flex h-full cursor-not-allowed items-center p-4 ml-4 bg-black rounded-lg bg-opacity-[0.04]">
-                                        <ZondReloadSvg />
-                                    </div>
-                                    <div className="flex ml-0 md:ml-4 h-full items-center mt-4 md:mt-0  p-4 bg-black bg-opacity-[0.04] rounded-lg flex-grow">
-                                        <BiSearchAlt className='opacity-[0.65]' />
-                                        <input value={searchInput} onChange={(e) => setSearchInput(e.target.value)} placeholder='Search by NFTs' className='w-full ml-2 text-sm font-normal bg-transparent border-transparent rounded-lg outline-none' />
-                                    </div>
-                                    <div className="flex items-center mt-4 md:mt-0">
-                                        <div className="flex cursor-not-allowed ml-0 md:ml-4   h-full rounded-lg bg-black bg-opacity-[0.04] p-4">
-                                            <span className="text-sm font-bold">Price: Low to High</span>
-                                            <MdExpandMore size={20} />
+                                        <div className="flex h-full cursor-not-allowed items-center p-4 ml-4 bg-black rounded-lg bg-opacity-[0.04]">
+                                            <ZondReloadSvg />
                                         </div>
-                                        <div className="flex items-center cursor-not-allowed ml-4 h-full rounded-lg bg-black bg-opacity-[0.04] p-1">
-                                            <div className="p-3">
-                                                <CgLayoutGrid size={20} />
+                                        <div className="flex ml-0 md:ml-4 h-full items-center mt-4 md:mt-0  p-4 bg-black bg-opacity-[0.04] rounded-lg flex-grow">
+                                            <BiSearchAlt className='opacity-[0.65]' />
+                                            <input value={searchInput} onChange={(e) => setSearchInput(e.target.value)} placeholder='Search by NFTs' className='w-full ml-2 text-sm font-normal bg-transparent border-transparent rounded-lg outline-none' />
+                                        </div>
+                                        <div className="flex items-center mt-4 md:mt-0">
+                                            <div className="flex cursor-not-allowed ml-0 md:ml-4   h-full rounded-lg bg-black bg-opacity-[0.04] p-4">
+                                                <span className="text-sm font-bold">Price: Low to High</span>
+                                                <MdExpandMore size={20} />
                                             </div>
-                                            <div className="p-3 bg-white rounded-lg">
-                                                <CgLayoutGridSmall size={20} />
+                                            <div className="flex items-center cursor-not-allowed ml-4 h-full rounded-lg bg-black bg-opacity-[0.04] p-1">
+                                                <div className="p-3">
+                                                    <CgLayoutGrid size={20} />
+                                                </div>
+                                                <div className="p-3 bg-white rounded-lg">
+                                                    <CgLayoutGridSmall size={20} />
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                <div className="flex w-full">
+                                    {isMyNftFetching ? (
+                                        <div className='w-full flex justify-center items-center min-h-[400px]'>
+                                            <ClipLoader />
+                                        </div>
+                                    ) : (<></>)}
+                                    {!isMyNftFetching ? (
+                                        <div className="flex flex-col items-center mt-4 md:-ml-4 md:flex-wrap md:flex-row">
+                                            {visibleNfts.map((nft) => (
+                                                <>
+                                                    {_times(nft.ownerAmount, (num) => (
+                                                        <div key={`${nft.id}_${num}`} className="m-4">
+                                                            <MyNftCard nft={nft} priceToUsdRate={ardxToUsdRate} />
+                                                        </div>
+                                                    ))}
+                                                </>
+                                            ))}
+                                        </div>
+                                    ) : (<></>)}
+                                </div>
                             </div>
-                            <div className="flex w-full">
-                                {isMyNftFetching ? (
-                                    <div className='w-full flex justify-center items-center min-h-[400px]'>
-                                        <ClipLoader />
-                                    </div>
-                                ) : (<></>)}
-                                {!isMyNftFetching ? (
-                                    <div className="flex flex-col items-center mt-4 md:-ml-4 md:flex-wrap md:flex-row">
-                                        {visibleNfts.map((nft) => (
-                                            <>
-                                                {_times(nft.ownerAmount, (num) => (
-                                                    <div key={`${nft.id}_${num}`} className="m-4">
-                                                        <MyNftCard nft={nft} priceToUsdRate={ardxToUsdRate} />
-                                                    </div>
-                                                ))}
-                                            </>
-                                        ))}
-                                    </div>
-                                ) : (<></>)}
-                            </div>
-                        </div>
 
+                        </div>
                     </div>
                 </div>
             </div>

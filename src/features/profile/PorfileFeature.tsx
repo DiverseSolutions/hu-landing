@@ -2,7 +2,7 @@ import MyNftCard from '@/components/card/MyNftCard'
 import { times as _times } from 'lodash'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { showAuthModal } from '@/store/reducer/auth-reducer/actions'
-import { useLazyMyOwnedNftQuery, useLazyMonxanshRateQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
+import { useLazyMyOwnedNftQuery, useLazyMonxanshRateQuery, useMyNftCountQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
 import { IoFilter, IoReload } from 'react-icons/io5'
 import ZondReloadSvg from '@/assets/svg/zond-reload.svg'
 import { BiHide } from 'react-icons/bi'
@@ -100,6 +100,13 @@ const PorfileFeature = ({ }: Props) => {
     const [maxPrice, setMaxPrice] = useState<number>()
     const [searchCategoryId, setSearchCategoryId] = useState<number>()
 
+    const { data: myNftCountData, isFetching: isMyNftCountFetching } = useMyNftCountQuery({
+        accountId: accountId as number,
+    }, {
+        skip: !accountId,
+        refetchOnMountOrArgChange: true,
+    })
+
     const [callMyOwnedNft, { data: myNftData, isLoading: isMyNftLoading, isFetching: isMyNftFetching }] = useLazyMyOwnedNftQuery()
 
     useEffect(() => {
@@ -112,16 +119,6 @@ const PorfileFeature = ({ }: Props) => {
             })
         }
     }, [isLoggedIn, accountId])
-
-    const handleSearch = async () => {
-        if (isLoggedIn && accountId) {
-            await callMyOwnedNft({
-                ownerId: accountId,
-            })
-        }
-    }
-
-    const router = useRouter()
 
     const [pageError, setPageError] = useState<string>()
     const [isRateLoading, setIsRateLoading] = useState(false)
@@ -248,7 +245,9 @@ const PorfileFeature = ({ }: Props) => {
                                         <div className="grid grid-cols-2 gap-x-8">
                                             <div className="flex opacity-[0.65] justify-between w-full">
                                                 <span>Total NFTs</span>
-                                                <span className='ml-8'>{0}</span>
+                                                <span className='ml-8'>
+                                                    {isMyNftCountFetching ? <ClipLoader size={14} /> : myNftCountData?.result?.nftCount || 0}
+                                                </span>
                                             </div>
                                             <div className="flex opacity-[0.65] justify-between w-full">
                                                 <span>Sent</span>

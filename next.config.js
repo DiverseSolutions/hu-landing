@@ -3,7 +3,6 @@ const withFonts = require('next-fonts');
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  trailingSlash: true,
   experimental: {
     urlImports: [
       'https://prod.spline.design',

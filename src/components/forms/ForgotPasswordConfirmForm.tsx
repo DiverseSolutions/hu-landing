@@ -59,7 +59,7 @@ export default function ForgotPasswordConfirmForm({ ...props }: Props) {
                             validate: (v) => v.match(/^[0-9]{6}/) ? undefined : "Invalid code"
                         })} />
                     <label className="label">
-                        <span className="label-text-alt text-error-content">{errors.code?.message}</span>
+                        <span className="label-text-alt text-error">{errors.code?.message}</span>
                     </label>
                 </div>
             </div>
@@ -76,7 +76,7 @@ export default function ForgotPasswordConfirmForm({ ...props }: Props) {
                             }
                         })} />
                     <label className="label">
-                        <span className="label-text-alt text-error-content">{errors.password?.message}</span>
+                        <span className="label-text-alt text-error">{errors.password?.message}</span>
                     </label>
                 </div>
             </div>
@@ -90,7 +90,7 @@ export default function ForgotPasswordConfirmForm({ ...props }: Props) {
                             validate: (v) => v === password ? undefined : "Password does not match"
                         })} />
                     <label className="label">
-                        <span className="label-text-alt text-error-content">{errors.password2?.message}</span>
+                        <span className="label-text-alt text-error">{errors.password2?.message}</span>
                     </label>
                 </div>
             </div>

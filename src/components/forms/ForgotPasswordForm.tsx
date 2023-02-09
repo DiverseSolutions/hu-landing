@@ -72,7 +72,7 @@ export default function ForgotPasswordForm({ ...props }: Props) {
                             },
                         })} />
                     <label className="label">
-                        <span className="label-text-alt text-error-content">{errors.email?.message}</span>
+                        <span className="label-text-alt text-error">{errors.email?.message}</span>
                     </label>
                 </div>
             </div>

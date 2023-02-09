@@ -19,6 +19,7 @@ import { logoutSuccess, showAuthModal } from '@/store/reducer/auth-reducer/actio
 import useWindowResize from 'beautiful-react-hooks/useWindowResize'
 import MobileDrawer from '@/components/drawer/MobileDrawer'
 import { BiMenuAltRight } from 'react-icons/bi'
+import ReleaseMobileDrawer from '@/components/drawer/ReleaseMobileDrawer'
 
 type Props = {}
 
@@ -99,7 +100,7 @@ export default function ReleaseLandingWithComingSoon({ }: Props) {
 
     return (
         <>
-            <MobileDrawer drawerContent={(
+            <ReleaseMobileDrawer drawerContent={(
                 <div className='p-4 bg-primary w-[80%] flex h-full justify-between flex-col'>
                     <div className="flex flex-col justify-center w-full">
                         <div>
@@ -272,7 +273,7 @@ export default function ReleaseLandingWithComingSoon({ }: Props) {
                         </div>
                     </footer>
                 </div>
-            </MobileDrawer>
+            </ReleaseMobileDrawer>
         </>
     )
 }

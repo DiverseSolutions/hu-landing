@@ -77,7 +77,7 @@ export default function SignupForm({ ...props }: Props) {
               validate: (v) => v?.length < 4 ? 'Minimum length 4' : undefined
             })} />
             <label className="label">
-              <span className="label-text-alt text-error-content">{errors.username?.message}</span>
+              <span className="label-text-alt text-error">{errors.username?.message}</span>
             </label>
           </div>
         </div>
@@ -95,7 +95,7 @@ export default function SignupForm({ ...props }: Props) {
                 }
               })} />
             <label className="label">
-              <span className="label-text-alt text-error-content">{errors.email?.message}</span>
+              <span className="label-text-alt text-error">{errors.email?.message}</span>
             </label>
           </div>
         </div>
@@ -112,7 +112,7 @@ export default function SignupForm({ ...props }: Props) {
                 }
               })} />
             <label className="label">
-              <span className="label-text-alt text-error-content">{errors.password?.message}</span>
+              <span className="label-text-alt text-error">{errors.password?.message}</span>
             </label>
           </div>
         </div>
@@ -126,7 +126,7 @@ export default function SignupForm({ ...props }: Props) {
                 validate: (v) => v === password ? undefined : 'Password does not match'
               })} />
             <label className="label">
-              <span className="label-text-alt text-error-content">{errors.password2?.message}</span>
+              <span className="label-text-alt text-error">{errors.password2?.message}</span>
             </label>
           </div>
         </div>

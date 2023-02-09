@@ -110,7 +110,7 @@ export default function LoginForm({ ...props }: Props) {
               validate: (v) => v?.length < 4 ? "Invalid username" : undefined
             })} />
           <label className="label">
-            <span className="label-text-alt text-error-content">{errors.username?.message}</span>
+            <span className="label-text-alt text-error">{errors.username?.message}</span>
           </label>
         </div>
       </div>
@@ -135,7 +135,7 @@ export default function LoginForm({ ...props }: Props) {
             </div>
           </div>
           <label className="label">
-            <span className="label-text-alt text-error-content">{errors.password?.message}</span>
+            <span className="label-text-alt text-error">{errors.password?.message}</span>
           </label>
         </div>
       </div>

@@ -1,8 +1,6 @@
 import React, { useRef } from 'react'
 import CopyRightSvg from '@/assets/svg/copyright.svg'
 import { MdArrowRightAlt } from 'react-icons/md'
-import Link from 'next/link'
-import { useAppSelector } from '@/store/hooks'
 
 
 type Props = {
@@ -10,11 +8,9 @@ type Props = {
     drawerContent?: React.ReactNode
 }
 
-function MobileDrawer({ children, drawerContent }: Props) {
+function ReleaseMobileDrawer({ children, drawerContent }: Props) {
 
     const drawerRef = useRef<HTMLInputElement>(null)
-
-    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
 
     return (
         <div className="drawer drawer-end">
@@ -26,21 +22,9 @@ function MobileDrawer({ children, drawerContent }: Props) {
                 <label htmlFor="hu-drawer" className="drawer-overlay"></label>
                 <div className='p-4 bg-primary w-[80%] flex h-full justify-between flex-col'>
                     {drawerContent ? drawerContent : (
-                        <div className='flex flex-col justify-between w-full h-full'>
+                        <div>
                             <div className="flex flex-col justify-center w-full">
-                                <div className='mt-0'>
-                                    {!isLoggedIn ? (
-                                        <div>
-                                            <ul className="w-full rounded-lg menu bg-secondary text-secondary-content">
-                                                <li><Link href="/auth?form=login" className='flex items-center justify-between w-full' rel="noreferrer" >Login <span><MdArrowRightAlt size={32} /></span></Link>
-                                                </li>
-                                                <li><Link href="/auth?form=signup" rel="noreferrer" className='flex items-center justify-between w-full'>Sign Up <span><MdArrowRightAlt size={32} /></span></Link>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    ) : (<></>)}
-                                </div>
-                                <div className='mt-8'>
+                                <div>
                                     <ul className="w-full rounded-lg menu bg-secondary text-secondary-content">
                                         <li><a href="https://metaland.mn/en" className='flex items-center justify-between w-full' target="_blank" rel="noreferrer" >METALAND <span><MdArrowRightAlt size={32} /></span></a>
                                         </li>
@@ -65,4 +49,4 @@ function MobileDrawer({ children, drawerContent }: Props) {
     )
 }
 
-export default MobileDrawer
+export default ReleaseMobileDrawer

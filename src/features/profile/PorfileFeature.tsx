@@ -207,7 +207,7 @@ const PorfileFeature = ({ }: Props) => {
                 <div className="flex justify-center w-full">
                     <div className="container">
                         <div className="mt-16">
-                            <div className="flex justify-start w-full">
+                            <div className="flex justify-center w-full md:justify-start">
                                 <div className="flex items-end h-full">
                                     <div className="flex">
                                         <div className="flex flex-col items-center">
@@ -223,25 +223,25 @@ const PorfileFeature = ({ }: Props) => {
                             </div>
                         </div>
                         <div className="mt-6">
-                            <div className="flex items-center justify-between w-full">
-                                <div className="flex space-x-4">
-                                    <div className="rounded-xl cursor-not-allowed font-bold px-5 py-[14px] bg-black bg-opacity-[0.04]">
+                            <div className="flex flex-col items-center justify-between w-full md:flex-row">
+                                <div className="grid grid-cols-2 md:flex md:flex-row">
+                                    <div className="rounded-xl m-4 cursor-not-allowed font-bold px-5 py-[14px] bg-black bg-opacity-[0.04]">
                                         <span className='opacity-[0.2]'>Buy More</span>
                                     </div>
-                                    <div className="rounded-xl cursor-not-allowed font-bold px-5 py-[14px] bg-black bg-opacity-[0.04]">
+                                    <div className="rounded-xl m-4 cursor-not-allowed font-bold px-5 py-[14px] bg-black bg-opacity-[0.04]">
                                         <span className='opacity-[0.2]'>Send NFT</span>
                                     </div>
-                                    <div className="rounded-xl cursor-pointer font-bold px-5 py-[14px] bg-black bg-opacity-[0.04]">
+                                    <div className="rounded-xl m-4 items-center flex cursor-pointer font-bold px-5 py-[14px] bg-black bg-opacity-[0.04]">
                                         <span className=''>Edit Profile</span>
                                     </div>
-                                    <div className="rounded-xl cursor-pointer font-bold px-5 py-[14px] bg-white border-black border-opacity-[0.2] border">
+                                    <div className="rounded-xl m-4 cursor-pointer font-bold px-5 py-[14px] bg-white border-black border-opacity-[0.2] border">
                                         <div className="flex items-center space-x-4">
                                             <span>Hide Profile</span>
                                             <BiHide size={24} />
                                         </div>
                                     </div>
                                 </div>
-                                <div className="flex">
+                                <div className="flex mt-4 md:mt-0">
                                     <div className="px-4 py-3 border rounded-xl">
                                         <div className="grid grid-cols-2 gap-x-8">
                                             <div className="flex opacity-[0.65] justify-between w-full">
@@ -320,7 +320,7 @@ const PorfileFeature = ({ }: Props) => {
                                         </div>
                                     ) : (<></>)}
                                     {!isMyNftFetching ? (
-                                        <div className="flex flex-col items-center mt-4 md:-ml-4 md:flex-wrap md:flex-row">
+                                        <div className="grid grid-cols-1 mt-4 sm:grid-cols-2 lg:grid-cols-4 md:-ml-4">
                                             {visibleNfts.map((nft) => (
                                                 <>
                                                     {_times(nft.ownerAmount, (num) => (

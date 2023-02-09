@@ -1,10 +1,10 @@
-import { useLazyGetCognitoUserDataQuery } from '@/store/rtk-query/cognito-userdata/cognito-userdata-api';
 import { useForgotPasswordMutation } from '@/store/rtk-query/cognito/cognito-api';
 import classNames from 'classnames';
 import React, { useState } from 'react'
 import { useForm } from "react-hook-form";
 import { toast } from 'react-toastify';
 import { EMAIL_REGEX } from '@/lib/consts';
+import { useLazyCognitoUserQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api';
 
 
 type Props = {
@@ -17,8 +17,9 @@ type ForgotPasswordFormData = {
 
 export default function ForgotPasswordForm({ ...props }: Props) {
 
-    const [callCognitoUserData] = useLazyGetCognitoUserDataQuery()
-    const [callForgotPassword, { isLoading: isForgotPasswordLoading }] = useForgotPasswordMutation()
+    const [callCognitoUserData] = useLazyCognitoUserQuery()
+    const [isForgotPasswordLoading, setIsForgotPasswordLoading] = useState(false)
+    const [callForgotPassword, { }] = useForgotPasswordMutation()
 
     const { register, handleSubmit, formState: {
         errors
@@ -29,23 +30,31 @@ export default function ForgotPasswordForm({ ...props }: Props) {
     })
 
     const onSubmit = async (d: ForgotPasswordFormData) => {
-        const userDataResp = await callCognitoUserData({
-            email: d.email,
-        }).unwrap()
-        if (!userDataResp.Response.Users.length) {
-            toast("User not found", {
-                type: 'error'
+        setIsForgotPasswordLoading(true)
+        try {
+            const userDataResp = await callCognitoUserData({
+                email: d.email,
+            }).unwrap()
+            if (!userDataResp.result) {
+                return;
+            }
+            if (!userDataResp.result.Response.Users.length) {
+                toast("User not found", {
+                    type: 'error'
+                })
+                return;
+            }
+            const cognitoUserData = userDataResp.result.Response.Users[0];
+            const r = await callForgotPassword({
+                Username: cognitoUserData.Username
+            }).unwrap()
+            toast('Confirmation code sent successfully. Please check your email.', {
+                type: 'success'
             })
-            return;
+            props.onSuccess(cognitoUserData.Username)
+        } finally {
+            setIsForgotPasswordLoading(false)
         }
-        const cognitoUserData = userDataResp.Response.Users[0];
-        const r = await callForgotPassword({
-            Username: cognitoUserData.Username
-        }).unwrap()
-        toast('Confirmation code sent successfully. Please check your email.', {
-            type: 'success'
-        })
-        props.onSuccess(cognitoUserData.Username)
     }
 
     return (

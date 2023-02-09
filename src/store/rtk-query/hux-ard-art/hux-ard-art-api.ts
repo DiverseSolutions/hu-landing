@@ -1,5 +1,5 @@
 import { ArdArtResponse } from './../ard-art/types';
-import { ArdArtBundleResponse, ArdArtBundleInvoiceResponse, ArdArtSingleInvoiceResponse, ArdArtAssetDetailByIDResult, ArdArtTicketOrAssetResponse, ArdArtMyOwnedNftResponse, ArdArtCreateSocialpayInvoiceResult, ArdArtCreateQpayInvoiceResult, ArdArtCreateQposInvoiceResult, ArdArtGetInvoiceByIdResult, ArdArtCheckInvoiceResult, ArdArtAssetDetailEarlyResult } from './types';
+import { ArdArtBundleResponse, ArdArtBundleInvoiceResponse, ArdArtAssetDetailByIDResult, ArdArtTicketOrAssetResponse, ArdArtMyOwnedNftResponse, ArdArtCreateSocialpayInvoiceResult, ArdArtCreateQpayInvoiceResult, ArdArtCreateQposInvoiceResult, ArdArtGetInvoiceByIdResult, ArdArtCheckInvoiceResult, ArdArtAssetDetailEarlyResult, ArdArtCognitoUserDetailResult } from './types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const huxArdArtApi = createApi({
@@ -133,6 +133,15 @@ export const huxArdArtApi = createApi({
                 method: 'GET',
             })
         }),
+        cognitoUser: builder.query<ArdArtResponse<ArdArtCognitoUserDetailResult>, {
+            email: string;
+        }>({
+            query: (d) => ({
+                url: '/api/v1/helper/getusername',
+                method: 'POST',
+                body: d
+            })
+        }),
     }),
 })
 
@@ -152,5 +161,7 @@ export const {
     useCheckInvoiceQuery,
     useLazyCheckInvoiceQuery,
     useAssetDetailEarlyQuery,
-    useLazyAssetDetailEarlyQuery
+    useLazyAssetDetailEarlyQuery,
+    useCognitoUserQuery,
+    useLazyCognitoUserQuery
 } = huxArdArtApi;

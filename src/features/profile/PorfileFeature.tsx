@@ -295,9 +295,14 @@ const PorfileFeature = ({ }: Props) => {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="flex h-full cursor-not-allowed items-center p-4 ml-4 bg-black rounded-lg bg-opacity-[0.04]">
+                                        <button onClick={() => {
+                                            callMyOwnedNft({
+                                                ownerId: accountId,
+                                                category: searchCategoryId,
+                                            })
+                                        }} className={classNames('flex h-full cursor-pointer items-center p-4 ml-4 bg-black rounded-lg bg-opacity-[0.04]', { 'loading': isMyNftFetching })}>
                                             <ZondReloadSvg />
-                                        </div>
+                                        </button>
                                         <div className="flex ml-0 md:ml-4 h-full items-center mt-4 md:mt-0  p-4 bg-black bg-opacity-[0.04] rounded-lg flex-grow">
                                             <BiSearchAlt className='opacity-[0.65]' />
                                             <input value={searchInput} onChange={(e) => setSearchInput(e.target.value)} placeholder='Search by NFTs' className='w-full ml-2 text-sm font-normal bg-transparent border-transparent rounded-lg outline-none' />

@@ -2,6 +2,7 @@ import EarlyTicketSection from '@/components/section/EarlyTicketSection';
 import { useAssetDetailEarlyQuery, useLazyMonxanshRateQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api';
 import { useLazyIdaxTickerQuery } from '@/store/rtk-query/idax/idax-api';
 import React, { useState, useMemo, useEffect } from 'react';
+
 import { ClipLoader } from 'react-spinners';
 
 type Props = {}

@@ -74,7 +74,7 @@ function PaymentStatusCard({ invoice: invoiceData, checkInvoice, priceToUsdrate,
     const router = useRouter()
     const [selected, setSelected] = useState<PaymentType>(() => {
         const socialPayMethod = Cookies.get('huSocialPayMethod')
-        if (socialPayMethod) {
+        if (type === 'socialpay' && socialPayMethod) {
             return socialPayMethod as PaymentType
         }
         return type as PaymentType

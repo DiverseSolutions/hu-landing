@@ -231,7 +231,7 @@ const PorfileFeature = ({ }: Props) => {
                         <div className="mt-6">
                             <div className="flex flex-col items-center justify-between w-full md:flex-row">
                                 <div className="grid grid-cols-2 md:flex md:flex-row">
-                                    <Link href="/" rel="noreferrer" className="rounded-xl m-4 cursor-pointer font-bold px-5 py-[14px] bg-white border-black border-opacity-[0.2] border">
+                                    <Link href="/early" rel="noreferrer" className="rounded-xl m-4 cursor-pointer font-bold px-5 py-[14px] bg-white border-black border-opacity-[0.2] border">
                                         <span>Buy More</span>
                                     </Link>
                                     <div className="rounded-xl m-4 cursor-not-allowed font-bold px-5 py-[14px] bg-black bg-opacity-[0.04]">

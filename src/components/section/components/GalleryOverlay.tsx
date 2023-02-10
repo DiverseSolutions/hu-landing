@@ -7,7 +7,7 @@ type Props = {
 
 function GalleryOverlay({ ticket }: Props) {
     return (
-        <div>GalleryOverlay</div>
+        <></>
     )
 }
 

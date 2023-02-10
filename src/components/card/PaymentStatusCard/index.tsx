@@ -73,8 +73,9 @@ function PaymentStatusCard({ invoice: invoiceData, checkInvoice, priceToUsdrate,
 
     const router = useRouter()
     const [selected, setSelected] = useState<PaymentType>(() => {
-        if (type === 'socialpay') {
-            return (Cookies.get('socialPaymethod') || type) as PaymentType
+        const socialPayMethod = Cookies.get('huSocialPayMethod')
+        if (socialPayMethod) {
+            return socialPayMethod as PaymentType
         }
         return type as PaymentType
     })
@@ -153,7 +154,9 @@ function PaymentStatusCard({ invoice: invoiceData, checkInvoice, priceToUsdrate,
                                         <PaymentTypeCard onClick={() => { }} icon={<VisaSvg />} name="Credit & Debit Card" active={selected === 'card'} />
                                     ) : (<></>)}
                                     {selected === 'socialpay' ? (
-                                        <PaymentTypeCard onClick={() => setSelected('socialpay')} icon={<Image src={SocialPayImg} width={32} height={32} alt="Social Pay" />}
+                                        <PaymentTypeCard onClick={() => {
+
+                                        }} icon={<Image src={SocialPayImg} width={32} height={32} alt="Social Pay" />}
                                             name="Social Pay" active={selected === 'socialpay'} />
                                     ) : (<></>)}
                                 </div>

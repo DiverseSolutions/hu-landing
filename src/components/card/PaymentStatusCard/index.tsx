@@ -52,11 +52,11 @@ function PaymentStatusCard({ invoice: invoiceData, checkInvoice, priceToUsdrate,
     const qrCode = useMemo(() => {
         if (invoice.paymentMethod === 'qpos' && invoice.successResponse) {
             const qposResp = JSON.parse(invoice.successResponse)
-            return qposResp.qrCode || undefined
+            return qposResp?.qrCode || undefined
         }
         if (invoice.paymentMethod === 'qpay' && invoice.successResponse) {
             const qpayResp = JSON.parse(invoice.successResponse)
-            return qpayResp.qr_text || undefined
+            return qpayResp?.qr_text || undefined
         }
         return undefined;
     }, [invoice])

@@ -41,7 +41,7 @@ const AuthFormsFeature = (props: Props) => {
                 <div className="hidden md:block w-[50%]" style={{
                     height: `calc(100vh - 100px)`
                 }}>
-                    <div className="relative w-full h-full min-h-[600px]">
+                    <div className="relative w-full h-full min-h-[700px]">
                         <Image src={loginLeftImg} fill alt="login" style={{ objectFit: 'cover', mixBlendMode: 'darken' }} />
                         <div className="absolute inset-0"></div>
                     </div>
@@ -50,7 +50,7 @@ const AuthFormsFeature = (props: Props) => {
                     height: `calc(100vh - 100px)`
                 }}>
                     <div className='h-full px-6 pt-6 mb-4 overflow-y-auto md:px-8'>
-                        <div className="flex items-center justify-center w-full h-full min-h-[600px]">
+                        <div className="flex items-center justify-center w-full h-full min-h-[700px]">
                             <div className="w-[90vw] md:w-[500px]">
                                 {formType === 'signup' ? (
                                     <>

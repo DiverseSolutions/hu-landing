@@ -19,6 +19,7 @@ import { useLazyIdaxTickerQuery } from '@/store/rtk-query/idax/idax-api'
 import PageLoader from '@/components/loader/PageLoader'
 import { useForm, UseFormHandleSubmit } from 'react-hook-form'
 import classNames from 'classnames'
+import Link from 'next/link'
 
 type Props = {
 
@@ -129,6 +130,8 @@ const PorfileFeature = ({ }: Props) => {
     const [callMonxanshRate] = useLazyMonxanshRateQuery()
     const [callIdaxTicker] = useLazyIdaxTickerQuery()
 
+    const router = useRouter()
+
     const fetchArdxToUsdRate = async () => {
         const [usdMntRate, ardxMntRate] = await Promise.all([
             callMonxanshRate({ currency: 'USD|MNT' }).unwrap(),
@@ -224,9 +227,9 @@ const PorfileFeature = ({ }: Props) => {
                         <div className="mt-6">
                             <div className="flex flex-col items-center justify-between w-full md:flex-row">
                                 <div className="grid grid-cols-2 md:flex md:flex-row">
-                                    <div className="rounded-xl m-4 cursor-not-allowed font-bold px-5 py-[14px] bg-black bg-opacity-[0.04]">
-                                        <span className='opacity-[0.2]'>Buy More</span>
-                                    </div>
+                                    <Link href="/" rel="noreferrer" className="rounded-xl m-4 cursor-pointer font-bold px-5 py-[14px] bg-white border-black border-opacity-[0.2] border">
+                                        <span>Buy More</span>
+                                    </Link>
                                     <div className="rounded-xl m-4 cursor-not-allowed font-bold px-5 py-[14px] bg-black bg-opacity-[0.04]">
                                         <span className='opacity-[0.2]'>Send NFT</span>
                                     </div>

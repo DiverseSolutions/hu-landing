@@ -9,27 +9,27 @@ const systemRequirementSpecs = [
         fields: [
             {
                 name: 'OS',
-                value: <span className="font-bold text-sm opacity-[0.65]">Windows® 7/Vista/XP</span>,
+                value: <span className="font-bold text-sm opacity-[0.65]">Windows 10/11</span>,
             },
             {
                 name: 'Processor',
-                value: <span className="font-bold text-sm opacity-[0.65] text-right">Intel® Core™ 2 Duo E6600 or<br />AMD Phenom™ X3 8750 <br />processor or better</span>
+                value: <span className="font-bold text-sm opacity-[0.65] text-right">Intel® Core™ i5-8500 Processor AMD Ryzen 5 3500</span>
             },
             {
                 name: 'Memory',
-                value: <span className="font-bold text-sm opacity-[0.65]">2GB RAM</span>
+                value: <span className="font-bold text-sm opacity-[0.65]">16GB RAM</span>
             },
             {
                 name: 'Graphics',
-                value: <span className="font-bold text-sm opacity-[0.65] text-right">Video card must be 256 MB or<br />more and should be a DirectX 9-<br />compatible with support for Pixel<br />Shader 3.0</span>
+                value: <span className="font-bold text-sm opacity-[0.65] text-right">GeForce GTX 1060 6GB or AMD RX580</span>
             },
             {
                 name: 'DirectX',
-                value: <span className="font-bold text-sm opacity-[0.65]">Version 9.0c</span>
+                value: <span className="font-bold text-sm opacity-[0.65]">Version 12</span>
             },
             {
                 name: 'Storage',
-                value: <span className="font-bold text-sm opacity-[0.65]">15 GB available space</span>
+                value: <span className="font-bold text-sm opacity-[0.65]">20 GB available space</span>
             },
         ]
     },

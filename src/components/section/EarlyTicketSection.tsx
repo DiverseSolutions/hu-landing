@@ -143,7 +143,7 @@ function TicketSection({ ticket, priceToUsdRate }: Props) {
                                     <div className="border-2 p-6 rounded-xl border-black border-opacity-[0.2] space-y-4">
                                         <div className="flex items-center w-full">
                                             <Clock />
-                                            <p className="ml-4 text-sm text-black text-opacity-[0.65]">Event Date {moment(ticket.finishDate).isValid() ? moment(ticket.finishDate).format('LLL Z') : ''}</p>
+                                            <p className="ml-4 text-sm text-black text-opacity-[0.65]">Event Date Thursday March 30, 2023 PM +09:00</p>
                                         </div>
                                         <div className="flex items-center w-full">
                                             <LocationSvg />

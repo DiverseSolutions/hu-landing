@@ -13,11 +13,11 @@ import { MdExpandLess, MdExpandMore } from 'react-icons/md'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState, useMemo } from 'react'
 import { ClipLoader } from 'react-spinners'
-import { generateFromString } from 'generate-avatar'
 import Avatar from '@/components/avatar/Avatar'
 import { useLazyIdaxTickerQuery } from '@/store/rtk-query/idax/idax-api'
 import PageLoader from '@/components/loader/PageLoader'
-import { useForm, UseFormHandleSubmit } from 'react-hook-form'
+import ProfileCoverImg from '@/assets/img/profile-cover.jpg'
+import { useForm } from 'react-hook-form'
 import classNames from 'classnames'
 import Link from 'next/link'
 
@@ -202,7 +202,11 @@ const PorfileFeature = ({ }: Props) => {
         <div className="relative w-full">
             <div className="flex justify-center w-full">
                 <div className="container mt-6 h-[300px] bg-[#D9D9D9] rounded-xl">
-
+                    <div className="relative w-full h-full">
+                        <div className="absolute inset-0">
+                            <img src={ProfileCoverImg.src} className="object-cover w-full h-full md:rounded-xl" />
+                        </div>
+                    </div>
                 </div>
             </div>
             <div className="w-full px-4 pb-16 md:px-0 transform translate-y-[-150px]">
@@ -232,9 +236,6 @@ const PorfileFeature = ({ }: Props) => {
                                     </Link>
                                     <div className="rounded-xl m-4 cursor-not-allowed font-bold px-5 py-[14px] bg-black bg-opacity-[0.04]">
                                         <span className='opacity-[0.2]'>Send NFT</span>
-                                    </div>
-                                    <div className="rounded-xl m-4 items-center flex cursor-pointer font-bold px-5 py-[14px] bg-black bg-opacity-[0.04]">
-                                        <span className=''>Edit Profile</span>
                                     </div>
                                     <div className="rounded-xl m-4 cursor-pointer font-bold px-5 py-[14px] bg-white border-black border-opacity-[0.2] border">
                                         <div className="flex items-center space-x-4">

@@ -1,3 +1,4 @@
+import { formatPrice } from '@/lib/utils'
 import { ArdArtMyOwnedNftRecord } from '@/store/rtk-query/hux-ard-art/types'
 import moment from 'moment'
 import React, { useMemo } from 'react'
@@ -32,17 +33,11 @@ export default function MyNftCard({ nft, priceToUsdRate }: Props) {
                     <h2 className="text-lg font-normal card-title">{nft.name}</h2>
                 </div>
                 <div className="mt-1 -px-2">
-                    <div className="p-2 bg-black bg-opacity-[0.04] rounded-lg">
+                    <div className="p-4 py-2 bg-black bg-opacity-[0.04] rounded-lg">
                         <div className="grid w-full grid-cols-2">
                             <div className="flex flex-col w-full">
-                                <p className="text-xs text-terteriary">Price</p>
-                                <p className="mt-1 text-sm">{priceUsd}</p>
-                                <p className="mt-1 text-xs font-normal text-terteriary">ARDX {priceFormatted} </p>
-                            </div>
-                            <div className="flex flex-col w-full">
-                                <p className="text-xs text-terteriary">Date</p>
-                                <p className="mt-1 text-sm">{moment(nft.createdAt).format('YYYY-MM-DD')}</p>
-                                <p className="mt-1 text-xs font-normal text-terteriary">{moment(nft.createdAt).format('HH:mm:ss')}</p>
+                                <p className="text-sm opacity-[0.65]">Current price</p>
+                                <p className="mt-1 text-sm"><span className="text-base font-bold">ARDX {formatPrice(nft.price)}</span> <span className='font-[300] ml-1 text-sm opacity-[0.65]'>{priceUsd}</span></p>
                             </div>
                         </div>
                     </div>

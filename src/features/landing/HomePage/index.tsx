@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import HomeNavbar from '@/components/navbar/HomeNavbar'
+import HomeNavbar from './components/HomeNavbar'
 import MobileDrawer from '@/components/drawer/MobileDrawer'
 import HomeTheHuRedSvg from '@/assets/svg/home-the-hu-red.svg'
 import useWindowResize from 'beautiful-react-hooks/useWindowResize'

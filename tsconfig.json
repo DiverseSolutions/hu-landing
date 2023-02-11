@@ -26,6 +26,9 @@
       "@/components/*": [
         "./src/components/*"
       ],
+      "@/components/navbar/*": [
+        "./src/components/navbar/*"
+      ],
     }
   },
   "include": [

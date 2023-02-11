@@ -3,7 +3,7 @@ import loginLeftImg from '@/assets/img/login-left.jpg'
 import Image from 'next/image'
 import LoginForm from '@/components/forms/LoginForm'
 import { useRouter } from 'next/router'
-import Navbar from '@/components/Navbar'
+import Navbar from '@/components/navbar'
 import MobileDrawer from '@/components/drawer/MobileDrawer'
 import SignupForm from '@/components/forms/SignupForm'
 

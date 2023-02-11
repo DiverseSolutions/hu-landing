@@ -2,7 +2,8 @@ import React, { useRef } from 'react'
 import CopyRightSvg from '@/assets/svg/copyright.svg'
 import { MdArrowRightAlt } from 'react-icons/md'
 import Link from 'next/link'
-import { useAppSelector } from '@/store/hooks'
+import { useAppDispatch, useAppSelector } from '@/store/hooks'
+import { logoutSuccess } from '@/store/reducer/auth-reducer/actions'
 
 
 type Props = {
@@ -13,13 +14,14 @@ type Props = {
 function MobileDrawer({ children, drawerContent }: Props) {
 
     const drawerRef = useRef<HTMLInputElement>(null)
-
+    const dispatch = useAppDispatch()
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+    const isAuthLoading = useAppSelector(state => state.auth.isLoading)
 
     return (
         <div className="drawer drawer-end">
             <input ref={drawerRef} id="hu-drawer" type="checkbox" className="drawer-toggle" />
-            <div className="relative drawer-content">
+            <div className="overflow-hidden drawer-content">
                 {children}
             </div>
             <div className="drawer-side">
@@ -40,6 +42,18 @@ function MobileDrawer({ children, drawerContent }: Props) {
                                         </div>
                                     ) : (<></>)}
                                 </div>
+                                {!isAuthLoading && isLoggedIn ? (
+                                    <div className='mt-8'>
+                                        <ul className="w-full rounded-lg menu bg-secondary text-secondary-content">
+                                            <li><Link href="/profile" className='flex items-center justify-between w-full' target="_blank" rel="noreferrer" >Profile <span><MdArrowRightAlt size={32} /></span></Link>
+                                            </li>
+                                            <li><button onClick={() => {
+                                                dispatch(logoutSuccess())
+                                            }} className='flex items-center justify-between w-full'  >Logout <span><MdArrowRightAlt size={32} /></span></button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                ) : (<></>)}
                                 <div className='mt-8'>
                                     <ul className="w-full rounded-lg menu bg-secondary text-secondary-content">
                                         <li><a href="https://metaland.mn/en" className='flex items-center justify-between w-full' target="_blank" rel="noreferrer" >METALAND <span><MdArrowRightAlt size={32} /></span></a>

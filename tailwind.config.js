@@ -46,7 +46,38 @@ module.exports = {
       }
     },
     extend: {
+      // that is animation class
+      animation: {
+        fade: 'fadeOut 1s ease-in-out forwards',
+        hero: 'heroMove 500ms ease-in-out forwards',
+        heroRevert: 'heroMoveRevert 500ms ease-in-out forwards',
+        heroMobile: 'heroMobileMove 500ms ease-in-out forwards',
+        heroMobileRevert: 'heroMobileMoveRevert 500ms ease-in-out forwards',
+      },
 
+      // that is actual animation
+      keyframes: theme => ({
+        fadeOut: {
+          '0%': { opacity: 1 },
+          '100%': { opacity: 0 },
+        },
+        heroMove: {
+          '0%': { transform: `translate(100%, -100%)` },
+          '100%': { transform: `translate(0%, 0%)` },
+        },
+        heroMoveRevert: {
+          '0%': { transform: `translate(0%, 0%)` },
+          '100%': { transform: `translate(100%, -100%)` },
+        },
+        heroMobileMove: {
+          '0%': { transform: `translate(0%, -100%)` },
+          '100%': { transform: `translate(0%, 0%)` },
+        },
+        heroMobileMoveRevert: {
+          '0%': { transform: `translate(0%, 0%)` },
+          '100%': { transform: `translate(0%, -100%)` },
+        },
+      }),
     },
   },
   plugins: [

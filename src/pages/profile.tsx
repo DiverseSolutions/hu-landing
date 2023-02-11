@@ -1,6 +1,6 @@
 import { withAuthLoader } from '@/components/AuthLoader';
 import Footer from '@/components/footer/Footer';
-import Navbar from '@/components/Navbar';
+import Navbar from '@/components/navbar';
 import PorfileFeature from '@/features/profile/PorfileFeature';
 import React, { useEffect } from 'react';
 

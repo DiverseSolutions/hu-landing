@@ -2,7 +2,7 @@ import '@/styles/globals.css'
 import type { AppProps } from 'next/app'
 import { wrapper } from '../store/store';
 import { Provider } from 'react-redux'
-import Navbar from '@/components/Navbar';
+import Navbar from '@/components/navbar';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { ToastContainer } from 'react-toastify';

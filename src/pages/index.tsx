@@ -19,7 +19,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        {DEPLOYMENT_ENV === 'prod' ? <ReleaseLandingWithComingSoon /> : <HomePage />}
+        {DEPLOYMENT_ENV === 'prod' ? <HomePage /> : <HomePage />}
       </main>
     </>
   )

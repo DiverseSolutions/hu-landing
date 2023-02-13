@@ -58,7 +58,7 @@ function HomePage({ }: Props) {
                                                 </div>
                                                 <div className="flex justify-center w-full px-8 mt-8">
                                                     <div className="w-full text-center md:text-right max-w-[1384px]">
-                                                        <p className='break-words text-[40px] leading-[44px] font-bold text-white'>WORLD TREMBLING NOMAD ROCK</p>
+                                                        <p className='break-words text-[28px] leading-[32px] font-bold text-white'>BE HEARD IN EVERY NATION AND EVERY TONGUE<br />WHEREVER THE SUN RISES</p>
                                                     </div>
                                                 </div>
                                                 <div className="flex self-center mt-4 md:hidden">

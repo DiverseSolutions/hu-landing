@@ -31,22 +31,14 @@ function HomeNavbar({ }: Props) {
                         <a className="text-xl normal-case btn btn-ghost">
                             <HomeNavbarTheHuSvg />
                         </a>
-                        <ul className="px-1 menu menu-horizontal text-white text-opacity-[0.35] text-base font-bold">
+                        <ul className="px-1 text-base font-bold menu menu-horizontal">
                             <li>
-                                <Link href="/">Home</Link>
-                            </li>
-                            <li>
-                                <Link href="/">
-                                    About the hu
-                                </Link>
-                            </li>
-                            <li>
-                                <a href="https://ardcoin.com" target="_blank" rel="noreferrer">
+                                <a className='text-white text-opacity-[0.35] hover:text-opacity-[1]' href="https://ardcoin.com" target="_blank" rel="noreferrer">
                                     ArdCoin
                                 </a>
                             </li>
                             <li>
-                                <a href="https://ard.art" target="_blank" rel="noreferrer">
+                                <a className='text-white text-opacity-[0.35] hover:text-opacity-[1]' href="https://ard.art" target="_blank" rel="noreferrer">
                                     Ard Art
                                 </a>
                             </li>

@@ -10,8 +10,8 @@ function BuyTicket({ }: Props) {
             <span className="w-[72px] h-[72px] p-2 bg-black flex justify-center items-center">
                 <img src={HomeBuyTicketIconImg.src} className="object-contain w-auto h-full" />
             </span>
-            <span className='px-8 text-xl font-bold uppercase'>
-                Buy Ticket
+            <span className='px-8 font-bold uppercase'>
+                Buy Ticket (Early bird)
             </span>
         </Link>
     )

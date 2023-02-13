@@ -69,7 +69,7 @@ function PaymentMethodCard({ item, priceToUsdrate }: Props) {
             return;
         }
         if (selected === 'socialpay' || selected === 'card') {
-            const linkParam = selected === 'card' ? 'payment' : 'socialpay'
+            const linkParam = selected === 'card' ? 'card' : 'socialpay'
             const r = await callCreateInvoiceSocialPay({
                 type: 'single',
                 method: selected,

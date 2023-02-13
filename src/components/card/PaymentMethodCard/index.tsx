@@ -36,7 +36,7 @@ function PaymentMethodCard({ item, priceToUsdrate }: Props) {
     const [selectedMongolianBank, setSelectedMongolianBank] = useState<MongolianBank>()
     const [isInvoiceUpdateLoading, setIsInvoiceUpdateLoading] = useState(false)
     const router = useRouter()
-    const [selected, setSelected] = useState<PaymentType>('card')
+    const [selected, setSelected] = useState<PaymentType>('ardapp')
     const [callCreateInvoiceSocialPay, { isLoading: isCreateInvoiceSocialPayLoading }] = useCreateSocialpayInvoiceMutation()
     const [callCreateInvoiceQPay, { isLoading: isCreateInvoiceQpayLoading }] = useCreateQpayInvoiceMutation()
     const [callCreateInvoiceQPos, { isLoading: isCreateInvoiceQPosLoading }] = useCreateQposInvoiceMutation()
@@ -188,15 +188,11 @@ function PaymentMethodCard({ item, priceToUsdrate }: Props) {
                 {!qrCode ? (
                     <div className="flex flex-col w-full">
                         <div className="mt-4">
-                            <PaymentTypeCard onClick={() => setSelected('card')} icon={<VisaSvg />} name="Credit & Debit Card" active={selected === 'card'} />
-                        </div>
-                        <div className="mt-4">
                             <PaymentTypeCard onClick={() => setSelected('ardapp')} icon={<Image src={ArdImg} width={32} height={32} alt="Ard" />}
                                 name="Ard App (available with ARDX)" active={selected === 'ardapp'} />
                         </div>
                         <div className="mt-4">
-                            <PaymentTypeCard onClick={() => setSelected('socialpay')} icon={<Image src={SocialPayImg} width={32} height={32} alt="Social Pay" />}
-                                name="Social Pay" active={selected === 'socialpay'} />
+                            <PaymentTypeCard onClick={() => setSelected('card')} icon={<VisaSvg />} name="Credit & Debit Card" active={selected === 'card'} />
                         </div>
                         <div tabIndex={0} onClick={(e) => {
                             if (isBanksExpanded && e.currentTarget) {
@@ -230,6 +226,10 @@ function PaymentMethodCard({ item, priceToUsdrate }: Props) {
                                     ))}
                                 </div>
                             </div>
+                        </div>
+                        <div className="mt-4">
+                            <PaymentTypeCard onClick={() => setSelected('socialpay')} icon={<Image src={SocialPayImg} width={32} height={32} alt="Social Pay" />}
+                                name="Social Pay" active={selected === 'socialpay'} />
                         </div>
                     </div>
                 ) : (<></>)}

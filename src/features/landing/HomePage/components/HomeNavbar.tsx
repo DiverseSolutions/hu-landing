@@ -33,13 +33,13 @@ function HomeNavbar({ }: Props) {
                         </a>
                         <ul className="px-1 text-base font-bold menu menu-horizontal">
                             <li>
-                                <a className='text-white text-opacity-[0.35] hover:text-opacity-[1]' href="https://ardcoin.com" target="_blank" rel="noreferrer">
-                                    ArdCoin
+                                <a className='text-white text-opacity-[0.35] hover:text-opacity-[1]' href="https://metaland.mn/en" target="_blank" rel="noreferrer">
+                                    Metaland
                                 </a>
                             </li>
                             <li>
-                                <a className='text-white text-opacity-[0.35] hover:text-opacity-[1]' href="https://ard.art" target="_blank" rel="noreferrer">
-                                    Ard Art
+                                <a className='text-white text-opacity-[0.35] hover:text-opacity-[1]' href="https://ardcoin.com" target="_blank" rel="noreferrer">
+                                    ArdCoin
                                 </a>
                             </li>
                         </ul>

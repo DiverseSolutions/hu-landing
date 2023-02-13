@@ -12,10 +12,12 @@ import "swiper/css";
 import "swiper/css/pagination";
 import BuyTicket from './components/BuyTicket'
 import BandMembersSection from './components/BandMembersSection'
+import classNames from 'classnames'
 
 const ScrollToExplore = dynamic(() => import('./components/ScrollToExplore'), { ssr: false, })
 const HeroSection = dynamic(() => import('./components/HeroSection'), { ssr: false, })
 const ImagesSection = dynamic(() => import('./components/ImagesSection'), { ssr: false, })
+const HeroParagraph = dynamic(() => import('./components/HeroParagraph'), { ssr: false, })
 
 type Props = {}
 
@@ -47,7 +49,7 @@ function HomePage({ }: Props) {
                             className="mySwiper"
                         >
                             <SwiperSlide>
-                                <div className='pt-[100px] h-full' style={{ height: 'calc(100vh-100px)' }}>
+                                <div className='pt-[100px] h-full'>
                                     <div className="flex justify-center w-full h-full">
                                         <div className="container">
                                             <div className="flex flex-col w-full">
@@ -61,21 +63,23 @@ function HomePage({ }: Props) {
                                                         <p className='break-words text-[28px] leading-[32px] font-bold text-white'>BE HEARD IN EVERY NATION AND EVERY TONGUE<br />WHEREVER THE SUN RISES</p>
                                                     </div>
                                                 </div>
-                                                <div className="flex self-center mt-4 md:hidden">
-                                                    <BuyTicket />
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </SwiperSlide>
                             <SwiperSlide>
-                                <div className='pt-[100px] h-full' style={{ height: 'calc(100vh-100px)' }}>
+                                <div className='pt-[100px] h-full'>
                                     <HeroSection showAnim={swiperActiveIdx === 1} revertAnim={swiperActiveIdx === 0 && prevSwiperActiveIdx === 1} />
                                 </div>
                             </SwiperSlide>
                             <SwiperSlide>
-                                <div className='pt-[100px] h-full' style={{ height: 'calc(100vh-100px)' }}>
+                                <div className='pt-[100px] h-full'>
+                                    <HeroParagraph />
+                                </div>
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <div className='pt-[100px] h-full'>
                                     <ImagesSection />
                                 </div>
                             </SwiperSlide>
@@ -87,25 +91,23 @@ function HomePage({ }: Props) {
                         </Swiper>
                     </div>
                 </div>
-                <div className="fixed h-[300px] bottom-0 left-0 right-0" style={{
+                <div className="fixed h-[300px] z-50 pointer-events-none bottom-0 left-0 right-0" style={{
                     background: `radial-gradient(105.33% 76.33% at 50% 95.88%, #721C1C 0.01%, rgba(0, 0, 0, 0) 100%)`
                 }}></div>
-                {swiperActiveIdx < 2 ? (
-                    <div className="fixed bottom-0 left-0 right-0 z-10 hidden md:block">
-                        <div className="flex justify-center w-full">
-                            <div className="container">
-                                <div className="flex items-center justify-between w-full pb-16">
-                                    <div className="flex self-start">
-                                        <ScrollToExplore isVisible={swiperActiveIdx === 0} />
-                                    </div>
-                                    <div className="flex self-end">
-                                        <BuyTicket />
-                                    </div>
+                <div className="fixed bottom-0 left-0 right-0 z-50 md:block">
+                    <div className="flex justify-center w-full">
+                        <div className="container">
+                            <div className="flex items-center justify-center w-full pb-16 md:justify-between">
+                                <div className="self-start hidden md:flex">
+                                    <ScrollToExplore isVisible={swiperActiveIdx === 0} />
+                                </div>
+                                <div className={classNames("flex self-center md:self-end", { 'hidden': swiperActiveIdx !== 0 })}>
+                                    <BuyTicket />
                                 </div>
                             </div>
                         </div>
                     </div>
-                ) : <></>}
+                </div>
             </MobileDrawer>
         </>
     )

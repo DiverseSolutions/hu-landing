@@ -205,8 +205,8 @@ function TicketSection({ ticket, priceToArdxRate }: Props) {
                                                                     onClick={() => {
                                                                         setSelectedTicketId(ticket.id)
                                                                     }}
-                                                                    className={classNames(`text-sm border`, { 'btn btn-black border-transparent p-3': selectedTicketId === ticket.id, 'bg-white hover:bg-black hover:bg-opacity-[0.04] p-3 border rounded-lg text-black': selectedTicketId !== ticket.id })}>
-                                                                    {ticket.name} {moment(ticket.scheduleDate).format('LLL z')}
+                                                                    className={classNames(`text-sm border text-left px-8`, { 'btn btn-black border-transparent p-3': selectedTicketId === ticket.id, 'bg-white hover:bg-black hover:bg-opacity-[0.04] p-3 border rounded-lg text-black': selectedTicketId !== ticket.id })}>
+                                                                    {ticket.name} {moment(ticket.scheduleDate).format('LLL Z')}
                                                                 </button>
                                                             ))}
                                                         </div>

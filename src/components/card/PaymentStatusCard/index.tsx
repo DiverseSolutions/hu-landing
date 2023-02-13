@@ -100,10 +100,17 @@ function PaymentStatusCard({ invoice: invoiceData, checkInvoice, priceToUsdrate,
     }
 
     useEffect(() => {
-        const interval = setInterval(() => {
-            handleCheckTransaction()
-        }, 5000)
-        return () => clearInterval(interval)
+        let intervalId: NodeJS.Timer;
+        setTimeout(() => {
+            intervalId = setInterval(() => {
+                handleCheckTransaction()
+            }, 3000)
+        }, 3000)
+        return () => {
+            if (intervalId) {
+                clearInterval(intervalId)
+            }
+        }
     }, [])
 
     return (

@@ -71,6 +71,7 @@ export const huxArdArtApi = createApi({
         }),
         createSocialpayInvoice: builder.mutation<ArdArtResponse<ArdArtCreateSocialpayInvoiceResult>, {
             type: 'single' | 'bundle';
+            method: 'socialpay' | 'card';
             productId?: number;
             bundleId?: number;
             amount: number;
@@ -81,7 +82,7 @@ export const huxArdArtApi = createApi({
                 method: 'POST',
                 body: {
                     ...d,
-                    method: 'socialpay',
+                    method: d.method,
                     callback: `${process.env.NEXT_PUBLIC_APP_HOST_URL}/payment-status`
                 }
             })

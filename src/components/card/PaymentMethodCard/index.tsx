@@ -71,6 +71,7 @@ function PaymentMethodCard({ item, priceToUsdrate }: Props) {
             const linkParam = selected === 'card' ? 'payment' : 'socialpay'
             const r = await callCreateInvoiceSocialPay({
                 type: 'single',
+                method: selected,
                 productId: item.id,
                 amount: 1,
                 accountId,

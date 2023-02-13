@@ -187,7 +187,7 @@ function TicketSection({ ticket, priceToArdxRate }: Props) {
                                     <div className="border border-black rounded-lg border-opacity-[0.1] p-6 mt-4">
                                         <div className='flex items-center'>
                                             <Clock size={24} />
-                                            <p className='text-black text-sm text-opacity-[0.65] ml-1'>Early Bird Sale ends {moment("2023-03-04 03:18:00").utcOffset("+08:00").format("MMMM D, YYYY [at] hh:mm A Z")}</p>
+                                            <p className='text-black text-sm text-opacity-[0.65] ml-1'>Early Bird Sale ends {moment("2023-03-04").utcOffset("+08:00").format("MMMM D, YYYY")}</p>
                                         </div>
                                         <div className="mt-4">
                                             <div className="p-4 rounded-lg bg-black bg-opacity-[0.04]">

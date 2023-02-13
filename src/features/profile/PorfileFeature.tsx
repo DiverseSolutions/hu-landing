@@ -199,7 +199,7 @@ const PorfileFeature = ({ }: Props) => {
     }
 
     return (
-        <div className="relative w-full">
+        <div className="relative w-full overflow-x-hidden">
             <div className="flex justify-center w-full">
                 <div className="container mt-6 h-[300px] bg-[#D9D9D9] rounded-xl">
                     <div className="relative w-full h-full">

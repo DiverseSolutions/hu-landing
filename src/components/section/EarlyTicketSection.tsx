@@ -122,7 +122,7 @@ function TicketSection({ ticket, priceToArdxRate }: Props) {
                                         </div>
                                         <div className="absolute bottom-4 right-4">
                                             <div className="flex p-4 px-8 bg-white cursor-pointer rounded-xl">
-                                                <span className="text-base font-bold">Show all photos({ticket.medias?.length || 0})</span>
+                                                <label htmlFor='ticket-media-modal'><span className="text-base font-bold">Show all photos({ticket.medias?.length || 0})</span></label>
                                             </div>
                                         </div>
                                     </div>

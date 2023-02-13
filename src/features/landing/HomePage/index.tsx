@@ -47,7 +47,7 @@ function HomePage({ }: Props) {
                             className="mySwiper"
                         >
                             <SwiperSlide>
-                                <section className='mt-[100px]' style={{ height: 'calc(100vh-100px)' }}>
+                                <div className='pt-[100px] h-full' style={{ height: 'calc(100vh-100px)' }}>
                                     <div className="flex justify-center w-full h-full">
                                         <div className="container">
                                             <div className="flex flex-col w-full">
@@ -67,20 +67,20 @@ function HomePage({ }: Props) {
                                             </div>
                                         </div>
                                     </div>
-                                </section>
+                                </div>
                             </SwiperSlide>
                             <SwiperSlide>
-                                <div className='mt-[100px] h-full' style={{ height: 'calc(100vh-100px)' }}>
+                                <div className='pt-[100px] h-full' style={{ height: 'calc(100vh-100px)' }}>
                                     <HeroSection showAnim={swiperActiveIdx === 1} revertAnim={swiperActiveIdx === 0 && prevSwiperActiveIdx === 1} />
                                 </div>
                             </SwiperSlide>
                             <SwiperSlide>
-                                <div className='mt-[100px] h-full' style={{ height: 'calc(100vh-100px)' }}>
+                                <div className='pt-[100px] h-full' style={{ height: 'calc(100vh-100px)' }}>
                                     <ImagesSection />
                                 </div>
                             </SwiperSlide>
                             {/* <SwiperSlide>
-                                <section className='md:mt-[100px]' style={{ height: 'calc(100vh-100px)' }}>
+                                <section className='md:pt-[100px] h-full' style={{ height: 'calc(100vh-100px)' }}>
                                     <BandMembersSection />
                                 </section>
                             </SwiperSlide> */}

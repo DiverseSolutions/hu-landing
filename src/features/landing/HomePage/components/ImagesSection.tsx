@@ -19,18 +19,42 @@ SwiperCore.use([Pagination])
 type Props = {}
 
 const images = [
-    HomeImgSection1.src,
     HomeImgSection2.src,
-    HomeImgSection3.src,
 ]
 
 function ImagesSection({ }: Props) {
+
+    const [isSingleImage, setIsSingleImage] = useState(images.length === 1)
 
     const { width: sw } = useWindowSize()
     const isMobile = sw <= 768
 
     const [selectedImg, setSelectedImg] = useState<string>()
 
+    if (isSingleImage) {
+        return (
+            <div className='h-full overflow-y-auto md:px-0 pb-[100px]'>
+                <div className="flex flex-col justify-between w-full h-full">
+                    <div className="flex justify-center w-full h-full">
+                        <div className="container flex items-start w-full h-full">
+                            <div className="grid w-full grid-cols-1 px-4 mt-8 md:hidden">
+                                {images.map((imgUrl) => (
+                                    <div key={imgUrl} className='w-full h-full aspect-square'>
+                                        <img onClick={() => setSelectedImg(imgUrl)} src={imgUrl} className="object-cover w-full h-full" />
+                                    </div>
+                                ))}
+                            </div>
+                            <div className="items-center hidden w-full h-full md:flex">
+                                <div className="flex justify-center items-center w-full h-[512px]">
+                                    <img src={images[0]} className="object-contain w-auto h-full" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
     return (
         <>
             <div className='h-full overflow-y-auto md:px-0 pb-[100px]'>

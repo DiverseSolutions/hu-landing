@@ -159,7 +159,7 @@ export default function LandingWithComingSoon({ }: Props) {
                                         <div className='flex justify-center w-full'>
                                             <div className="flex items-center">
                                                 <div className="mr-1 "><CopyRightSvg /></div>
-                                                <p className="font-medium text-white uppercase">2023 THE HU</p>
+                                                <p className="font-medium text-white uppercase">The HU & ARD</p>
                                             </div>
                                         </div>
                                         <div className='items-center justify-center hidden w-full md:justify-end'>

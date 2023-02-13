@@ -13,6 +13,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import BuyTicket from './components/BuyTicket'
 import classNames from 'classnames'
+import HomeFooter from '@/components/footer/HomeFooter'
 
 const TheHuRedResponsive = dynamic(() => import('./components/TheHuRedResponsive'), { ssr: false, })
 const ScrollToExplore = dynamic(() => import('./components/ScrollToExplore'), { ssr: false, })
@@ -119,14 +120,7 @@ function HomePage({ }: Props) {
                     </div>
                 </div>
                 <div className={classNames("fixed bottom-0 left-0 right-0 z-50 pointer-events-none transition-all duration-300", { 'opacity-0': swiperActiveIdx !== 3, 'opacity-100': swiperActiveIdx === 3 })}>
-                    <div className="h-[64px] md:h-[100px]">
-                        <div className="flex items-center justify-center w-full h-full">
-                            <div className="flex items-center">
-                                <div className="mr-1 "><CopyRightSvg /></div>
-                                <p className="font-medium text-white uppercase">THE HU & ARD</p>
-                            </div>
-                        </div>
-                    </div>
+                    <HomeFooter />
                 </div>
             </MobileDrawer>
         </>

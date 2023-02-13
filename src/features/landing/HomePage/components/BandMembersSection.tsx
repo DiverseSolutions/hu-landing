@@ -56,7 +56,7 @@ function BandMembersSection({ }: Props) {
                         <div className="flex justify-center w-full mt-8 md:mt-0 md:items-end">
                             <div className="flex items-center">
                                 <RiCopyrightLine />
-                                <span className='opacity-[0.65] text-sm ml-2'>2023 THE HU</span>
+                                <span className='opacity-[0.65] text-sm ml-2'>The HU & ARD</span>
                             </div>
                         </div>
                         <div className="flex justify-center w-full mt-8 md:mt-0 md:items-end md:justify-end">

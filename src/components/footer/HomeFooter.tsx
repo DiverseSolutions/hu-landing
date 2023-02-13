@@ -2,29 +2,30 @@ import React from 'react'
 
 import { IoLogoMedium, IoLogoInstagram, IoLogoFacebook, IoLogoDiscord } from 'react-icons/io5'
 import { RiCopyrightLine } from 'react-icons/ri'
+import CopyRightSvg from '@/assets/svg/copyright.svg'
 
 type Props = {}
 
-function Footer({ }: Props) {
+function HomeFooter({ }: Props) {
     return (
-        <div className="flex justify-center w-full pt-12 pb-12">
-            <div className="container">
+        <div className="flex justify-center w-full pb-8">
+            <div className="container text-white">
                 <div className="flex flex-col md:grid md:grid-cols-3">
                     <div className="flex justify-center w-full md:justify-start">
                         <div className="flex flex-col justify-between h-full">
                             <span className="mb-6 text-sm font-bold text-center uppercase md:text-left">Connect With Us</span>
                             <div className="grid w-full grid-cols-4 gap-x-6">
-                                <IoLogoMedium size={24} />
-                                <IoLogoInstagram size={24} />
-                                <IoLogoFacebook size={24} />
-                                <IoLogoDiscord size={24} />
+                                <IoLogoMedium size={24} color="white" />
+                                <IoLogoInstagram size={24} color="white" />
+                                <IoLogoFacebook size={24} color="white" />
+                                <IoLogoDiscord size={24} color="white" />
                             </div>
                         </div>
                     </div>
                     <div className="flex justify-center w-full mt-8 md:mt-0 md:items-end">
                         <div className="flex items-center">
-                            <RiCopyrightLine />
-                            <span className='opacity-[0.65] text-sm ml-2 text-black'>2023 The HU & ARD</span>
+                            <CopyRightSvg />
+                            <span className='opacity-[0.65] text-sm ml-2'>2023 The HU & ARD</span>
                         </div>
                     </div>
                     <div className="flex justify-center w-full mt-8 md:mt-0 md:items-end md:justify-end">
@@ -37,4 +38,4 @@ function Footer({ }: Props) {
     )
 }
 
-export default Footer
+export default HomeFooter

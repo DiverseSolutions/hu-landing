@@ -156,7 +156,7 @@ const PorfileFeature = ({ }: Props) => {
                 await fetchArdxToUsdRate()
             } catch (e) {
                 console.log(e)
-                setPageError("Currency error. Please try relad the page")
+                setPageError("Currency error. Please try reload the page")
             }
             setIsRateLoading(false)
         })()

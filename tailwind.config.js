@@ -46,6 +46,9 @@ module.exports = {
       }
     },
     extend: {
+      backgroundImage: {
+        'home-footer-radial-red': 'radial-gradient(105.33% 76.33% at 50% 95.88%, #721C1C 0.01%, rgba(0, 0, 0, 0) 100%)'
+      },
       // that is animation class
       animation: {
         fade: 'fadeOut 1s ease-in-out forwards',

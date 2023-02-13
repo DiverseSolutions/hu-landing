@@ -1,5 +1,5 @@
 import React from 'react'
-import { IoLogoMedium, IoLogoInstagram, IoLogoFacebook, IoLogoDiscord } from 'react-icons/io5'
+import CopyRightSvg from '@/assets/svg/copyright.svg'
 import { RiCopyrightLine } from 'react-icons/ri'
 import HomeImgSection1 from '@/assets/img/home-img-section-1.jpg'
 import HomeImgSection2 from '@/assets/img/home-img-section-2.jpg'
@@ -16,6 +16,12 @@ SwiperCore.use([Pagination])
 
 type Props = {}
 
+const images = [
+    HomeImgSection1.src,
+    HomeImgSection2.src,
+    HomeImgSection3.src,
+]
+
 function ImagesSection({ }: Props) {
 
     const { width: sw } = useWindowSize()
@@ -26,32 +32,35 @@ function ImagesSection({ }: Props) {
             <div className="flex flex-col justify-between w-full h-full">
                 <div className="flex justify-center w-full h-full">
                     <div className="container h-full">
-                        <div className="flex items-center w-full h-full">
+                        <div className="grid grid-cols-2">
+
+                        </div>
+                        <div className="items-center hidden w-full h-full md:flex">
                             <div className="flex items-center w-full h-[512px]">
                                 <Swiper
                                     speed={500}
                                     autoplay={false}
-                                    effect="creative"
-                                    centeredSlides
+                                    freeMode
+                                    slidesPerView={2}
+                                    spaceBetween={0}
                                     direction={"horizontal"}
                                     threshold={1}
-                                    slidesPerView={1.5}
                                     modules={[Pagination]}
-                                    className="mySwiper"
+                                    className="home-images-swiper"
                                 >
                                     <SwiperSlide>
-                                        <div className="flex items-center w-full h-full">
-                                            <img src={HomeImgSection1.src} className="object-contain w-auto h-full" />
+                                        <div className="flex items-center justify-center w-full h-full">
+                                            <img src={HomeImgSection1.src} className="object-contain w-full h-auto" />
                                         </div>
                                     </SwiperSlide>
                                     <SwiperSlide>
-                                        <div className="flex items-center w-full h-full">
-                                            <img src={HomeImgSection2.src} className="object-contain w-auto h-full" />
+                                        <div className="flex items-center justify-center w-full h-full">
+                                            <img src={HomeImgSection2.src} className="object-contain w-full h-auto" />
                                         </div>
                                     </SwiperSlide>
                                     <SwiperSlide>
-                                        <div className="flex items-center w-full h-full">
-                                            <img src={HomeImgSection3.src} className="object-contain w-auto h-full" />
+                                        <div className="flex items-center justify-center w-full h-full">
+                                            <img src={HomeImgSection3.src} className="object-contain w-full h-auto" />
                                         </div>
                                     </SwiperSlide>
                                 </Swiper>

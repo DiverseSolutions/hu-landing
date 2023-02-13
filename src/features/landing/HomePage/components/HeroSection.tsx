@@ -14,11 +14,11 @@ function HeroSection(props: HeroSectionProps) {
 
     return (
         <div className='h-full'>
-            <div className="flex items-center justify-center w-full h-full">
+            <div className="flex justify-center w-full h-full md:items-center">
                 <div className="container">
-                    <div className="flex flex-col items-center w-full h-full md:flex-row md:justify-center">
-                        <div className="flex">
-                            <img src={HomeSection2DragonImg.src} className={classNames(`object-contain transform h-[50vh] md:h-[68vh] w-auto`,
+                    <div className="flex flex-col w-full h-full md:items-center md:flex-row md:justify-center">
+                        <div className="hidden md:flex">
+                            <img src={HomeSection2DragonImg.src} className={classNames(`object-contain transform md:h-[68vh] w-auto`,
                                 [sw <= 768 ? 'animate-heroMobile' : 'animate-hero'],
                                 { [sw <= 768 ? 'animate-heroMobile' : 'animate-hero']: props.showAnim, [sw <= 768 ? 'animate-heroMobileRevert' : 'animate-heroRevert']: props.revertAnim })} style={{
                                     animationPlayState: props.showAnim || props.revertAnim ? 'running' : 'paused'

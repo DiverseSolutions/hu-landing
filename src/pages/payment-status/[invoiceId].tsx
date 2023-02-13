@@ -60,11 +60,14 @@ const PaymentStatus = (props: Props) => {
                     setPageErrorMessage("An Error Eccoured. Please try reload the page.")
                 }
             }
-            if (!isAuthLoading && !accountId) {
-                setPageErrorMessage("Account not found.")
-            }
         })()
     }, [isAuthLoading, accountId, router.query])
+
+    useEffect(() => {
+        if (!isAuthLoading && !accountId) {
+            setPageErrorMessage("Account not found.")
+        }
+    }, [isAuthLoading, accountId])
 
     useEffect(() => {
         if (pageErrorMessage) {
@@ -102,7 +105,7 @@ const PaymentStatus = (props: Props) => {
         }
         if (!accountId) {
             console.log(`accountId not found`)
-            setPageErrorMessage("Account not found.")
+            setPageErrorMessage("Account Id not found.")
             return;
         }
         if (router.query.bank) {

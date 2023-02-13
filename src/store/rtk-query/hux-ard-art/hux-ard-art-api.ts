@@ -76,6 +76,7 @@ export const huxArdArtApi = createApi({
             bundleId?: number;
             amount: number;
             accountId: number;
+            email: string;
         }>({
             query: (d) => ({
                 url: '/api/v1/market/invoice/create',
@@ -93,6 +94,7 @@ export const huxArdArtApi = createApi({
             bundleId?: number;
             amount: number;
             accountId: number;
+            email: string;
         }>({
             query: (d) => ({
                 url: '/api/v1/market/invoice/create',
@@ -108,6 +110,7 @@ export const huxArdArtApi = createApi({
             type: 'single' | 'bundle';
             productId?: number;
             bundleId?: number;
+            email: string;
             amount: number;
             accountId: number;
         }>({

@@ -97,6 +97,7 @@ export interface ArdArtTicketOrAssetRecord {
     price: number;
     finishDate: string;
     scheduleDate: string;
+    scheduleDateCustom: string;
     tag: string;
 }
 

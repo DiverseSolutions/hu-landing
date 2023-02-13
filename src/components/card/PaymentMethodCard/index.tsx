@@ -32,6 +32,7 @@ type PaymentType = 'card' | 'socialpay' | 'ardapp' | 'socialpay' | 'mongolian-ba
 function PaymentMethodCard({ item, priceToUsdrate }: Props) {
 
     const accountId = useAppSelector(state => state.auth.ardArt.accountId)
+    const email = useAppSelector(state => state.auth.profile?.email)
     const [qrCode, setQrCode] = useState<string>()
     const [selectedMongolianBank, setSelectedMongolianBank] = useState<MongolianBank>()
     const [isInvoiceUpdateLoading, setIsInvoiceUpdateLoading] = useState(false)
@@ -72,6 +73,7 @@ function PaymentMethodCard({ item, priceToUsdrate }: Props) {
             const r = await callCreateInvoiceSocialPay({
                 type: 'single',
                 method: selected,
+                email: email!,
                 productId: item.id,
                 amount: 1,
                 accountId,
@@ -85,6 +87,7 @@ function PaymentMethodCard({ item, priceToUsdrate }: Props) {
             const r = await callCreateInvoiceQPos({
                 type: 'single',
                 productId: item.id,
+                email: email!,
                 amount: 1,
                 accountId,
             }).unwrap()
@@ -107,6 +110,7 @@ function PaymentMethodCard({ item, priceToUsdrate }: Props) {
             if (qPosBank) {
                 const r = await callCreateInvoiceQPos({
                     productId: item.id,
+                    email: email!,
                     accountId,
                     type: 'single',
                     amount: 1,
@@ -119,6 +123,7 @@ function PaymentMethodCard({ item, priceToUsdrate }: Props) {
             const r = await callCreateInvoiceQPay({
                 productId: item.id,
                 accountId,
+                email: email!,
                 type: 'single',
                 amount: 1,
             }).unwrap()

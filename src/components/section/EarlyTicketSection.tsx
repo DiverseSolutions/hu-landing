@@ -165,23 +165,6 @@ function TicketSection({ ticket, priceToArdxRate }: Props) {
                                             <p className='text-2xl font-bold max-w-[250px]'>
                                                 {ticket.name}
                                             </p>
-                                            <div className="my-6 border border-black border-opacity-[0.1]">
-                                            </div>
-                                            <div className='flex items-center px-2 space-x-8'>
-                                                <HeartSvg />
-                                                <div className="flex items-center cursor-not-allowed">
-                                                    <ZondReloadSvg />
-                                                    <span className="ml-2 text-xs opacity-[0.65]">
-                                                        Refresh
-                                                    </span>
-                                                </div>
-                                                <div className="flex items-center cursor-not-allowed">
-                                                    <ShareSvg />
-                                                    <span className="ml-2 text-xs opacity-[0.65]">
-                                                        Share
-                                                    </span>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
                                     <div className="border border-black rounded-lg border-opacity-[0.1] p-6 mt-4">

@@ -70,17 +70,17 @@ function HomePage({ }: Props) {
                                 </section>
                             </SwiperSlide>
                             <SwiperSlide>
-                                <section className='mt-[100px]' style={{ height: 'calc(100vh-100px)' }}>
+                                <section className='md:mt-[100px]' style={{ height: 'calc(100vh-100px)' }}>
                                     <HeroSection showAnim={swiperActiveIdx === 1} revertAnim={swiperActiveIdx === 0 && prevSwiperActiveIdx === 1} />
                                 </section>
                             </SwiperSlide>
                             <SwiperSlide>
-                                <section className='mt-[100px]' style={{ height: 'calc(100vh-100px)' }}>
+                                <section className='md:mt-[100px]' style={{ height: 'calc(100vh-100px)' }}>
                                     <ImagesSection />
                                 </section>
                             </SwiperSlide>
                             <SwiperSlide>
-                                <section className='mt-[100px]' style={{ height: 'calc(100vh-100px)' }}>
+                                <section className='md:mt-[100px]' style={{ height: 'calc(100vh-100px)' }}>
                                     <BandMembersSection />
                                 </section>
                             </SwiperSlide>

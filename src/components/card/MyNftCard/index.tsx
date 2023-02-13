@@ -29,7 +29,7 @@ export default function MyNftCard({ nft, priceToUsdRate }: Props) {
             <figure><img src={nft.imageUrl} className="object-cover rounded-xl w-full h-[300px]" alt="Shoes" /></figure>
             <div className="relative w-full h-auto px-2 pb-0 card-body">
                 <div className='px-2'>
-                    <p className="text-xs text-terteriary">Hosted by the hu</p>
+                    <p className="text-xs text-terteriary">Hosted by ARD</p>
                     <h2 className="text-lg font-normal card-title">{nft.name}</h2>
                 </div>
                 <div className="mt-1 -px-2">

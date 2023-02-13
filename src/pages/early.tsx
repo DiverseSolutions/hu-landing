@@ -1,5 +1,5 @@
 import Footer from '@/components/footer/Footer'
-import Navbar from '@/components/navbar'
+import Navbar from '@/components/Navbar'
 import EarlyTicketFeature from '@/features/ticket/EarlyTicketFeature'
 import React from 'react'
 

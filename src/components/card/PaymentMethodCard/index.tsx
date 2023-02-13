@@ -46,14 +46,14 @@ function PaymentMethodCard({ item, priceToUsdrate }: Props) {
         return new Intl.NumberFormat('en-US', {
             style: 'currency',
             currency: 'USD',
-        }).format(item.price * priceToUsdrate)
-    }, [item.price, priceToUsdrate])
+        }).format(item.price)
+    }, [item.price])
 
     const priceFormatted = useMemo(() => {
         return new Intl.NumberFormat('en-US', {
             style: 'currency',
             currency: 'USD'
-        }).format(item.price).substring(1)
+        }).format(item.price / priceToUsdrate).substring(1)
     }, [item.price, priceToUsdrate])
 
     const executeInvoiceUpdate = async () => {

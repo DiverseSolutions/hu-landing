@@ -28,9 +28,9 @@ import GalleryOverlay from './components/GalleryOverlay'
 
 type Props = {
     ticket: ArdArtAssetDetailEarlyResult,
-    priceToUsdRate: number,
+    priceToArdxRate: number,
 }
-function TicketSection({ ticket, priceToUsdRate }: Props) {
+function TicketSection({ ticket, priceToArdxRate }: Props) {
 
     const { data: tickets, isLoading: isTicketsLoading } = useGetTicketOrAssetQuery({
         subTag: ticket.tag,
@@ -65,12 +65,9 @@ function TicketSection({ ticket, priceToUsdRate }: Props) {
         return undefined
     })
 
-    const priceUsd = useMemo(() => {
-        return new Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'USD',
-        }).format(ticket.price * priceToUsdRate)
-    }, [ticket, priceToUsdRate])
+    const priceArdx = useMemo(() => {
+        return formatPrice(ticket.price / priceToArdxRate)
+    }, [ticket.price, priceToArdxRate])
 
     const priceFormatted = useMemo(() => {
         return formatPrice(ticket.price)
@@ -164,7 +161,7 @@ function TicketSection({ ticket, priceToUsdRate }: Props) {
                                 <div className="flex flex-col w-full">
                                     <div className="rounded-lg border-[1px] border-black border-opacity-[0.1] p-6">
                                         <div>
-                                            <p className='text-sm opacity-[0.65]'>Hosted by The Hu</p>
+                                            <p className='text-sm opacity-[0.65]'>Hosted by ARD</p>
                                             <p className='text-2xl font-bold max-w-[250px]'>
                                                 {ticket.name}
                                             </p>
@@ -190,13 +187,13 @@ function TicketSection({ ticket, priceToUsdRate }: Props) {
                                     <div className="border border-black rounded-lg border-opacity-[0.1] p-6 mt-4">
                                         <div className='flex items-center'>
                                             <Clock size={24} />
-                                            <p className='text-black text-sm text-opacity-[0.65] ml-1'>Sale ends {moment("2023-03-04 03:18:00").utcOffset("+08:00").format("MMMM D, YYYY [at] hh:mm A Z")}</p>
+                                            <p className='text-black text-sm text-opacity-[0.65] ml-1'>Early Bird Sale ends {moment("2023-03-04 03:18:00").utcOffset("+08:00").format("MMMM D, YYYY [at] hh:mm A Z")}</p>
                                         </div>
                                         <div className="mt-4">
                                             <div className="p-4 rounded-lg bg-black bg-opacity-[0.04]">
                                                 <div className="flex flex-col">
                                                     <p className='text-black text-sm text-opacity-[0.65]'>Current price</p>
-                                                    <div className="flex items-center text-2xl font-bold">{priceFormatted} ARDX <span className="ml-2 text-sm font-[300] text-black text-opacity-[0.65]">{priceUsd}</span> </div>
+                                                    <div className="flex items-center text-2xl font-bold">${priceFormatted} <span className="ml-2 text-sm font-[300] text-black text-opacity-[0.65]">ARDX{priceArdx}</span> </div>
                                                 </div>
                                             </div>
                                         </div>

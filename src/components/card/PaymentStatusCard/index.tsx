@@ -87,15 +87,8 @@ function PaymentStatusCard({ invoice: invoiceData, checkInvoice, priceToUsdrate,
         return new Intl.NumberFormat('en-US', {
             style: 'currency',
             currency: 'USD',
-        }).format(item.price * priceToUsdrate)
-    }, [item.price, priceToUsdrate])
-
-    const priceFormatted = useMemo(() => {
-        return new Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'USD'
-        }).format(item.price).substring(1)
-    }, [item.price, priceToUsdrate])
+        }).format(item.price)
+    }, [item.price])
 
     const handleCheckTransaction = async () => {
         const f = await callCheckInvoice({

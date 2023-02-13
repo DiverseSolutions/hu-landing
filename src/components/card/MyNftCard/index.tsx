@@ -10,11 +10,11 @@ type Props = {
 
 export default function MyNftCard({ nft, priceToUsdRate }: Props) {
 
-    const priceUsd = useMemo(() => {
+    const priceArdx = useMemo(() => {
         return new Intl.NumberFormat('en-US', {
             style: 'currency',
             currency: 'USD',
-        }).format(nft.price * priceToUsdRate)
+        }).format(nft.price / priceToUsdRate)
     }, [nft.price, priceToUsdRate])
 
     const priceFormatted = useMemo(() => {
@@ -37,7 +37,7 @@ export default function MyNftCard({ nft, priceToUsdRate }: Props) {
                         <div className="grid w-full grid-cols-2">
                             <div className="flex flex-col w-full">
                                 <p className="text-sm opacity-[0.65]">Current price</p>
-                                <p className="mt-1 text-sm"><span className="text-base font-bold">ARDX {formatPrice(nft.price)}</span> <span className='font-[300] ml-1 text-sm opacity-[0.65]'>{priceUsd}</span></p>
+                                <p className="mt-1 text-sm"><span className="text-base font-bold">${formatPrice(nft.price)}</span> <span className='font-[300] ml-1 text-sm opacity-[0.65]'>ARDX{priceArdx}</span></p>
                             </div>
                         </div>
                     </div>

@@ -1,12 +1,11 @@
 import PaymentStatusCard from '@/components/card/PaymentStatusCard'
-import { ArdArtInvoiceResult } from '@/store/rtk-query/ard-art/types'
-import { ArdArtAssetDetailByIDResult, ArdArtCheckInvoiceResult } from '@/store/rtk-query/hux-ard-art/types'
+import { ArdArtGetInvoiceByIdResult, ArdArtAssetDetailByIDResult } from '@/store/rtk-query/hux-ard-art/types'
+import { ArdArtCheckInvoiceResult } from '@/store/rtk-query/hux-ard-art/types'
 import React from 'react'
 
 type Props = {
-    invoice: ArdArtInvoiceResult,
+    invoice: ArdArtGetInvoiceByIdResult,
     checkInvoice?: ArdArtCheckInvoiceResult,
-    product: ArdArtAssetDetailByIDResult,
     priceToUsdRate: number,
     type: PaymentType,
     bank?: string
@@ -14,10 +13,10 @@ type Props = {
 
 export type PaymentType = 'card' | 'socialpay' | 'ardapp' | 'socialpay' | 'mongolian-banks'
 
-function PaymentStatusFeature({ invoice, product, priceToUsdRate, type, ...props }: Props) {
+function PaymentStatusFeature({ invoice, priceToUsdRate, type, ...props }: Props) {
     return (
         <div className="flex w-full h-full">
-            <PaymentStatusCard checkInvoice={props.checkInvoice} type={type} bank={props.bank} priceToUsdrate={priceToUsdRate} invoice={invoice} item={product} />
+            <PaymentStatusCard checkInvoice={props.checkInvoice} type={type} bank={props.bank} priceToUsdrate={priceToUsdRate} invoice={invoice} />
         </div>
     )
 }

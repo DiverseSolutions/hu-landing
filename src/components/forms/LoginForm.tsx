@@ -1,8 +1,9 @@
-import { PASSWORD_MIN_REGEX } from '@/lib/consts';
+import { PASSWORD_MIN_REGEX, IS_EMAIL_REGEX } from '@/lib/consts';
 import { useAppDispatch } from '@/store/hooks';
 import { authSuccess } from '@/store/reducer/auth-reducer/actions';
 import { useMetalandLoginMutation } from '@/store/rtk-query/ard-art/ard-art-api';
 import { useLazyGetUserQuery, useLoginMutation } from '@/store/rtk-query/cognito/cognito-api';
+import { useLazyCognitoUserQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api';
 import classNames from 'classnames';
 import React, { useState } from 'react'
 import { useForm } from "react-hook-form";
@@ -28,6 +29,7 @@ export default function LoginForm({ ...props }: Props) {
   const [isLoginLoading, setIsLoginLoading] = useState(false)
   const [callMetalandLogin, { isLoading: isMetalandLoginLoading }] = useMetalandLoginMutation()
   const [callLogin, { isLoading: isCognitoLoginLoading }] = useLoginMutation()
+  const [callCognitoUser] = useLazyCognitoUserQuery()
 
   const { register, handleSubmit, formState: {
     errors
@@ -39,9 +41,21 @@ export default function LoginForm({ ...props }: Props) {
   })
 
   const handleLogin = async (d: LoginFormData) => {
+
+    let userInputUsername = d.username.trim()
+    let cognitoUsername = userInputUsername
+    if (IS_EMAIL_REGEX.test(userInputUsername)) {
+      const cognitoUser = await callCognitoUser({ email: userInputUsername })
+      if (!cognitoUser.data?.result?.Response?.Users?.length) {
+        toast("Account not found")
+        return;
+      }
+      const cognitoUserData = cognitoUser.data.result.Response.Users[0];
+      cognitoUsername = cognitoUserData.Username
+    }
     const cognitoResp = await callLogin({
       AuthParameters: {
-        USERNAME: d.username,
+        USERNAME: cognitoUsername,
         PASSWORD: d.password
       }
     }).unwrap();
@@ -103,14 +117,14 @@ export default function LoginForm({ ...props }: Props) {
       <div className="mb-4">
         <div className="w-full form-control">
           <label className="label">
-            <span className="label-text">Username</span>
+            <span className="label-text">Email or Username</span>
           </label>
           <input type="text" className="w-full input input-bordered"
             {...register('username', {
               validate: (v) => v?.length < 4 ? "Invalid username" : undefined
             })} />
           <label className="label">
-            <span className="label-text-alt text-error-content">{errors.username?.message}</span>
+            <span className="label-text-alt text-error">{errors.username?.message}</span>
           </label>
         </div>
       </div>
@@ -135,7 +149,7 @@ export default function LoginForm({ ...props }: Props) {
             </div>
           </div>
           <label className="label">
-            <span className="label-text-alt text-error-content">{errors.password?.message}</span>
+            <span className="label-text-alt text-error">{errors.password?.message}</span>
           </label>
         </div>
       </div>

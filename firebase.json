@@ -18,12 +18,16 @@
           "destination": "/early.html"
         },
         {
+          "source": "/model**",
+          "destination": "/model.html"
+        },
+        {
           "source": "/ticket**",
           "destination": "/ticket.html"
         },
         {
-          "source": "/payment-status**",
-          "destination": "/payment-status.html"
+          "source": "/payment-status/**",
+          "destination": "/payment-status/[invoiceId].html"
         },
         {
           "source": "/payment**",
@@ -61,6 +65,14 @@
           "destination": "/spline.html"
         },
         {
+          "source": "/auth**",
+          "destination": "/auth.html"
+        },
+        {
+          "source": "/model**",
+          "destination": "/model.html"
+        },
+        {
           "source": "/early**",
           "destination": "/early.html"
         },
@@ -69,8 +81,63 @@
           "destination": "/ticket.html"
         },
         {
-          "source": "/payment-status**",
-          "destination": "/payment-status.html"
+          "source": "/payment-status/**",
+          "destination": "/payment-status/[invoiceId].html"
+        },
+        {
+          "source": "/payment**",
+          "destination": "/payment.html"
+        },
+        {
+          "source": "/profile**",
+          "destination": "/profile.html"
+        },
+        {
+          "source": "/login**",
+          "destination": "/login.html"
+        },
+        {
+          "source": "/signup**",
+          "destination": "/signup.html"
+        },
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    },
+    {
+      "target": "staging",
+      "public": "out",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "/spline**",
+          "destination": "/spline.html"
+        },
+        {
+          "source": "/auth**",
+          "destination": "/auth.html"
+        },
+        {
+          "source": "/model**",
+          "destination": "/model.html"
+        },
+        {
+          "source": "/early**",
+          "destination": "/early.html"
+        },
+        {
+          "source": "/ticket**",
+          "destination": "/ticket.html"
+        },
+        {
+          "source": "/payment-status/**",
+          "destination": "/payment-status/[invoiceId].html"
         },
         {
           "source": "/payment**",

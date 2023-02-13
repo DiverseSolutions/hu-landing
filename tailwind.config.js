@@ -46,7 +46,41 @@ module.exports = {
       }
     },
     extend: {
+      backgroundImage: {
+        'home-footer-radial-red': 'radial-gradient(105.33% 76.33% at 50% 95.88%, #721C1C 0.01%, rgba(0, 0, 0, 0) 100%)'
+      },
+      // that is animation class
+      animation: {
+        fade: 'fadeOut 1s ease-in-out forwards',
+        hero: 'heroMove 500ms ease-in-out forwards',
+        heroRevert: 'heroMoveRevert 500ms ease-in-out forwards',
+        heroMobile: 'heroMobileMove 500ms ease-in-out forwards',
+        heroMobileRevert: 'heroMobileMoveRevert 500ms ease-in-out forwards',
+      },
 
+      // that is actual animation
+      keyframes: theme => ({
+        fadeOut: {
+          '0%': { opacity: 1 },
+          '100%': { opacity: 0 },
+        },
+        heroMove: {
+          '0%': { transform: `translate(100%, -100%) scale(1.4)` },
+          '100%': { transform: `translate(0%, 0%) scale(1.0)` },
+        },
+        heroMoveRevert: {
+          '0%': { transform: `translate(0%, 0%) scale(1.0)` },
+          '100%': { transform: `translate(100%, -100%) scale(1.4)` },
+        },
+        heroMobileMove: {
+          '0%': { transform: `translate(0%, -100%)` },
+          '100%': { transform: `translate(0%, 0%)` },
+        },
+        heroMobileMoveRevert: {
+          '0%': { transform: `translate(0%, 0%)` },
+          '100%': { transform: `translate(0%, -100%)` },
+        },
+      }),
     },
   },
   plugins: [

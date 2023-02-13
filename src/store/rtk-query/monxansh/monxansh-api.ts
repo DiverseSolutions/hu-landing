@@ -9,6 +9,7 @@ export const monxanshApi = createApi({
             query: (d) => ({
                 url: '',
                 method: "GET",
+                mode: 'no-cors',
                 params: {
                     currency: d.currency
                 }
@@ -18,6 +19,5 @@ export const monxanshApi = createApi({
 })
 
 export const {
-    useMonxanshRateQuery,
-    useLazyMonxanshRateQuery
+
 } = monxanshApi;

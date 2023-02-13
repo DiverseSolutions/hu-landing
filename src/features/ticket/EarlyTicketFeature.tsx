@@ -1,20 +1,19 @@
 import EarlyTicketSection from '@/components/section/EarlyTicketSection';
-import { useGetTicketOrAssetQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api';
+import { useArdxUsdRateQuery, useAssetDetailEarlyQuery, useLazyArdxUsdRateQuery, useLazyMonxanshRateQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api';
 import { useLazyIdaxTickerQuery } from '@/store/rtk-query/idax/idax-api';
-import { useLazyMonxanshRateQuery } from '@/store/rtk-query/monxansh/monxansh-api';
 import React, { useState, useMemo, useEffect } from 'react';
+
 import { ClipLoader } from 'react-spinners';
 
 type Props = {}
 
 export default function EarlyTicketFeature({ }: Props) {
 
-    const [ardxToUsdRate, setArdxToUsdRate] = useState(0)
+    const [usdToArdxRate, setUsdToArdxRate] = useState(0)
     const [isLoading, setIsLoading] = useState(true)
-    const [callMonxanshRate] = useLazyMonxanshRateQuery()
-    const [callIdaxTicker] = useLazyIdaxTickerQuery()
-    const { data: ticketData, isLoading: isTicketsLoading } = useGetTicketOrAssetQuery({ tag: 'early' })
-    const ticket = useMemo(() => ticketData?.result?.records[0], [ticketData])
+    const { data: ticketData, isLoading: isTicketsLoading } = useAssetDetailEarlyQuery()
+    const [callArdxToUsdRate] = useLazyArdxUsdRateQuery()
+    const ticket = useMemo(() => ticketData?.result, [ticketData])
 
     useEffect(() => {
         if (!ticket) {
@@ -23,7 +22,7 @@ export default function EarlyTicketFeature({ }: Props) {
         (async () => {
             setIsLoading(true)
             try {
-                await fetchArdxToUsdRate()
+                await fetchUsdToArdxRate()
             } catch (e) {
                 console.log(`rate error:`)
                 console.log(e)
@@ -32,15 +31,16 @@ export default function EarlyTicketFeature({ }: Props) {
         })()
     }, [ticket])
 
-    const fetchArdxToUsdRate = async () => {
-        const [usdMntRate, ardxMntRate] = await Promise.all([
-            callMonxanshRate({ currency: 'USD|MNT' }).unwrap(),
-            callIdaxTicker({ symbol: 'ardx1557mont' }).unwrap()
+    const fetchUsdToArdxRate = async () => {
+        const [ardxUsdRate] = await Promise.all([
+            callArdxToUsdRate().unwrap()
         ]);
-        const usdRate = usdMntRate.find((r) => r.code === 'USD');
-        if (usdRate) {
-            const ardxToUsd = parseFloat(ardxMntRate.last) / usdRate.rate_float
-            setArdxToUsdRate(ardxToUsd)
+        if (!ardxUsdRate.result) {
+            return;
+        }
+        const ardxToUsd = ardxUsdRate.result.sell
+        if (ardxToUsd) {
+            setUsdToArdxRate(ardxToUsd)
         }
     }
 
@@ -54,12 +54,12 @@ export default function EarlyTicketFeature({ }: Props) {
     if (!ticket) {
         return <p>No Ticket found</p>
     }
-    if (!ardxToUsdRate) {
+    if (!usdToArdxRate) {
         return <p>An error occured. Please try reload the page.</p>
     }
     return (
         <div>
-            <EarlyTicketSection ticket={ticket} priceToUsdRate={ardxToUsdRate} />
+            <EarlyTicketSection ticket={ticket} priceToArdxRate={usdToArdxRate} />
         </div>
     )
 }

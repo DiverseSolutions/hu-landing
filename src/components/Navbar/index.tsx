@@ -7,7 +7,10 @@ import TheHuBlackSvg from '@/assets/svg/the-hu-black.svg'
 import CartBlackSvg from '@/assets/svg/cart-black.svg'
 import ChevronDownSvg from '@/assets/svg/chevron-down.svg'
 import ExitBlackSvg from '@/assets/svg/exit-black.svg'
+import { BiMenuAltRight } from 'react-icons/bi'
 import Avatar from '../avatar/Avatar'
+import MobileDrawer from '../drawer/MobileDrawer'
+import { useRouter } from 'next/router'
 
 type Props = {}
 
@@ -18,9 +21,11 @@ export default function Navbar({ }: Props) {
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
     const profile = useAppSelector(state => state.auth.profile)
 
+    const router = useRouter()
+
     return (
         <>
-            <div className="z-50 flex justify-center w-full py-6 border-b-2 navbar bg-base-100">
+            <div className="z-50 h-[100px] flex justify-center w-full py-6 border-b-2 navbar bg-base-100">
                 <div className="container">
                     <div className="flex items-center w-full">
                         <div className="flex-1">
@@ -88,13 +93,19 @@ export default function Navbar({ }: Props) {
                             )}
                             {!isAuthLoading && !isLoggedIn ? (
                                 <>
-                                    <label onClick={() => {
-                                        dispatch(showAuthModal({
-                                            type: 'login'
-                                        }))
-                                    }} className="ml-2 btn btn-black md:btn-wide max-w-[200px]">
-                                        Login
-                                    </label>
+                                    <div className="flex justify-end">
+                                        <label className='md:hidden' htmlFor="hu-drawer"><BiMenuAltRight size={48} /></label>
+                                        <div onClick={() => {
+                                            router.push('/auth?form=login')
+                                        }} className="hidden btn btn-black md:flex">
+                                            Login
+                                        </div>
+                                        <div onClick={() => {
+                                            router.push('/auth?form=signup')
+                                        }} className="hidden ml-2 rounded-lg border font-bold px-3 text-sm py-2 items-center justify-center cursor-pointer border-black border-opacity-[0.2] md:flex">
+                                            <span className='opacity-[0.65]'>Sign Up</span>
+                                        </div>
+                                    </div>
                                 </>
                             ) : (<></>)}
                         </div>

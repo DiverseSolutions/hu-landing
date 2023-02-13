@@ -1,7 +1,5 @@
-import { ArdArtInvoiceResult } from '@/store/rtk-query/ard-art/types'
 import React, { useState, useMemo } from 'react'
-import { isMobile } from 'react-device-detect';
-
+import Cookies from 'js-cookie'
 import ArdImg from '@/assets/img/ard.jpg'
 import SocialPayImg from '@/assets/img/socialpay.png'
 import VisaSvg from '@/assets/svg/visa.svg'
@@ -10,19 +8,19 @@ import { MdExpandMore, MdExpandLess, MdChevronLeft } from 'react-icons/md'
 import BxCheck from '@/assets/svg/bx-check.svg'
 import Image from 'next/image'
 import QRImage from "react-qr-image"
-import { useUpdateInvoiceQPayMutation, useUpdateInvoiceQPosMutation, useUpdateInvoiceSocialPayMutation } from '@/store/rtk-query/ard-art/ard-art-api'
+import { useCreateQpayInvoiceMutation, useCreateQposInvoiceMutation, useCreateSocialpayInvoiceMutation } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
 import classNames from 'classnames'
 import { toast } from 'react-toastify'
 import { ArdArtAssetDetailByIDResult } from '@/store/rtk-query/hux-ard-art/types'
 import { useRouter } from 'next/router'
 import { qpayBanks, qposBanks, QPayBank } from './banks'
+import { useAppSelector } from '@/store/hooks';
 
 type MongolianBank = QPayBank
 
 const visibleMongolianBanks = qpayBanks.filter((qb) => qb.name !== 'Ard App')
 
 type Props = {
-    invoice: ArdArtInvoiceResult
     item: ArdArtAssetDetailByIDResult,
     priceToUsdrate: number,
 }
@@ -31,30 +29,32 @@ type PaymentType = 'card' | 'socialpay' | 'ardapp' | 'socialpay' | 'mongolian-ba
 
 
 
-function PaymentMethodCard({ invoice, item, priceToUsdrate }: Props) {
+function PaymentMethodCard({ item, priceToUsdrate }: Props) {
 
+    const accountId = useAppSelector(state => state.auth.ardArt.accountId)
+    const email = useAppSelector(state => state.auth.profile?.email)
     const [qrCode, setQrCode] = useState<string>()
     const [selectedMongolianBank, setSelectedMongolianBank] = useState<MongolianBank>()
     const [isInvoiceUpdateLoading, setIsInvoiceUpdateLoading] = useState(false)
     const router = useRouter()
-    const [selected, setSelected] = useState<PaymentType>('card')
-    const [callUpdateInvoiceSocialPay, { isLoading: isUpdateInvoiceSocialPayLoading }] = useUpdateInvoiceSocialPayMutation()
-    const [callUpdateInvoiceQPay, { isLoading: isUpdateInvoiceQpayLoading }] = useUpdateInvoiceQPayMutation()
-    const [callUpdateInvoiceQPos, { isLoading: isUpdateInvoiceQPosLoading }] = useUpdateInvoiceQPosMutation()
+    const [selected, setSelected] = useState<PaymentType>('ardapp')
+    const [callCreateInvoiceSocialPay, { isLoading: isCreateInvoiceSocialPayLoading }] = useCreateSocialpayInvoiceMutation()
+    const [callCreateInvoiceQPay, { isLoading: isCreateInvoiceQpayLoading }] = useCreateQpayInvoiceMutation()
+    const [callCreateInvoiceQPos, { isLoading: isCreateInvoiceQPosLoading }] = useCreateQposInvoiceMutation()
     const [isBanksExpanded, setIsBanksExpanded] = useState(false)
 
     const priceUsd = useMemo(() => {
         return new Intl.NumberFormat('en-US', {
             style: 'currency',
             currency: 'USD',
-        }).format(item.price * priceToUsdrate)
-    }, [item.price, priceToUsdrate])
+        }).format(item.price)
+    }, [item.price])
 
     const priceFormatted = useMemo(() => {
         return new Intl.NumberFormat('en-US', {
             style: 'currency',
             currency: 'USD'
-        }).format(item.price).substring(1)
+        }).format(item.price / priceToUsdrate).substring(1)
     }, [item.price, priceToUsdrate])
 
     const executeInvoiceUpdate = async () => {
@@ -64,11 +64,19 @@ function PaymentMethodCard({ invoice, item, priceToUsdrate }: Props) {
             })
             return;
         }
+        if (!accountId) {
+            toast("Account not found")
+            return;
+        }
         if (selected === 'socialpay' || selected === 'card') {
-            const linkParam = selected === 'card' ? 'payment' : 'socialpay'
-            const r = await callUpdateInvoiceSocialPay({
-                invoiceId: invoice.id,
+            const linkParam = selected === 'card' ? 'card' : 'socialpay'
+            const r = await callCreateInvoiceSocialPay({
+                type: 'single',
+                method: selected,
+                email: email!,
                 productId: item.id,
+                amount: 1,
+                accountId,
             }).unwrap()
             if (r.result) {
                 if (r.result?.response?.invoice) {
@@ -76,11 +84,15 @@ function PaymentMethodCard({ invoice, item, priceToUsdrate }: Props) {
                 }
             }
         } else if (selected === 'ardapp') {
-            const r = await callUpdateInvoiceQPos({
-                invoiceId: invoice.id,
+            const r = await callCreateInvoiceQPos({
+                type: 'single',
+                productId: item.id,
+                email: email!,
+                amount: 1,
+                accountId,
             }).unwrap()
             if (r.result) {
-                router.push(`/payment-status?productId=${item.id}&invoiceId=${invoice.id}&type=ardapp`)
+                router.push(`/payment-status/${r.result.invoiceId}?&type=${selected}`)
             }
         } else if (selectedMongolianBank) {
             let qpayBank: MongolianBank | undefined
@@ -96,19 +108,27 @@ function PaymentMethodCard({ invoice, item, priceToUsdrate }: Props) {
                 return;
             }
             if (qPosBank) {
-                const r = await callUpdateInvoiceQPos({
-                    invoiceId: invoice.id,
+                const r = await callCreateInvoiceQPos({
+                    productId: item.id,
+                    email: email!,
+                    accountId,
+                    type: 'single',
+                    amount: 1,
                 }).unwrap()
                 if (r.result) {
-                    router.push(`/payment-status?productId=${item.id}&invoiceId=${invoice.id}&type=${selected}&bank=${encodeURIComponent(selectedMongolianBank.name)}`)
+                    router.push(`/payment-status/${r.result.invoiceId}?type=${selected}&bank=${encodeURIComponent(selectedMongolianBank.name)}`)
                 }
                 return;
             }
-            const r = await callUpdateInvoiceQPay({
-                invoiceId: invoice.id,
+            const r = await callCreateInvoiceQPay({
+                productId: item.id,
+                accountId,
+                email: email!,
+                type: 'single',
+                amount: 1,
             }).unwrap()
             if (r.result) {
-                router.push(`/payment-status?productId=${item.id}&invoiceId=${invoice.id}&type=${selected}&bank=${encodeURIComponent(selectedMongolianBank.name)}`)
+                router.push(`/payment-status/${r.result.invoiceId}?&type=${selected}&bank=${encodeURIComponent(selectedMongolianBank.name)}`)
             }
 
         }
@@ -125,8 +145,8 @@ function PaymentMethodCard({ invoice, item, priceToUsdrate }: Props) {
     }
 
     return (
-        <div className="md:shadow-xl card shadow-none w-96 bg-base-100 text-[14px]">
-            <div className="card-body">
+        <div className="md:shadow-xl card shadow-none max-w-[90vw] w-[464px] bg-base-100 text-[14px]">
+            <div className="card-body mw-md:p-0">
                 <div>
                     <MdChevronLeft className='cursor-pointer' size={24} color="black" onClick={() => {
                         router.back()
@@ -138,7 +158,7 @@ function PaymentMethodCard({ invoice, item, priceToUsdrate }: Props) {
                         <div className="flex justify-between w-full h-full ml-2">
                             <div className="flex flex-col justify-center h-full ">
                                 <h4 className='text-[16px] max-w-[168px]'>{item.name}</h4>
-                                <span className='text-xs text-opacity-[0.35] text-black'>Hosted by The Hu</span>
+                                <span className='text-xs text-opacity-[0.35] text-black'>Hosted by ARD</span>
                             </div>
                             <div className="flex">
                                 <span className='text-sm' style={{ color: 'rgba(39, 41, 55, 0.75)' }}>US{priceUsd}</span>
@@ -173,15 +193,11 @@ function PaymentMethodCard({ invoice, item, priceToUsdrate }: Props) {
                 {!qrCode ? (
                     <div className="flex flex-col w-full">
                         <div className="mt-4">
-                            <PaymentTypeCard onClick={() => setSelected('card')} icon={<VisaSvg />} name="Credit & Debit Card" active={selected === 'card'} />
-                        </div>
-                        <div className="mt-4">
                             <PaymentTypeCard onClick={() => setSelected('ardapp')} icon={<Image src={ArdImg} width={32} height={32} alt="Ard" />}
                                 name="Ard App (available with ARDX)" active={selected === 'ardapp'} />
                         </div>
                         <div className="mt-4">
-                            <PaymentTypeCard onClick={() => setSelected('socialpay')} icon={<Image src={SocialPayImg} width={32} height={32} alt="Social Pay" />}
-                                name="Social Pay" active={selected === 'socialpay'} />
+                            <PaymentTypeCard onClick={() => setSelected('card')} icon={<VisaSvg />} name="Credit & Debit Card" active={selected === 'card'} />
                         </div>
                         <div tabIndex={0} onClick={(e) => {
                             if (isBanksExpanded && e.currentTarget) {
@@ -215,6 +231,10 @@ function PaymentMethodCard({ invoice, item, priceToUsdrate }: Props) {
                                     ))}
                                 </div>
                             </div>
+                        </div>
+                        <div className="mt-4">
+                            <PaymentTypeCard onClick={() => setSelected('socialpay')} icon={<Image src={SocialPayImg} width={32} height={32} alt="Social Pay" />}
+                                name="Social Pay" active={selected === 'socialpay'} />
                         </div>
                     </div>
                 ) : (<></>)}

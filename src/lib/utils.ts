@@ -5,7 +5,7 @@ export const isValidEmail = (email: string) => {
     return email.match(EMAIL_REGEX) ? true : false;
 }
 
-const priceFormatter = formatNumber({ integerSeparator: `'` })
+const priceFormatter = formatNumber({ integerSeparator: `'`, round: 2, })
 export const formatPrice = (v: number) => {
     return priceFormatter(v)
 }

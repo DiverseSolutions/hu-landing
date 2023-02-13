@@ -59,8 +59,17 @@ export default function ForgotPasswordConfirmForm({ ...props }: Props) {
                             validate: (v) => v.match(/^[0-9]{6}/) ? undefined : "Invalid code"
                         })} />
                     <label className="label">
-                        <span className="label-text-alt text-error-content">{errors.code?.message}</span>
+                        <span className="label-text-alt text-error">{errors.code?.message}</span>
                     </label>
+                </div>
+            </div>
+            <div className="mb-4">
+                <div className="w-full form-control">
+                    <label className="label">
+                        <span className="label-text">Username (use this for login)</span>
+                    </label>
+                    <input type="text" placeholder="Type here" className="w-full bg-base-100 input input-bordered"
+                        value={props.username} readOnly />
                 </div>
             </div>
             <div className="mb-4">
@@ -76,7 +85,7 @@ export default function ForgotPasswordConfirmForm({ ...props }: Props) {
                             }
                         })} />
                     <label className="label">
-                        <span className="label-text-alt text-error-content">{errors.password?.message}</span>
+                        <span className="label-text-alt text-error">{errors.password?.message}</span>
                     </label>
                 </div>
             </div>
@@ -90,7 +99,7 @@ export default function ForgotPasswordConfirmForm({ ...props }: Props) {
                             validate: (v) => v === password ? undefined : "Password does not match"
                         })} />
                     <label className="label">
-                        <span className="label-text-alt text-error-content">{errors.password2?.message}</span>
+                        <span className="label-text-alt text-error">{errors.password2?.message}</span>
                     </label>
                 </div>
             </div>

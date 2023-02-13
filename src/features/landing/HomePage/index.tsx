@@ -48,7 +48,7 @@ function HomePage({ }: Props) {
                         >
                             <SwiperSlide>
                                 <section className='mt-[100px]' style={{ height: 'calc(100vh-100px)' }}>
-                                    <div className="flex justify-center w-full">
+                                    <div className="flex justify-center w-full h-full">
                                         <div className="container">
                                             <div className="flex flex-col w-full">
                                                 <div className="flex justify-center w-full">
@@ -70,27 +70,27 @@ function HomePage({ }: Props) {
                                 </section>
                             </SwiperSlide>
                             <SwiperSlide>
-                                <section className='md:mt-[100px]' style={{ height: 'calc(100vh-100px)' }}>
+                                <div className='mt-[100px] h-full' style={{ height: 'calc(100vh-100px)' }}>
                                     <HeroSection showAnim={swiperActiveIdx === 1} revertAnim={swiperActiveIdx === 0 && prevSwiperActiveIdx === 1} />
-                                </section>
+                                </div>
                             </SwiperSlide>
                             <SwiperSlide>
-                                <section className='md:mt-[100px]' style={{ height: 'calc(100vh-100px)' }}>
+                                <div className='mt-[100px] h-full' style={{ height: 'calc(100vh-100px)' }}>
                                     <ImagesSection />
-                                </section>
+                                </div>
                             </SwiperSlide>
-                            <SwiperSlide>
+                            {/* <SwiperSlide>
                                 <section className='md:mt-[100px]' style={{ height: 'calc(100vh-100px)' }}>
                                     <BandMembersSection />
                                 </section>
-                            </SwiperSlide>
+                            </SwiperSlide> */}
                         </Swiper>
                     </div>
                 </div>
                 <div className="fixed h-[300px] bottom-0 left-0 right-0" style={{
                     background: `radial-gradient(105.33% 76.33% at 50% 95.88%, #721C1C 0.01%, rgba(0, 0, 0, 0) 100%)`
                 }}></div>
-                {swiperActiveIdx < 3 ? (
+                {swiperActiveIdx < 2 ? (
                     <div className="fixed bottom-0 left-0 right-0 z-10 hidden md:block">
                         <div className="flex justify-center w-full">
                             <div className="container">

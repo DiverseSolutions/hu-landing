@@ -13,7 +13,7 @@ function HeroSection(props: HeroSectionProps) {
     const { width: sw } = useWindowSize()
 
     return (
-        <div className='h-full'>
+        <div className='h-full pb-[100px]'>
             <div className="flex items-center justify-center w-full h-full">
                 <div className="container">
                     <div className="flex flex-col items-center w-full h-full md:flex-row md:justify-center">

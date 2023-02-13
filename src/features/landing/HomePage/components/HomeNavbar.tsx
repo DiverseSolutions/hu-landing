@@ -1,5 +1,6 @@
 import React from 'react'
 import HomeNavbarTheHuSvg from '@/assets/svg/home-navbar-the-hu.svg'
+import MobileNavbarLogo from '@/assets/svg/mobile-navbar-logo.svg'
 import Link from 'next/link'
 import HomeCartWhiteSvg from '@/assets/svg/home-cart-white.svg'
 import { BiMenuAltRight } from 'react-icons/bi'
@@ -23,9 +24,9 @@ function HomeNavbar({ }: Props) {
             <div className="container">
                 <div className="py-8 bg-black navbar backdrop-blur-[7.5px] bg-opacity-[0.4]">
                     <div className="navbar-start md:hidden">
-                        <a className="text-xl normal-case btn btn-ghost">
-                            <HomeNavbarTheHuSvg />
-                        </a>
+                        <Link href="/" className="text-xl normal-case btn btn-ghost">
+                            <MobileNavbarLogo />
+                        </Link>
                     </div>
                     <div className="hidden navbar-start lg:flex">
                         <a className="text-xl normal-case btn btn-ghost">

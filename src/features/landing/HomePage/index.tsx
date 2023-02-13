@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import HomeNavbar from './components/HomeNavbar'
 import MobileDrawer from '@/components/drawer/MobileDrawer'
-import HomeTheHuRedSvg from '@/assets/svg/home-the-hu-red.svg'
+
 import useWindowResize from 'beautiful-react-hooks/useWindowResize'
 import dynamic from 'next/dynamic'
 import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
@@ -14,6 +14,7 @@ import BuyTicket from './components/BuyTicket'
 import BandMembersSection from './components/BandMembersSection'
 import classNames from 'classnames'
 
+const TheHuRedResponsive = dynamic(() => import('./components/TheHuRedResponsive'), { ssr: false, })
 const ScrollToExplore = dynamic(() => import('./components/ScrollToExplore'), { ssr: false, })
 const HeroSection = dynamic(() => import('./components/HeroSection'), { ssr: false, })
 const ImagesSection = dynamic(() => import('./components/ImagesSection'), { ssr: false, })
@@ -114,39 +115,3 @@ function HomePage({ }: Props) {
 }
 
 export default HomePage
-
-
-
-function TheHuRedResponsive() {
-    const [sw, setSw] = useState<number>(1500);
-    const onWindowSize = useWindowResize()
-
-    useEffect(() => {
-        setSw(window.innerWidth)
-    }, [])
-
-    onWindowSize(() => {
-        setSw(window.innerWidth)
-    })
-
-    const height = useMemo(() => {
-        if (!sw || sw > 1384) {
-            return 193
-        }
-        return Math.max(193 * sw / 1384 * 0.8, 20)
-    }, [sw])
-
-    if (!sw) {
-        return <></>
-    }
-
-    return (
-        <div className="flex items-center justify-center w-full mt-8" style={{
-            height,
-        }}>
-            <HomeTheHuRedSvg style={{
-                transform: `scale(${sw > 1384 ? 1 : sw / 1384 * 0.8})`
-            }} />
-        </div>
-    )
-}

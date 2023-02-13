@@ -119,7 +119,7 @@ function HomePage({ }: Props) {
                         <img src={MobileHeroImg.src} className="w-auto h-[50vh]" />
                     </div>
                 </div>
-                <div className={classNames("fixed bottom-0 left-0 right-0 z-50 pointer-events-none transition-all duration-300", { 'opacity-0': swiperActiveIdx !== 3, 'opacity-100': swiperActiveIdx === 3 })}>
+                <div className={classNames("fixed bottom-0 left-0 right-0 z-[52] pointer-events-none transition-all duration-300", { 'opacity-0': swiperActiveIdx !== 3, 'opacity-100': swiperActiveIdx === 3 })}>
                     <HomeFooter />
                 </div>
             </MobileDrawer>

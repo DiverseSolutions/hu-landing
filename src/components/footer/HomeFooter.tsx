@@ -11,7 +11,7 @@ function HomeFooter({ }: Props) {
         <div className="flex justify-center w-full pb-8">
             <div className="container text-white">
                 <div className="flex flex-col md:grid md:grid-cols-3">
-                    <div className="flex justify-center w-full md:justify-start">
+                    <div className="flex justify-center w-full opacity-0 md:justify-start">
                         <div className="flex flex-col justify-between h-full">
                             <span className="mb-6 text-sm font-bold text-center uppercase md:text-left">Connect With Us</span>
                             <div className="grid w-full grid-cols-4 gap-x-6">
@@ -28,7 +28,7 @@ function HomeFooter({ }: Props) {
                             <span className='opacity-[0.65] text-sm ml-2'>2023 The HU & ARD</span>
                         </div>
                     </div>
-                    <div className="flex justify-center w-full mt-8 md:mt-0 md:items-end md:justify-end">
+                    <div className="flex justify-center w-full mt-8 opacity-0 md:mt-0 md:items-end md:justify-end">
                         <span className='cursor-pointer text-sm opacity-[0.65]'>TERMS & CONDITION</span>
                         <span className='text-sm ml-4 cursor-pointer opacity-[0.65]'>PRIVACY POLICY</span>
                     </div>

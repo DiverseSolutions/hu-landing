@@ -175,7 +175,7 @@ function PaymentStatusCard({ invoice: invoiceData, checkInvoice, priceToUsdrate,
                         </p>
                     </div>
                 ) : (<></>)}
-                {!isSuccess && invoice.paymentMethod === 'socialpay' || invoice.paymentMethod === 'card' ? (
+                {!isSuccess && (invoice.paymentMethod === 'socialpay' || invoice.paymentMethod === 'card') ? (
                     <div className="flex flex-col items-center w-full mt-4">
                         <BeatLoader className='my-8' />
                         <p className="mt-2 text-2xl font-bold text-center max-w-[200px]">

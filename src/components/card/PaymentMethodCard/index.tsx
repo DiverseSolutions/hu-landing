@@ -146,7 +146,7 @@ function PaymentMethodCard({ item, priceToUsdrate }: Props) {
 
     return (
         <div className="md:shadow-xl card shadow-none max-w-[90vw] w-[464px] bg-base-100 text-[14px]">
-            <div className="card-body">
+            <div className="card-body mw-md:p-0">
                 <div>
                     <MdChevronLeft className='cursor-pointer' size={24} color="black" onClick={() => {
                         router.back()

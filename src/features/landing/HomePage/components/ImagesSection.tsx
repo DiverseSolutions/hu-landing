@@ -33,7 +33,7 @@ function ImagesSection({ }: Props) {
 
     if (isSingleImage) {
         return (
-            <div className='h-full overflow-y-auto md:px-0 pb-[100px]'>
+            <div className='h-full md:px-0 pb-[100px]'>
                 <div className="flex flex-col justify-between w-full h-full">
                     <div className="flex justify-center w-full h-full">
                         <div className="container flex items-start w-full h-full">
@@ -57,7 +57,7 @@ function ImagesSection({ }: Props) {
     }
     return (
         <>
-            <div className='h-full overflow-y-auto md:px-0 pb-[100px]'>
+            <div className='h-full md:px-0 pb-[100px]'>
                 <div className="flex flex-col justify-between w-full h-full">
                     <div className="flex justify-center w-full h-full">
                         <div className="container h-full">

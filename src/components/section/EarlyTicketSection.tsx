@@ -136,7 +136,7 @@ function TicketSection({ ticket, priceToArdxRate }: Props) {
                                 <div className="mt-6 ml-4">
                                     <p className="text-2xl font-bold">Detail</p>
                                 </div>
-                                <div className="mt-6">
+                                <div className="mt-6 ml-4 mr-4">
                                     <div className="border-2 p-6 rounded-xl border-black border-opacity-[0.2] space-y-4">
                                         <div className="flex items-center w-full">
                                             <Clock />
@@ -149,7 +149,7 @@ function TicketSection({ ticket, priceToArdxRate }: Props) {
                                     </div>
                                 </div>
                                 <div className="mt-6">
-                                    <SystemRequirementsSection />
+                                    {/* <SystemRequirementsSection /> */}
                                     <div className="mt-6">
                                         <div className="px-8">
                                             <MediaSection ticket={ticket} />
@@ -243,6 +243,9 @@ function TicketSection({ ticket, priceToArdxRate }: Props) {
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div className="mt-6">
+                                        <SystemRequirementsSection />
                                     </div>
                                 </div>
                             </div>

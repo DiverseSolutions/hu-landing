@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import HomeNavbar from './components/HomeNavbar'
 import MobileDrawer from '@/components/drawer/MobileDrawer'
-import CopyRightSvg from '@/assets/svg/copyright.svg'
+import HomeBgImg from '@/assets/img/home-bg.png'
 import dynamic from 'next/dynamic'
 import { Swiper, SwiperSlide } from "swiper/react"
 import SwiperCore, { Pagination, Mousewheel } from "swiper"
@@ -38,6 +38,9 @@ function HomePage({ }: Props) {
                 <div className="relative w-screen h-screen overflow-hidden bg-black">
                     <div className='fixed top-0 left-0 right-0 z-50'>
                         <HomeNavbar />
+                    </div>
+                    <div className="absolute inset-0 pointer-events-none">
+                        <img src={HomeBgImg.src} className="object-cover w-full h-full mix-blend-lighten" />
                     </div>
                     <div className='h-screen'>
                         <Swiper

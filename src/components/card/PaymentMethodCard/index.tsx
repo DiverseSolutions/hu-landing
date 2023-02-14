@@ -158,7 +158,7 @@ function PaymentMethodCard({ item, priceToUsdrate }: Props) {
                         <div className="flex justify-between w-full h-full ml-2">
                             <div className="flex flex-col justify-center h-full ">
                                 <h4 className='text-[16px] max-w-[168px]'>{item.name}</h4>
-                                <span className='text-xs text-opacity-[0.35] text-black'>Hosted by ARD</span>
+                                <span className='text-xs text-opacity-[0.35] text-black'>Powered by ARD</span>
                             </div>
                             <div className="flex">
                                 <span className='text-sm' style={{ color: 'rgba(39, 41, 55, 0.75)' }}>US{priceUsd}</span>

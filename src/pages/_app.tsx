@@ -21,7 +21,7 @@ export default function App({ Component, pageProps, ...rest }: AppProps) {
         <meta property="og:title" content="The HU in the Metaverse" />
         <meta property="og:description" content="Join the legendary band The HU for their first-ever virtual concert in the Metaverse!" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/hu-favicon.ico" />
         <meta property="og:image" content={`${APP_HOST_URL}/${HuOgImg.src}`} />
         <meta property="og:image:width" content={HuOgImg.width.toString()} />
         <meta property="og:image:height" content={HuOgImg.height.toString()} />

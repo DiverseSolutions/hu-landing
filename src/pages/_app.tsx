@@ -26,8 +26,10 @@ export default function App({ Component, pageProps, ...rest }: AppProps) {
         <meta property="og:image:width" content={HuOgImg.width.toString()} />
         <meta property="og:image:height" content={HuOgImg.height.toString()} />
         <meta property="og:image:type" content="image/jpeg" />
-        <meta name="twitter:card" content="summary_large_image"></meta>
-        <meta name="twitter:image" content={`${APP_HOST_URL}${HuOgImg.src}`}></meta>
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="The HU in the Metaverse" />
+        <meta name="twitter:description" content="Join the legendary band The HU for their first-ever virtual concert in the Metaverse!" />
+        <meta name="twitter:image" content={`${APP_HOST_URL}${HuOgImg.src}`} />
       </Head>
       <Provider store={store}>
         <Component {...props.pageProps} />

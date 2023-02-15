@@ -1,11 +1,11 @@
-import { Html, Main, NextScript } from 'next/document'
+import { Html, Head, Main, NextScript } from 'next/document'
 import Script from 'next/script'
 import { GOOGLE_ANALYTICS_ID } from '@/lib/consts'
 
 export default function Document() {
   return (
     <Html lang="en" data-theme="the-hu">
-
+      <Head />
       <body>
         <Main />
         <NextScript />

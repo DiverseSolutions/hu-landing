@@ -1,9 +1,6 @@
 import { ArdArtAssetDetailEarlyResult } from '@/store/rtk-query/hux-ard-art/types'
 import React, { useState, useMemo, useEffect } from 'react'
 import { sortBy as _sortBy } from 'lodash'
-import HeartSvg from '@/assets/svg/heart-grey.svg'
-import ShareSvg from '@/assets/svg/share-grey.svg'
-import ZondReloadSvg from '@/assets/svg/zond-reload-grey.svg'
 import { useDispatch } from 'react-redux'
 import { useAppSelector } from '@/store/hooks'
 import { showAuthModal } from '@/store/reducer/auth-reducer/actions'
@@ -114,16 +111,15 @@ function TicketSection({ ticket, priceToArdxRate }: Props) {
                             <div className="md:w-[60%] mw-md:order-2 mw-md:mt-8">
                                 <div className="flex justify-center w-full">
                                     <div className="relative flex justify-center w-full max-w-[600px]">
-                                        <img src={ticket.imageUrl} alt={ticket.name} className="object-cover w-full h-auto rounded-lg" />
-                                        <div className="absolute top-4 right-4">
-                                            <div className="rounded-xl cursor-pointer p-4 bg-white bg-opacity-[0.65]">
-                                                <ZoomInSvg />
-                                            </div>
-                                        </div>
-                                        <div className="absolute bottom-4 right-4">
-                                            <div className="flex p-4 px-8 bg-white cursor-pointer rounded-xl">
-                                                <label htmlFor='ticket-media-modal'><span className="text-base font-bold">Show all photos({ticket.medias?.length || 0})</span></label>
-                                            </div>
+                                        {/* <img src={ticket.imageUrl} alt={ticket.name} className="object-cover w-full h-auto rounded-lg" /> */}
+                                        <video src="/video/ticket.mp4" autoPlay loop className='w-full h-auto max-h-[60vh]' />
+
+                                    </div>
+                                </div>
+                                <div className='mt-6'>
+                                    <div className="flex justify-center w-full">
+                                        <div className="flex p-4 px-8 bg-white cursor-pointer rounded-xl">
+                                            <label htmlFor='ticket-media-modal'><span className="text-base font-bold">Show all photos({ticket.medias?.length || 0})</span></label>
                                         </div>
                                     </div>
                                 </div>

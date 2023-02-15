@@ -5,3 +5,5 @@ export const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i
 export const GOOGLE_ANALYTICS_ID = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID
 
 export const ERROR_CURRENCY = 'Currency error. Please try reload the page'
+
+export const APP_HOST_URL = process.env.NEXT_PUBLIC_APP_HOST_URL as string

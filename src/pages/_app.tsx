@@ -16,7 +16,8 @@ export default function App({ Component, pageProps, ...rest }: AppProps) {
     <>
       <Head>
         <title>hu.rocks</title>
-        <meta property="og:title" content="The HU" />
+        <meta property="og:title" content="The HU in the Metaverse" />
+        <meta property="og:description" content="Join the legendary band The HU for their first-ever virtual concert in the Metaverse!" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
         <meta property="og:image" content={HuOgImg.src} />

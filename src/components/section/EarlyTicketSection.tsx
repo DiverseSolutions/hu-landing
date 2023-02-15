@@ -112,7 +112,7 @@ function TicketSection({ ticket, priceToArdxRate }: Props) {
                                 <div className="flex justify-center w-full">
                                     <div className="relative flex justify-center w-full max-w-[600px]">
                                         {/* <img src={ticket.imageUrl} alt={ticket.name} className="object-cover w-full h-auto rounded-lg" /> */}
-                                        <video src="/video/ticket.mp4" autoPlay loop className='w-full h-auto max-h-[60vh]' />
+                                        <video src="/video/ticket.mp4" autoPlay loop muted className='w-full h-auto max-h-[60vh]' />
 
                                     </div>
                                 </div>

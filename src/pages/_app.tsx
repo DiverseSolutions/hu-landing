@@ -23,6 +23,8 @@ export default function App({ Component, pageProps, ...rest }: AppProps) {
         <meta property="og:image" content={HuOgImg.src} />
         <meta property="og:image:width" content={HuOgImg.width.toString()} />
         <meta property="og:image:height" content={HuOgImg.height.toString()} />
+        <meta property="og:image:type" content="image/jpeg" />
+        <meta name="twitter:card" content="summary"></meta>
       </Head>
       <Provider store={store}>
         <Component {...props.pageProps} />

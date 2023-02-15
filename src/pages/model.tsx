@@ -12,7 +12,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <div className="mt-32"><ModelScene modelId='LHC' /></div>
+        <div className="h-screen"><ModelScene modelId='LHC' /></div>
       </main>
     </>
   )

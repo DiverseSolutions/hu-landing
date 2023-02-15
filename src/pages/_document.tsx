@@ -1,11 +1,18 @@
 import { Html, Head, Main, NextScript } from 'next/document'
 import Script from 'next/script'
 import { GOOGLE_ANALYTICS_ID } from '@/lib/consts'
+import HuOgImg from '@/assets/img/hu-og.jpg'
 
 export default function Document() {
   return (
     <Html lang="en" data-theme="the-hu">
-      <Head />
+      <Head>
+        <title>hu.rocks</title>
+        <meta property="og:title" content="The HU" />
+        <meta property="og:image" content={HuOgImg.src} />
+        <meta property="og:image:width" content={HuOgImg.width.toString()} />
+        <meta property="og:image:height" content={HuOgImg.height.toString()} />
+      </Head>
       <body>
         <Main />
         <NextScript />

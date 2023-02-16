@@ -6,6 +6,7 @@ import HomeImgSection2 from '@/assets/img/home-img-section-2.jpg'
 import HomeImgSection3 from '@/assets/img/home-img-section-3.jpg'
 import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
 import SwiperCore, { Pagination, Mousewheel } from "swiper";
+import HomeFooterBgImg from '@/assets/img/home-footer-img-bg.png'
 
 // Import Swiper styles
 import "swiper/css";
@@ -36,17 +37,31 @@ function ImagesSection({ }: Props) {
             <div className='h-full md:px-0 pb-[100px]'>
                 <div className="flex flex-col justify-between w-full h-full">
                     <div className="flex justify-center w-full h-full">
-                        <div className="container flex items-start w-full h-full">
-                            <div className="grid w-full grid-cols-1 px-4 mt-8 md:hidden">
+                        <div className="container relative flex items-center w-full h-full">
+                            <div className="relative inset-0 z-10 grid w-full grid-cols-1 px-4 mt-8 md:hidden">
+                                <div className="absolute inset-0 md:hidden">
+                                    <div className="flex items-center justify-center w-full h-full">
+                                        <img src={HomeFooterBgImg.src} className="h-[33vh] opacity-[0.4] w-full object-contain transform translate-y-[-50%]" />
+                                    </div>
+                                </div>
                                 {images.map((imgUrl) => (
-                                    <div key={imgUrl} className='w-full h-full aspect-square'>
-                                        <img onClick={() => setSelectedImg(imgUrl)} src={imgUrl} className="object-cover w-full h-full" />
+                                    <div key={imgUrl} className='z-30 w-full h-full aspect-square'>
+                                        <img onClick={() => setSelectedImg(imgUrl)} src={imgUrl} className="object-contain w-full h-full" />
                                     </div>
                                 ))}
                             </div>
                             <div className="items-center hidden w-full h-full md:flex">
-                                <div className="flex justify-center items-center w-full h-[512px]">
-                                    <img src={images[0]} className="object-contain w-auto h-full" />
+                                <div className="flex justify-center items-center w-full h-[512px] relative">
+                                    <div className="absolute inset-0">
+                                        <div className="flex items-center justify-center w-full h-full">
+                                            <img src={HomeFooterBgImg.src} className="h-full opacity-[0.4] w-auto object-contain transform translate-y-[-200px]" />
+                                        </div>
+                                    </div>
+                                    <div className="absolute inset-0 z-10">
+                                        <div className="flex items-center justify-center w-full h-full">
+                                            <img src={images[0]} className="object-contain w-auto h-full" />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -69,7 +84,7 @@ function ImagesSection({ }: Props) {
                                 ))}
                             </div>
                             <div className="items-center hidden w-full h-full md:flex">
-                                <div className="flex items-center w-full h-[512px]">
+                                <div className="flex items-center w-full h-[512px] relative">
                                     <Swiper
                                         speed={500}
                                         autoplay={false}

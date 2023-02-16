@@ -58,9 +58,9 @@ function SystemRequirementsSection() {
             </div>
             <div className="mt-6">
                 <div className="border-2 p-6 rounded-xl border-black border-opacity-[0.2] space-y-4">
-                    <div className="flex justify-between w-full">
-                        <div className="flex">
-                            <div className="mb-4 tabs">
+                    <div className="flex items-center justify-between w-full">
+                        <div className="flex items-center">
+                            <div className="flex items-center w-full tabs">
                                 {systemRequirementSpecs.map((spec) => (
                                     <a key={spec.name} onClick={() => setActiveIndex(spec.name)} className={classNames('text-base tab', { 'tab-active tab-bordered border-b': activeIndex === spec.name })}>{spec.name}</a>
                                 ))}
@@ -71,7 +71,7 @@ function SystemRequirementsSection() {
                         </div>
                     </div>
                     {isRequirementsVisible ? (
-                        <div>
+                        <div className='mt-8'>
                             {fields.map((field, idx) => (
                                 <div key={field.name} className={classNames("flex w-full justify-between border-b border-black border-opacity-[0.1] pb-1", { 'mt-6': idx !== 0 })}>
                                     <span className="text-sm opacity-[0.65]">{field.name}:</span>

@@ -128,7 +128,7 @@ function TicketSection({ ticket, priceToArdxRate }: Props) {
                                 <div className="mt-6 ml-4">
                                     <p className="text-2xl font-bold">Description</p>
                                 </div>
-                                <div className="mt-6 ml-4">
+                                <div className="mt-6 ml-4 text-black opacity-[0.65]">
                                     {ticket.description}
                                 </div>
                                 <div className="mt-6 ml-4">
@@ -142,7 +142,7 @@ function TicketSection({ ticket, priceToArdxRate }: Props) {
                                         </div>
                                         <div className="flex items-center w-full">
                                             <LocationSvg />
-                                            <p className="ml-4 text-base text-black text-opacity-[0.65]">{'Metaland'}</p>
+                                            <p className="ml-4 text-sm text-black text-opacity-[0.65]">{'Metaland'}</p>
                                         </div>
                                     </div>
                                 </div>

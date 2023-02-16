@@ -33,12 +33,6 @@ const systemRequirementSpecs = [
             },
         ]
     },
-    {
-        name: 'macOS',
-    },
-    {
-        name: 'Linux',
-    },
 ]
 
 function SystemRequirementsSection() {

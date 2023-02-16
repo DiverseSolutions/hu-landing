@@ -110,9 +110,9 @@ function TicketSection({ ticket, priceToArdxRate }: Props) {
                         <div className="flex flex-col justify-between w-full md:flex-row">
                             <div className="md:w-[60%] mw-md:order-2 mw-md:mt-8">
                                 <div className="flex justify-center w-full">
-                                    <div className="relative flex justify-center w-full max-w-[600px]">
+                                    <div className="relative flex justify-center w-full">
                                         {/* <img src={ticket.imageUrl} alt={ticket.name} className="object-cover w-full h-auto rounded-lg" /> */}
-                                        <video src="/video/ticket-v2.mp4" autoPlay loop muted className='w-full h-auto max-h-[60vh] rounded-md' />
+                                        <video src="/video/ticket-v2.mp4" autoPlay loop muted className='w-full h-auto rounded-md' />
                                     </div>
                                 </div>
                                 <div className='mt-6'>

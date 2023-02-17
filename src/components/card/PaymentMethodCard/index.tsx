@@ -218,23 +218,26 @@ function PaymentMethodCard({ item, priceToUsdrate }: Props) {
                             </div>
                             <div className="w-full dropdown-content max-h-[300px] overflow-y-auto">
                                 <div className="flex flex-col w-full mt-4 space-y-4 bg-white">
-                                    {visibleMongolianBanks.map((mb) => (
-                                        <PaymentTypeCard key={mb.name}
-                                            onClick={() => {
-                                                setSelected('mongolian-banks')
-                                                setSelectedMongolianBank(mb)
-                                            }}
-                                            active={mb.name === selected} name={mb.name}
-                                            activeClass="bg-black bg-opacity-[0.04] border-transparent"
-                                            inactiveClass='bg-white'
-                                            icon={<img src={mb.logo} className={"w-[32px] h-[32px]"} />} />
-                                    ))}
+                                    <>
+                                        {visibleMongolianBanks.map((mb) => (
+                                            <PaymentTypeCard key={mb.name}
+                                                onClick={() => {
+                                                    setSelected('mongolian-banks')
+                                                    setSelectedMongolianBank(mb)
+                                                }}
+                                                active={mb.name === selected} name={mb.name}
+                                                activeClass="bg-black bg-opacity-[0.04] border-transparent"
+                                                inactiveClass='bg-white'
+                                                icon={<img src={mb.logo} className={"w-[32px] h-[32px]"} />} />
+                                        ))}
+                                        <div className="mt-4">
+                                            <PaymentTypeCard onClick={() => setSelected('socialpay')} activeClass="bg-black bg-opacity-[0.04] border-transparent"
+                                                inactiveClass='bg-white' icon={<Image src={SocialPayImg} width={32} height={32} alt="Social Pay" />}
+                                                name="Social Pay" active={selected === 'socialpay'} />
+                                        </div>
+                                    </>
                                 </div>
                             </div>
-                        </div>
-                        <div className="mt-4">
-                            <PaymentTypeCard onClick={() => setSelected('socialpay')} icon={<Image src={SocialPayImg} width={32} height={32} alt="Social Pay" />}
-                                name="Social Pay" active={selected === 'socialpay'} />
                         </div>
                     </div>
                 ) : (<></>)}

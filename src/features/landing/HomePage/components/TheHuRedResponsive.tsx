@@ -6,7 +6,7 @@ type Props = {}
 function TheHuRedResponsive({ }: Props) {
 
     return (
-        <div className="flex items-center justify-center w-full px-8 mt-8 md:px-0">
+        <div className="flex items-center justify-center w-full px-4 mt-8 md:px-0">
             <img src={HomeTheHuImg.src} className="object-contain w-full h-auto" />
         </div>
     )

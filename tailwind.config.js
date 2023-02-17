@@ -65,12 +65,12 @@ module.exports = {
           '100%': { opacity: 0 },
         },
         heroMove: {
-          '0%': { transform: `translate(100%, -100%) scale(1.4)` },
+          '0%': { transform: `translate(100%, -90%) scale(1.4)` },
           '100%': { transform: `translate(0%, 0%) scale(1.0)` },
         },
         heroMoveRevert: {
           '0%': { transform: `translate(0%, 0%) scale(1.0)` },
-          '100%': { transform: `translate(100%, -100%) scale(1.4)` },
+          '100%': { transform: `translate(100%, -90%) scale(1.4)` },
         },
         heroMobileMove: {
           '0%': { transform: `translate(0%, -100%)` },

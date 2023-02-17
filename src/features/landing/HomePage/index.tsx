@@ -68,7 +68,7 @@ function HomePage({ }: Props) {
                                                         <TheHuRedResponsive />
                                                     </div>
                                                 </div>
-                                                <div className="flex justify-center w-full px-8 mt-4">
+                                                <div className="flex justify-center w-full px-0 mt-4">
                                                     <div className="w-full text-center md:text-right">
                                                         <p className='text-xl font-bold text-white break-words md:text-2xl md:block'>IN THE METAVERSE</p>
                                                         <p className='break-words mt-4 text-[28px] leading-[32px] font-bold text-white hidden md:block'>BE HEARD IN EVERY NATION AND EVERY TONGUE<br />WHEREVER THE SUN RISES</p>

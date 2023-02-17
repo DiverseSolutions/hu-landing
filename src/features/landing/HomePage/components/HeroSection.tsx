@@ -7,7 +7,7 @@ type HeroSectionProps = {
     animIndex: number
 }
 
-const animClasses = ['translate-y-[-90%] translate-x-[100%] scale-[1.4]', ' translate-x-0 translate-y-0 scale(1.0)', 'translate-y-[140%]']
+const animClasses = ['translate-y-[-80%] translate-x-[100%] scale-[1.4]', ' translate-x-0 translate-y-0 scale(1.0)', 'translate-y-[140%]']
 
 function HeroSection(props: HeroSectionProps) {
 

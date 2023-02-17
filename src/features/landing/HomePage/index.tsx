@@ -6,6 +6,8 @@ import dynamic from 'next/dynamic'
 import { Swiper, SwiperSlide } from "swiper/react"
 import SwiperCore, { Pagination, Mousewheel } from "swiper"
 
+import TheHuRedResponsive from './components/TheHuRedResponsive'
+
 import MobileHeroImg from '@/assets/img/hero-mobile.png'
 
 // Import Swiper styles
@@ -15,7 +17,6 @@ import BuyTicket from './components/BuyTicket'
 import classNames from 'classnames'
 import HomeFooter from '@/components/footer/HomeFooter'
 
-const TheHuRedResponsive = dynamic(() => import('./components/TheHuRedResponsive'), { ssr: false, })
 const ScrollToExplore = dynamic(() => import('./components/ScrollToExplore'), { ssr: false, })
 const HeroSection = dynamic(() => import('./components/HeroSection'), { ssr: false, })
 const ImagesSection = dynamic(() => import('./components/ImagesSection'), { ssr: false, })
@@ -52,6 +53,7 @@ function HomePage({ }: Props) {
                                 setPrevSwiperActiveIdx(swiperActiveIdx)
                                 setSwiperActiveIdx(s.activeIndex)
                             }}
+                            preventInteractionOnTransition
                             slidesPerView={1}
                             mousewheel
                             modules={[Mousewheel, Pagination]}
@@ -63,12 +65,12 @@ function HomePage({ }: Props) {
                                         <div className="container">
                                             <div className="flex flex-col w-full">
                                                 <div className="flex justify-center w-full">
-                                                    <div className="relative">
+                                                    <div className="relative w-full">
                                                         <TheHuRedResponsive />
                                                     </div>
                                                 </div>
-                                                <div className="flex justify-center w-full px-8 mt-4">
-                                                    <div className="w-full text-center md:text-right max-w-[1384px]">
+                                                <div className="flex justify-center w-full px-0 mt-4">
+                                                    <div className="w-full text-center md:text-right">
                                                         <p className='text-xl font-bold text-white break-words md:text-2xl md:block'>IN THE METAVERSE</p>
                                                         <p className='break-words mt-4 text-[28px] leading-[32px] font-bold text-white hidden md:block'>BE HEARD IN EVERY NATION AND EVERY TONGUE<br />WHEREVER THE SUN RISES</p>
                                                         <p className='text-center mt-4 text-[20px] leading-[28px] font-bold text-white md:hidden'>BE HEARD IN EVERY NATION AND<br />EVERY TONGUE WHEREVER THE<br />SUN RISES</p>

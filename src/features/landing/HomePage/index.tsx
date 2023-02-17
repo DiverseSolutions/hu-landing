@@ -53,6 +53,7 @@ function HomePage({ }: Props) {
                                 setPrevSwiperActiveIdx(swiperActiveIdx)
                                 setSwiperActiveIdx(s.activeIndex)
                             }}
+                            preventInteractionOnTransition
                             slidesPerView={1}
                             mousewheel
                             modules={[Mousewheel, Pagination]}

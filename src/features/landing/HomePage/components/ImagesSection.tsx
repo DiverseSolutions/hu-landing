@@ -51,7 +51,7 @@ function ImagesSection({ }: Props) {
                                 ))}
                             </div>
                             <div className="items-center hidden w-full h-full md:flex">
-                                <div className="flex justify-center items-center w-full h-[512px] relative">
+                                <div className="flex justify-center items-center w-full h-[60vh] relative">
                                     <div className="absolute inset-0">
                                         <div className="flex items-center justify-center w-full h-full">
                                             <img src={HomeFooterBgImg.src} className="h-full opacity-[0.4] w-auto object-contain transform translate-y-[-200px]" />

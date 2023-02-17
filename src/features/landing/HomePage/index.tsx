@@ -81,7 +81,7 @@ function HomePage({ }: Props) {
                             </SwiperSlide>
                             <SwiperSlide>
                                 <div className='pt-[64px] md:pt-[100px] h-full'>
-                                    <HeroSection showAnim={swiperActiveIdx === 1} revertAnim={swiperActiveIdx === 0 && prevSwiperActiveIdx === 1} />
+                                    <HeroSection animIndex={swiperActiveIdx} />
                                 </div>
                             </SwiperSlide>
                             <SwiperSlide>

@@ -10,6 +10,7 @@ import { cognitoApi } from './rtk-query/cognito/cognito-api';
 import { idaxOpenApi } from './rtk-query/idax-openapi/idax-openapi'
 import { monxanshApi } from './rtk-query/monxansh/monxansh-api';
 import { cognitoUserDataApi } from './rtk-query/cognito-userdata/cognito-userdata-api'
+import { idaxApi } from './rtk-query/idax/idax-api'
 
 import authReducer from './reducer/auth-reducer';
 import alertReducer from './reducer/alert-reducer';
@@ -22,6 +23,7 @@ export const store = configureStore({
     [cognitoApi.reducerPath]: cognitoApi.reducer,
     [huxArdArtApi.reducerPath]: huxArdArtApi.reducer,
     [idaxOpenApi.reducerPath]: idaxOpenApi.reducer,
+    [idaxApi.reducerPath]: idaxApi.reducer,
     [monxanshApi.reducerPath]: monxanshApi.reducer,
     [cognitoUserDataApi.reducerPath]: cognitoUserDataApi.reducer,
     auth: authReducer,
@@ -37,6 +39,7 @@ export const store = configureStore({
       idaxOpenApi.middleware,
       monxanshApi.middleware,
       cognitoUserDataApi.middleware,
+      idaxApi.middleware,
     )
   },
 })

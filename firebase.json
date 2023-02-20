@@ -61,6 +61,14 @@
       ],
       "rewrites": [
         {
+          "source": "/wv/idax**",
+          "destination": "/wv/idax/index.html"
+        },
+        {
+          "source": "/spline**",
+          "destination": "/spline.html"
+        },
+        {
           "source": "/spline**",
           "destination": "/spline.html"
         },

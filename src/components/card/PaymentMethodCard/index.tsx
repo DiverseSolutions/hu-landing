@@ -205,13 +205,21 @@ function PaymentMethodCard({ item, priceToUsdrate }: Props) {
                             }
                             setIsBanksExpanded(!isBanksExpanded)
                         }} className={classNames('cursor-pointer border-[1px] dropdown dropdown-bottom mt-4 flex-col text-dark-secondary rounded-lg bg-black bg-opacity-[0.04] p-[14px] w-full flex items-center', {
-                            ' border-black': selectedMongolianBank && selected === 'mongolian-banks' ? true : false,
+                            ' border-black': selectedMongolianBank && ['mongolian-banks', 'socialpay'].includes(selected) ? true : false,
                         })}>
                             <div className="flex justify-between w-full">
-                                <div className="flex items-center">
-                                    {selectedMongolianBank?.logo ? <img src={selectedMongolianBank.logo} className="w-[32px] h-[32px]" /> : <BankLineSvg />}
-                                    <p className="ml-3">{selectedMongolianBank?.name || 'Mongolian Banks'}</p>
-                                </div>
+                                {selectedMongolianBank && (selected !== 'socialpay') ? (
+                                    <div className="flex items-center">
+                                        {selectedMongolianBank?.logo ? <img src={selectedMongolianBank.logo} className="w-[32px] h-[32px]" /> : <BankLineSvg />}
+                                        <p className="ml-3">{selectedMongolianBank?.name || 'Mongolian Banks'}</p>
+                                    </div>
+                                ) : (<></>)}
+                                {selected === 'socialpay' ? (
+                                    <div className="flex items-center">
+                                        <img src={SocialPayImg.src} className="w-[32px] h-[32px]" />
+                                        <p className="ml-3">Socialpay</p>
+                                    </div>
+                                ) : (<></>)}
                                 <div className="flex items-center">
                                     {isBanksExpanded ? <MdExpandLess size={24} color="black" /> : <MdExpandMore size={24} color="black" />}
                                 </div>
@@ -225,7 +233,7 @@ function PaymentMethodCard({ item, priceToUsdrate }: Props) {
                                                     setSelected('mongolian-banks')
                                                     setSelectedMongolianBank(mb)
                                                 }}
-                                                active={mb.name === selected} name={mb.name}
+                                                active={selected === 'mongolian-banks' && (mb.name === selectedMongolianBank?.name)} name={mb.name}
                                                 activeClass="bg-black bg-opacity-[0.04] border-transparent"
                                                 inactiveClass='bg-white'
                                                 icon={<img src={mb.logo} className={"w-[32px] h-[32px]"} />} />

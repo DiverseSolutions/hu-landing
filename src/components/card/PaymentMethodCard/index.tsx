@@ -33,8 +33,8 @@ function PaymentMethodCard({ item, priceToUsdrate }: Props) {
 
     const accountId = useAppSelector(state => state.auth.ardArt.accountId)
     const email = useAppSelector(state => state.auth.profile?.email)
-    const [qrCode, setQrCode] = useState<string>()
     const [selectedMongolianBank, setSelectedMongolianBank] = useState<MongolianBank>()
+    const [qrCode, setQrCode] = useState<string>()
     const [isInvoiceUpdateLoading, setIsInvoiceUpdateLoading] = useState(false)
     const router = useRouter()
     const [selected, setSelected] = useState<PaymentType>('ardapp')
@@ -218,6 +218,12 @@ function PaymentMethodCard({ item, priceToUsdrate }: Props) {
                                     <div className="flex items-center">
                                         <img src={SocialPayImg.src} className="w-[32px] h-[32px]" />
                                         <p className="ml-3">Socialpay</p>
+                                    </div>
+                                ) : (<></>)}
+                                {!selectedMongolianBank && (selected !== 'socialpay') ? (
+                                    <div className="flex items-center">
+                                        <BankLineSvg />
+                                        <p className="ml-3">{'Mongolian Banks'}</p>
                                     </div>
                                 ) : (<></>)}
                                 <div className="flex items-center">

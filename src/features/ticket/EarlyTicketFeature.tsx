@@ -1,6 +1,6 @@
 import EarlyTicketSection from '@/components/section/EarlyTicketSection';
 import { useArdxUsdRateQuery, useAssetDetailEarlyQuery, useLazyArdxUsdRateQuery, useLazyMonxanshRateQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api';
-import { useLazyIdaxTickerQuery } from '@/store/rtk-query/idax/idax-api';
+import { useLazyIdaxTickerQuery } from '@/store/rtk-query/idax-openapi/idax-openapi';
 import React, { useState, useMemo, useEffect } from 'react';
 
 import { ClipLoader } from 'react-spinners';

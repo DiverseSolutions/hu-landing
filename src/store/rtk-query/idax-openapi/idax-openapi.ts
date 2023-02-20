@@ -1,8 +1,8 @@
 import { IdaxTickerResponse } from './types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-export const idaxApi = createApi({
-    reducerPath: 'idaxApi',
+export const idaxOpenApi = createApi({
+    reducerPath: 'idaxOpenApi',
     baseQuery: fetchBaseQuery({ baseUrl: 'https://openapi.idax.exchange' }),
     endpoints: (builder) => ({
         ticker: builder.query<IdaxTickerResponse, { symbol: string }>({
@@ -20,4 +20,4 @@ export const idaxApi = createApi({
 export const {
     useTickerQuery: useIdaxTickerQuery,
     useLazyTickerQuery: useLazyIdaxTickerQuery
-} = idaxApi;
+} = idaxOpenApi;

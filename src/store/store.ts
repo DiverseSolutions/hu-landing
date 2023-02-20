@@ -7,7 +7,7 @@ import { nextjsApi } from './rtk-query/nextjs/nextjs-api';
 import { ardArtApi } from './rtk-query/ard-art/ard-art-api';
 import { huxArdArtApi } from './rtk-query/hux-ard-art/hux-ard-art-api';
 import { cognitoApi } from './rtk-query/cognito/cognito-api';
-import { idaxApi } from './rtk-query/idax/idax-api'
+import { idaxOpenApi } from './rtk-query/idax-openapi/idax-openapi'
 import { monxanshApi } from './rtk-query/monxansh/monxansh-api';
 import { cognitoUserDataApi } from './rtk-query/cognito-userdata/cognito-userdata-api'
 
@@ -21,7 +21,7 @@ export const store = configureStore({
     [ardArtApi.reducerPath]: ardArtApi.reducer,
     [cognitoApi.reducerPath]: cognitoApi.reducer,
     [huxArdArtApi.reducerPath]: huxArdArtApi.reducer,
-    [idaxApi.reducerPath]: idaxApi.reducer,
+    [idaxOpenApi.reducerPath]: idaxOpenApi.reducer,
     [monxanshApi.reducerPath]: monxanshApi.reducer,
     [cognitoUserDataApi.reducerPath]: cognitoUserDataApi.reducer,
     auth: authReducer,
@@ -34,7 +34,7 @@ export const store = configureStore({
       ardArtApi.middleware,
       cognitoApi.middleware,
       huxArdArtApi.middleware,
-      idaxApi.middleware,
+      idaxOpenApi.middleware,
       monxanshApi.middleware,
       cognitoUserDataApi.middleware,
     )

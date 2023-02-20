@@ -11,7 +11,7 @@ import { useLazyGetAssetDetailByIdQuery } from '@/store/rtk-query/hux-ard-art/hu
 import { ArdArtAssetDetailByIDResult } from '@/store/rtk-query/hux-ard-art/types'
 import { ArdArtGetInvoiceByIdResult } from '@/store/rtk-query/hux-ard-art/types'
 import { ArdArtCheckInvoiceResult } from '@/store/rtk-query/hux-ard-art/types'
-import { useLazyIdaxTickerQuery } from '@/store/rtk-query/idax/idax-api'
+import { useLazyIdaxTickerQuery } from '@/store/rtk-query/idax-openapi/idax-openapi'
 
 import { PaymentType } from '@/features/payment/PaymentStatusFeature'
 import { alertVisibility } from '@/store/reducer/alert-reducer/actions'

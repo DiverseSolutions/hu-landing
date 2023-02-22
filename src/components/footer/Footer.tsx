@@ -1,3 +1,4 @@
+import classNames from 'classnames'
 import React from 'react'
 
 import { IoLogoMedium, IoLogoInstagram, IoLogoFacebook, IoLogoDiscord } from 'react-icons/io5'
@@ -27,9 +28,9 @@ function Footer({ }: Props) {
                             <span className='opacity-[0.65] text-sm ml-2 text-black'>2023 The HU & ARD</span>
                         </div>
                     </div>
-                    <div className="flex justify-center w-full mt-8 opacity-0 md:mt-0 md:items-end md:justify-end">
-                        <span className='cursor-pointer text-sm opacity-[0.65]'>TERMS & CONDITION</span>
-                        <span className='text-sm ml-4 cursor-pointer opacity-[0.65]'>PRIVACY POLICY</span>
+                    <div className="flex justify-center w-full mt-8 md:mt-0 md:items-end md:justify-end">
+                        <span className={classNames('cursor-pointer opacity-0 text-sm', { 'opacity-[0.65]': false })}>TERMS & CONDITION</span>
+                        <a href="/privacy-policy/en" target={"_blank"} rel="noreferrer" className='text-sm ml-4 cursor-pointer opacity-[0.65]'>PRIVACY POLICY</a>
                     </div>
                 </div>
             </div>

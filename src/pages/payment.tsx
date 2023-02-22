@@ -8,7 +8,7 @@ import { useLazyGetInvoiceByIdQuery, useLazyMonxanshRateQuery } from '@/store/rt
 import InvoiceFeature from '@/features/payment/InvoiceFeature'
 import { useLazyGetAssetDetailByIdQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
 import { ArdArtAssetDetailByIDResult } from '@/store/rtk-query/hux-ard-art/types'
-import { useLazyIdaxTickerQuery } from '@/store/rtk-query/idax/idax-api'
+import { useLazyIdaxTickerQuery } from '@/store/rtk-query/idax-openapi/idax-openapi'
 
 type Props = {}
 

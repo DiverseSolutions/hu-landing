@@ -30,7 +30,7 @@ function Footer({ }: Props) {
                         </div>
                     </div>
                     <div className="flex justify-center w-full mt-8 md:mt-0 md:items-end md:justify-end">
-                        <span className={classNames('cursor-pointer opacity-0 text-sm', { 'opacity-[0.65]': false })}>TERMS & CONDITION</span>
+                        <Link href="/terms-of-service/en" className={classNames('cursor-pointer text-sm', { 'opacity-[0.65]': true })}>TERMS & CONDITION</Link>
                         <Link href="/privacy-policy/en" target={"_blank"} rel="noreferrer" className='text-sm ml-4 cursor-pointer opacity-[0.65]'>PRIVACY POLICY</Link>
                     </div>
                 </div>

@@ -5,7 +5,7 @@ name: (PROD) Deploy to hu.idax.exchnge
 "on":
   push:
     branches:
-      - main
+      - release/idax
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest

@@ -91,8 +91,9 @@ export default function AuthFeature({
                         return
                     }
                 }
+            } else {
+                dispatch(authNotLoggedIn())
             }
-            dispatch(authNotLoggedIn())
         } else {
             const cognitoUserResp = await callGetUser({
                 AccessToken: cognitoAccessToken,

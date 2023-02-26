@@ -2,7 +2,7 @@ const withFonts = require('next-fonts');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  trailingSlash: process.env.DOTENV_IDAX_PROD ? true : false,
+  trailingSlash: process.env.DOTENV_IDAX ? true : false,
   reactStrictMode: true,
   experimental: {
     urlImports: [

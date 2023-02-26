@@ -92,6 +92,8 @@ export default function AuthFeature({
                     }
                 }
             } else {
+                console.log('not logged in')
+                console.log(`ex token: ${idaxExToken}, user code: ${idaxUserCode}`)
                 dispatch(authNotLoggedIn())
             }
         } else {

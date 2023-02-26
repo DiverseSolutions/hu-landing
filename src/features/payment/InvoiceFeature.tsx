@@ -5,13 +5,14 @@ import React from 'react'
 
 type Props = {
     product: ArdArtAssetDetailByIDResult,
+    region: string,
     priceToUsdRate: number,
 }
 
-function InvoiceFeature({ product, priceToUsdRate }: Props) {
+function InvoiceFeature({ product, region, priceToUsdRate }: Props) {
     return (
         <div className="flex w-full h-full">
-            <PaymentMethodCard priceToUsdrate={priceToUsdRate} item={product} />
+            <PaymentMethodCard region={region} priceToUsdrate={priceToUsdRate} item={product} />
         </div>
     )
 }

@@ -29,13 +29,14 @@ visibleMongolianBanks.push({
 type Props = {
     item: ArdArtAssetDetailByIDResult,
     priceToUsdrate: number,
+    region: string,
 }
 
 type PaymentType = 'card' | 'socialpay' | 'ardapp' | 'socialpay' | 'mongolian-banks'
 
 
 
-function PaymentMethodCard({ item, priceToUsdrate }: Props) {
+function PaymentMethodCard({ item, priceToUsdrate, region }: Props) {
 
     const accountId = useAppSelector(state => state.auth.ardArt.accountId)
     const email = useAppSelector(state => state.auth.profile?.email)
@@ -63,7 +64,7 @@ function PaymentMethodCard({ item, priceToUsdrate }: Props) {
         }).format(item.price / priceToUsdrate).substring(1)
     }, [item.price, priceToUsdrate])
 
-    const executeInvoiceUpdate = async () => {
+    const executeCreateInvoice = async () => {
         if (!selected) {
             toast('Please select your payment method', {
                 type: 'info'
@@ -79,6 +80,7 @@ function PaymentMethodCard({ item, priceToUsdrate }: Props) {
             const r = await callCreateInvoiceSocialPay({
                 type: 'single',
                 method: selected,
+                region,
                 email: email!,
                 productId: item.id,
                 amount: 1,
@@ -94,6 +96,7 @@ function PaymentMethodCard({ item, priceToUsdrate }: Props) {
                 type: 'single',
                 productId: item.id,
                 email: email!,
+                region,
                 amount: 1,
                 accountId,
             }).unwrap()
@@ -117,6 +120,7 @@ function PaymentMethodCard({ item, priceToUsdrate }: Props) {
                 const r = await callCreateInvoiceQPos({
                     productId: item.id,
                     email: email!,
+                    region,
                     accountId,
                     type: 'single',
                     amount: 1,
@@ -130,6 +134,7 @@ function PaymentMethodCard({ item, priceToUsdrate }: Props) {
                 productId: item.id,
                 accountId,
                 email: email!,
+                region,
                 type: 'single',
                 amount: 1,
             }).unwrap()
@@ -143,7 +148,7 @@ function PaymentMethodCard({ item, priceToUsdrate }: Props) {
     const handleConfirm = async () => {
         setIsInvoiceUpdateLoading(true)
         try {
-            await executeInvoiceUpdate()
+            await executeCreateInvoice()
         } catch (e) {
 
         }

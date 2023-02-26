@@ -4,7 +4,6 @@ import { sortBy as _sortBy } from 'lodash'
 import { useDispatch } from 'react-redux'
 import { useAppSelector } from '@/store/hooks'
 import { showAuthModal } from '@/store/reducer/auth-reducer/actions'
-import { useGetTicketOrAssetQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
 import { useRouter } from 'next/router'
 import classNames from 'classnames'
 import moment from 'moment'
@@ -16,7 +15,6 @@ import Clock from '@/components/icon/svgr/Clock'
 import { MdClose, MdOutlineLocationOn } from 'react-icons/md'
 
 import { formatPrice } from '@/lib/utils'
-import { ClipLoader } from 'react-spinners'
 import { toast } from 'react-toastify'
 import SystemRequirementsSection from './components/SystemRequirementsSection'
 import MediaSection from './components/MediaSection'
@@ -27,14 +25,28 @@ type Props = {
     ticket: ArdArtAssetDetailEarlyResult,
     priceToArdxRate: number,
 }
+
+const TICKET_REGIONS = [
+    {
+        region: 'ASIA',
+        name: 'Early bird ticket ASIA',
+        date: 'Thursday, March 30, 2023, 21:00:00 (UTC +08:00)'
+    },
+    {
+        region: 'EUROPE',
+        name: 'Early bird ticket EUROPE',
+        date: 'Thursday, March 30, 2023, 21:00:00 (UTC +00:00)'
+    },
+    {
+        region: 'USA',
+        name: 'Early bird ticket USA',
+        date: 'Thursday, March 30, 2023, 21:00:00 (UTC -08:00)'
+    },
+];
+
 function TicketSection({ ticket, priceToArdxRate }: Props) {
 
-    const { data: tickets, isLoading: isTicketsLoading } = useGetTicketOrAssetQuery({
-        subTag: ticket.tag,
-        type: "ticket"
-    })
-
-    const [selectedTicketId, setSelectedTicketId] = useState<number>()
+    const [selectedTicketRegion, setSelectedTicketRegion] = useState<string>()
 
     const [isTimezoneWarningVisible, setIsTimezoneWarningVisible] = useState(true)
 
@@ -83,7 +95,7 @@ function TicketSection({ ticket, priceToArdxRate }: Props) {
     }, [])
 
     const handlePurchase = async () => {
-        if (!selectedTicketId) {
+        if (!selectedTicketRegion) {
             toast('Please select your ticket timezone', {
                 type: 'warning'
             })
@@ -96,7 +108,7 @@ function TicketSection({ ticket, priceToArdxRate }: Props) {
             return;
         }
         try {
-            router.push(`/payment?productId=${selectedTicketId}`)
+            router.push(`/payment?productId=${ticket.id}&region=${selectedTicketRegion}`)
         } catch (e) {
             console.log(e)
         }
@@ -195,27 +207,24 @@ function TicketSection({ ticket, priceToArdxRate }: Props) {
                                             </div>
                                             <div className="mt-4">
                                                 <div className="flex flex-col w-full">
-                                                    {isTicketsLoading ? <ClipLoader color="black" /> : <></>}
-                                                    {!isTicketsLoading && tickets?.result?.records?.length ? (
-                                                        <div className='flex flex-col w-full space-y-4'>
-                                                            {tickets.result.records.map((ticket) => (
-                                                                <button key={ticket.id}
-                                                                    onClick={() => {
-                                                                        setSelectedTicketId(ticket.id)
-                                                                    }}
-                                                                    className={classNames(`text-sm border text-left`, { 'bg-black text-white p-3 rounded-lg': selectedTicketId === ticket.id, 'bg-white hover:bg-black hover:bg-opacity-[0.04] px-4 py-3 border rounded-lg text-black': selectedTicketId !== ticket.id })}>
-                                                                    {ticket.name} {ticket.scheduleDateCustom}
-                                                                </button>
-                                                            ))}
-                                                        </div>
-                                                    ) : (<></>)}
+                                                    <div className='flex flex-col w-full space-y-4'>
+                                                        {TICKET_REGIONS.map((ticket) => (
+                                                            <button key={ticket.region}
+                                                                onClick={() => {
+                                                                    setSelectedTicketRegion(ticket.region)
+                                                                }}
+                                                                className={classNames(`text-sm border text-left`, { 'bg-black text-white p-3 rounded-lg': selectedTicketRegion === ticket.region, 'bg-white hover:bg-black hover:bg-opacity-[0.04] px-4 py-3 border rounded-lg text-black': selectedTicketRegion !== ticket.region })}>
+                                                                {ticket.name} {ticket.date}
+                                                            </button>
+                                                        ))}
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div className="mt-4">
                                             <div className="flex w-full">
                                                 <div className="flex flex-grow">
-                                                    <button onClick={handlePurchase} className={classNames("btn btn-primary rounded-lg btn-block", { 'bg-black bg-opacity-[0.2] text-black text-opacity-[0.2] hover:bg-black hover:bg-opacity-[0.2]': !selectedTicketId })}>Purchase</button>
+                                                    <button onClick={handlePurchase} className={classNames("btn btn-primary rounded-lg btn-block", { 'bg-black bg-opacity-[0.2] text-black text-opacity-[0.2] hover:bg-black hover:bg-opacity-[0.2]': !selectedTicketRegion })}>Purchase</button>
                                                 </div>
                                                 <div className="flex ml-2">
                                                     <div className="btn hover:bg-opacity-[0.12] btn-disabled bg-opacity-[0.2] rounded-lg">

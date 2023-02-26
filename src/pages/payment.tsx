@@ -12,6 +12,7 @@ import { useLazyIdaxTickerQuery } from '@/store/rtk-query/idax-openapi/idax-open
 
 type Props = {}
 
+const SUPPORTED_REGIONS = ['ASIA', 'EUROPE', 'USA']
 
 const Payment = (props: Props) => {
 
@@ -25,13 +26,18 @@ const Payment = (props: Props) => {
     const isAuthLoading = useAppSelector(state => state.auth.isLoading)
     const accountId = useAppSelector(state => state.auth.ardArt.accountId)
     const router = useRouter()
+    const [region, setRegion] = useState<string>()
 
     const [assetData, setAssetData] = useState<ArdArtAssetDetailByIDResult>()
     const [isLoading, setIsLoading] = useState(true)
 
     const [callAssetDetailById] = useLazyGetAssetDetailByIdQuery()
 
+
     useEffect(() => {
+        if (!router.isReady) {
+            return
+        }
         (async () => {
             if (!isAuthLoading && accountId) {
                 try {
@@ -45,7 +51,7 @@ const Payment = (props: Props) => {
                 setPageErrorMessage("Account not found.")
             }
         })()
-    }, [isAuthLoading, accountId])
+    }, [isAuthLoading, accountId, router.isReady])
 
     useEffect(() => {
         if (pageErrorMessage) {
@@ -79,6 +85,16 @@ const Payment = (props: Props) => {
             setPageErrorMessage("Product not found.")
             return;
         }
+        const region = router.query.region as string;
+        if (!region) {
+            setPageErrorMessage("Region not found.")
+            return
+        }
+        if (!SUPPORTED_REGIONS.includes(region)) {
+            setPageErrorMessage(`${region} region is not supported.`)
+            return
+        }
+        setRegion(region)
         if (!accountId) {
             console.log(`accountId not found`)
             setPageErrorMessage("Account not found.")
@@ -105,7 +121,7 @@ const Payment = (props: Props) => {
     if (pageErrorMessage) {
         return (
             <>
-                <div className="flex items-center justify-center h-screen w-scree">
+                <div className="flex items-center justify-center w-screen h-screen">
                     {pageErrorMessage}
                 </div>
             </>
@@ -157,16 +173,17 @@ const Payment = (props: Props) => {
                         </div>
                     </div>
                     <div className="absolute inset-0 overflow-y-auto">
-                        {assetData ? (
+                        {assetData && region ? (
                             <>
                                 <div className="flex items-center justify-center w-full h-full">
                                     <div className="flex">
-                                        <InvoiceFeature product={assetData} priceToUsdRate={ardxToUsdRate} />
+                                        <InvoiceFeature region={region} product={assetData} priceToUsdRate={ardxToUsdRate} />
                                     </div>
                                 </div>
                             </>
                         ) : <></>}
                         {!assetData ? <p>Asset not found</p> : <></>}
+                        {!region ? <p>Region not found</p> : <></>}
                     </div>
                 </div>
             </div>

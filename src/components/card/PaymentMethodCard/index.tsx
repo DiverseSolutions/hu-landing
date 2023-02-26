@@ -168,7 +168,7 @@ function PaymentMethodCard({ item, priceToUsdrate, region }: Props) {
                         <img src={item.imageUrl} alt={item.name} className="max-w-[64px] object-contain rounded-lg h-auto" />
                         <div className="flex justify-between w-full h-full ml-2">
                             <div className="flex flex-col justify-center h-full ">
-                                <h4 className='text-[16px] max-w-[168px]'>{item.name}</h4>
+                                <h4 className='text-[16px] max-w-[168px]'>{item.name} ({region})</h4>
                                 <span className='text-xs text-opacity-[0.35] text-black'>Powered by ARD</span>
                             </div>
                             <div className="flex">

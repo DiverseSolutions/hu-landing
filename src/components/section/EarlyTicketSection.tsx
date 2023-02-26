@@ -50,8 +50,6 @@ function TicketSection({ ticket, priceToArdxRate }: Props) {
     const [selectedTicketRegion, setSelectedTicketRegion] = useState<string>()
     const [callCreateIdaxInvoice] = useCreateIdaxInvoiceMutation()
 
-    const [selectedTicketId, setSelectedTicketId] = useState<number>()
-
     const authSession = useAppSelector(state => state.auth.session)
 
     const [isTimezoneWarningVisible, setIsTimezoneWarningVisible] = useState(true)
@@ -119,7 +117,7 @@ function TicketSection({ ticket, priceToArdxRate }: Props) {
         }
         if (authSession === 'idax-wv') {
             const r = await callCreateIdaxInvoice({
-                productId: selectedTicketId,
+                productId: ticket.id,
                 accountId: accountId,
                 email: email!,
                 type: 'single',
@@ -131,7 +129,7 @@ function TicketSection({ ticket, priceToArdxRate }: Props) {
                 window.location.href = r.result.response.url
             }
         } else {
-            router.push(`/payment?productId=${selectedTicketId}&region=${selectedTicketRegion}`)
+            router.push(`/payment?productId=${ticket.id}&region=${selectedTicketRegion}`)
         }
     }
 

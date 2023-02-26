@@ -4,6 +4,7 @@ import { sortBy as _sortBy } from 'lodash'
 import { useDispatch } from 'react-redux'
 import { useAppSelector } from '@/store/hooks'
 import { showAuthModal } from '@/store/reducer/auth-reducer/actions'
+import { useCreateIdaxInvoiceMutation, useGetTicketOrAssetQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
 import { useRouter } from 'next/router'
 import classNames from 'classnames'
 import moment from 'moment'
@@ -47,11 +48,15 @@ const TICKET_REGIONS = [
 function TicketSection({ ticket, priceToArdxRate }: Props) {
 
     const [selectedTicketRegion, setSelectedTicketRegion] = useState<string>()
+    const [callCreateIdaxInvoice] = useCreateIdaxInvoiceMutation()
+
+    const [selectedTicketId, setSelectedTicketId] = useState<number>()
+
+    const authSession = useAppSelector(state => state.auth.session)
 
     const [isTimezoneWarningVisible, setIsTimezoneWarningVisible] = useState(true)
 
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
-    const accountId = useAppSelector(state => state.auth.ardArt.accountId);
     const dispatch = useDispatch()
     const router = useRouter()
 
@@ -64,6 +69,9 @@ function TicketSection({ ticket, priceToArdxRate }: Props) {
             return false
         }
     })
+
+    const email = useAppSelector(state => state.auth.profile?.email)
+    const accountId = useAppSelector(state => state.auth.ardArt?.accountId)
 
     const [countDownValue, setCountDownValue] = useState<moment.Duration | undefined>(() => {
         const mFinishDate = moment(ticket.finishDate);
@@ -94,6 +102,8 @@ function TicketSection({ ticket, priceToArdxRate }: Props) {
         return () => clearInterval(intervalId)
     }, [])
 
+    const idaxAuth = useAppSelector(state => state.auth.idax)
+
     const handlePurchase = async () => {
         if (!selectedTicketRegion) {
             toast('Please select your ticket timezone', {
@@ -107,10 +117,21 @@ function TicketSection({ ticket, priceToArdxRate }: Props) {
             }))
             return;
         }
-        try {
-            router.push(`/payment?productId=${ticket.id}&region=${selectedTicketRegion}`)
-        } catch (e) {
-            console.log(e)
+        if (authSession === 'idax-wv') {
+            const r = await callCreateIdaxInvoice({
+                productId: selectedTicketId,
+                accountId: accountId,
+                email: email!,
+                type: 'single',
+                amount: 1,
+                idaxUserId: `${idaxAuth?.id}`,
+                idaxUserCode: idaxAuth?.code as string
+            }).unwrap()
+            if (r.result) {
+                window.location.href = r.result.response.url
+            }
+        } else {
+            router.push(`/payment?productId=${selectedTicketId}&region=${selectedTicketRegion}`)
         }
     }
 

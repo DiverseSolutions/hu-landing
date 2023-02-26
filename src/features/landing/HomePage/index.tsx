@@ -127,7 +127,7 @@ function HomePage({ }: Props) {
                     </div>
                 </div>
                 <div className={classNames("fixed bottom-0 left-0 right-0 z-[52] pointer-events-none transition-all duration-300", { 'opacity-0': swiperActiveIdx !== 3, 'opacity-100': swiperActiveIdx === 3 })}>
-                    <HomeFooter />
+                    <HomeFooter isVisible={swiperActiveIdx === 3} />
                 </div>
             </MobileDrawer>
         </>

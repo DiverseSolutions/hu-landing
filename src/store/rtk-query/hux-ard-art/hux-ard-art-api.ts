@@ -1,5 +1,5 @@
 import { ArdArtResponse } from './../ard-art/types';
-import { ArdArtBundleResponse, ArdArtBundleInvoiceResponse, ArdArtAssetDetailByIDResult, ArdArtTicketOrAssetResponse, ArdArtMyOwnedNftResponse, ArdArtCreateSocialpayInvoiceResult, ArdArtCreateQpayInvoiceResult, ArdArtCreateQposInvoiceResult, ArdArtGetInvoiceByIdResult, ArdArtCheckInvoiceResult, ArdArtAssetDetailEarlyResult, ArdArtCognitoUserDetailResult, ArdArtMyNftCountResult, ArdArtArdxUsdRateResult } from './types';
+import { ArdArtBundleResponse, ArdArtBundleInvoiceResponse, ArdArtAssetDetailByIDResult, ArdArtTicketOrAssetResponse, ArdArtMyOwnedNftResponse, ArdArtCreateSocialpayInvoiceResult, ArdArtCreateQpayInvoiceResult, ArdArtCreateQposInvoiceResult, ArdArtGetInvoiceByIdResult, ArdArtCheckInvoiceResult, ArdArtAssetDetailEarlyResult, ArdArtCognitoUserDetailResult, ArdArtMyNftCountResult, ArdArtArdxUsdRateResult, ArdArtIdaxInvoiceResult } from './types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { MonXanshRateResponse } from '../monxansh/types';
 
@@ -71,8 +71,8 @@ export const huxArdArtApi = createApi({
         }),
         createSocialpayInvoice: builder.mutation<ArdArtResponse<ArdArtCreateSocialpayInvoiceResult>, {
             type: 'single' | 'bundle';
-            method: 'socialpay' | 'card';
             region?: string;
+            method: 'socialpay' | 'card' | 'idax';
             productId?: number;
             bundleId?: number;
             amount: number;
@@ -86,6 +86,25 @@ export const huxArdArtApi = createApi({
                     ...d,
                     method: d.method,
                     callback: `${process.env.NEXT_PUBLIC_APP_HOST_URL}/payment-status`
+                }
+            })
+        }),
+        createIdaxInvoice: builder.mutation<ArdArtResponse<ArdArtIdaxInvoiceResult>, {
+            type: 'single' | 'bundle';
+            productId?: number;
+            bundleId?: number;
+            amount: number;
+            accountId: number;
+            email: string;
+            idaxUserId: string;
+            idaxUserCode: string;
+        }>({
+            query: (d) => ({
+                url: '/api/v1/market/invoice/create',
+                method: 'POST',
+                body: {
+                    ...d,
+                    method: 'idax',
                 }
             })
         }),
@@ -200,5 +219,6 @@ export const {
     useMyNftCountQuery,
     useLazyMyNftCountQuery,
     useArdxUsdRateQuery,
-    useLazyArdxUsdRateQuery
+    useLazyArdxUsdRateQuery,
+    useCreateIdaxInvoiceMutation,
 } = huxArdArtApi;

@@ -20,16 +20,16 @@ function HomeNavbar({ }: Props) {
     const profile = useAppSelector(state => state.auth.profile)
 
     return (
-        <div className="flex justify-center w-full h-[64px] md:h-[100px]">
-            <div className="container h-full">
-                <div className=" bg-black navbar h-full backdrop-blur-[7.5px] bg-opacity-[0.4]">
-                    <div className="navbar-start md:hidden">
+        <div className="flex justify-center w-full h-[64px] md:h-[100px] backdrop-blur-[7.5px] bg-black bg-opacity-[0.4]">
+            <div className="container w-full h-full ">
+                <div className="h-full px-0 navbar">
+                    <div className="px-0 navbar-start md:hidden">
                         <Link href="/" className="text-xl normal-case btn btn-ghost">
                             <MobileNavbarLogo />
                         </Link>
                     </div>
-                    <div className="hidden navbar-start lg:flex">
-                        <a className="text-xl normal-case btn btn-ghost">
+                    <div className="hidden pl-0 navbar-start lg:flex">
+                        <a className="px-0 text-xl normal-case btn btn-ghost">
                             <HomeNavbarTheHuSvg />
                         </a>
                         <ul className="px-1 text-base font-bold menu menu-horizontal">

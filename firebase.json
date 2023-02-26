@@ -10,6 +10,14 @@
       ],
       "rewrites": [
         {
+          "source": "/privacy-policy/en**",
+          "destination": "/privacy-policy/en.html"
+        },
+        {
+          "source": "/terms-of-service/en**",
+          "destination": "/terms-of-service/en.html"
+        },
+        {
           "source": "/spline**",
           "destination": "/spline.html"
         },
@@ -60,6 +68,22 @@
         "**/node_modules/**"
       ],
       "rewrites": [
+        {
+          "source": "/wv/idax**",
+          "destination": "/wv/idax/index.html"
+        },
+        {
+          "source": "/terms-of-service/en**",
+          "destination": "/terms-of-service/en.html"
+        },
+        {
+          "source": "/privacy-policy/en**",
+          "destination": "/privacy-policy/en.html"
+        },
+        {
+          "source": "/spline**",
+          "destination": "/spline.html"
+        },
         {
           "source": "/spline**",
           "destination": "/spline.html"
@@ -115,6 +139,14 @@
         "**/node_modules/**"
       ],
       "rewrites": [
+        {
+          "source": "/privacy-policy/en**",
+          "destination": "/privacy-policy/en.html"
+        },
+        {
+          "source": "/terms-of-service/en**",
+          "destination": "/terms-of-service/en.html"
+        },
         {
           "source": "/spline**",
           "destination": "/spline.html"

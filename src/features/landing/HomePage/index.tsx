@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import HomeNavbar from './components/HomeNavbar'
 import MobileDrawer from '@/components/drawer/MobileDrawer'
-import CopyRightSvg from '@/assets/svg/copyright.svg'
+import HomeBgImg from '@/assets/img/home-bg.png'
 import dynamic from 'next/dynamic'
 import { Swiper, SwiperSlide } from "swiper/react"
 import SwiperCore, { Pagination, Mousewheel } from "swiper"
+
+import TheHuRedResponsive from './components/TheHuRedResponsive'
 
 import MobileHeroImg from '@/assets/img/hero-mobile.png'
 
@@ -15,7 +17,6 @@ import BuyTicket from './components/BuyTicket'
 import classNames from 'classnames'
 import HomeFooter from '@/components/footer/HomeFooter'
 
-const TheHuRedResponsive = dynamic(() => import('./components/TheHuRedResponsive'), { ssr: false, })
 const ScrollToExplore = dynamic(() => import('./components/ScrollToExplore'), { ssr: false, })
 const HeroSection = dynamic(() => import('./components/HeroSection'), { ssr: false, })
 const ImagesSection = dynamic(() => import('./components/ImagesSection'), { ssr: false, })
@@ -39,6 +40,10 @@ function HomePage({ }: Props) {
                     <div className='fixed top-0 left-0 right-0 z-50'>
                         <HomeNavbar />
                     </div>
+                    {/* TODO:: background snow effect */}
+                    <div className="absolute inset-0 hidden pointer-events-none">
+                        <img src={HomeBgImg.src} className="object-cover w-full h-full mix-blend-lighten" />
+                    </div>
                     <div className='h-screen'>
                         <Swiper
                             onSwiper={(sw) => setSwiper(sw)}
@@ -48,6 +53,7 @@ function HomePage({ }: Props) {
                                 setPrevSwiperActiveIdx(swiperActiveIdx)
                                 setSwiperActiveIdx(s.activeIndex)
                             }}
+                            preventInteractionOnTransition
                             slidesPerView={1}
                             mousewheel
                             modules={[Mousewheel, Pagination]}
@@ -59,14 +65,15 @@ function HomePage({ }: Props) {
                                         <div className="container">
                                             <div className="flex flex-col w-full">
                                                 <div className="flex justify-center w-full">
-                                                    <div className="relative">
+                                                    <div className="relative w-full">
                                                         <TheHuRedResponsive />
                                                     </div>
                                                 </div>
-                                                <div className="flex justify-center w-full px-8 mt-8">
-                                                    <div className="w-full text-center md:text-right max-w-[1384px]">
-                                                        <p className='break-words text-[28px] leading-[32px] font-bold text-white hidden md:block'>BE HEARD IN EVERY NATION AND EVERY TONGUE<br />WHEREVER THE SUN RISES</p>
-                                                        <p className='text-right text-[20px] leading-[28px] font-bold text-white md:hidden'>BE HEARD IN EVERY NATION AND<br />EVERY TONGUE WHEREVER THE<br />SUN RISES</p>
+                                                <div className="flex justify-center w-full px-0 mt-4">
+                                                    <div className="w-full text-center md:text-right">
+                                                        <p className='text-xl font-bold text-white break-words md:text-2xl md:block'>IN THE METAVERSE</p>
+                                                        <p className='break-words mt-4 text-[28px] leading-[32px] font-bold text-white hidden md:block'>BE HEARD IN EVERY NATION AND EVERY TONGUE<br />WHEREVER THE SUN RISES</p>
+                                                        <p className='text-center mt-4 text-[20px] leading-[28px] font-bold text-white md:hidden'>BE HEARD IN EVERY NATION AND<br />EVERY TONGUE WHEREVER THE<br />SUN RISES</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -76,7 +83,7 @@ function HomePage({ }: Props) {
                             </SwiperSlide>
                             <SwiperSlide>
                                 <div className='pt-[64px] md:pt-[100px] h-full'>
-                                    <HeroSection showAnim={swiperActiveIdx === 1} revertAnim={swiperActiveIdx === 0 && prevSwiperActiveIdx === 1} />
+                                    <HeroSection animIndex={swiperActiveIdx} />
                                 </div>
                             </SwiperSlide>
                             <SwiperSlide>

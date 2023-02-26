@@ -1,9 +1,6 @@
 import { ArdArtAssetDetailEarlyResult } from '@/store/rtk-query/hux-ard-art/types'
 import React, { useState, useMemo, useEffect } from 'react'
 import { sortBy as _sortBy } from 'lodash'
-import HeartSvg from '@/assets/svg/heart-grey.svg'
-import ShareSvg from '@/assets/svg/share-grey.svg'
-import ZondReloadSvg from '@/assets/svg/zond-reload-grey.svg'
 import { useDispatch } from 'react-redux'
 import { useAppSelector } from '@/store/hooks'
 import { showAuthModal } from '@/store/reducer/auth-reducer/actions'
@@ -109,28 +106,29 @@ function TicketSection({ ticket, priceToArdxRate }: Props) {
         <>
             <div>
                 <div className="flex justify-center w-full pb-16 mt-4">
-                    <div className="container lg:max-w-[70vw] 2xl:max-w-[1300px] mw-md:px-4">
+                    <div className="container lg:max-w-[70vw] 2xl:max-w-[1024px] mw-md:px-4">
                         <div className="flex flex-col justify-between w-full md:flex-row">
                             <div className="md:w-[60%] mw-md:order-2 mw-md:mt-8">
                                 <div className="flex justify-center w-full">
-                                    <div className="relative flex justify-center w-full max-w-[600px]">
-                                        <img src={ticket.imageUrl} alt={ticket.name} className="object-cover w-full h-auto rounded-lg" />
-                                        <div className="absolute top-4 right-4">
-                                            <div className="rounded-xl cursor-pointer p-4 bg-white bg-opacity-[0.65]">
-                                                <ZoomInSvg />
+                                    <div className="relative flex justify-center w-full">
+                                        {/* <img src={ticket.imageUrl} alt={ticket.name} className="object-cover w-full h-auto rounded-lg" /> */}
+                                        <div className="relative w-full">
+                                            <video src="/video/ticket-v2.mp4" autoPlay loop muted className='w-full h-auto rounded-md' />
+                                            <div className="absolute top-0 left-0 right-0">
+                                                <div className="flex justify-end w-full">
+                                                    <div className="flex p-4 px-8 mt-4 mr-4 bg-white cursor-pointer rounded-xl">
+                                                        <label htmlFor='ticket-media-modal'><span className="text-base font-bold cursor-pointer">Show all photos ({ticket.medias?.length || 0})</span></label>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div className="absolute bottom-4 right-4">
-                                            <div className="flex p-4 px-8 bg-white cursor-pointer rounded-xl">
-                                                <label htmlFor='ticket-media-modal'><span className="text-base font-bold">Show all photos({ticket.medias?.length || 0})</span></label>
-                                            </div>
-                                        </div>
+
                                     </div>
                                 </div>
                                 <div className="mt-6 ml-4">
                                     <p className="text-2xl font-bold">Description</p>
                                 </div>
-                                <div className="mt-6 ml-4">
+                                <div className="mt-6 ml-4 text-black opacity-[0.65]">
                                     {ticket.description}
                                 </div>
                                 <div className="mt-6 ml-4">
@@ -144,7 +142,7 @@ function TicketSection({ ticket, priceToArdxRate }: Props) {
                                         </div>
                                         <div className="flex items-center w-full">
                                             <LocationSvg />
-                                            <p className="ml-4 text-base text-black text-opacity-[0.65]">{'Metaland'}</p>
+                                            <p className="ml-4 text-sm text-black text-opacity-[0.65]">{'Metaland'}</p>
                                         </div>
                                     </div>
                                 </div>

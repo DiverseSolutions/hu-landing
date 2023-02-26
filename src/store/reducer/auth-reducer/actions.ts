@@ -1,7 +1,10 @@
 import { createAction } from "@reduxjs/toolkit";
 
+export type AuthSessionType = 'web' | 'idax-wv' | undefined
+
 export const authSuccess = createAction<{
-    ardArt: {
+    session: AuthSessionType,
+    ardArt?: {
         accessToken: {
             value: string;
             expiresIn: number;
@@ -11,7 +14,7 @@ export const authSuccess = createAction<{
             expiresIn: number;
         };
     },
-    cognito: {
+    cognito?: {
         accessToken: {
             value: string;
             expiresIn: number;
@@ -20,6 +23,12 @@ export const authSuccess = createAction<{
             value: string;
             expiresIn: number;
         };
+    },
+    idax?: {
+        id: number;
+        code: string;
+        name: string;
+        email: string;
     },
     profile: {
         username: string;
@@ -28,7 +37,8 @@ export const authSuccess = createAction<{
 }>("AUTH_SUCCESS")
 
 export const sessionRestored = createAction<{
-    ardArt: {
+    session: AuthSessionType,
+    ardArt?: {
         accessToken: {
             value: string;
         };
@@ -36,13 +46,19 @@ export const sessionRestored = createAction<{
             value: number;
         };
     },
-    cognito: {
+    cognito?: {
         accessToken: {
             value: string;
         };
         idToken: {
             value: string;
         };
+    },
+    idax?: {
+        id: number;
+        code: string;
+        name: string;
+        email: string;
     },
     profile: {
         username: string;

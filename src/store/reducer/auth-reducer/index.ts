@@ -1,8 +1,10 @@
 import { clearAuthcookie, storeAuthCookie } from "@/lib/cookie";
 import { createSlice } from "@reduxjs/toolkit"
 import { authNotLoggedIn, authSuccess, hideAuthModal, logoutSuccess, sessionExpired, sessionRestored, showAuthModal, AuthModalType } from "./actions"
+import { AuthSessionType } from './actions'
 
 type AuthState = {
+    session: AuthSessionType;
     isLoading: boolean;
     isLoggedIn: boolean;
     authModal: AuthModalType | null;
@@ -17,10 +19,17 @@ type AuthState = {
     profile: {
         username?: string;
         email?: string;
-    }
+    },
+    idax?: {
+        id: number;
+        code: string;
+        name: string;
+        email: string;
+    },
 }
 
 const initialState: AuthState = {
+    session: undefined,
     isLoggedIn: false,
     isLoading: true,
     authModal: null,
@@ -28,7 +37,7 @@ const initialState: AuthState = {
     ardArt: {},
     profile: {
 
-    }
+    },
 }
 
 const authSlice = createSlice({
@@ -43,25 +52,45 @@ const authSlice = createSlice({
             state.isLoading = false;
         })
         builder.addCase(authSuccess, (state, { payload }) => {
+            state.session = state.session
             state.isLoggedIn = true;
             state.isLoading = false;
-            state.ardArt.accessToken = payload.ardArt.accessToken.value;
-            state.ardArt.accountId = payload.ardArt.accountId.value;
-            state.cognito.accessToken = payload.cognito.accessToken.value;
-            state.cognito.idToken = payload.cognito.idToken.value;
+            if (payload.ardArt) {
+                state.ardArt.accessToken = payload.ardArt.accessToken.value;
+                state.ardArt.accountId = payload.ardArt.accountId.value;
+            }
+            if (payload.cognito) {
+                state.cognito.accessToken = payload.cognito.accessToken.value;
+                state.cognito.idToken = payload.cognito.idToken.value;
+            }
+            if (payload.idax) {
+                state.idax = {
+                    id: payload.idax.id,
+                    email: payload.idax.email,
+                    code: payload.idax.code,
+                    name: payload.idax.name,
+                }
+            }
+            if (payload.cognito && payload.ardArt) {
+                storeAuthCookie({
+                    cognito: payload.cognito,
+                    ardArt: payload.ardArt,
+                })
+            }
             state.profile = payload.profile;
-            storeAuthCookie({
-                cognito: payload.cognito,
-                ardArt: payload.ardArt,
-            })
         })
         builder.addCase(sessionRestored, (state, { payload }) => {
+            state.session = state.session
             state.isLoggedIn = true;
             state.isLoading = false;
-            state.ardArt.accessToken = payload.ardArt.accessToken.value;
-            state.ardArt.accountId = payload.ardArt.accountId.value;
-            state.cognito.accessToken = payload.cognito.accessToken.value;
-            state.cognito.idToken = payload.cognito.idToken.value;
+            if (payload.ardArt) {
+                state.ardArt.accessToken = payload.ardArt.accessToken.value;
+                state.ardArt.accountId = payload.ardArt.accountId.value;
+            }
+            if (payload.cognito) {
+                state.cognito.accessToken = payload.cognito.accessToken.value;
+                state.cognito.idToken = payload.cognito.idToken.value;
+            }
             state.profile = payload.profile;
         })
         builder.addCase(logoutSuccess, (state, action) => {

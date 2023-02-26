@@ -4,9 +4,10 @@ import HomeSection2DragonImg from '@/assets/img/home-section2-dragon.png'
 import classNames from 'classnames'
 
 type HeroSectionProps = {
-    showAnim: boolean,
-    revertAnim: boolean,
+    animIndex: number
 }
+
+const animClasses = ['translate-y-[-80%] translate-x-[100%] scale-[1.4]', ' translate-x-0 translate-y-0 scale(1.0)', 'translate-y-[140%]']
 
 function HeroSection(props: HeroSectionProps) {
 
@@ -18,11 +19,7 @@ function HeroSection(props: HeroSectionProps) {
                 <div className="container">
                     <div className="flex flex-col w-full h-full md:items-center md:flex-row md:justify-center">
                         <div className="hidden md:flex">
-                            <img src={HomeSection2DragonImg.src} className={classNames(`object-contain transform md:h-[68vh] w-auto`,
-                                [sw <= 768 ? 'animate-heroMobile' : 'animate-hero'],
-                                { [sw <= 768 ? 'animate-heroMobile' : 'animate-hero']: props.showAnim, [sw <= 768 ? 'animate-heroMobileRevert' : 'animate-heroRevert']: props.revertAnim })} style={{
-                                    animationPlayState: props.showAnim || props.revertAnim ? 'running' : 'paused'
-                                }} />
+                            <img src={HomeSection2DragonImg.src} className={classNames(`object-contain transform md:h-[68vh] w-auto`, 'transition-all duration-500 ease-in-out ', animClasses[props.animIndex] || animClasses[animClasses.length - 1] || '')} />
                         </div>
                         <div className="flex flex-col px-8 mt-8 md:mt-0 md:ml-64 md:px-0">
                             <p className='font-bold leading-[28px] text-[24px] md:leading-[44px] md:text-[40px] text-[#982626] uppercase '>Citizens of the World</p>

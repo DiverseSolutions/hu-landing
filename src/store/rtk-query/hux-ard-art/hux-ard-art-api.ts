@@ -123,7 +123,7 @@ export const huxArdArtApi = createApi({
                 body: {
                     ...d,
                     method: 'qpay',
-                    callback: `${process.env.NEXT_PUBLIC_APP_HOST_URL}/profile`
+                    callback: `${process.env.NEXT_PUBLIC_APP_HOST_URL}/payment-status`
                 }
             })
         }),
@@ -142,7 +142,7 @@ export const huxArdArtApi = createApi({
                 body: {
                     ...d,
                     method: 'qpos',
-                    callback: `${process.env.NEXT_PUBLIC_APP_HOST_URL}/profile`
+                    callback: `${process.env.NEXT_PUBLIC_APP_HOST_URL}/payment-status`
                 }
             })
         }),

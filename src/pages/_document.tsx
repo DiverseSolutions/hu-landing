@@ -2,6 +2,8 @@ import { Html, Head, Main, NextScript } from 'next/document'
 import Script from 'next/script'
 import { GOOGLE_ANALYTICS_ID } from '@/lib/consts'
 
+const DEPLOYMENT_ENV = process.env.NEXT_PUBLIC_DEPLOYMENT_ENV || 'prod'
+
 export default function Document() {
   return (
     <Html lang="en" data-theme="the-hu">
@@ -20,8 +22,12 @@ export default function Document() {
           `}
           </Script>
         ) : (<></>)}
-        <script src="//widget.manychat.com/100771372950041.js" defer></script>
-        <script src="https://mccdn.me/assets/js/widget.js" defer></script>
+        {DEPLOYMENT_ENV !== 'prod' ? (
+          <>
+            <script src="//widget.manychat.com/100771372950041.js" defer></script>
+            <script src="https://mccdn.me/assets/js/widget.js" defer></script>
+          </>
+        ) : (<></>)}
       </body>
     </Html>
   )

@@ -10,9 +10,7 @@ type Props = {
     isVisible: boolean;
 }
 
-function HomeFooter({
-    isVisible
-}: Props) {
+function HomeFooter({ isVisible }: Props) {
     return (
         <div className="flex justify-center w-full pb-8">
             <div className="container text-white">

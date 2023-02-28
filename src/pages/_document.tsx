@@ -24,8 +24,8 @@ export default function Document() {
         ) : (<></>)}
         {DEPLOYMENT_ENV !== 'prod' ? (
           <>
-            <script src="//widget.manychat.com/100771372950041.js" defer></script>
-            <script src="https://mccdn.me/assets/js/widget.js" defer></script>
+            <script src="//widget.manychat.com/287810938508397.js"></script>
+            <script src="https://mccdn.me/assets/js/widget.js"></script>
           </>
         ) : (<></>)}
       </body>

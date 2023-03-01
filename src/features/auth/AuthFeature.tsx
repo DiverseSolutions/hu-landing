@@ -89,6 +89,9 @@ export default function AuthFeature({
                             }
                         }))
                         return
+                    } else {
+                        console.log('idax user not found')
+                        console.log(data)
                     }
                 }
             } else {

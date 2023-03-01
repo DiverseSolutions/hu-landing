@@ -28,10 +28,8 @@ export default function Document() {
             <script src="https://mccdn.me/assets/js/widget.js" defer></script>
           </>
         ) : (<></>)}
-        {DEPLOYMENT_ENV === 'prod' ? (
-          <>
-            <Script id="hu-facebook-pixel" strategy='afterInteractive' dangerouslySetInnerHTML={{
-              __html: `!function(f,b,e,v,n,t,s)
+        <Script id="hu-facebook-pixel" strategy='afterInteractive' dangerouslySetInnerHTML={{
+          __html: `!function(f,b,e,v,n,t,s)
               {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
               n.callMethod.apply(n,arguments):n.queue.push(arguments)};
               if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
@@ -41,9 +39,7 @@ export default function Document() {
               'https://connect.facebook.net/en_US/fbevents.js');
               fbq('init', '748893529928638');
               fbq('track', 'PageView');`
-            }} />
-          </>
-        ) : (<></>)}
+        }} />
       </body>
     </Html>
   )

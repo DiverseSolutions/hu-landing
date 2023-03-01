@@ -68,7 +68,7 @@ export default function AuthFeature({
         const ardArtAccessToken = Cookies.get('ardArtAccessToken');
         const ardArtAccountId = Cookies.get('ardArtAccountId');
         if (!cognitoIdToken || !cognitoAccessToken || !ardArtAccessToken || !ardArtAccountId) {
-            const idaxExToken = Cookies.get('ex_token')
+            const idaxExToken = Cookies.get('ex_token') || Cookies.get('token')
             const idaxUserCode = router.query.code as string | undefined
             if (idaxExToken && idaxUserCode) {
                 const data = await callIdaxUserInfo()

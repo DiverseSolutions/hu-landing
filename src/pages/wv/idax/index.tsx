@@ -8,11 +8,11 @@ type Props = {}
 function WebViewIdax({ }: Props) {
 
     const router = useRouter()
-    const [isLoading, setIsLoading] = useState(false)
     const [pageError, setPageError] = useState<string>()
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
     const session = useAppSelector(state => state.auth.session)
     const isAuthLoading = useAppSelector(state => state.auth.isLoading)
+    const isLoading = !pageError
 
     useEffect(() => {
         if (!router.isReady) {
@@ -27,6 +27,7 @@ function WebViewIdax({ }: Props) {
         if (!isAuthLoading && (session === 'idax-wv') && isLoggedIn) {
             router.push('/')
         }
+        console.log(session)
     }, [session, isLoggedIn, isAuthLoading, isLoading, router.isReady])
 
 
@@ -39,7 +40,7 @@ function WebViewIdax({ }: Props) {
             </div>
         )
     }
-    if (isAuthLoading) {
+    if (isLoading) {
         return (
             <div className="w-full h-screen overflow-hidden bg-black">
                 <div className="flex items-center justify-center w-full h-full">

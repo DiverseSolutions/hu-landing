@@ -52,7 +52,7 @@ const authSlice = createSlice({
             state.isLoading = false;
         })
         builder.addCase(authSuccess, (state, { payload }) => {
-            state.session = state.session
+            state.session = payload.session
             state.isLoggedIn = true;
             state.isLoading = false;
             if (payload.ardArt) {
@@ -80,7 +80,7 @@ const authSlice = createSlice({
             state.profile = payload.profile;
         })
         builder.addCase(sessionRestored, (state, { payload }) => {
-            state.session = state.session
+            state.session = payload.session
             state.isLoggedIn = true;
             state.isLoading = false;
             if (payload.ardArt) {

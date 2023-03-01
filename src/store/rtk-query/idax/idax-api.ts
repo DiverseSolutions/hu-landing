@@ -7,7 +7,7 @@ export const idaxApi = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: `${process.env.NEXT_PUBLIC_IDAX_HOST}`,
         prepareHeaders(headers, api) {
-            const exToken = Cookies.get('ex_token')
+            const exToken = Cookies.get('ex_token') || Cookies.get('token')
             if (exToken) {
                 headers.set('exchange-token', exToken)
             }

@@ -42,9 +42,6 @@ export default function Document() {
           fbq('init', '748893529928638');
           fbq('track', 'PageView');`}
             </Script>
-            <noscript><img height="1" width="1" style={{ display: 'none' }}
-              src="https://www.facebook.com/tr?id=748893529928638&ev=PageView&noscript=1"
-            /></noscript>
           </>
         ) : (<></>)}
       </body>

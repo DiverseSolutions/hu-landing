@@ -93,6 +93,7 @@ export const huxArdArtApi = createApi({
             type: 'single' | 'bundle';
             productId?: number;
             bundleId?: number;
+            region?: string;
             amount: number;
             accountId: number;
             email: string;
@@ -105,6 +106,7 @@ export const huxArdArtApi = createApi({
                 body: {
                     ...d,
                     method: 'idax',
+                    callback: `${process.env.NEXT_PUBLIC_APP_HOST_URL}/payment-status`
                 }
             })
         }),

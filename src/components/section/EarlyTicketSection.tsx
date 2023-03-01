@@ -112,12 +112,13 @@ function TicketSection({ ticket, priceToArdxRate }: Props) {
         if (authSession === 'idax-wv') {
             const r = await callCreateIdaxInvoice({
                 productId: ticket.id,
-                accountId: undefined!,
+                accountId: 1,
                 email: email!,
                 type: 'single',
+                region: selectedTicketRegion,
                 amount: 1,
                 idaxUserId: `${idaxAuth?.id}`,
-                idaxUserCode: idaxAuth?.code as string
+                idaxUserCode: idaxAuth?.code as string,
             }).unwrap()
             if (r.result) {
                 window.location.href = r.result.response.url

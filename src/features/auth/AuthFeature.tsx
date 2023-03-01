@@ -69,12 +69,13 @@ export default function AuthFeature({
         const ardArtAccountId = Cookies.get('ardArtAccountId');
         if (!cognitoIdToken || !cognitoAccessToken || !ardArtAccessToken || !ardArtAccountId) {
             const idaxExToken = Cookies.get('ex_token') || Cookies.get('token')
-            const idaxUserCode = router.query.code as string | undefined
+            const idaxUserCode = router.query.code as string | undefined || Cookies.get('idax_user_code')
             if (idaxExToken && idaxUserCode) {
                 const data = await callIdaxUserInfo()
                 if (data.data) {
                     const idaxUserInfo = data.data?.data
                     if (idaxUserInfo) {
+                        Cookies.set('idax_user_code', router.query.code as string)
                         dispatch(sessionRestored({
                             session: 'idax-wv',
                             idax: {

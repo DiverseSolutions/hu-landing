@@ -109,16 +109,10 @@ function TicketSection({ ticket, priceToArdxRate }: Props) {
             })
             return
         }
-        if (!isLoggedIn || !accountId) {
-            dispatch(showAuthModal({
-                type: 'login'
-            }))
-            return;
-        }
         if (authSession === 'idax-wv') {
             const r = await callCreateIdaxInvoice({
                 productId: ticket.id,
-                accountId: accountId,
+                accountId: undefined!,
                 email: email!,
                 type: 'single',
                 amount: 1,
@@ -129,6 +123,12 @@ function TicketSection({ ticket, priceToArdxRate }: Props) {
                 window.location.href = r.result.response.url
             }
         } else {
+            if (!isLoggedIn || !accountId) {
+                dispatch(showAuthModal({
+                    type: 'login'
+                }))
+                return;
+            }
             router.push(`/payment?productId=${ticket.id}&region=${selectedTicketRegion}`)
         }
     }

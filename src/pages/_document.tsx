@@ -30,7 +30,7 @@ export default function Document() {
         ) : (<></>)}
         {DEPLOYMENT_ENV === 'prod' ? (
           <>
-            <Script id="facebookPixel" defer strategy='afterInteractive'>
+            <Script id="hu-facebook-pixel" strategy='afterInteractive'>
               {`!function(f,b,e,v,n,t,s)
           {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
           n.callMethod.apply(n,arguments):n.queue.push(arguments)};

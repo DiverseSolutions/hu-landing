@@ -113,7 +113,7 @@ function TicketSection({ ticket, priceToArdxRate }: Props) {
             const r = await callCreateIdaxInvoice({
                 productId: ticket.id,
                 accountId: 1,
-                email: email!,
+                email: email || "test@gmail.com",
                 type: 'single',
                 region: selectedTicketRegion,
                 amount: 1,

@@ -75,7 +75,9 @@ export default function AuthFeature({
                 if (data.data) {
                     const idaxUserInfo = data.data?.data
                     if (idaxUserInfo) {
-                        Cookies.set('idax_user_code', router.query.code as string)
+                        if (router.query.code) {
+                            Cookies.set('idax_user_code', router.query.code as string)
+                        }
                         dispatch(sessionRestored({
                             session: 'idax-wv',
                             idax: {

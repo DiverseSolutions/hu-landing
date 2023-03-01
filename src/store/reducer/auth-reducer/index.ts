@@ -91,6 +91,14 @@ const authSlice = createSlice({
                 state.cognito.accessToken = payload.cognito.accessToken.value;
                 state.cognito.idToken = payload.cognito.idToken.value;
             }
+            if (payload.idax) {
+                state.idax = {
+                    id: payload.idax.id,
+                    email: payload.idax.email,
+                    code: payload.idax.code,
+                    name: payload.idax.name,
+                }
+            }
             state.profile = payload.profile;
         })
         builder.addCase(logoutSuccess, (state, action) => {

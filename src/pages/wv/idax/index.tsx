@@ -21,12 +21,10 @@ function WebViewIdax({ }: Props) {
         if (!isAuthLoading && !isLoggedIn) {
             setPageError("Session Expired. Please try reload the page.")
         }
-        if (!isAuthLoading && isLoggedIn && (session !== 'idax-wv')) {
-            setPageError("Invalid login session")
-        }
         if (!isAuthLoading && (session === 'idax-wv') && isLoggedIn) {
             router.push('/')
         }
+        setPageError("Invalid login session")
     }, [session, isLoggedIn, isAuthLoading, isLoading, router.isReady])
 
 

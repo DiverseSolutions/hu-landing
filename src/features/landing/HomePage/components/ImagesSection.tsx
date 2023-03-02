@@ -4,6 +4,7 @@ import { RiCopyrightLine } from 'react-icons/ri'
 import HomeImgSection1 from '@/assets/img/home-img-section-1.jpg'
 import HomeImgSection2 from '@/assets/img/home-img-section-2.jpg'
 import HomeImgSection3 from '@/assets/img/home-img-section-3.jpg'
+import HomeFooterImg from '@/assets/img/hu-home-footer.jpg'
 import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
 import SwiperCore, { Pagination, Mousewheel } from "swiper";
 import HomeFooterBgImg from '@/assets/img/home-footer-img-bg.png'
@@ -20,7 +21,7 @@ SwiperCore.use([Pagination])
 type Props = {}
 
 const images = [
-    HomeImgSection2.src,
+    HomeFooterImg.src,
 ]
 
 function ImagesSection({ }: Props) {

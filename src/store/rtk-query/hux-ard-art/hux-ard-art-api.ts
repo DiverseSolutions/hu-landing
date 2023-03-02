@@ -30,12 +30,16 @@ export const huxArdArtApi = createApi({
                 method: 'GET',
             })
         }),
-        getBundle: builder.query<ArdArtBundleResponse, void>({
-            query: () => ({
+        getBundle: builder.query<ArdArtBundleResponse, {
+            offset?: number;
+            limit?: number;
+        } | void>({
+            query: (d) => ({
                 url: '/api/v1/bundle/get',
                 method: 'POST',
                 body: {
-
+                    "offset": d?.offset || 0,
+                    "limit": d?.limit || 200
                 }
             })
         }),

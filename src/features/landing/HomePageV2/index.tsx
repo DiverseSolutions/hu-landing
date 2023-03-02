@@ -1,4 +1,5 @@
 import React from 'react'
+import BundlesSection from './components/BundlesSection'
 import HomeNavbarV2 from './components/HomeNavbarV2'
 
 import BgImg from './img/bg.png'
@@ -14,7 +15,7 @@ function HomePageV2({ }: Props) {
                         <HomeNavbarV2 />
                     </div>
                     <div className="absolute top-0 bottom-0 right-0">
-                        <img src={BgImg.src} className="object-cover w-[50vw] h-auto mix-blend-darken" />
+                        <img src={BgImg.src} className="object-cover w-[44vw] h-auto mix-blend-darken" />
                     </div>
                     <div className="absolute inset-0">
                         <div className="flex justify-center w-full h-full">
@@ -36,6 +37,13 @@ function HomePageV2({ }: Props) {
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div className="">
+                <div className="flex justify-center w-full">
+                    <div className="container mt-[64px] min-h-[50vh] pb-12">
+                        <BundlesSection />
                     </div>
                 </div>
             </div>

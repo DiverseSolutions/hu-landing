@@ -7,7 +7,9 @@ const DEPLOYMENT_ENV = process.env.NEXT_PUBLIC_DEPLOYMENT_ENV || 'prod'
 export default function Document() {
   return (
     <Html lang="en" data-theme="the-hu">
-      <Head />
+      <Head>
+        <meta name="facebook-domain-verification" content="g13y164djgp1qhfc91u43oxbyrcmes" />
+      </Head>
       <body>
         <Main />
         <NextScript />

@@ -37,8 +37,8 @@ function ItemsSection({ }: Props) {
                                     <>
                                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-5">
                                             {assetsData?.result?.records.map((item) => (
-                                                <div className="flex m-4 cursor-pointer">
-                                                    <ItemCard key={item.id}
+                                                <div key={item.id} className="flex m-4 cursor-pointer">
+                                                    <ItemCard
                                                         item={item}
                                                     />
                                                 </div>

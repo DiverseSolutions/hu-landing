@@ -54,8 +54,8 @@ function BundlesSection({ }: Props) {
                                 <>
                                     <div className="flex space-x-4">
                                         {bundleData.result.records.map((bundle) => (
-                                            <div className="flex cursor-pointer">
-                                                <BundleCard key={bundle.id}
+                                            <div key={bundle.id} className="flex cursor-pointer">
+                                                <BundleCard
                                                     bundle={bundle}
                                                 />
                                             </div>

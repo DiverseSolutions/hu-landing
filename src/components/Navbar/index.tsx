@@ -34,24 +34,24 @@ function Navbar({ }: Props) {
                         </Link>
                         <ul className="px-1 ml-8 text-sm font-light menu menu-horizontal">
                             <li>
-                                <a className='text-black text-base font-bold text-opacity-[0.35] hover:text-opacity-[1]' href="/" rel="noreferrer">
+                                <Link className='text-black text-base font-bold text-opacity-[0.35] hover:text-opacity-[1]' href="/" rel="noreferrer">
                                     About us
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a className='text-black text-base font-bold text-opacity-[0.35] hover:text-opacity-[1]' href="/" rel="noreferrer">
+                                <Link className='text-black text-base font-bold text-opacity-[0.35] hover:text-opacity-[1]' href="/" rel="noreferrer">
                                     ArdCoin
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a className='text-black text-base font-bold text-opacity-[0.35] hover:text-opacity-[1]' href="/" rel="noreferrer">
+                                <Link className='text-black text-base font-bold text-opacity-[0.35] hover:text-opacity-[1]' href="/" rel="noreferrer">
                                     Metaland
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a className='text-black text-base font-bold text-opacity-[0.35] hover:text-opacity-[1]' href="/" rel="noreferrer">
+                                <Link className='text-black text-base font-bold text-opacity-[0.35] hover:text-opacity-[1]' href="/" rel="noreferrer">
                                     Help Center
-                                </a>
+                                </Link>
                             </li>
                         </ul>
                     </div>

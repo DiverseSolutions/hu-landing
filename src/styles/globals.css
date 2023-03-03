@@ -48,3 +48,7 @@
         /* Firefox */
     }
 }
+
+model-viewer {
+    --progress-bar-color: red;
+}

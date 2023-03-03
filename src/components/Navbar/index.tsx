@@ -12,7 +12,7 @@ import ExitBlackSvg from '@/assets/svg/exit-black.svg'
 
 type Props = {}
 
-function HomeNavbarV2({ }: Props) {
+function Navbar({ }: Props) {
 
     const dispatch = useAppDispatch()
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
@@ -121,4 +121,4 @@ function HomeNavbarV2({ }: Props) {
     )
 }
 
-export default HomeNavbarV2
+export default Navbar

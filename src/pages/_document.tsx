@@ -42,6 +42,7 @@ export default function Document() {
                 fbq('track', 'PageView');`
           }} />
         ) : (<></>)}
+        <script async defer id="hu-model-viewer" type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.0.1/model-viewer.min.js"></script>
       </body>
     </Html>
   )

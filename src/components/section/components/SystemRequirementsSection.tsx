@@ -35,10 +35,15 @@ const systemRequirementSpecs = [
     },
 ]
 
-function SystemRequirementsSection() {
+type Props = {
+    defaultVisible?: boolean
+}
+function SystemRequirementsSection({
+    defaultVisible
+}: Props) {
 
     const [activeIndex, setActiveIndex] = useState(systemRequirementSpecs[0].name)
-    const [isRequirementsVisible, setIsRequirementsVisible] = useState(true)
+    const [isRequirementsVisible, setIsRequirementsVisible] = useState(defaultVisible === undefined ? true : defaultVisible)
     const fields = useMemo(() => {
         const spec = systemRequirementSpecs.find((spec) => spec.name === activeIndex)
         return spec?.fields || []

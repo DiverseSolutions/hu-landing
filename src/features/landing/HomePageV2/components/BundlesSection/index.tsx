@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import BundleCard from '@/components/card/BundleCard'
 import { useGetBundleQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
 import { ClipLoader } from 'react-spinners'
-import FilterTag from './components/FilterTag'
+import FilterTag from '@/components/btn/FilterTag'
 
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md'
 

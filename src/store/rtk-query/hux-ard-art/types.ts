@@ -224,12 +224,26 @@ export interface ArdArtGetInvoiceByIdResult {
     status: string;
     invoiceCode: null;
     idaxInvoiceUrl: null;
-    product: Product;
+    product?: Product;
     ardArtInvoiceId: string;
     description: string;
     successResponse: string;
     errorResponse: null;
+    bundle?: {
+        id: number;
+        name: string;
+        description: string;
+        price: number;
+        imageUrl: string;
+        coverUrl: string;
+        finishDate: string;
+        paymentToken: string;
+        depositAmount: number;
+        category: string;
+        tag: string;
+    }
 }
+
 
 export interface Product {
     id: number;

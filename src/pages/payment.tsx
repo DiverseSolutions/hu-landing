@@ -4,10 +4,10 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useState, useMemo } from 'react'
 import invoiceLeft from '@/assets/img/invoice-left.png'
 import invoiceRight from '@/assets/img/invoice-right.png'
-import { useLazyGetInvoiceByIdQuery, useLazyMonxanshRateQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
+import { useBundleDetailQuery, useLazyBundleDetailQuery, useLazyGetInvoiceByIdQuery, useLazyMonxanshRateQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
 import InvoiceFeature from '@/features/payment/InvoiceFeature'
 import { useLazyGetAssetDetailByIdQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
-import { ArdArtAssetDetailByIDResult } from '@/store/rtk-query/hux-ard-art/types'
+import { ArdArtAssetDetailByIDResult, ArdArtBundleDetailResult } from '@/store/rtk-query/hux-ard-art/types'
 import { useLazyIdaxTickerQuery } from '@/store/rtk-query/idax-openapi/idax-openapi'
 
 type Props = {}
@@ -29,9 +29,11 @@ const Payment = (props: Props) => {
     const [region, setRegion] = useState<string>()
 
     const [assetData, setAssetData] = useState<ArdArtAssetDetailByIDResult>()
+    const [bundleData, setBundleData] = useState<ArdArtBundleDetailResult>()
     const [isLoading, setIsLoading] = useState(true)
 
     const [callAssetDetailById] = useLazyGetAssetDetailByIdQuery()
+    const [callBundleDetail] = useLazyBundleDetailQuery()
 
 
     useEffect(() => {
@@ -57,10 +59,10 @@ const Payment = (props: Props) => {
         if (pageErrorMessage) {
             setIsLoading(false)
         }
-        if (accountId && !isAuthLoading && ardxToUsdRate && assetData) {
+        if (accountId && !isAuthLoading && ardxToUsdRate && (assetData || bundleData)) {
             setIsLoading(false)
         }
-    }, [accountId, isAuthLoading, pageErrorMessage, ardxToUsdRate, assetData])
+    }, [accountId, isAuthLoading, pageErrorMessage, ardxToUsdRate, assetData, bundleData])
 
     const fetchArdxToUsdRate = async () => {
         const [usdMntRate, ardxMntRate] = await Promise.all([
@@ -81,8 +83,9 @@ const Payment = (props: Props) => {
 
     const loadData = async () => {
         const productId = parseInt(router.query.productId as string);
-        if (!productId) {
-            setPageErrorMessage("Product not found.")
+        const bundleId = parseInt(router.query.bundleId as string);
+        if (!productId && !bundleId) {
+            setPageErrorMessage("Product or Bundle not found.")
             return;
         }
         const region = router.query.region as string;
@@ -100,15 +103,28 @@ const Payment = (props: Props) => {
             setPageErrorMessage("Account not found.")
             return;
         }
-        const asset = await callAssetDetailById({
-            id: productId,
-        })
-        if (asset.data?.result) {
-            setAssetData(asset.data?.result)
-        } else {
-            setPageErrorMessage("Product not found")
-            return;
+        if (productId) {
+            const asset = await callAssetDetailById({
+                id: productId,
+            })
+            if (asset.data?.result) {
+                setAssetData(asset.data?.result)
+            } else {
+                setPageErrorMessage("Product not found")
+                return;
+            }
+        } else if (bundleId) {
+            const bundle = await callBundleDetail({
+                id: bundleId,
+            })
+            if (bundle.data?.result) {
+                setBundleData(bundle.data?.result)
+            } else {
+                setPageErrorMessage("Bundle not found")
+                return;
+            }
         }
+
         const ardxToUsdRate = await fetchArdxToUsdRate()
         if (ardxToUsdRate) {
             setArdxToUsdRate(ardxToUsdRate)
@@ -173,16 +189,16 @@ const Payment = (props: Props) => {
                         </div>
                     </div>
                     <div className="absolute inset-0 overflow-y-auto">
-                        {assetData && region ? (
+                        {(assetData || bundleData) && region ? (
                             <>
                                 <div className="flex items-center justify-center w-full h-full">
                                     <div className="flex">
-                                        <InvoiceFeature region={region} product={assetData} priceToUsdRate={ardxToUsdRate} />
+                                        <InvoiceFeature isBundle={bundleData ? true : false} region={region} product={(assetData || bundleData)!} priceToUsdRate={ardxToUsdRate} />
                                     </div>
                                 </div>
                             </>
                         ) : <></>}
-                        {!assetData ? <p>Asset not found</p> : <></>}
+                        {!(assetData || bundleData) ? <p>Asset or Bundle not found</p> : <></>}
                         {!region ? <p>Region not found</p> : <></>}
                     </div>
                 </div>

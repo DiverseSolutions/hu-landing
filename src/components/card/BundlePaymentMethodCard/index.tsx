@@ -27,16 +27,16 @@ visibleMongolianBanks.push({
 })
 
 type Props = {
-    item: ArdArtAssetDetailByIDResult | ArdArtBundleDetailResult,
+    bundle: ArdArtBundleDetailResult,
     priceToUsdrate: number,
-    isBundle?: boolean;
     region: string,
 }
 
 type PaymentType = 'card' | 'socialpay' | 'ardapp' | 'socialpay' | 'mongolian-banks'
 
 
-function PaymentMethodCard({ item, priceToUsdrate, region, ...props }: Props) {
+
+function BundlePaymentMethodCard({ bundle, priceToUsdrate, region }: Props) {
 
     const accountId = useAppSelector(state => state.auth.ardArt.accountId)
     const email = useAppSelector(state => state.auth.profile?.email)
@@ -54,15 +54,15 @@ function PaymentMethodCard({ item, priceToUsdrate, region, ...props }: Props) {
         return new Intl.NumberFormat('en-US', {
             style: 'currency',
             currency: 'USD',
-        }).format(item.price)
-    }, [item.price])
+        }).format(bundle.price)
+    }, [bundle.price])
 
     const priceFormatted = useMemo(() => {
         return new Intl.NumberFormat('en-US', {
             style: 'currency',
             currency: 'USD'
-        }).format(item.price / priceToUsdrate).substring(1)
-    }, [item.price, priceToUsdrate])
+        }).format(bundle.price / priceToUsdrate).substring(1)
+    }, [bundle.price, priceToUsdrate])
 
     const executeCreateInvoice = async () => {
         if (!selected) {
@@ -82,7 +82,7 @@ function PaymentMethodCard({ item, priceToUsdrate, region, ...props }: Props) {
                 method: selected,
                 region,
                 email: email!,
-                productId: item.id,
+                productId: bundle.id,
                 amount: 1,
                 accountId,
             }).unwrap()
@@ -93,15 +93,8 @@ function PaymentMethodCard({ item, priceToUsdrate, region, ...props }: Props) {
             }
         } else if (selected === 'ardapp') {
             const r = await callCreateInvoiceQPos({
-                ...(props.isBundle ? (
-                    {
-                        type: 'bundle',
-                        bundleId: item.id,
-                    }
-                ) : ({
-                    type: 'single',
-                    productId: item.id,
-                })),
+                type: 'single',
+                productId: bundle.id,
                 email: email!,
                 region,
                 amount: 1,
@@ -125,18 +118,11 @@ function PaymentMethodCard({ item, priceToUsdrate, region, ...props }: Props) {
             }
             if (qPosBank) {
                 const r = await callCreateInvoiceQPos({
-                    ...(props.isBundle ? (
-                        {
-                            type: 'bundle',
-                            bundleId: item.id,
-                        }
-                    ) : ({
-                        type: 'single',
-                        productId: item.id,
-                    })),
+                    productId: bundle.id,
                     email: email!,
                     region,
                     accountId,
+                    type: 'single',
                     amount: 1,
                 }).unwrap()
                 if (r.result) {
@@ -145,18 +131,11 @@ function PaymentMethodCard({ item, priceToUsdrate, region, ...props }: Props) {
                 return;
             }
             const r = await callCreateInvoiceQPay({
-                ...(props.isBundle ? (
-                    {
-                        type: 'bundle',
-                        bundleId: item.id,
-                    }
-                ) : ({
-                    type: 'single',
-                    productId: item.id,
-                })),
+                productId: bundle.id,
                 accountId,
                 email: email!,
                 region,
+                type: 'single',
                 amount: 1,
             }).unwrap()
             if (r.result) {
@@ -186,10 +165,10 @@ function PaymentMethodCard({ item, priceToUsdrate, region, ...props }: Props) {
                 </div>
                 <div className="mt-4">
                     <div className="flex">
-                        <img src={item.imageUrl} alt={item.name} className="max-w-[64px] object-contain rounded-lg h-auto" />
+                        <img src={bundle.imageUrl} alt={bundle.name} className="max-w-[64px] object-contain rounded-lg h-auto" />
                         <div className="flex justify-between w-full h-full ml-2">
                             <div className="flex flex-col justify-center h-full ">
-                                <h4 className='text-[16px] max-w-[168px]'>{item.name} ({region})</h4>
+                                <h4 className='text-[16px] max-w-[168px]'>{bundle.name} ({region})</h4>
                                 <span className='text-xs text-opacity-[0.35] text-black'>Powered by ARD</span>
                             </div>
                             <div className="flex">
@@ -323,7 +302,7 @@ function PaymentMethodCard({ item, priceToUsdrate, region, ...props }: Props) {
     )
 }
 
-export default PaymentMethodCard
+export default BundlePaymentMethodCard
 
 type PaymentTypeCardProps = {
     icon: JSX.Element,

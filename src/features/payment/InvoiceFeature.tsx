@@ -1,18 +1,19 @@
 import PaymentMethodCard from '@/components/card/PaymentMethodCard'
-import { ArdArtGetInvoiceByIdResult } from '@/store/rtk-query/hux-ard-art/types'
+import { ArdArtBundleDetailResult, ArdArtGetInvoiceByIdResult } from '@/store/rtk-query/hux-ard-art/types'
 import { ArdArtAssetDetailByIDResult } from '@/store/rtk-query/hux-ard-art/types'
 import React from 'react'
 
 type Props = {
-    product: ArdArtAssetDetailByIDResult,
+    product: ArdArtAssetDetailByIDResult | ArdArtBundleDetailResult,
+    isBundle: boolean;
     region: string,
     priceToUsdRate: number,
 }
 
-function InvoiceFeature({ product, region, priceToUsdRate }: Props) {
+function InvoiceFeature({ product, region, priceToUsdRate, isBundle }: Props) {
     return (
         <div className="flex w-full h-full">
-            <PaymentMethodCard region={region} priceToUsdrate={priceToUsdRate} item={product} />
+            <PaymentMethodCard region={region} isBundle={isBundle} priceToUsdrate={priceToUsdRate} item={product} />
         </div>
     )
 }

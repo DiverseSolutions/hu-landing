@@ -38,7 +38,7 @@ function PaymentStatusCard({ invoice: invoiceData, checkInvoice, priceToUsdrate,
     const [invoice, setInvoice] = useState(invoiceData)
 
     const item = useMemo(() => {
-        return invoice.product
+        return invoice.product || invoice.bundle as any
     }, [invoice])
 
     const [checkInvoiceData, setCheckInvoiceData] = useState<ArdArtCheckInvoiceResult | undefined>(checkInvoice)

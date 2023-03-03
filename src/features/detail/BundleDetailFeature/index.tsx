@@ -73,7 +73,7 @@ function BundleDetailFeature({
                 window.location.href = r.result.response.url
             }
         } else {
-            router.push(`/payment?productId=${bundle.id}&region=${selectedRegion}`)
+            router.push(`/payment?bundleId=${bundle.id}&region=${selectedRegion}`)
         }
     }
 
@@ -92,7 +92,7 @@ function BundleDetailFeature({
                 <div className="flex justify-center w-full">
                     <div className="container mt-8">
                         <div className="flex w-full">
-                            <div className="flex flex-col w-[60%]">
+                            <div className="flex flex-col w-[65%]">
                                 <p className="font-bold text-[32px]">{bundle.name}</p>
                                 <div className="mt-6">
                                     <div className="flex items-center">
@@ -128,7 +128,7 @@ function BundleDetailFeature({
                                     </div>
                                 </div>
                             </div>
-                            <div className="w-[40%] ml-10">
+                            <div className="w-[35%] ml-10">
                                 <div className="mt-4 rounded-lg border-[1px] border-black border-opacity-[0.1] p-6">
                                     <div className='flex items-center'>
                                         <MdOutlineLocationOn size={24} opacity={0.65} />

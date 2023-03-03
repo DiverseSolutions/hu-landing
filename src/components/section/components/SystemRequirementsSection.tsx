@@ -51,11 +51,11 @@ function SystemRequirementsSection({
 
     return (
         <div>
-            <div className="flex items-center mt-6 ml-4">
+            <div className="flex items-center w-full mt-6 ml-4">
                 <p className="text-2xl font-bold">System Requirements</p>
                 <span className="ml-2"><AlertWarningSvg /></span>
             </div>
-            <div className="mt-6">
+            <div className="w-full mt-6">
                 <div className="border-2 p-6 rounded-xl border-black border-opacity-[0.2] space-y-4">
                     <div className="flex items-center justify-between w-full">
                         <div className="flex items-center">
@@ -66,7 +66,7 @@ function SystemRequirementsSection({
                             </div>
                         </div>
                         <div className="flex cursor-pointer">
-                            {isRequirementsVisible ? <MdExpandMore onClick={() => setIsRequirementsVisible(false)} size={24} /> : <MdExpandLess onClick={() => setIsRequirementsVisible(true)} size={24} />}
+                            {isRequirementsVisible ? <MdExpandLess onClick={() => setIsRequirementsVisible(false)} size={24} /> : <MdExpandMore onClick={() => setIsRequirementsVisible(true)} size={24} />}
                         </div>
                     </div>
                     {isRequirementsVisible ? (

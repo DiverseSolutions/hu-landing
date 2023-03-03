@@ -14,6 +14,10 @@
           "destination": "/privacy-policy/en.html"
         },
         {
+          "source": "detail**",
+          "destination": "detail.html"
+        },
+        {
           "source": "/terms-of-service/en**",
           "destination": "/terms-of-service/en.html"
         },
@@ -71,6 +75,10 @@
         {
           "source": "/wv/idax**",
           "destination": "/wv/idax/index.html"
+        },
+        {
+          "source": "detail**",
+          "destination": "detail.html"
         },
         {
           "source": "/terms-of-service/en**",
@@ -142,6 +150,10 @@
         {
           "source": "/privacy-policy/en**",
           "destination": "/privacy-policy/en.html"
+        },
+        {
+          "source": "detail**",
+          "destination": "detail.html"
         },
         {
           "source": "/terms-of-service/en**",

@@ -14,7 +14,7 @@ function BundleCard({ bundle }: Props) {
     return (
         <>
             <div onClick={() => {
-                router.push(`/bundle?id=${bundle.id}`)
+                router.push(`/detail?bundle=${bundle.id}`)
             }} className='card relative p-0 w-[450px] cursor-pointer'>
                 <div className="p-0 card-body">
                     <div className="w-full h-[360px] rounded-xl overflow-hidden">

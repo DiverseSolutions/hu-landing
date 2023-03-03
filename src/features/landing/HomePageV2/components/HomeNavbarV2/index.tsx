@@ -29,9 +29,9 @@ function HomeNavbarV2({ }: Props) {
                         </Link>
                     </div>
                     <div className="hidden pl-0 navbar-start lg:flex">
-                        <a className="text-xl normal-case btn btn-ghost">
+                        <Link href="/" className="text-xl normal-case btn btn-ghost">
                             <img src={TheHuImg.src} className="w-auto h-full max-h-[16px]" />
-                        </a>
+                        </Link>
                         <ul className="px-1 ml-8 text-sm font-light menu menu-horizontal">
                             <li>
                                 <a className='text-black text-base font-bold text-opacity-[0.35] hover:text-opacity-[1]' href="/" rel="noreferrer">

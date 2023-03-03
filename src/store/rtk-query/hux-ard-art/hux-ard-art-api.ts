@@ -1,5 +1,5 @@
 import { ArdArtResponse } from './../ard-art/types';
-import { ArdArtBundleResponse, ArdArtBundleInvoiceResponse, ArdArtAssetDetailByIDResult, ArdArtTicketOrAssetResponse, ArdArtMyOwnedNftResponse, ArdArtCreateSocialpayInvoiceResult, ArdArtCreateQpayInvoiceResult, ArdArtCreateQposInvoiceResult, ArdArtGetInvoiceByIdResult, ArdArtCheckInvoiceResult, ArdArtAssetDetailEarlyResult, ArdArtCognitoUserDetailResult, ArdArtMyNftCountResult, ArdArtArdxUsdRateResult, ArdArtIdaxInvoiceResult } from './types';
+import { ArdArtBundleResponse, ArdArtBundleInvoiceResponse, ArdArtAssetDetailByIDResult, ArdArtTicketOrAssetResponse, ArdArtMyOwnedNftResponse, ArdArtCreateSocialpayInvoiceResult, ArdArtCreateQpayInvoiceResult, ArdArtCreateQposInvoiceResult, ArdArtGetInvoiceByIdResult, ArdArtCheckInvoiceResult, ArdArtAssetDetailEarlyResult, ArdArtCognitoUserDetailResult, ArdArtMyNftCountResult, ArdArtArdxUsdRateResult, ArdArtIdaxInvoiceResult, ArdArtBundleDetailResult, ArdArtAssetDetailResult } from './types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { MonXanshRateResponse } from '../monxansh/types';
 
@@ -164,6 +164,22 @@ export const huxArdArtApi = createApi({
                 method: 'GET',
             })
         }),
+        bundleDetail: builder.query<ArdArtResponse<ArdArtBundleDetailResult>, {
+            id: number
+        }>({
+            query: (d) => ({
+                url: `/api/v1/bundle/detail/${d.id}`,
+                method: 'GET',
+            })
+        }),
+        assetDetail: builder.query<ArdArtResponse<ArdArtAssetDetailResult>, {
+            id: number
+        }>({
+            query: (d) => ({
+                url: `/api/v1/asset/detail/${d.id}`,
+                method: 'GET',
+            })
+        }),
         cognitoUser: builder.query<ArdArtResponse<ArdArtCognitoUserDetailResult>, {
             email: string;
         }>({
@@ -225,4 +241,8 @@ export const {
     useArdxUsdRateQuery,
     useLazyArdxUsdRateQuery,
     useCreateIdaxInvoiceMutation,
+    useBundleDetailQuery,
+    useLazyBundleDetailQuery,
+    useAssetDetailQuery,
+    useLazyAssetDetailQuery
 } = huxArdArtApi;

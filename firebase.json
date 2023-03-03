@@ -15,7 +15,7 @@
         },
         {
           "source": "detail**",
-          "destination": "detail.html"
+          "destination": "/detail.html"
         },
         {
           "source": "/terms-of-service/en**",
@@ -78,7 +78,7 @@
         },
         {
           "source": "detail**",
-          "destination": "detail.html"
+          "destination": "/detail.html"
         },
         {
           "source": "/terms-of-service/en**",
@@ -153,7 +153,7 @@
         },
         {
           "source": "detail**",
-          "destination": "detail.html"
+          "destination": "/detail.html"
         },
         {
           "source": "/terms-of-service/en**",

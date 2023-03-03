@@ -1,13 +1,13 @@
 import { formatPrice } from '@/lib/utils';
-import { ArdArtBundleRecord } from '@/store/rtk-query/hux-ard-art/types';
+import { ArdArtBundleRecord, ArdArtTicketOrAssetRecord } from '@/store/rtk-query/hux-ard-art/types';
 import { useRouter } from 'next/router';
 import React from 'react'
 
 type Props = {
-    bundle: ArdArtBundleRecord
+    item: ArdArtTicketOrAssetRecord
 }
 
-function BundleCard({ bundle }: Props) {
+function ItemCard({ item: bundle }: Props) {
 
     const router = useRouter()
 
@@ -15,17 +15,17 @@ function BundleCard({ bundle }: Props) {
         <>
             <div onClick={() => {
                 router.push(`/bundle?id=${bundle.id}`)
-            }} className='card relative p-0 w-[450px] cursor-pointer'>
+            }} className='relative w-full p-0 cursor-pointer card'>
                 <div className="p-0 card-body">
-                    <div className="w-full h-[360px] rounded-xl overflow-hidden">
-                        <img src={bundle.imageUrl} className="object-cover transform hover:scale-[1.1] transition-all duration-200 w-full h-full" />
+                    <div className="w-full h-[350px] rounded-xl overflow-hidden">
+                        <img src={bundle.imageUrl} className="object-cover transform transition-all duration-200 hover:scale-[1.1] w-full h-full" />
                     </div>
                     <div className="mt-2">
-                        <p className="text-sm text-black text-opacity-[0.65] font-light">Powered by ARD & Metaforce</p>
-                        <p className="text-xl font-bold text-black text-opacity-[0.93]">
+                        <p className="text-sm font-light text-black text-opacity-[0.65]">Powered by ARD & Metaforce</p>
+                        <p className="text-base font-light text-black text-opacity-[0.93]">
                             {bundle.name}
                         </p>
-                        <div className="flex items-center justify-start mt-2">
+                        <div className="flex items-center mt-2">
                             <span className="text-xl font-bold text-black text-opacity-[0.93]">
                                 ${formatPrice(bundle.price)}
                             </span>
@@ -45,4 +45,4 @@ function BundleCard({ bundle }: Props) {
     )
 }
 
-export default BundleCard
+export default ItemCard

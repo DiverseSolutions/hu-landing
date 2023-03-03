@@ -6,6 +6,7 @@ import HomeCartWhiteSvg from '@/assets/svg/home-cart-white.svg'
 import { BiMenuAltRight } from 'react-icons/bi'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { logoutSuccess, showAuthModal } from '@/store/reducer/auth-reducer/actions'
+import HeartSvg from './img/heart.svg'
 import ChevronDownSvg from '@/assets/svg/chevron-down.svg'
 import ExitBlackSvg from '@/assets/svg/exit-black.svg'
 
@@ -19,7 +20,7 @@ function HomeNavbarV2({ }: Props) {
     const profile = useAppSelector(state => state.auth.profile)
 
     return (
-        <div className="flex justify-center w-full h-[64px] md:h-[100px] backdrop-blur-[7.5px] bg-white bg-opacity-[0.01] isolate">
+        <div className="flex justify-center w-full h-[64px] md:h-[93px] bg-white bg-opacity-[0.93]">
             <div className="container w-full h-full ">
                 <div className="h-full px-0 navbar">
                     <div className="px-0 navbar-start md:hidden">
@@ -31,27 +32,25 @@ function HomeNavbarV2({ }: Props) {
                         <a className="text-xl normal-case btn btn-ghost">
                             <img src={TheHuImg.src} className="w-auto h-full max-h-[16px]" />
                         </a>
-                    </div>
-                    <div className="hidden pl-0 uppercase navbar-center lg:flex">
-                        <ul className="px-1 text-sm font-light menu menu-horizontal">
+                        <ul className="px-1 ml-8 text-sm font-light menu menu-horizontal">
                             <li>
-                                <a className='text-white text-opacity-[0.35] hover:text-opacity-[1]' href="/" rel="noreferrer">
-                                    Home
+                                <a className='text-black text-base font-bold text-opacity-[0.35] hover:text-opacity-[1]' href="/" rel="noreferrer">
+                                    About us
                                 </a>
                             </li>
                             <li>
-                                <a className='text-white text-opacity-[0.35] hover:text-opacity-[1]' href="/" target="_blank" rel="noreferrer">
-                                    About the hu
-                                </a>
-                            </li>
-                            <li>
-                                <a className='text-white text-opacity-[0.35] hover:text-opacity-[1]' href="https://ardcoin.com" target="_blank" rel="noreferrer">
+                                <a className='text-black text-base font-bold text-opacity-[0.35] hover:text-opacity-[1]' href="/" rel="noreferrer">
                                     ArdCoin
                                 </a>
                             </li>
                             <li>
-                                <a className='text-white text-opacity-[0.35] hover:text-opacity-[1]' href="https://metaland.mn/en" target="_blank" rel="noreferrer">
+                                <a className='text-black text-base font-bold text-opacity-[0.35] hover:text-opacity-[1]' href="/" rel="noreferrer">
                                     Metaland
+                                </a>
+                            </li>
+                            <li>
+                                <a className='text-black text-base font-bold text-opacity-[0.35] hover:text-opacity-[1]' href="/" rel="noreferrer">
+                                    Help Center
                                 </a>
                             </li>
                         </ul>
@@ -95,18 +94,18 @@ function HomeNavbarV2({ }: Props) {
                                     dispatch(showAuthModal({
                                         type: 'login'
                                     }))
-                                }} className="px-5 py-[14px] text-sm text-opacity-[0.93] bg-opacity-[0.93] hover:bg-opacity-1 text-black bg-white cursor-pointer rounded-xl">
+                                }} className="px-5 py-[14px] btn text-white btn-black text-sm text-opacity-[0.93] rounded-xl">
                                     Login
                                 </button>
                                 <button onClick={() => {
                                     dispatch(showAuthModal({
                                         type: 'register'
                                     }))
-                                }} className="px-5 py-[14px] text-sm text-opacity-[0.93] bg-opacity-[0.04] text-white bg-black cursor-pointer rounded-xl">
-                                    Register
+                                }} className="px-5 py-[14px] text-sm text-opacity-[0.93] font-bold bg-opacity-[0.04] text-black bg-black cursor-pointer rounded-xl">
+                                    Signup
                                 </button>
-                                <div className='flex cursor-pointer'>
-                                    <HomeCartWhiteSvg />
+                                <div className='flex cursor-pointer justify-center items-center bg-black bg-opacity-[0.04] rounded-lg w-12 h-12'>
+                                    <HeartSvg />
                                 </div>
                             </div>
                         )}

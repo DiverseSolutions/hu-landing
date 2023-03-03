@@ -15,11 +15,11 @@ export const huxArdArtApi = createApi({
             category?: number,
             minPrice?: number,
             maxPrice?: number
-        }>({
+        } | void>({
             query: (d) => ({
                 url: '/api/v1/asset/get',
                 method: 'POST',
-                body: d
+                body: d || {}
             })
         }),
         getAssetDetailById: builder.query<ArdArtResponse<ArdArtAssetDetailByIDResult>, {

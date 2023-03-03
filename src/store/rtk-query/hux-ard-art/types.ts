@@ -51,6 +51,7 @@ export interface ArdArtBundleResult {
 
 export interface ArdArtBundleRecord {
     id: number;
+    tag: string;
     name: string;
     description: string;
     price: number;

@@ -33,7 +33,7 @@ function Layout({ children }: Props) {
             <MobileDrawer>
                 <div>
                     {isLayoutVisible ? <Navbar /> : <></>}
-                    <div className='mt-[72px] md:mt-[104px]'>
+                    <div className='mt-[72px] md:mt-[104px] min-h-[50vh]'>
                         {children}
                     </div>
                     {isLayoutVisible ? <Footer /> : <></>}

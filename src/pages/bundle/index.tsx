@@ -7,6 +7,7 @@ import { pageError } from '@/store/reducer/error-reducer/actions'
 import { useAssetDetailQuery, useBundleDetailQuery, useUsdToArdxRateQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
 import { useRouter } from 'next/router'
 import React, { useState, useEffect, useMemo } from 'react'
+import { MdChevronLeft } from 'react-icons/md'
 import { ClipLoader } from 'react-spinners'
 
 type Props = {}
@@ -61,10 +62,7 @@ function DetailPage({ }: Props) {
             </>
         )
     }
-    return (
-        <>
-        </>
-    )
+    return <></>
 }
 
 export default DetailPage

@@ -20,8 +20,10 @@ function ItemCard({ item }: Props) {
                 router.push(`/product?id=${item.id}`)
             }} className='relative w-full p-0 cursor-pointer card'>
                 <div className="p-0 card-body">
-                    <div className="w-full h-[350px] rounded-xl overflow-hidden">
+                    <div className="w-full relative h-[350px] rounded-xl overflow-hidden">
                         <img src={item.imageUrl} className="object-cover transform transition-all duration-200 hover:scale-[1.1] w-full h-full" />
+                        <div className="absolute top-4 left-4">
+                        </div>
                     </div>
                     <div className="mt-2">
                         <p className="text-sm font-light text-black text-opacity-[0.65]">Powered by ARD & Metaforce</p>

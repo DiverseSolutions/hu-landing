@@ -52,6 +52,7 @@ export interface ArdArtBundleResult {
 export interface ArdArtBundleRecord {
     id: number;
     tag: string;
+    category: string;
     name: string;
     description: string;
     price: number;
@@ -97,13 +98,13 @@ export type ArdArtTicketOrAssetRecord = {
     isActive: boolean;
     isOutOfStock: boolean;
     name: string;
-    type: string;
+    type: 'asset' | 'ticket';
     description: string;
     assetId: number;
     link: string;
     imageUrl: string;
     objectUrl: string;
-    category: number;
+    category: string;
     ownerAmount: null;
     price: number;
     finishDate: string;

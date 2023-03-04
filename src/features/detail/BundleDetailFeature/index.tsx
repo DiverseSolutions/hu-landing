@@ -1,6 +1,5 @@
 import FilterTag from '@/components/btn/FilterTag'
 import BundleItemCard from '@/components/card/BundleItemCard'
-import ItemCard from '@/components/card/ItemCard'
 import { formatPrice } from '@/lib/utils'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { showAuthModal } from '@/store/reducer/auth-reducer/actions'
@@ -12,13 +11,14 @@ import React, { useState, useMemo } from 'react'
 import { toast } from 'react-toastify'
 import { MdClose, MdOutlineLocationOn } from 'react-icons/md'
 
-import SystemRequirements from './components/SystemRequirements'
 import { TICKET_REGIONS } from '@/lib/consts'
 import classNames from 'classnames'
 import dynamic from 'next/dynamic'
 import { ClipLoader } from 'react-spinners'
 import SystemRequirementsSection from '@/components/section/components/SystemRequirementsSection'
 import SystemRequirementsDropdown from '@/components/common/SystemRequirementsDropdown'
+import { IoExpand, IoResize } from 'react-icons/io5'
+import ModelModal from './components/ModelModal'
 
 type Props = {
     bundle: ArdArtBundleDetailResult
@@ -32,6 +32,7 @@ function BundleDetailFeature({
     bundle
 }: Props) {
 
+    const [isModelExpanded, setIsModelExpanded] = useState(false)
     const router = useRouter()
     const [selectedRegion, setSelectedRegion] = useState<string>()
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
@@ -84,11 +85,16 @@ function BundleDetailFeature({
         <>
             <div>
                 {isGlb ? (
-                    <div className="flex justify-center w-full h-[400px]">
+                    <div className="flex relative justify-center w-full h-[400px]">
                         <div dangerouslySetInnerHTML={{
                             __html: `<model-viewer loading="eager" style="height: 400px; width: 50vw;" poster="${bundle.imageUrl}" src="${bundle.coverUrl}" ar crossorigin="anonymous" camera-controls touch-action="pan-y"></model-viewer>`
                         }}>
 
+                        </div>
+                        <div onClick={() => {
+                            setIsModelExpanded(true)
+                        }} className="absolute cursor-pointer top-0 right-[35%]">
+                            <IoExpand size={48} />
                         </div>
                     </div>
                 ) : (<img src={bundle.coverUrl} className="object-cover rounded-xl w-full h-[400px]" />)}
@@ -193,6 +199,9 @@ function BundleDetailFeature({
                     </div>
                 </div>
             </div>
+            {isGlb ? (
+                <ModelModal modelUrl={bundle.coverUrl} imageUrl={bundle.imageUrl} isOpen={isModelExpanded} onClose={() => setIsModelExpanded(false)} />
+            ) : (<></>)}
         </>
     )
 }

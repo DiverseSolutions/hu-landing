@@ -8,6 +8,39 @@ export const ERROR_CURRENCY = 'Currency error. Please try reload the page'
 
 export const APP_HOST_URL = process.env.NEXT_PUBLIC_APP_HOST_URL as string
 
+export const BUNDLE_CATEGORY = [{
+    slug: 'legendary',
+    name: 'Legendary'
+}, {
+    slug: 'epic',
+    name: 'Epic'
+}, {
+    slug: 'rare',
+    name: 'Rare'
+}, {
+    slug: 'common',
+    name: 'Common',
+}]
+
+export const ASSET_CATEGORY = [{
+    slug: 'ticket',
+    name: 'Ticket'
+}, {
+    slug: 'persona',
+    name: 'Persona'
+}, {
+    slug: 'emote',
+    name: 'Emote'
+}, {
+    slug: 'weapon',
+    name: 'Weapon',
+},
+{
+    slug: 'mount',
+    name: 'Mount',
+}
+]
+
 export const TICKET_REGIONS = [
     {
         region: 'ASIA',

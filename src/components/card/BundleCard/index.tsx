@@ -17,13 +17,21 @@ function BundleCard({ bundle }: Props) {
     return (
         <>
             <div onClick={() => {
-                router.push(`/bundle?id=${bundle.id}`, undefined, {
-                    scroll: true
-                })
-            }} className='card relative p-0 w-[450px] cursor-pointer'>
+                router.push(`/bundle?id=${bundle.id}`)
+            }} className='relative w-full p-0 cursor-pointer card'>
                 <div className="p-0 card-body">
-                    <div className="w-full h-[360px] rounded-xl overflow-hidden">
+                    <div className="w-full relative h-[360px] rounded-xl overflow-hidden">
                         <img src={bundle.imageUrl} className="object-cover transform hover:scale-[1.1] transition-all duration-200 w-full h-full" />
+                        <div className="absolute top-4 left-4">
+                            <div className="flex capitalize items-center px-2 py-1 text-xs rounded-xl bg-[#ff00a8] text-white font-bold">
+                                {bundle.category}
+                            </div>
+                        </div>
+                        <div className="absolute bottom-4 left-4">
+                            <div className="flex capitalize items-center px-2 py-1 text-xs rounded-xl bg-[#D63333] text-white font-bold">
+                                Bonus ARDX{formatPrice(bundle.depositAmount)}
+                            </div>
+                        </div>
                     </div>
                     <div className="mt-2">
                         <p className="text-sm text-black text-opacity-[0.65] font-light">Powered by ARD & Metaforce</p>
@@ -40,11 +48,6 @@ function BundleCard({ bundle }: Props) {
                                 </span>
                             ) : (<ClipLoader size={12} />)}
                         </div>
-                    </div>
-                </div>
-                <div className="absolute top-4 left-4">
-                    <div className="flex capitalize items-center px-2 py-1 text-xs rounded-xl bg-[#ff00a8] text-white font-bold">
-                        {bundle.tag}
                     </div>
                 </div>
             </div>

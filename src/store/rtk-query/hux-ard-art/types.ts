@@ -138,7 +138,8 @@ export interface ArdArtMyOwnedNftRecord {
     link: string;
     imageUrl: string;
     objectUrl: string;
-    category: number;
+    category: string;
+    tag: string;
     ownerAmount: number;
     price: number;
 }
@@ -160,7 +161,8 @@ export interface ArdArtAssetDetailByIDResult {
     link: string;
     imageUrl: string;
     objectUrl: string;
-    category: number;
+    category: string;
+    tag: string;
     finishDate: string;
     medias: any[];
     price: number;

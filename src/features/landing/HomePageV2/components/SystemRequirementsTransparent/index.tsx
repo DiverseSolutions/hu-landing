@@ -7,7 +7,7 @@ type Props = {}
 
 function SystemRequirementsTransparent({ }: Props) {
     return (
-        <div tabIndex={0} className="flex dropdown dropdown-hover dropdown-top dropdown-end rounded-xl py-[14px] cursor-pointer px-6 items-center space-x-4 bg-white bg-opacity-[0.04]">
+        <div tabIndex={0} className="flex dropdown dropdown-hover dropdown-top md:dropdown-end rounded-xl py-[14px] cursor-pointer px-6 items-center space-x-4 bg-white bg-opacity-[0.04]">
             <SysReqInfoSvg />
             <p className="font-bold text-white">System Requirements</p>
             <SysReqChevron />

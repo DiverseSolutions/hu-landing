@@ -32,7 +32,7 @@ function ItemsSection({ }: Props) {
     return (
         <>
             <div className='flex flex-col items-center w-full'>
-                <div className="container">
+                <div className="container px-2 md:px-0">
                     <p className="font-bold text-[32px]">
                         The Hu in the metaverse collection
                     </p>
@@ -42,7 +42,7 @@ function ItemsSection({ }: Props) {
                 </div>
                 <div className="relative w-screen">
                     <div className="flex flex-wrap justify-center max-w-full mt-8">
-                        <div className="container overflow-x-visible">
+                        <div className="container px-2 overflow-x-visible md:px-0">
                             {isAssetLoading ? (<ClipLoader />) : (<></>)}
                             <div className="w-full">
                                 {!isAssetLoading && visibleItems?.length ? (

@@ -60,7 +60,7 @@ function HomePageV2({ }: Props) {
                     </div>
                 </div>
                 <div id="bundle-section" className="pb-12">
-                    <div className="flex justify-center w-full">
+                    <div className="flex justify-center w-full px-4">
                         <div className="mt-[64px] min-h-[50vh]">
                             <BundlesSection />
                         </div>

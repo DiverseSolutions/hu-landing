@@ -14,7 +14,7 @@ function CategorySelectList({ onChanged, activeValues, defaultValues }: Props) {
     const [activeList, setActiveList] = useState<CategoryItemType[]>([])
 
     return (
-        <div className="flex space-x-4">
+        <div className="flex flex-wrap space-x-4 space-y-4 md:space-y-0 md:flex-nowrap">
             {defaultValues.map((c) => {
                 const isActive = activeValues.find((a) => a.id === c.id) ? true : false
                 return <button key={c.id}

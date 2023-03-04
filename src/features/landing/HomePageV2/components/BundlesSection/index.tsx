@@ -35,12 +35,12 @@ function BundlesSection({ }: Props) {
     return (
         <>
             <div className='flex flex-col items-center w-full'>
-                <div className="container">
+                <div className="container px-2 md:px-0">
                     <p className="font-bold text-[32px]">
                         Bundles
                     </p>
                     <div className="mt-8">
-                        <div className="flex justify-between w-full">
+                        <div className="flex flex-col justify-between w-full space-y-4 md:space-y-0 md:flex-row">
                             <div className="flex space-x-4">
                                 <CategorySelectList defaultValues={bundleCategories} activeValues={activeCategory} onChanged={setActiveCategory} />
                             </div>
@@ -64,7 +64,7 @@ function BundlesSection({ }: Props) {
                 </div>
                 <div className="relative w-screen">
                     <div className="flex justify-center mt-8 overflow-auto no-scrollbar">
-                        <div className="container overflow-x-visible">
+                        <div className="container px-2 overflow-x-visible md:px-0">
                             {isBundleLoading ? (<ClipLoader />) : (<></>)}
                             {!isBundleLoading && visibleBundles?.length ? (
                                 <>

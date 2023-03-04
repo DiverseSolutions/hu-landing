@@ -186,13 +186,13 @@ const ProfileFeature = ({ }: Props) => {
                             </div>
                             <div className="mt-8">
                                 <div className="p-8 rounded-xl w-ful bg-[#3e3bde] bg-opacity-[0.08]">
-                                    <div className="flex justify-between w-full">
+                                    <div className="flex flex-col justify-between w-full space-y-4 md:space-y-0 md:flex-row">
                                         <div className="flex flex-col max-w-[450px]">
                                             <p className="text-lg font-bold">The Hu in the Metaverse</p>
                                             <p className='text-base mt-4 text-black opacity-[0.65]'>Be a part of history and join the legendary band HU for their first-ever virtual concert in the Metaverse!</p>
                                         </div>
                                         <div className="flex flex-col">
-                                            <div className='w-[450px] py-[14px] bg-black rounded-xl font-bold text-white text-center cursor-pointer dropdown dropdown-top dropdown-hover' tabIndex={0}>
+                                            <div className='md:w-[450px] py-[14px] bg-black rounded-xl font-bold text-white text-center cursor-pointer dropdown dropdown-top dropdown-hover' tabIndex={0}>
                                                 Download
                                             </div>
                                             <div tabIndex={0} className="mt-4 z-50 dropdown dropdown-hover dropdown-bottom cursor-pointer items-center flex w-full justify-center py-[14px] bg-white bg-opacity-[0.4] backdrop-blur-[7.5px] rounded-xl">

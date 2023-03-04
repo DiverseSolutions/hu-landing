@@ -11,7 +11,7 @@ import React, { useState, useMemo } from 'react'
 import { toast } from 'react-toastify'
 import { MdClose, MdOutlineLocationOn } from 'react-icons/md'
 
-import { TICKET_REGIONS } from '@/lib/consts'
+import { ASSET_CATEGORY, TICKET_REGIONS } from '@/lib/consts'
 import classNames from 'classnames'
 import dynamic from 'next/dynamic'
 import { ClipLoader } from 'react-spinners'
@@ -19,19 +19,23 @@ import SystemRequirementsSection from '@/components/section/components/SystemReq
 import SystemRequirementsDropdown from '@/components/common/SystemRequirementsDropdown'
 import { IoExpand, IoResize } from 'react-icons/io5'
 import ModelModal from './components/ModelModal'
+import CategorySelectList from '@/components/common/CategorySelectList'
+import { CategoryItemType } from '@/components/common/CategorySelectList/types'
 
 type Props = {
     bundle: ArdArtBundleDetailResult
 }
 
-const ModelViewer = `model-viewer` as keyof JSX.IntrinsicElements
-
-const TAGS = ['Legendary', 'Epic', 'Rare', 'Common']
+const categoryList = ASSET_CATEGORY.map((a) => ({
+    id: a.slug,
+    name: a.name
+}))
 
 function BundleDetailFeature({
     bundle
 }: Props) {
 
+    const [activeCategory, setActiveCategory] = useState<CategoryItemType[]>([])
     const [isModelExpanded, setIsModelExpanded] = useState(false)
     const router = useRouter()
     const [selectedRegion, setSelectedRegion] = useState<string>()
@@ -49,6 +53,13 @@ function BundleDetailFeature({
     const isGlb = useMemo(() => {
         return bundle.coverUrl.endsWith('.glb')
     }, [bundle.coverUrl])
+
+    const visibleItems = useMemo(() => {
+        if (!activeCategory?.length) {
+            return bundle.items
+        }
+        return bundle.items.filter((i) => activeCategory.find((a) => a.id === i.product.category))
+    }, [bundle.items, activeCategory])
 
     const handlePurchase = async () => {
         if (!selectedRegion) {
@@ -99,9 +110,9 @@ function BundleDetailFeature({
                     </div>
                 ) : (<img src={bundle.coverUrl} className="object-cover rounded-xl w-full h-[400px]" />)}
                 <div className="flex justify-center w-full">
-                    <div className="container mt-8">
-                        <div className="flex w-full">
-                            <div className="flex flex-col w-[65%]">
+                    <div className="container px-2 mt-8 md:px-0">
+                        <div className="flex flex-col w-full md:flex-row">
+                            <div className="flex flex-col md:w-[65%] w-full">
                                 <p className="font-bold text-[32px]">{bundle.name}</p>
                                 <div className="mt-6">
                                     <div className="flex items-center">
@@ -117,12 +128,12 @@ function BundleDetailFeature({
                                     <div className="mt-8">
                                         <div className="flex">
                                             <div className="flex bg-black bg-opacity-[0.04] rounded-lg">
-                                                <div className="flex flex-col items-center px-4 py-2">
+                                                <div className="flex flex-col items-center justify-center px-4 py-2">
                                                     <p className='text-2xl font-bold'>{bundle.items?.length}</p>
                                                     <p className="font-normal text-black text-opacity-[0.65]">Items</p>
                                                 </div>
                                             </div>
-                                            <div className="flex ml-2 bg-black bg-opacity-[0.04] rounded-lg px-4 py-2 pr-[120px]">
+                                            <div className="flex ml-2 bg-black bg-opacity-[0.04] rounded-lg px-4 py-2 md:pr-[120px]">
                                                 <div className="flex flex-col">
                                                     <div className="flex">
                                                         <span className="text-2xl font-bold">$ {formatPrice(bundle.price)}</span>
@@ -139,7 +150,7 @@ function BundleDetailFeature({
                                     </div>
                                 </div>
                             </div>
-                            <div className="w-[35%] ml-10">
+                            <div className="md:w-[35%] w-full md:ml-10">
                                 <div className="mt-4 rounded-lg border-[1px] border-black border-opacity-[0.1] p-6">
                                     <div className='flex items-center'>
                                         <MdOutlineLocationOn size={24} opacity={0.65} />
@@ -183,18 +194,16 @@ function BundleDetailFeature({
                     </div>
                 </div>
                 <div className="flex justify-center w-full mt-[120px]">
-                    <div className="container">
-                        <div className="flex space-x-2">
-                            {TAGS.map((tag) => <FilterTag key={tag} name={tag} />)}
-                        </div>
+                    <div className="container px-2 md:px-0">
+                        <CategorySelectList defaultValues={categoryList} activeValues={activeCategory} onChanged={setActiveCategory} />
                         <div className="mt-6">
-                            {bundle.items?.length ? (
-                                <div className="grid grid-cols-1 gap-x-2 md:grid-cols-2 xl:grid-cols-5">
-                                    {bundle.items.map((item) => (
+                            {visibleItems?.length ? (
+                                <div className="grid grid-cols-1 gap-x-2 gap-y-6 md:grid-cols-2 xl:grid-cols-5">
+                                    {visibleItems.map((item) => (
                                         <BundleItemCard key={item.id} item={item} />
                                     ))}
                                 </div>
-                            ) : (<div className='w-full'>Bundle has no items.</div>)}
+                            ) : (<></>)}
                         </div>
                     </div>
                 </div>

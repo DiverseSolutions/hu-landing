@@ -9,6 +9,7 @@ import InvoiceFeature from '@/features/payment/InvoiceFeature'
 import { useLazyGetAssetDetailByIdQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
 import { ArdArtAssetDetailByIDResult, ArdArtBundleDetailResult } from '@/store/rtk-query/hux-ard-art/types'
 import { useLazyIdaxTickerQuery } from '@/store/rtk-query/idax-openapi/idax-openapi'
+import BehindNavbar from '@/components/layout/BehindNavbar'
 
 type Props = {}
 
@@ -160,49 +161,51 @@ const Payment = (props: Props) => {
     }
     return (
         <>
-            <div className="w-full h-screen overflow-y-auto">
-                <div className="relative w-full h-full">
-                    <div className="absolute inset-0 hidden overflow-auto md:block">
-                        <div className="relative w-full h-full">
-                            <div className="w-[512px] h-[120vh] relative">
-                                <img src={invoiceLeft.src} className="object-cover w-auto h-full mix-blend-darken" />
+            <BehindNavbar>
+                <div className="w-full h-screen overflow-y-auto">
+                    <div className="relative w-full h-full">
+                        <div className="absolute inset-0 hidden overflow-auto md:block">
+                            <div className="relative w-full h-full">
+                                <div className="w-[512px] h-[120vh] relative">
+                                    <img src={invoiceLeft.src} className="object-cover w-auto h-full mix-blend-darken" />
+                                </div>
+                            </div>
+                            <div className="absolute inset-0 transform rounded-full aspect-square">
+                                <div className="h-[120vh] transform translate-x-[-50%] rounded-full aspect-square" style={{
+                                    background: 'radial-gradient(50% 50% at 50% 50%, rgba(255, 255, 255, 0) 20.23%, #FFFFFF 80.12%)',
+                                }}>
+
+                                </div>
                             </div>
                         </div>
-                        <div className="absolute inset-0 transform rounded-full aspect-square">
-                            <div className="h-[120vh] transform translate-x-[-50%] rounded-full aspect-square" style={{
-                                background: 'radial-gradient(50% 50% at 50% 50%, rgba(255, 255, 255, 0) 20.23%, #FFFFFF 80.12%)',
-                            }}>
+                        <div className="absolute inset-0 hidden md:block">
+                            <div className="relative w-full h-full ">
+                                <div className="absolute top-0 bottom-0 right-0">
+                                    <div className="min-w-[33vw] h-full relative flex justify-end">
+                                        <img src={invoiceRight.src} className="object-cover w-full h-auto mix-blend-darken" />
+                                        <div className="absolute inset-0" style={{ background: 'radial-gradient(50% 50% at 50% 50%, rgba(255, 255, 255, 0) 48.23%, #FFFFFF 150%)' }}>
 
-                            </div>
-                        </div>
-                    </div>
-                    <div className="absolute inset-0 hidden md:block">
-                        <div className="relative w-full h-full ">
-                            <div className="absolute top-0 bottom-0 right-0">
-                                <div className="min-w-[33vw] h-full relative flex justify-end">
-                                    <img src={invoiceRight.src} className="object-cover w-full h-auto mix-blend-darken" />
-                                    <div className="absolute inset-0" style={{ background: 'radial-gradient(50% 50% at 50% 50%, rgba(255, 255, 255, 0) 48.23%, #FFFFFF 150%)' }}>
-
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="absolute inset-0 overflow-y-auto">
-                        {(assetData || bundleData) && region ? (
-                            <>
-                                <div className="flex items-center justify-center w-full h-full">
-                                    <div className="flex">
-                                        <InvoiceFeature isBundle={bundleData ? true : false} region={region} product={(assetData || bundleData)!} priceToUsdRate={ardxToUsdRate} />
+                        <div className="absolute inset-0 overflow-y-auto">
+                            {(assetData || bundleData) && region ? (
+                                <>
+                                    <div className="flex items-center justify-center w-full h-full">
+                                        <div className="flex">
+                                            <InvoiceFeature isBundle={bundleData ? true : false} region={region} product={(assetData || bundleData)!} priceToUsdRate={ardxToUsdRate} />
+                                        </div>
                                     </div>
-                                </div>
-                            </>
-                        ) : <></>}
-                        {!(assetData || bundleData) ? <p>Asset or Bundle not found</p> : <></>}
-                        {!region ? <p>Region not found</p> : <></>}
+                                </>
+                            ) : <></>}
+                            {!(assetData || bundleData) ? <p>Asset or Bundle not found</p> : <></>}
+                            {!region ? <p>Region not found</p> : <></>}
+                        </div>
                     </div>
                 </div>
-            </div>
+            </BehindNavbar>
         </>
     )
 }

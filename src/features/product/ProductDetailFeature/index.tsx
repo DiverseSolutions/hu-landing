@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { showAuthModal } from '@/store/reducer/auth-reducer/actions';
-import { useArdxUsdRateQuery, useAssetDetailEarlyQuery, useCreateIdaxInvoiceMutation, useLazyArdxUsdRateQuery, useLazyMonxanshRateQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api';
+import { useArdxUsdRateQuery, useAssetDetailEarlyQuery, useCreateIdaxInvoiceMutation, useLazyArdxUsdRateQuery, useLazyMonxanshRateQuery, useUsdToArdxRateQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api';
 import { ArdArtAssetDetailResult } from '@/store/rtk-query/hux-ard-art/types';
 import PlusGrey from '@/components/icon/svgr/PlusGrey'
 import LocationSvg from '@/assets/svg/location.svg'
@@ -20,16 +20,13 @@ import SystemRequirementsSection from '@/components/section/components/SystemReq
 
 type Props = {
     item: ArdArtAssetDetailResult,
-    usdToArdxRate: number,
 }
 
 export default function ProductDetailFeature({
     item,
-    usdToArdxRate,
 }: Props) {
 
-    const [callArdxToUsdRate] = useLazyArdxUsdRateQuery()
-
+    const { data: usdToArdx } = useUsdToArdxRateQuery()
     const [selectedTicketRegion, setSelectedTicketRegion] = useState<string>()
     const [callCreateIdaxInvoice] = useCreateIdaxInvoiceMutation()
 
@@ -76,10 +73,6 @@ export default function ProductDetailFeature({
             router.push(`/payment?productId=${item.id}&region=${selectedTicketRegion}`)
         }
     }
-
-    const priceArdx = useMemo(() => {
-        return formatPrice(item.price / usdToArdxRate)
-    }, [item.price, usdToArdxRate])
 
     const priceFormatted = useMemo(() => {
         return formatPrice(item.price)
@@ -137,7 +130,9 @@ export default function ProductDetailFeature({
                                         <div className="p-4 rounded-lg bg-black bg-opacity-[0.04]">
                                             <div className="flex flex-col">
                                                 <p className='text-black text-sm text-opacity-[0.65]'>Current price</p>
-                                                <div className="flex items-center text-2xl font-bold">${priceFormatted} <span className="ml-2 text-sm font-[300] text-black text-opacity-[0.65]">ARDX{priceArdx}</span> </div>
+                                                <div className="flex items-center text-2xl font-bold">${priceFormatted} {usdToArdx ? (
+                                                    <span className="ml-2 text-sm font-[300] text-black text-opacity-[0.65]">ARDX{formatPrice(item.price * usdToArdx)}</span>
+                                                ) : (<ClipLoader size={14} />)}</div>
                                             </div>
                                         </div>
                                     </div>

@@ -8,7 +8,6 @@ export const ERROR_CURRENCY = 'Currency error. Please try reload the page'
 
 export const APP_HOST_URL = process.env.NEXT_PUBLIC_APP_HOST_URL as string
 
-
 export const TICKET_REGIONS = [
     {
         region: 'ASIA',
@@ -26,3 +25,5 @@ export const TICKET_REGIONS = [
         date: 'Thursday, March 30, 2023, 21:00:00 (UTC -08:00)'
     },
 ];
+
+export const ERR_UNKNOWN = "An unknown error occured. Please try reload the page."

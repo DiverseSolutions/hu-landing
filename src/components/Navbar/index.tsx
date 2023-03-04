@@ -1,8 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import TheHuImg from './img/the-hu.png'
 import MobileNavbarLogo from '@/assets/svg/mobile-navbar-logo.svg'
 import Link from 'next/link'
-import HomeCartWhiteSvg from '@/assets/svg/home-cart-white.svg'
 import { BiMenuAltRight } from 'react-icons/bi'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { logoutSuccess, showAuthModal } from '@/store/reducer/auth-reducer/actions'
@@ -20,7 +19,7 @@ function Navbar({ }: Props) {
     const profile = useAppSelector(state => state.auth.profile)
 
     return (
-        <div className="flex justify-center w-full h-[64px] md:h-[93px] bg-white bg-opacity-[0.93]">
+        <div className="flex transition-all duration-100 fixed z-[100] top-0 justify-center w-full h-[64px] md:h-[96px] bg-white bg-opacity-[0.93]">
             <div className="container w-full h-full ">
                 <div className="h-full px-0 navbar">
                     <div className="px-0 navbar-start md:hidden">
@@ -111,7 +110,7 @@ function Navbar({ }: Props) {
                         )}
                         <div className="md:hidden">
                             <label htmlFor='hu-drawer' className="btn btn-ghost">
-                                <BiMenuAltRight color='white' size={48} />
+                                <BiMenuAltRight color='black' size={48} />
                             </label>
                         </div>
                     </div>

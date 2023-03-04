@@ -195,7 +195,7 @@ export const huxArdArtApi = createApi({
             query: (d) => ({
                 url: '/api/v1/helper/rate',
                 method: 'GET',
-            })
+            }),
         }),
         myNftCount: builder.query<ArdArtResponse<ArdArtMyNftCountResult>, {
             accountId: number;
@@ -211,6 +211,18 @@ export const huxArdArtApi = createApi({
                 url: '/api/v1/helper/rate/usd',
                 method: 'GET',
             })
+        }),
+        usdToArdxRate: builder.query<number | undefined, void>({
+            query: () => ({
+                url: '/api/v1/helper/rate/usd',
+                method: 'GET',
+            }),
+            transformResponse(baseQueryReturnValue: ArdArtResponse<ArdArtArdxUsdRateResult>, meta, arg) {
+                if (!baseQueryReturnValue.result?.buy) {
+                    return undefined
+                }
+                return 1 / baseQueryReturnValue.result?.buy
+            },
         }),
     }),
 })
@@ -240,6 +252,8 @@ export const {
     useLazyMyNftCountQuery,
     useArdxUsdRateQuery,
     useLazyArdxUsdRateQuery,
+    useUsdToArdxRateQuery,
+    useLazyUsdToArdxRateQuery,
     useCreateIdaxInvoiceMutation,
     useBundleDetailQuery,
     useLazyBundleDetailQuery,

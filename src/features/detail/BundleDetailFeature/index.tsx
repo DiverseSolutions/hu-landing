@@ -4,7 +4,7 @@ import ItemCard from '@/components/card/ItemCard'
 import { formatPrice } from '@/lib/utils'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { showAuthModal } from '@/store/reducer/auth-reducer/actions'
-import { useCreateIdaxInvoiceMutation } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
+import { useCreateIdaxInvoiceMutation, useUsdToArdxRateQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
 import { ArdArtBundleDetailResult } from '@/store/rtk-query/hux-ard-art/types'
 import { useRouter } from 'next/router'
 import PlusGrey from '@/components/icon/svgr/PlusGrey'
@@ -18,6 +18,7 @@ import classNames from 'classnames'
 import dynamic from 'next/dynamic'
 import { ClipLoader } from 'react-spinners'
 import SystemRequirementsSection from '@/components/section/components/SystemRequirementsSection'
+import SystemRequirementsDropdown from '@/components/common/SystemRequirementsDropdown'
 
 type Props = {
     bundle: ArdArtBundleDetailResult
@@ -39,6 +40,8 @@ function BundleDetailFeature({
     const email = useAppSelector(state => state.auth.profile?.email)
     const idaxAuth = useAppSelector(state => state.auth.idax)
     const dispatch = useAppDispatch()
+
+    const { data: usdArdx } = useUsdToArdxRateQuery()
 
     const [callCreateIdaxInvoice] = useCreateIdaxInvoiceMutation()
 
@@ -103,7 +106,7 @@ function BundleDetailFeature({
                                         <p className='text-black text-opacity-[0.54] text-base'>{bundle.description}</p>
                                     </div>
                                     <div className="mt-8">
-                                        <div className='flex'><SystemRequirementsSection defaultVisible={false} /></div>
+                                        <div className="flex"><SystemRequirementsDropdown /></div>
                                     </div>
                                     <div className="mt-8">
                                         <div className="flex">
@@ -117,7 +120,9 @@ function BundleDetailFeature({
                                                 <div className="flex flex-col">
                                                     <div className="flex">
                                                         <span className="text-2xl font-bold">$ {formatPrice(bundle.price)}</span>
-                                                        <span className='text-sm font-normal ml-1 text-opacity-[0.65] text-black'>ARDX {formatPrice(bundle.price)}</span>
+                                                        {usdArdx ? (
+                                                            <span className='text-sm font-normal ml-1 text-opacity-[0.65] text-black'>ARDX {formatPrice(bundle.price * usdArdx)}</span>
+                                                        ) : (<ClipLoader size={14} />)}
                                                     </div>
                                                     <span className="mt-1 text-sm text-black text-opacity-[0.65]">
                                                         total bundle price with USD

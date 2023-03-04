@@ -1,5 +1,7 @@
 import EarlyTicketSection from '@/components/section/EarlyTicketSection';
-import { useArdxUsdRateQuery, useAssetDetailEarlyQuery, useLazyArdxUsdRateQuery, useLazyMonxanshRateQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api';
+import { useAppDispatch } from '@/store/hooks';
+import { pageError } from '@/store/reducer/error-reducer/actions';
+import { useAssetDetailEarlyQuery, useLazyMonxanshRateQuery, useUsdToArdxRateQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api';
 import { useLazyIdaxTickerQuery } from '@/store/rtk-query/idax-openapi/idax-openapi';
 import React, { useState, useMemo, useEffect } from 'react';
 
@@ -9,40 +11,23 @@ type Props = {}
 
 export default function EarlyTicketFeature({ }: Props) {
 
-    const [usdToArdxRate, setUsdToArdxRate] = useState(0)
-    const [isLoading, setIsLoading] = useState(true)
     const { data: ticketData, isLoading: isTicketsLoading } = useAssetDetailEarlyQuery()
-    const [callArdxToUsdRate] = useLazyArdxUsdRateQuery()
     const ticket = useMemo(() => ticketData?.result, [ticketData])
+    const dispatch = useAppDispatch()
+    const { data: usdToArdxRate, isLoading: isRateLoading } = useUsdToArdxRateQuery()
 
     useEffect(() => {
-        if (!ticket) {
-            return;
+        if (!isRateLoading && !usdToArdxRate) {
+            dispatch(pageError({
+                message: `Currency Rate Error occured. Please try reload the page.`
+            }))
         }
-        (async () => {
-            setIsLoading(true)
-            try {
-                await fetchUsdToArdxRate()
-            } catch (e) {
-                console.log(`rate error:`)
-                console.log(e)
-            }
-            setIsLoading(false)
-        })()
-    }, [ticket])
+    }, [usdToArdxRate, isRateLoading])
 
-    const fetchUsdToArdxRate = async () => {
-        const [ardxUsdRate] = await Promise.all([
-            callArdxToUsdRate().unwrap()
-        ]);
-        if (!ardxUsdRate.result) {
-            return;
-        }
-        const ardxToUsd = ardxUsdRate.result.sell
-        if (ardxToUsd) {
-            setUsdToArdxRate(ardxToUsd)
-        }
-    }
+
+    const isLoading = useMemo(() => {
+        return !ticket && !usdToArdxRate
+    }, [isRateLoading, isTicketsLoading])
 
     if (isLoading) {
         return (
@@ -59,7 +44,7 @@ export default function EarlyTicketFeature({ }: Props) {
     }
     return (
         <div>
-            <EarlyTicketSection ticket={ticket} priceToArdxRate={usdToArdxRate} />
+            <EarlyTicketSection ticket={ticket} usdToArdx={usdToArdxRate} />
         </div>
     )
 }

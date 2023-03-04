@@ -24,7 +24,7 @@ import GalleryOverlay from './components/GalleryOverlay'
 
 type Props = {
     ticket: ArdArtAssetDetailEarlyResult,
-    priceToArdxRate: number,
+    usdToArdx: number,
 }
 
 const TICKET_REGIONS = [
@@ -45,7 +45,7 @@ const TICKET_REGIONS = [
     },
 ];
 
-function TicketSection({ ticket, priceToArdxRate }: Props) {
+function TicketSection({ ticket, usdToArdx }: Props) {
 
     const [selectedTicketRegion, setSelectedTicketRegion] = useState<string>()
     const [callCreateIdaxInvoice] = useCreateIdaxInvoiceMutation()
@@ -81,8 +81,8 @@ function TicketSection({ ticket, priceToArdxRate }: Props) {
     })
 
     const priceArdx = useMemo(() => {
-        return formatPrice(ticket.price / priceToArdxRate)
-    }, [ticket.price, priceToArdxRate])
+        return formatPrice(ticket.price * usdToArdx)
+    }, [ticket.price, usdToArdx])
 
     const priceFormatted = useMemo(() => {
         return formatPrice(ticket.price)

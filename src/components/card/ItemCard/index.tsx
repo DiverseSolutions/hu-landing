@@ -1,7 +1,9 @@
 import { formatPrice } from '@/lib/utils';
+import { useUsdToArdxRateQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api';
 import { ArdArtTicketOrAssetRecord } from '@/store/rtk-query/hux-ard-art/types';
 import { useRouter } from 'next/router';
 import React from 'react'
+import { ClipLoader } from 'react-spinners';
 
 type Props = {
     item: ArdArtTicketOrAssetRecord;
@@ -9,11 +11,13 @@ type Props = {
 
 function ItemCard({ item }: Props) {
 
+    const { data: usdToArdx } = useUsdToArdxRateQuery()
     const router = useRouter()
+
     return (
         <>
             <div onClick={() => {
-                window.location.href = `/detail?product=${item.id}`
+                router.push(`/product?id=${item.id}`)
             }} className='relative w-full p-0 cursor-pointer card'>
                 <div className="p-0 card-body">
                     <div className="w-full h-[350px] rounded-xl overflow-hidden">
@@ -28,9 +32,11 @@ function ItemCard({ item }: Props) {
                             <span className="text-xl font-bold text-black text-opacity-[0.93]">
                                 ${formatPrice(item.price)}
                             </span>
-                            <span className="rounded-[4px] px-2 py-1 text-opacity-[0.65] font-light text-xs ml-[6px] bg-black bg-opacity-[0.04]">
-                                {formatPrice(item.price)} ARDX
-                            </span>
+                            {usdToArdx ? (
+                                <span className="rounded-[4px] px-2 py-1 text-opacity-[0.65] font-light text-xs ml-[6px] bg-black bg-opacity-[0.04]">
+                                    {formatPrice(item.price * usdToArdx)} ARDX
+                                </span>
+                            ) : (<ClipLoader size={12} />)}
                         </div>
                     </div>
                 </div>

@@ -1,7 +1,9 @@
 import { formatPrice } from '@/lib/utils';
+import { useUsdToArdxRateQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api';
 import { ArdArtBundleRecord } from '@/store/rtk-query/hux-ard-art/types';
 import { useRouter } from 'next/router';
 import React from 'react'
+import { ClipLoader } from 'react-spinners';
 
 type Props = {
     bundle: ArdArtBundleRecord
@@ -10,11 +12,14 @@ type Props = {
 function BundleCard({ bundle }: Props) {
 
     const router = useRouter()
+    const { data: usdToArdx } = useUsdToArdxRateQuery()
 
     return (
         <>
             <div onClick={() => {
-                router.push(`/detail?bundle=${bundle.id}`)
+                router.push(`/bundle?id=${bundle.id}`, undefined, {
+                    scroll: true
+                })
             }} className='card relative p-0 w-[450px] cursor-pointer'>
                 <div className="p-0 card-body">
                     <div className="w-full h-[360px] rounded-xl overflow-hidden">
@@ -29,9 +34,11 @@ function BundleCard({ bundle }: Props) {
                             <span className="text-xl font-bold text-black text-opacity-[0.93]">
                                 ${formatPrice(bundle.price)}
                             </span>
-                            <span className="rounded-[4px] px-2 py-1 text-opacity-[0.65] font-light text-xs ml-[6px] bg-black bg-opacity-[0.04]">
-                                {formatPrice(bundle.price)} ARDX
-                            </span>
+                            {usdToArdx ? (
+                                <span className="rounded-[4px] px-2 py-1 text-opacity-[0.65] font-light text-xs ml-[6px] bg-black bg-opacity-[0.04]">
+                                    {formatPrice(bundle.price * usdToArdx)} ARDX
+                                </span>
+                            ) : (<ClipLoader size={12} />)}
                         </div>
                     </div>
                 </div>

@@ -332,13 +332,13 @@ const PorfileFeature = ({ }: Props) => {
                                     {!isMyNftFetching ? (
                                         <div className="grid grid-cols-1 mt-4 sm:grid-cols-2 lg:grid-cols-4 md:-ml-4">
                                             {visibleNfts.map((nft) => (
-                                                <>
+                                                <div key={nft.id}>
                                                     {_times(nft.ownerAmount, (num) => (
                                                         <div key={`${nft.id}_${num}`} className="m-4">
                                                             <MyNftCard nft={nft} priceToUsdRate={ardxToUsdRate} />
                                                         </div>
                                                     ))}
-                                                </>
+                                                </div>
                                             ))}
                                         </div>
                                     ) : (<></>)}

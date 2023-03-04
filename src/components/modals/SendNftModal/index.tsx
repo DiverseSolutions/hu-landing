@@ -5,18 +5,24 @@ import { formatPrice } from '@/lib/utils'
 import { useArdxUsdRateQuery, useUsdToArdxRateQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
 import { ClipLoader } from 'react-spinners'
 import SendNftEmailForm from '@/components/forms/SendNftEmailForm'
+import SendNftConfirmationForm from '@/components/forms/SendNftConfirmationForm'
+import { toast } from 'react-toastify'
 
 type Props = {
     nft: ArdArtMyOwnedNftRecord | undefined,
     onClose: () => void
 }
 
+type SendNftFormType = 'email' | 'otp-confirm'
+
 function SendNftModal({ onClose, nft }: Props) {
 
+    const [formType, setFormType] = useState<SendNftFormType>('email')
     const sendNftModalRef = useRef<HTMLInputElement>(null)
 
     const { data: usdArdx, isLoading: isRateLoading } = useUsdToArdxRateQuery()
 
+    const [otpId, setOtpId] = useState<number>()
     const [email, setEmail] = useState<string>()
 
     const handleClose = () => {
@@ -61,9 +67,21 @@ function SendNftModal({ onClose, nft }: Props) {
                         </div>
                     </div>
                     <div className="mt-6">
-                        <SendNftEmailForm onSubmit={(v) => {
-
-                        }} />
+                        {formType === 'email' ? (
+                            <SendNftEmailForm onSubmit={(v) => {
+                                setEmail(v.email)
+                                setOtpId(v.otpId)
+                                setFormType('otp-confirm')
+                            }} />
+                        ) : (<></>)}
+                        {formType === 'otp-confirm' && otpId && email ? (
+                            <SendNftConfirmationForm productId={nft.id} otpId={otpId} email={email} onSuccess={() => {
+                                toast("Send NFT Success", {
+                                    type: 'success'
+                                })
+                                setFormType('email')
+                            }} />
+                        ) : (<></>)}
                     </div>
                 </div>
             </div>) : <></>}

@@ -16,6 +16,7 @@ import { useLazyIdaxTickerQuery } from '@/store/rtk-query/idax-openapi/idax-open
 import { PaymentType } from '@/features/payment/PaymentStatusFeature'
 import { alertVisibility } from '@/store/reducer/alert-reducer/actions'
 import BehindNavbar from '@/components/layout/BehindNavbar'
+import DesktopBehindNavbar from '@/components/layout/DesktopBehindNavbar'
 type Props = {}
 
 

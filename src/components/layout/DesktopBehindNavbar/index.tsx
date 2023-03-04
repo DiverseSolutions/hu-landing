@@ -4,12 +4,12 @@ type Props = {
     children: React.ReactNode
 }
 
-function BehindNavbar({ children }: Props) {
+function DesktopBehindNavbar({ children }: Props) {
     return (
-        <div className={`-mt-[80px] md:-mt-[104px]`}>
+        <div className={`md:-mt-[104px]`}>
             {children}
         </div>
     )
 }
 
-export default BehindNavbar
+export default DesktopBehindNavbar

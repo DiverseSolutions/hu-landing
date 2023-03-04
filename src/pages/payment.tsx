@@ -9,6 +9,7 @@ import InvoiceFeature from '@/features/payment/InvoiceFeature'
 import { useLazyGetAssetDetailByIdQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
 import { ArdArtAssetDetailByIDResult, ArdArtBundleDetailResult } from '@/store/rtk-query/hux-ard-art/types'
 import { useLazyIdaxTickerQuery } from '@/store/rtk-query/idax-openapi/idax-openapi'
+import DesktopBehindNavbar from '@/components/layout/DesktopBehindNavbar'
 import BehindNavbar from '@/components/layout/BehindNavbar'
 
 type Props = {}

@@ -206,6 +206,20 @@ export const huxArdArtApi = createApi({
                 body: d
             })
         }),
+        sendNft: builder.mutation<ArdArtResponse<any>, {
+            otpCode: string;
+            otpId: string;
+            accountId: number;
+            receiverEmail: string;
+            productId: number;
+            amount: number
+        }>({
+            query: (d) => ({
+                url: '/api/v1/market/transfer',
+                method: 'POST',
+                body: d
+            })
+        }),
         ardxUsdRate: builder.query<ArdArtResponse<ArdArtArdxUsdRateResult>, void>({
             query: () => ({
                 url: '/api/v1/helper/rate/usd',
@@ -224,6 +238,7 @@ export const huxArdArtApi = createApi({
                 return 1 / baseQueryReturnValue.result?.buy
             },
         }),
+
     }),
 })
 
@@ -258,5 +273,6 @@ export const {
     useBundleDetailQuery,
     useLazyBundleDetailQuery,
     useAssetDetailQuery,
-    useLazyAssetDetailQuery
+    useLazyAssetDetailQuery,
+    useSendNftMutation,
 } = huxArdArtApi;

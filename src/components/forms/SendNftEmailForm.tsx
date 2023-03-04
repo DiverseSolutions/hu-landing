@@ -1,9 +1,11 @@
 import { EMAIL_REGEX } from '@/lib/consts'
+import { useOtpSendEmailMutation } from '@/store/rtk-query/ard-art/ard-art-api'
+import classNames from 'classnames'
 import React from 'react'
 import { useForm } from 'react-hook-form'
 
 type Props = {
-    onSubmit: (v: { email: string }) => void
+    onSubmit: (v: { email: string, otpId: number }) => void
 }
 
 type SendNftEmailFormData = {
@@ -11,6 +13,8 @@ type SendNftEmailFormData = {
 }
 
 function SendNftEmailForm({ ...props }: Props) {
+
+    const [callOtpSendEmail, { isLoading: isSendOtpLoading }] = useOtpSendEmailMutation()
 
     const { handleSubmit, register, formState: {
         errors
@@ -20,8 +24,16 @@ function SendNftEmailForm({ ...props }: Props) {
         }
     })
 
-    const onSubmit = (d: SendNftEmailFormData) => {
-
+    const onSubmit = async (d: SendNftEmailFormData) => {
+        const r = await callOtpSendEmail({
+            actionType: 'third_party_access'
+        }).unwrap()
+        if (r.result?.id) {
+            props.onSubmit({
+                email: d.email,
+                otpId: r.result.id
+            })
+        }
     }
 
     return (
@@ -38,7 +50,7 @@ function SendNftEmailForm({ ...props }: Props) {
                     <span className="label-text-alt text-error">{errors.email?.message}</span>
                 </label>) : <></>}
             <div className="mt-6">
-                <button type="submit" className="w-full btn btn-black">Confirm & Send</button>
+                <button type="submit" className={classNames("w-full btn btn-black", { 'loading': isSendOtpLoading })}>Confirm & Send</button>
             </div>
         </form>
     )

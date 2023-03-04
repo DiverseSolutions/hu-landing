@@ -1,4 +1,5 @@
-import { ArdArtBalanceResponse, ArdArtMetalandLogin, ArdArtMetalandLoginResponse, ArdArtBalance } from './types';
+import { ArdArtResponse } from './../hux-ard-art/types';
+import { ArdArtBalanceResponse, ArdArtMetalandLogin, ArdArtMetalandLoginResponse, ArdArtBalance, ArdArtOtpResult } from './types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { getArdArdAccessToken } from '@/lib/cookie'
 
@@ -41,6 +42,15 @@ export const ardArtApi = createApi({
                 return undefined
             },
         }),
+        otpSendEmail: builder.mutation<ArdArtResponse<ArdArtOtpResult>, {
+            actionType: "third_party_access"
+        }>({
+            query: (d) => ({
+                url: '/api/v1/otp/sendEmail',
+                method: 'POST',
+                body: d
+            })
+        }),
     }),
 })
 
@@ -49,4 +59,5 @@ export const {
     useBalanceQuery,
     useArdxBalanceQuery,
     useLazyArdxBalanceQuery,
+    useOtpSendEmailMutation,
 } = ardArtApi;

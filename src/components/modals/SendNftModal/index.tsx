@@ -11,11 +11,12 @@ import { toast } from 'react-toastify'
 type Props = {
     nft: ArdArtMyOwnedNftRecord | undefined,
     onClose: () => void
+    onSuccess: () => void
 }
 
 type SendNftFormType = 'email' | 'otp-confirm'
 
-function SendNftModal({ onClose, nft }: Props) {
+function SendNftModal({ onClose, nft, onSuccess }: Props) {
 
     const [formType, setFormType] = useState<SendNftFormType>('email')
     const sendNftModalRef = useRef<HTMLInputElement>(null)
@@ -80,6 +81,8 @@ function SendNftModal({ onClose, nft }: Props) {
                                     type: 'success'
                                 })
                                 setFormType('email')
+                                onSuccess()
+                                handleClose()
                             }} />
                         ) : (<></>)}
                     </div>

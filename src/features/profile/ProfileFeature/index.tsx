@@ -268,7 +268,15 @@ const ProfileFeature = ({ }: Props) => {
                     </div>
                 </div>
             </div>
-            <SendNftModal nft={selectedSendNft} onClose={() => {
+            <SendNftModal nft={selectedSendNft} onSuccess={() => {
+                if (accountId) {
+                    callMyOwnedNft({
+                        ownerId: accountId
+                    })
+                }
+                setSelectedNftId(undefined)
+                setSelectedNftIdIdx(undefined)
+            }} onClose={() => {
                 setSelectedSendNft(undefined)
             }} />
         </>

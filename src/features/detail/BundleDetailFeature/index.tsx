@@ -51,7 +51,7 @@ function BundleDetailFeature({
     const [callCreateIdaxInvoice] = useCreateIdaxInvoiceMutation()
 
     const isGlb = useMemo(() => {
-        return bundle.coverUrl.endsWith('.glb')
+        return bundle.coverUrl?.endsWith('.glb')
     }, [bundle.coverUrl])
 
     const visibleItems = useMemo(() => {

@@ -1,5 +1,5 @@
 import { ArdArtResponse } from './../ard-art/types';
-import { ArdArtBundleResponse, ArdArtBundleInvoiceResponse, ArdArtAssetDetailByIDResult, ArdArtTicketOrAssetResponse, ArdArtMyOwnedNftResponse, ArdArtCreateSocialpayInvoiceResult, ArdArtCreateQpayInvoiceResult, ArdArtCreateQposInvoiceResult, ArdArtGetInvoiceByIdResult, ArdArtCheckInvoiceResult, ArdArtAssetDetailEarlyResult, ArdArtCognitoUserDetailResult, ArdArtMyNftCountResult, ArdArtArdxUsdRateResult } from './types';
+import { ArdArtBundleResponse, ArdArtBundleInvoiceResponse, ArdArtAssetDetailByIDResult, ArdArtTicketOrAssetResponse, ArdArtMyOwnedNftResponse, ArdArtCreateSocialpayInvoiceResult, ArdArtCreateQpayInvoiceResult, ArdArtCreateQposInvoiceResult, ArdArtGetInvoiceByIdResult, ArdArtCheckInvoiceResult, ArdArtAssetDetailEarlyResult, ArdArtCognitoUserDetailResult, ArdArtMyNftCountResult, ArdArtArdxUsdRateResult, ArdArtIdaxInvoiceResult, ArdArtBundleDetailResult, ArdArtAssetDetailResult } from './types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { MonXanshRateResponse } from '../monxansh/types';
 
@@ -15,11 +15,11 @@ export const huxArdArtApi = createApi({
             category?: number,
             minPrice?: number,
             maxPrice?: number
-        }>({
+        } | void>({
             query: (d) => ({
                 url: '/api/v1/asset/get',
                 method: 'POST',
-                body: d
+                body: d || {}
             })
         }),
         getAssetDetailById: builder.query<ArdArtResponse<ArdArtAssetDetailByIDResult>, {
@@ -30,12 +30,16 @@ export const huxArdArtApi = createApi({
                 method: 'GET',
             })
         }),
-        getBundle: builder.query<ArdArtBundleResponse, void>({
-            query: () => ({
+        getBundle: builder.query<ArdArtBundleResponse, {
+            offset?: number;
+            limit?: number;
+        } | void>({
+            query: (d) => ({
                 url: '/api/v1/bundle/get',
                 method: 'POST',
                 body: {
-
+                    "offset": d?.offset || 0,
+                    "limit": d?.limit || 200
                 }
             })
         }),
@@ -71,7 +75,8 @@ export const huxArdArtApi = createApi({
         }),
         createSocialpayInvoice: builder.mutation<ArdArtResponse<ArdArtCreateSocialpayInvoiceResult>, {
             type: 'single' | 'bundle';
-            method: 'socialpay' | 'card';
+            region?: string;
+            method: 'socialpay' | 'card' | 'idax';
             productId?: number;
             bundleId?: number;
             amount: number;
@@ -88,10 +93,30 @@ export const huxArdArtApi = createApi({
                 }
             })
         }),
+        createIdaxInvoice: builder.mutation<ArdArtResponse<ArdArtIdaxInvoiceResult>, {
+            type: 'single' | 'bundle';
+            productId?: number;
+            bundleId?: number;
+            amount: number;
+            accountId: number;
+            email: string;
+            idaxUserId: string;
+            idaxUserCode: string;
+        }>({
+            query: (d) => ({
+                url: '/api/v1/market/invoice/create',
+                method: 'POST',
+                body: {
+                    ...d,
+                    method: 'idax',
+                }
+            })
+        }),
         createQpayInvoice: builder.mutation<ArdArtResponse<ArdArtCreateQpayInvoiceResult>, {
             type: 'single' | 'bundle';
             productId?: number;
             bundleId?: number;
+            region?: string;
             amount: number;
             accountId: number;
             email: string;
@@ -102,7 +127,7 @@ export const huxArdArtApi = createApi({
                 body: {
                     ...d,
                     method: 'qpay',
-                    callback: `${process.env.NEXT_PUBLIC_APP_HOST_URL}/profile`
+                    callback: `${process.env.NEXT_PUBLIC_APP_HOST_URL}/payment-status`
                 }
             })
         }),
@@ -110,6 +135,7 @@ export const huxArdArtApi = createApi({
             type: 'single' | 'bundle';
             productId?: number;
             bundleId?: number;
+            region?: string;
             email: string;
             amount: number;
             accountId: number;
@@ -120,7 +146,7 @@ export const huxArdArtApi = createApi({
                 body: {
                     ...d,
                     method: 'qpos',
-                    callback: `${process.env.NEXT_PUBLIC_APP_HOST_URL}/profile`
+                    callback: `${process.env.NEXT_PUBLIC_APP_HOST_URL}/payment-status`
                 }
             })
         }),
@@ -135,6 +161,22 @@ export const huxArdArtApi = createApi({
         assetDetailEarly: builder.query<ArdArtResponse<ArdArtAssetDetailEarlyResult>, void>({
             query: () => ({
                 url: `/api/v1/asset/detail/early`,
+                method: 'GET',
+            })
+        }),
+        bundleDetail: builder.query<ArdArtResponse<ArdArtBundleDetailResult>, {
+            id: number
+        }>({
+            query: (d) => ({
+                url: `/api/v1/bundle/detail/${d.id}`,
+                method: 'GET',
+            })
+        }),
+        assetDetail: builder.query<ArdArtResponse<ArdArtAssetDetailResult>, {
+            id: number
+        }>({
+            query: (d) => ({
+                url: `/api/v1/asset/detail/${d.id}`,
                 method: 'GET',
             })
         }),
@@ -153,7 +195,7 @@ export const huxArdArtApi = createApi({
             query: (d) => ({
                 url: '/api/v1/helper/rate',
                 method: 'GET',
-            })
+            }),
         }),
         myNftCount: builder.query<ArdArtResponse<ArdArtMyNftCountResult>, {
             accountId: number;
@@ -164,12 +206,39 @@ export const huxArdArtApi = createApi({
                 body: d
             })
         }),
+        sendNft: builder.mutation<ArdArtResponse<any>, {
+            otpCode: string;
+            otpId: string;
+            accountId: number;
+            receiverEmail: string;
+            productId: number;
+            amount: number
+        }>({
+            query: (d) => ({
+                url: '/api/v1/market/transfer',
+                method: 'POST',
+                body: d
+            })
+        }),
         ardxUsdRate: builder.query<ArdArtResponse<ArdArtArdxUsdRateResult>, void>({
             query: () => ({
                 url: '/api/v1/helper/rate/usd',
                 method: 'GET',
             })
         }),
+        usdToArdxRate: builder.query<number | undefined, void>({
+            query: () => ({
+                url: '/api/v1/helper/rate/usd',
+                method: 'GET',
+            }),
+            transformResponse(baseQueryReturnValue: ArdArtResponse<ArdArtArdxUsdRateResult>, meta, arg) {
+                if (!baseQueryReturnValue.result?.buy) {
+                    return undefined
+                }
+                return 1 / baseQueryReturnValue.result?.buy
+            },
+        }),
+
     }),
 })
 
@@ -197,5 +266,13 @@ export const {
     useMyNftCountQuery,
     useLazyMyNftCountQuery,
     useArdxUsdRateQuery,
-    useLazyArdxUsdRateQuery
+    useLazyArdxUsdRateQuery,
+    useUsdToArdxRateQuery,
+    useLazyUsdToArdxRateQuery,
+    useCreateIdaxInvoiceMutation,
+    useBundleDetailQuery,
+    useLazyBundleDetailQuery,
+    useAssetDetailQuery,
+    useLazyAssetDetailQuery,
+    useSendNftMutation,
 } = huxArdArtApi;

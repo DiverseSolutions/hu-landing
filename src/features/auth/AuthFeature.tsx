@@ -9,6 +9,8 @@ import Cookies from 'js-cookie'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { authNotLoggedIn, hideAuthModal, sessionRestored } from '@/store/reducer/auth-reducer/actions'
 import { useLazyGetUserQuery } from '@/store/rtk-query/cognito/cognito-api'
+import { useLazyIdaxUserInfoQuery } from '@/store/rtk-query/idax/idax-api'
+import { useRouter } from 'next/router'
 
 type Props = {}
 
@@ -20,6 +22,8 @@ export default function AuthFeature({
 
 }: Props) {
 
+    const router = useRouter()
+    const [callIdaxUserInfo] = useLazyIdaxUserInfoQuery()
     const authModal = useAppSelector(state => state.auth.authModal)
     const [callGetUser] = useLazyGetUserQuery()
     const dispatch = useAppDispatch()
@@ -33,13 +37,16 @@ export default function AuthFeature({
     }
 
     useEffect(() => {
+        if (!router.isReady) {
+            return
+        }
         try {
             syncSession()
         } catch (e) {
             console.warn('Restore session err:')
             console.warn(e);
         }
-    }, [])
+    }, [router.isReady])
 
     useEffect(() => {
         if (authModal) {
@@ -61,12 +68,37 @@ export default function AuthFeature({
         const ardArtAccessToken = Cookies.get('ardArtAccessToken');
         const ardArtAccountId = Cookies.get('ardArtAccountId');
         if (!cognitoIdToken || !cognitoAccessToken || !ardArtAccessToken || !ardArtAccountId) {
+            const idaxExToken = Cookies.get('ex_token')
+            const idaxUserCode = router.query.code as string | undefined
+            if (idaxExToken && idaxUserCode) {
+                const data = await callIdaxUserInfo()
+                if (data.data) {
+                    const idaxUserInfo = data.data?.data
+                    if (idaxUserInfo) {
+                        dispatch(sessionRestored({
+                            session: 'idax-wv',
+                            idax: {
+                                id: idaxUserInfo.id,
+                                code: idaxUserCode,
+                                name: idaxUserInfo.nickName,
+                                email: idaxUserInfo.email,
+                            },
+                            profile: {
+                                username: idaxUserInfo.nickName,
+                                email: idaxUserInfo.email
+                            }
+                        }))
+                        return
+                    }
+                }
+            }
             dispatch(authNotLoggedIn())
         } else {
             const cognitoUserResp = await callGetUser({
                 AccessToken: cognitoAccessToken,
             }).unwrap();
             dispatch(sessionRestored({
+                session: 'web',
                 ardArt: {
                     accessToken: {
                         value: ardArtAccessToken,
@@ -98,7 +130,7 @@ export default function AuthFeature({
                     setFormType(DEFAULT_MODAL)
                 }
             }} />
-            <div className="modal" onClick={() => {
+            <div className="modal backdrop-blur-[7.5px] bg-black bg-opacity-[0.4]" onClick={() => {
                 dispatch(hideAuthModal())
             }}>
                 <div className="modal-box" onClick={(e) => {

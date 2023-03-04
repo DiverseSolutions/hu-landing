@@ -1,6 +1,5 @@
-import Head from 'next/head'
-import ReleaseLandingWithComingSoon from '@/features/landing/ReleaseLandingWithComingSoon';
 import HomePage from '@/features/landing/HomePage';
+import HomePageV2 from '@/features/landing/HomePageV2';
 
 const DEPLOYMENT_ENV = process.env.NEXT_PUBLIC_DEPLOYMENT_ENV || 'prod'
 
@@ -12,14 +11,8 @@ export default function Home() {
 
   return (
     <>
-      <Head>
-        <title>hu.rocks</title>
-        <meta name="description" content="HU" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
       <main>
-        {DEPLOYMENT_ENV === 'prod' ? <HomePage /> : <HomePage />}
+        {DEPLOYMENT_ENV === 'prod' ? <HomePage /> : <HomePageV2 />}
       </main>
     </>
   )

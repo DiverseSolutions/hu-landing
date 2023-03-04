@@ -40,6 +40,7 @@ export const rtkErrorAlert: Middleware =
         }
         if (`${action.payload?.status}`.toLowerCase() === 'error') {
             const metalandErr = action.payload?.message;
+            console.log(`show metaland err: ${metalandErr}`)
             if (metalandErr) {
                 if (api.getState()?.alert?.isArtArtVisible) {
                     toast(metalandErr, {

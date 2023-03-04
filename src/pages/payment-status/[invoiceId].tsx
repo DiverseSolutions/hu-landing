@@ -11,10 +11,12 @@ import { useLazyGetAssetDetailByIdQuery } from '@/store/rtk-query/hux-ard-art/hu
 import { ArdArtAssetDetailByIDResult } from '@/store/rtk-query/hux-ard-art/types'
 import { ArdArtGetInvoiceByIdResult } from '@/store/rtk-query/hux-ard-art/types'
 import { ArdArtCheckInvoiceResult } from '@/store/rtk-query/hux-ard-art/types'
-import { useLazyIdaxTickerQuery } from '@/store/rtk-query/idax/idax-api'
+import { useLazyIdaxTickerQuery } from '@/store/rtk-query/idax-openapi/idax-openapi'
 
 import { PaymentType } from '@/features/payment/PaymentStatusFeature'
 import { alertVisibility } from '@/store/reducer/alert-reducer/actions'
+import BehindNavbar from '@/components/layout/BehindNavbar'
+import DesktopBehindNavbar from '@/components/layout/DesktopBehindNavbar'
 type Props = {}
 
 
@@ -168,48 +170,50 @@ const PaymentStatus = (props: Props) => {
     }
     return (
         <>
-            <div className="w-full h-screen overflow-y-auto">
-                <div className="relative w-full h-full">
-                    <div className="absolute inset-0 hidden overflow-auto md:block">
-                        <div className="relative w-full h-full">
-                            <div className="w-[512px] h-[120vh] relative">
-                                <img src={invoiceLeft.src} className="object-cover w-auto h-full mix-blend-darken" />
+            <BehindNavbar>
+                <div className="w-full h-screen overflow-y-auto">
+                    <div className="relative w-full h-full">
+                        <div className="absolute inset-0 hidden overflow-auto md:block">
+                            <div className="relative w-full h-full">
+                                <div className="w-[512px] h-[120vh] relative">
+                                    <img src={invoiceLeft.src} className="object-cover w-auto h-full mix-blend-darken" />
+                                </div>
+                            </div>
+                            <div className="absolute inset-0 transform rounded-full aspect-square">
+                                <div className="h-[120vh] transform translate-x-[-50%] rounded-full aspect-square" style={{
+                                    background: 'radial-gradient(50% 50% at 50% 50%, rgba(255, 255, 255, 0) 20.23%, #FFFFFF 80.12%)',
+                                }}>
+
+                                </div>
                             </div>
                         </div>
-                        <div className="absolute inset-0 transform rounded-full aspect-square">
-                            <div className="h-[120vh] transform translate-x-[-50%] rounded-full aspect-square" style={{
-                                background: 'radial-gradient(50% 50% at 50% 50%, rgba(255, 255, 255, 0) 20.23%, #FFFFFF 80.12%)',
-                            }}>
+                        <div className="absolute inset-0 hidden md:block">
+                            <div className="relative w-full h-full ">
+                                <div className="absolute top-0 bottom-0 right-0">
+                                    <div className="min-w-[33vw] h-full relative flex justify-end">
+                                        <img src={invoiceRight.src} className="object-cover w-full h-auto mix-blend-darken" />
+                                        <div className="absolute inset-0" style={{ background: 'radial-gradient(50% 50% at 50% 50%, rgba(255, 255, 255, 0) 48.23%, #FFFFFF 150%)' }}>
 
-                            </div>
-                        </div>
-                    </div>
-                    <div className="absolute inset-0 hidden md:block">
-                        <div className="relative w-full h-full ">
-                            <div className="absolute top-0 bottom-0 right-0">
-                                <div className="min-w-[33vw] h-full relative flex justify-end">
-                                    <img src={invoiceRight.src} className="object-cover w-full h-auto mix-blend-darken" />
-                                    <div className="absolute inset-0" style={{ background: 'radial-gradient(50% 50% at 50% 50%, rgba(255, 255, 255, 0) 48.23%, #FFFFFF 150%)' }}>
-
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="absolute inset-0 overflow-y-auto">
-                        {invoiceData ? (
-                            <>
-                                <div className="flex items-center justify-center w-full h-full">
-                                    <div className="flex">
-                                        {paymentType ? <PaymentStatusFeature checkInvoice={checkInvoiceData} bank={bank} type={paymentType} invoice={invoiceData} priceToUsdRate={ardxToUsdRate} /> : <><p>Payment type not found.</p></>}
+                        <div className="absolute inset-0 overflow-y-auto">
+                            {invoiceData ? (
+                                <>
+                                    <div className="flex items-center justify-center w-full h-full">
+                                        <div className="flex">
+                                            {paymentType ? <PaymentStatusFeature checkInvoice={checkInvoiceData} bank={bank} type={paymentType} invoice={invoiceData} priceToUsdRate={ardxToUsdRate} /> : <><p>Payment type not found.</p></>}
+                                        </div>
                                     </div>
-                                </div>
-                            </>
-                        ) : <></>}
-                        {!invoiceData ? <p>Invoice not found</p> : <></>}
+                                </>
+                            ) : <></>}
+                            {!invoiceData ? <p>Invoice not found</p> : <></>}
+                        </div>
                     </div>
                 </div>
-            </div>
+            </BehindNavbar>
         </>
     )
 }

@@ -11,7 +11,7 @@ import QRImage from "react-qr-image"
 import { useCreateQpayInvoiceMutation, useCreateQposInvoiceMutation, useCreateSocialpayInvoiceMutation } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
 import classNames from 'classnames'
 import { toast } from 'react-toastify'
-import { ArdArtAssetDetailByIDResult } from '@/store/rtk-query/hux-ard-art/types'
+import { ArdArtAssetDetailByIDResult, ArdArtBundleDetailResult } from '@/store/rtk-query/hux-ard-art/types'
 import { useRouter } from 'next/router'
 import { qpayBanks, qposBanks, QPayBank } from './banks'
 import { useAppSelector } from '@/store/hooks';
@@ -19,22 +19,29 @@ import { useAppSelector } from '@/store/hooks';
 type MongolianBank = QPayBank
 
 const visibleMongolianBanks = qpayBanks.filter((qb) => qb.name !== 'Ard App')
+visibleMongolianBanks.push({
+    name: 'Socialpay',
+    link: ``,
+    logo: SocialPayImg.src,
+    description: ``,
+})
 
 type Props = {
-    item: ArdArtAssetDetailByIDResult,
+    item: ArdArtAssetDetailByIDResult | ArdArtBundleDetailResult,
     priceToUsdrate: number,
+    isBundle?: boolean;
+    region: string,
 }
 
 type PaymentType = 'card' | 'socialpay' | 'ardapp' | 'socialpay' | 'mongolian-banks'
 
 
-
-function PaymentMethodCard({ item, priceToUsdrate }: Props) {
+function PaymentMethodCard({ item, priceToUsdrate, region, ...props }: Props) {
 
     const accountId = useAppSelector(state => state.auth.ardArt.accountId)
     const email = useAppSelector(state => state.auth.profile?.email)
-    const [qrCode, setQrCode] = useState<string>()
     const [selectedMongolianBank, setSelectedMongolianBank] = useState<MongolianBank>()
+    const [qrCode, setQrCode] = useState<string>()
     const [isInvoiceUpdateLoading, setIsInvoiceUpdateLoading] = useState(false)
     const router = useRouter()
     const [selected, setSelected] = useState<PaymentType>('ardapp')
@@ -57,7 +64,7 @@ function PaymentMethodCard({ item, priceToUsdrate }: Props) {
         }).format(item.price / priceToUsdrate).substring(1)
     }, [item.price, priceToUsdrate])
 
-    const executeInvoiceUpdate = async () => {
+    const executeCreateInvoice = async () => {
         if (!selected) {
             toast('Please select your payment method', {
                 type: 'info'
@@ -73,6 +80,7 @@ function PaymentMethodCard({ item, priceToUsdrate }: Props) {
             const r = await callCreateInvoiceSocialPay({
                 type: 'single',
                 method: selected,
+                region,
                 email: email!,
                 productId: item.id,
                 amount: 1,
@@ -85,9 +93,17 @@ function PaymentMethodCard({ item, priceToUsdrate }: Props) {
             }
         } else if (selected === 'ardapp') {
             const r = await callCreateInvoiceQPos({
-                type: 'single',
-                productId: item.id,
+                ...(props.isBundle ? (
+                    {
+                        type: 'bundle',
+                        bundleId: item.id,
+                    }
+                ) : ({
+                    type: 'single',
+                    productId: item.id,
+                })),
                 email: email!,
+                region,
                 amount: 1,
                 accountId,
             }).unwrap()
@@ -109,10 +125,18 @@ function PaymentMethodCard({ item, priceToUsdrate }: Props) {
             }
             if (qPosBank) {
                 const r = await callCreateInvoiceQPos({
-                    productId: item.id,
+                    ...(props.isBundle ? (
+                        {
+                            type: 'bundle',
+                            bundleId: item.id,
+                        }
+                    ) : ({
+                        type: 'single',
+                        productId: item.id,
+                    })),
                     email: email!,
+                    region,
                     accountId,
-                    type: 'single',
                     amount: 1,
                 }).unwrap()
                 if (r.result) {
@@ -121,10 +145,18 @@ function PaymentMethodCard({ item, priceToUsdrate }: Props) {
                 return;
             }
             const r = await callCreateInvoiceQPay({
-                productId: item.id,
+                ...(props.isBundle ? (
+                    {
+                        type: 'bundle',
+                        bundleId: item.id,
+                    }
+                ) : ({
+                    type: 'single',
+                    productId: item.id,
+                })),
                 accountId,
                 email: email!,
-                type: 'single',
+                region,
                 amount: 1,
             }).unwrap()
             if (r.result) {
@@ -137,7 +169,7 @@ function PaymentMethodCard({ item, priceToUsdrate }: Props) {
     const handleConfirm = async () => {
         setIsInvoiceUpdateLoading(true)
         try {
-            await executeInvoiceUpdate()
+            await executeCreateInvoice()
         } catch (e) {
 
         }
@@ -157,8 +189,8 @@ function PaymentMethodCard({ item, priceToUsdrate }: Props) {
                         <img src={item.imageUrl} alt={item.name} className="max-w-[64px] object-contain rounded-lg h-auto" />
                         <div className="flex justify-between w-full h-full ml-2">
                             <div className="flex flex-col justify-center h-full ">
-                                <h4 className='text-[16px] max-w-[168px]'>{item.name}</h4>
-                                <span className='text-xs text-opacity-[0.35] text-black'>Hosted by ARD</span>
+                                <h4 className='text-[16px] max-w-[168px]'>{item.name} ({region})</h4>
+                                <span className='text-xs text-opacity-[0.35] text-black'>Powered by ARD</span>
                             </div>
                             <div className="flex">
                                 <span className='text-sm' style={{ color: 'rgba(39, 41, 55, 0.75)' }}>US{priceUsd}</span>
@@ -205,36 +237,52 @@ function PaymentMethodCard({ item, priceToUsdrate }: Props) {
                             }
                             setIsBanksExpanded(!isBanksExpanded)
                         }} className={classNames('cursor-pointer border-[1px] dropdown dropdown-bottom mt-4 flex-col text-dark-secondary rounded-lg bg-black bg-opacity-[0.04] p-[14px] w-full flex items-center', {
-                            ' border-black': selectedMongolianBank && selected === 'mongolian-banks' ? true : false,
+                            ' border-black': selectedMongolianBank && ['mongolian-banks', 'socialpay'].includes(selected) ? true : false,
                         })}>
                             <div className="flex justify-between w-full">
-                                <div className="flex items-center">
-                                    {selectedMongolianBank?.logo ? <img src={selectedMongolianBank.logo} className="w-[32px] h-[32px]" /> : <BankLineSvg />}
-                                    <p className="ml-3">{selectedMongolianBank?.name || 'Mongolian Banks'}</p>
-                                </div>
+                                {selectedMongolianBank && (selected !== 'socialpay') ? (
+                                    <div className="flex items-center">
+                                        {selectedMongolianBank?.logo ? <img src={selectedMongolianBank.logo} className="w-[32px] h-[32px]" /> : <BankLineSvg />}
+                                        <p className="ml-3">{selectedMongolianBank?.name || 'Mongolian Banks'}</p>
+                                    </div>
+                                ) : (<></>)}
+                                {selected === 'socialpay' ? (
+                                    <div className="flex items-center">
+                                        <img src={SocialPayImg.src} className="w-[32px] h-[32px]" />
+                                        <p className="ml-3">Socialpay</p>
+                                    </div>
+                                ) : (<></>)}
+                                {!selectedMongolianBank && (selected !== 'socialpay') ? (
+                                    <div className="flex items-center">
+                                        <BankLineSvg />
+                                        <p className="ml-3">{'Mongolian Banks'}</p>
+                                    </div>
+                                ) : (<></>)}
                                 <div className="flex items-center">
                                     {isBanksExpanded ? <MdExpandLess size={24} color="black" /> : <MdExpandMore size={24} color="black" />}
                                 </div>
                             </div>
                             <div className="w-full dropdown-content max-h-[300px] overflow-y-auto">
                                 <div className="flex flex-col w-full mt-4 space-y-4 bg-white">
-                                    {visibleMongolianBanks.map((mb) => (
-                                        <PaymentTypeCard key={mb.name}
-                                            onClick={() => {
-                                                setSelected('mongolian-banks')
-                                                setSelectedMongolianBank(mb)
-                                            }}
-                                            active={mb.name === selected} name={mb.name}
-                                            activeClass="bg-black bg-opacity-[0.04] border-transparent"
-                                            inactiveClass='bg-white'
-                                            icon={<img src={mb.logo} className={"w-[32px] h-[32px]"} />} />
-                                    ))}
+                                    <>
+                                        {visibleMongolianBanks.map((mb) => (
+                                            <PaymentTypeCard key={mb.name}
+                                                onClick={() => {
+                                                    setSelectedMongolianBank(mb)
+                                                    if (mb.name === 'Socialpay') {
+                                                        setSelected('socialpay')
+                                                    } else {
+                                                        setSelected('mongolian-banks')
+                                                    }
+                                                }}
+                                                active={mb.name === selectedMongolianBank?.name} name={mb.name}
+                                                activeClass="bg-black bg-opacity-[0.04] border-transparent"
+                                                inactiveClass='bg-white'
+                                                icon={<img src={mb.logo} className={"w-[32px] h-[32px]"} />} />
+                                        ))}
+                                    </>
                                 </div>
                             </div>
-                        </div>
-                        <div className="mt-4">
-                            <PaymentTypeCard onClick={() => setSelected('socialpay')} icon={<Image src={SocialPayImg} width={32} height={32} alt="Social Pay" />}
-                                name="Social Pay" active={selected === 'socialpay'} />
                         </div>
                     </div>
                 ) : (<></>)}

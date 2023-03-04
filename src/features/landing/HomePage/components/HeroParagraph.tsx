@@ -15,7 +15,7 @@ function HeroParagraph({ }: Props) {
                 <div className="container">
                     <div className="flex flex-col items-center w-full h-full md:flex-row md:justify-center">
                         <div className="hidden md:flex">
-                            <img src={HomeSection2DragonImg.src} className={classNames(`object-contain transform h-[68vh] w-auto`)} />
+                            <img src={HomeSection2DragonImg.src} className={classNames(`object-contain opacity-0 transform h-[68vh] w-auto`)} />
                         </div>
                         <div className="flex flex-col px-8 mt-8 md:mt-0 md:ml-64 md:px-0">
                             <p className='font-bold leading-[28px] text-[24px] md:leading-[44px] md:text-[40px] text-[#982626] uppercase md:max-w-[540px]'>One and Only The HU</p>

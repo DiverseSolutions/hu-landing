@@ -56,7 +56,7 @@ export default function SignupOtpForm({ username, ...props }: Props) {
                     </div>
                     <label className="label">
                         <span className="label-text-alt">Code that sent to your email</span>
-                        <span onClick={onResend} className={classNames('btn btn-xs label-text-alt', { 'loading': isSignupResendLoading })}>Resend</span>
+                        <span onClick={onResend} className={classNames('btn btn-xs text-white label-text-alt', { 'loading': isSignupResendLoading })}>Resend</span>
                     </label>
                 </div>
             </div>

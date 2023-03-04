@@ -33,18 +33,17 @@ const systemRequirementSpecs = [
             },
         ]
     },
-    {
-        name: 'macOS',
-    },
-    {
-        name: 'Linux',
-    },
 ]
 
-function SystemRequirementsSection() {
+type Props = {
+    defaultVisible?: boolean
+}
+function SystemRequirementsSection({
+    defaultVisible
+}: Props) {
 
     const [activeIndex, setActiveIndex] = useState(systemRequirementSpecs[0].name)
-    const [isRequirementsVisible, setIsRequirementsVisible] = useState(true)
+    const [isRequirementsVisible, setIsRequirementsVisible] = useState(defaultVisible === undefined ? true : defaultVisible)
     const fields = useMemo(() => {
         const spec = systemRequirementSpecs.find((spec) => spec.name === activeIndex)
         return spec?.fields || []
@@ -52,26 +51,26 @@ function SystemRequirementsSection() {
 
     return (
         <div>
-            <div className="flex items-center mt-6 ml-4">
+            <div className="flex items-center w-full mt-6 ml-4">
                 <p className="text-2xl font-bold">System Requirements</p>
                 <span className="ml-2"><AlertWarningSvg /></span>
             </div>
-            <div className="mt-6">
+            <div className="w-full mt-6">
                 <div className="border-2 p-6 rounded-xl border-black border-opacity-[0.2] space-y-4">
-                    <div className="flex justify-between w-full">
-                        <div className="flex">
-                            <div className="mb-4 tabs">
+                    <div className="flex items-center justify-between w-full">
+                        <div className="flex items-center">
+                            <div className="flex items-center w-full tabs">
                                 {systemRequirementSpecs.map((spec) => (
                                     <a key={spec.name} onClick={() => setActiveIndex(spec.name)} className={classNames('text-base tab', { 'tab-active tab-bordered border-b': activeIndex === spec.name })}>{spec.name}</a>
                                 ))}
                             </div>
                         </div>
                         <div className="flex cursor-pointer">
-                            {isRequirementsVisible ? <MdExpandMore onClick={() => setIsRequirementsVisible(false)} size={24} /> : <MdExpandLess onClick={() => setIsRequirementsVisible(true)} size={24} />}
+                            {isRequirementsVisible ? <MdExpandLess onClick={() => setIsRequirementsVisible(false)} size={24} /> : <MdExpandMore onClick={() => setIsRequirementsVisible(true)} size={24} />}
                         </div>
                     </div>
                     {isRequirementsVisible ? (
-                        <div>
+                        <div className='mt-8'>
                             {fields.map((field, idx) => (
                                 <div key={field.name} className={classNames("flex w-full justify-between border-b border-black border-opacity-[0.1] pb-1", { 'mt-6': idx !== 0 })}>
                                     <span className="text-sm opacity-[0.65]">{field.name}:</span>

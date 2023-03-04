@@ -2,7 +2,7 @@ import MyNftCard from '@/components/card/MyNftCard'
 import { times as _times } from 'lodash'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { showAuthModal } from '@/store/reducer/auth-reducer/actions'
-import { useLazyMyOwnedNftQuery, useMyNftCountQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
+import { useLazyMyNftCountQuery, useLazyMyOwnedNftQuery, useMyNftCountQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
 import { BiHide } from 'react-icons/bi'
 import React, { useEffect, useState, useMemo } from 'react'
 import { ClipLoader } from 'react-spinners'
@@ -44,19 +44,16 @@ const ProfileFeature = ({ }: Props) => {
     const profile = useAppSelector(state => state.auth.profile)
     const dispatch = useAppDispatch()
 
-    const { data: myNftCountData, isFetching: isMyNftCountFetching } = useMyNftCountQuery({
-        accountId: accountId as number,
-    }, {
-        skip: !accountId,
-        refetchOnMountOrArgChange: true,
-    })
-
+    const [callMyNftCount, { data: myNftCountData, isFetching: isMyNftCountFetching }] = useLazyMyNftCountQuery()
     const [callMyOwnedNft, { data: myNftData, isLoading: isMyNftLoading, isFetching: isMyNftFetching }] = useLazyMyOwnedNftQuery()
 
     useEffect(() => {
         if (isLoggedIn && accountId) {
             callMyOwnedNft({
                 ownerId: accountId
+            })
+            callMyNftCount({
+                accountId
             })
         }
     }, [isLoggedIn, accountId])
@@ -272,6 +269,9 @@ const ProfileFeature = ({ }: Props) => {
                 if (accountId) {
                     callMyOwnedNft({
                         ownerId: accountId
+                    })
+                    callMyNftCount({
+                        accountId
                     })
                 }
                 setSelectedNftId(undefined)

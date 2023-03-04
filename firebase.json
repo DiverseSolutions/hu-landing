@@ -14,6 +14,14 @@
           "destination": "/privacy-policy/en.html"
         },
         {
+          "source": "/bundle**",
+          "destination": "/bundle.html"
+        },
+        {
+          "source": "/product**",
+          "destination": "/product.html"
+        },
+        {
           "source": "detail**",
           "destination": "/detail.html"
         },
@@ -79,6 +87,14 @@
         {
           "source": "detail**",
           "destination": "/detail.html"
+        },
+        {
+          "source": "/bundle**",
+          "destination": "/bundle.html"
+        },
+        {
+          "source": "/product**",
+          "destination": "/product.html"
         },
         {
           "source": "/terms-of-service/en**",
@@ -154,6 +170,14 @@
         {
           "source": "detail**",
           "destination": "/detail.html"
+        },
+        {
+          "source": "/bundle**",
+          "destination": "/bundle.html"
+        },
+        {
+          "source": "/product**",
+          "destination": "/product.html"
         },
         {
           "source": "/terms-of-service/en**",

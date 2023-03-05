@@ -13,6 +13,8 @@ import { toast } from 'react-toastify'
 import HeartWhiteSvg from './img/heart-white.svg'
 import { MdClose, MdOutlineLocationOn } from 'react-icons/md'
 
+import WarningSvg from './img/warning.svg'
+
 import { ASSET_CATEGORY, TICKET_REGIONS } from '@/lib/consts'
 import classNames from 'classnames'
 import { ClipLoader } from 'react-spinners'
@@ -119,34 +121,34 @@ function BundleDetailFeature({
                                     <div className="flex flex-col">
                                         <p className="font-bold text-[24px] leading-[32px] max-w-[300px]">{bundle.name} <span className="text-black text-opacity-[0.35]">(Bundle)</span></p>
                                         <div className="flex items-center mt-4">
-                                            <p className='text-base'>Powered by <span className="font-bold">ARD</span></p>
+                                            <p className='text-sm md:text-base'>Powered by <span className="font-bold">ARD</span></p>
                                             <span className="px-2 py-1 font-bold ml-2 text-xs text-white rounded-xl bg-[#D63333]">Bonus ARDX{formatPrice(bundle.depositAmount)}</span>
                                             <div className="rounded-full w-0.5 h-0.5 bg-black ml-2">
 
                                             </div>
-                                            <p className='ml-2 text-base'>Created <span className='font-bold'>Feb 2023</span></p>
+                                            <p className='ml-2 text-sm md:text-base'>Created <span className='font-bold'>Feb 2023</span></p>
                                         </div>
                                         <div className="mt-6">
-                                            <p className='text-black text-opacity-[0.54] max-h-[300px] overflow-y-auto no-scrollbar text-base'>{bundle.description}</p>
+                                            <p className='text-black text-opacity-[0.54] max-h-[300px] overflow-y-auto no-scrollbar text-sm md:text-base'>{bundle.description}</p>
                                         </div>
                                     </div>
                                     <div className="flex w-full mt-8">
                                         <div className="flex flex-wrap md:flex-nowrap">
                                             <div className="flex bg-black bg-opacity-[0.04] rounded-xl">
                                                 <div className="flex flex-col items-center justify-center px-4 py-2">
-                                                    <p className='text-base font-bold'>{bundle.items?.length}</p>
-                                                    <p className="font-normal text-black text-opacity-[0.65]">Items</p>
+                                                    <p className='text-sm font-bold md:text-base'>{bundle.items?.length}</p>
+                                                    <p className="font-normal text-[10px] text-black text-opacity-[0.65]">Items</p>
                                                 </div>
                                             </div>
                                             <div className="flex ml-2 bg-black bg-opacity-[0.04] rounded-xl px-4 py-2">
                                                 <div className="flex flex-col">
                                                     <div className="flex">
-                                                        <span className="text-base font-bold">$ {formatPrice(bundle.price)}</span>
+                                                        <span className="text-sm font-bold md:text-base">$ {formatPrice(bundle.price)}</span>
                                                         {usdArdx ? (
-                                                            <span className='text-sm font-normal ml-1 text-opacity-[0.65] text-black'>ARDX {formatPrice(bundle.price * usdArdx)}</span>
+                                                            <span className='text-xs font-normal ml-1 text-opacity-[0.65] text-black'>ARDX {formatPrice(bundle.price * usdArdx)}</span>
                                                         ) : (<ClipLoader size={14} />)}
                                                     </div>
-                                                    <span className=" text-sm text-black text-opacity-[0.65]">
+                                                    <span className="text-[10px] text-black text-opacity-[0.65]">
                                                         total bundle price with USD
                                                     </span>
                                                 </div>
@@ -154,9 +156,9 @@ function BundleDetailFeature({
                                             <div className="flex mt-2 md:mt-0 md:ml-2 bg-black bg-opacity-[0.04] rounded-xl px-4 py-2">
                                                 <div className="flex flex-col">
                                                     <div className="flex">
-                                                        <span className="text-base font-bold">March 30, 2023</span>
+                                                        <span className="text-sm font-bold md:text-base">March 30, 2023</span>
                                                     </div>
-                                                    <span className=" text-sm text-black text-opacity-[0.65]">
+                                                    <span className="text-[10px] text-black text-opacity-[0.65]">
                                                         Event Date
                                                     </span>
                                                 </div>
@@ -164,9 +166,9 @@ function BundleDetailFeature({
                                             <div className="flex ml-2 mt-2 md:mt-0 md:ml-2 bg-black bg-opacity-[0.04] rounded-xl px-4 py-2">
                                                 <div className="flex flex-col">
                                                     <div className="flex">
-                                                        <span className="text-base font-bold">Metaland</span>
+                                                        <span className="text-sm font-bold md:text-base">Metaland</span>
                                                     </div>
-                                                    <span className=" text-sm text-black text-opacity-[0.65]">
+                                                    <span className="text-[10px] text-black text-opacity-[0.65]">
                                                         Location
                                                     </span>
                                                 </div>
@@ -176,14 +178,15 @@ function BundleDetailFeature({
                                 </div>
                             </div>
                             <div className="w-full md:ml-10">
-                                <div className="p-6 mt-4 rounded-xl">
+                                <div className="mt-4 rounded-xl">
                                     <div className='flex items-center'>
                                         <MdOutlineLocationOn size={24} opacity={0.65} />
-                                        <p className='text-black text-sm text-opacity-[0.65] ml-1'>Choose timezone that matches you</p>
+                                        <p className='text-black text-xs md:text-sm text-opacity-[0.65] ml-1'>Choose timezone that matches you</p>
                                     </div>
                                     <div className="mt-4">
                                         <div className="flex w-full p-4 rounded-xl itms-start" style={{ background: 'rgba(255, 140, 0, 0.05)' }}>
-                                            <span className='text-xs'>To make Purchase please select your Time Zone accordingly. Please note that you will be only able to attend the concert in the the Time zone of your selection.</span>
+                                            <div><WarningSvg /></div>
+                                            <span className='text-xs ml-[18px]'>To make Purchase please select your Time Zone accordingly. Please note that you will be only able to attend the concert in the the Time zone of your selection.</span>
                                         </div>
                                     </div>
                                     <div className="mt-4">
@@ -194,7 +197,7 @@ function BundleDetailFeature({
                                                         onClick={() => {
                                                             setSelectedRegion(ticket.region)
                                                         }}
-                                                        className={classNames(`text-sm border text-left`, { 'bg-black text-white p-3 rounded-xl': selectedRegion === ticket.region, 'bg-white hover:bg-black hover:bg-opacity-[0.04] px-4 py-3 border rounded-xl text-black': selectedRegion !== ticket.region })}>
+                                                        className={classNames(`text-xs md:text-sm border text-left`, { 'bg-black text-white p-3 rounded-xl': selectedRegion === ticket.region, 'bg-white hover:bg-black hover:bg-opacity-[0.04] px-4 py-3 border rounded-xl text-black': selectedRegion !== ticket.region })}>
                                                         {ticket.name} {ticket.date}
                                                     </button>
                                                 ))}

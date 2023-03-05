@@ -39,7 +39,7 @@ function BundleCard({ bundle }: Props) {
                             {bundle.name}
                         </p>
                         <div className="flex items-center justify-start mt-2">
-                            <span className="text-xl font-bold text-black text-opacity-[0.93]">
+                            <span className="text-sm md:text-xl font-bold text-black text-opacity-[0.93]">
                                 ${formatPrice(bundle.price)}
                             </span>
                             {usdToArdx ? (

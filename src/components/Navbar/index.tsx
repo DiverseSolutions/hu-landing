@@ -28,27 +28,22 @@ function Navbar({ }: Props) {
                         </Link>
                     </div>
                     <div className="hidden pl-0 navbar-start lg:flex">
-                        <Link href="/" className="text-xl normal-case btn btn-ghost">
+                        <Link href="/" className="text-xl normal-case">
                             <img src={TheHuImg.src} className="w-auto h-full max-h-[16px]" />
                         </Link>
                         <ul className="px-1 ml-8 text-sm font-light menu menu-horizontal">
                             <li>
-                                <Link className='text-black text-base font-bold text-opacity-[0.35] hover:text-opacity-[1]' href="/" rel="noreferrer">
-                                    About us
-                                </Link>
-                            </li>
-                            <li>
-                                <Link className='text-black text-base font-bold text-opacity-[0.35] hover:text-opacity-[1]' href="/" rel="noreferrer">
+                                <Link className='text-black hover:bg-transparent text-base font-bold text-opacity-[0.35] hover:text-opacity-[1]' href="/" rel="noreferrer">
                                     ArdCoin
                                 </Link>
                             </li>
                             <li>
-                                <Link className='text-black text-base font-bold text-opacity-[0.35] hover:text-opacity-[1]' href="/" rel="noreferrer">
+                                <Link className='text-black hover:bg-transparent text-base font-bold text-opacity-[0.35] hover:text-opacity-[1]' href="/" rel="noreferrer">
                                     Metaland
                                 </Link>
                             </li>
                             <li>
-                                <Link className='text-black text-base font-bold text-opacity-[0.35] hover:text-opacity-[1]' href="/" rel="noreferrer">
+                                <Link className='text-black hover:bg-transparent text-base font-bold text-opacity-[0.35] hover:text-opacity-[1]' href="/" rel="noreferrer">
                                     Help Center
                                 </Link>
                             </li>
@@ -88,19 +83,19 @@ function Navbar({ }: Props) {
                                 </button>
                             </>
                         ) : (
-                            <div className="items-center hidden space-x-4 md:flex">
+                            <div className="items-center hidden space-x-2 md:flex">
                                 <button onClick={() => {
                                     dispatch(showAuthModal({
                                         type: 'login'
                                     }))
-                                }} className="px-5 py-[14px] btn text-white btn-black text-sm text-opacity-[0.93] rounded-xl">
+                                }} className="py-2 px-4 btn text-white btn-black text-sm text-opacity-[0.93] rounded-xl">
                                     Login
                                 </button>
                                 <button onClick={() => {
                                     dispatch(showAuthModal({
                                         type: 'register'
                                     }))
-                                }} className="px-5 py-[14px] text-sm text-opacity-[0.93] font-bold bg-opacity-[0.04] text-black bg-black cursor-pointer rounded-xl">
+                                }} className="py-2 px-4 h-full btn hover:bg-black hover:bg-opacity-[0.04] text-sm text-opacity-[0.93] font-bold bg-opacity-[0.04] text-black bg-black cursor-pointer rounded-xl">
                                     Signup
                                 </button>
                                 <div className='flex cursor-pointer justify-center items-center bg-black bg-opacity-[0.04] rounded-lg w-12 h-12'>

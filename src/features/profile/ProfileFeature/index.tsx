@@ -93,6 +93,36 @@ const ProfileFeature = ({ }: Props) => {
         return myNftData?.result?.records || []
     }, [myNftData, activeCategory, activeTag])
 
+    const visibleNftsDuplicated = useMemo(() => {
+        if (!visibleNfts?.length) {
+            return []
+        }
+        const duplicated: JSX.Element[] = []
+        visibleNfts.forEach((nft) => (
+            _times(nft.ownerAmount, (num) => {
+                const nftIdWithIndex = `${nft.id}_${num}`
+                const isSelected = selectedNftIdIdx === nftIdWithIndex
+                duplicated.push(<div key={nftIdWithIndex} onClick={() => {
+                    if (isSelected) {
+                        setSelectedNftId(undefined)
+                        setSelectedNftId(undefined)
+                    } else {
+                        setSelectedNftIdIdx(nftIdWithIndex)
+                        setSelectedNftId(nft.id)
+                        handleSendNft(nft.id)
+                    }
+                }}
+                    className={classNames({
+                        'opacity-[0.5]': !isSelected && selectedNftId,
+                    })}
+                >
+                    <MyNftCard nft={nft} />
+                </div>)
+            })
+        ))
+        return duplicated
+    }, [visibleNfts])
+
     const { data: ardxBalance, isLoading: isBalanceLoading } = useArdxBalanceQuery()
 
     const handleSendNft = (selectedNftId: number) => {
@@ -202,7 +232,7 @@ const ProfileFeature = ({ }: Props) => {
                                             <a className="text-sm md:text-base cursor-not-allowed border-b-[1px] tab tab-bordered border-transparent font-bold opacity-[0.35]">Activity</a>
                                         </div>
                                     </div>
-                                    <div className="mt-2">
+                                    <div className="mt-4">
                                         <div className="flex items-center w-full p-4 rounded-lg" style={{ background: 'rgba(255, 140, 0, 0.05)' }}>
                                             <span><WarningSvg /></span>
                                             <span className='text-xs md:text-sm ml-[18px]'>You can only transfer one NFT at a time. Please check the NFT before proceeding with transfer.</span>
@@ -223,33 +253,8 @@ const ProfileFeature = ({ }: Props) => {
                                             </div>
                                         ) : (<></>)}
                                         {!isMyNftFetching ? (
-                                            <div className="grid w-full grid-cols-2 px-0 mt-4 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 md:-ml-4">
-                                                {visibleNfts.map((nft) => (
-                                                    <div key={nft.id} className="cursor-pointer">
-                                                        {_times(nft.ownerAmount, (num) => {
-                                                            const nftIdWithIndex = `${nft.id}_${num}`
-                                                            const isSelected = selectedNftIdIdx === nftIdWithIndex
-                                                            return (
-                                                                <div key={nftIdWithIndex} onClick={() => {
-                                                                    if (isSelected) {
-                                                                        setSelectedNftId(undefined)
-                                                                        setSelectedNftId(undefined)
-                                                                    } else {
-                                                                        setSelectedNftIdIdx(nftIdWithIndex)
-                                                                        setSelectedNftId(nft.id)
-                                                                        handleSendNft(nft.id)
-                                                                    }
-                                                                }}
-                                                                    className={classNames({
-                                                                        'opacity-[0.5]': !isSelected && selectedNftId,
-                                                                    })}
-                                                                >
-                                                                    <MyNftCard nft={nft} />
-                                                                </div>
-                                                            )
-                                                        })}
-                                                    </div>
-                                                ))}
+                                            <div className="grid w-full grid-cols-2 gap-4 px-0 mt-4 gap-y-4 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 md:-ml-4">
+                                                {visibleNftsDuplicated}
                                             </div>
                                         ) : (<></>)}
                                     </div>

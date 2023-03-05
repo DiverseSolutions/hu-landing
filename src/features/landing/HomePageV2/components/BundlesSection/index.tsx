@@ -70,7 +70,7 @@ function BundlesSection({ }: Props) {
                                 <>
                                     <div className="flex flex-row space-x-4">
                                         {visibleBundles.map((bundle) => (
-                                            <div key={bundle.id} className="cursor-pointer flex-grow flex-shrink-0 basis-[450px]">
+                                            <div key={bundle.id} className="cursor-pointer flex-grow flex-shrink-0 basis-[80vw] md:min-w-[450px] md:basis-[30vw]">
                                                 <BundleCard
                                                     bundle={bundle}
                                                 />

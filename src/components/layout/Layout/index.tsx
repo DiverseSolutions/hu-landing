@@ -9,7 +9,7 @@ type Props = {
 }
 
 const HIDE_LAYOUT_ROUTES = [
-    ''
+    '/'
 ]
 
 function Layout({ children }: Props) {
@@ -32,11 +32,15 @@ function Layout({ children }: Props) {
         <div>
             <MobileDrawer>
                 <div>
-                    {isLayoutVisible ? <Navbar /> : <></>}
-                    <div className='mt-[72px] md:mt-[104px] min-h-[50vh]'>
-                        {children}
-                    </div>
-                    {isLayoutVisible ? <Footer /> : <></>}
+                    {isLayoutVisible ? (
+                        <>
+                            <Navbar />
+                            <div className='mt-[72px] md:mt-[104px] min-h-[50vh]'>
+                                {children}
+                            </div>
+                            <Footer />
+                        </>
+                    ) : children}
                 </div>
             </MobileDrawer>
         </div>

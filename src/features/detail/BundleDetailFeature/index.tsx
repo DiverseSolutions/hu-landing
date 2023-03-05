@@ -153,6 +153,7 @@ function BundleDetailFeature({
                                                     </span>
                                                 </div>
                                             </div>
+                                            <div className="w-full md:hidden"></div>
                                             <div className="flex mt-2 md:mt-0 md:ml-2 bg-black bg-opacity-[0.04] rounded-xl px-4 py-2">
                                                 <div className="flex flex-col">
                                                     <div className="flex">

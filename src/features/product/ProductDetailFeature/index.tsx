@@ -92,7 +92,7 @@ export default function ProductDetailFeature({
                             <div className="flex mt-0 md:hidden">
                                 <div className='flex flex-col'>
                                     <p className='text-[24px] md:text-2xl mt-4 font-bold max-w-[250px]'>
-                                        {item.name} <span className="capitalize opacity-[0.35]">({item.category})</span>
+                                        {item.name} {item.category?.length ? (<span className="capitalize opacity-[0.35]">({item.category})</span>) : (<></>)}
                                     </p>
                                     <p className='text-sm md:text-base'><span className='opacity-[0.65]'>Powered by</span> <span className="font-bold  text-black opacity-[0.93]">ARD</span> & <span className="font-bold  text-black opacity-[0.93]">Metaland</span></p>
                                 </div>
@@ -112,7 +112,7 @@ export default function ProductDetailFeature({
                                             </span>
                                         </div>
                                     </div>
-                                    <div className="flex items-center mt-2 md:mt-0 md:ml-2 bg-black bg-opacity-[0.04] rounded-xl px-4 py-2">
+                                    <div className="flex items-center md:ml-2 bg-black bg-opacity-[0.04] rounded-xl px-4 py-2">
                                         <div className="flex flex-col">
                                             <div className="flex">
                                                 <span className="text-sm font-bold md:text-base">March 30, 2023</span>
@@ -192,7 +192,7 @@ export default function ProductDetailFeature({
                                     <div>
                                         <p className='text-sm md:text-base'><span className='opacity-[0.65]'>Powered by</span> <span className="font-bold  text-black opacity-[0.93]">ARD</span> & <span className="font-bold  text-black opacity-[0.93]">Metaland</span></p>
                                         <p className='text-[24px] md:text-2xl mt-4 font-bold max-w-[250px]'>
-                                            {item.name} <span className="capitalize opacity-[0.35]">({item.category})</span>
+                                            {item.name} {item.category?.length ? (<span className="capitalize opacity-[0.35]">({item.category})</span>) : (<></>)}
                                         </p>
                                     </div>
                                 </div>

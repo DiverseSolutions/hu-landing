@@ -42,11 +42,13 @@ function ItemCard({ item }: Props) {
                         </div>
                     </div>
                 </div>
-                <div className="absolute top-2 left-2 md:top-4 md:left-4">
-                    <div className="flex capitalize items-center px-2 py-1 text-xs rounded-xl bg-[#ff00a8] text-white font-bold">
-                        {item.tag}
+                {item.tag?.length ? (
+                    <div className="absolute top-2 left-2 md:top-4 md:left-4">
+                        <div className="flex capitalize items-center px-2 py-1 text-xs rounded-xl bg-[#ff00a8] text-white font-bold">
+                            {item.tag}
+                        </div>
                     </div>
-                </div>
+                ) : (<></>)}
             </div>
         </>
     )

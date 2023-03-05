@@ -39,11 +39,13 @@ export default function MyNftCard({ nft }: Props) {
                     </div>
                 </div>
             </div>
-            <div className="absolute top-2 left-2 md:top-4 md:left-4">
-                <div className="flex capitalize items-center px-2 py-1 text-xs rounded-xl bg-[#2087FF] text-white font-light">
-                    {nft.tag}
+            {nft.tag?.length ? (
+                <div className="absolute top-2 left-2 md:top-4 md:left-4">
+                    <div className="flex capitalize items-center px-2 py-1 text-xs rounded-xl bg-[#2087FF] text-white font-light">
+                        {nft.tag}
+                    </div>
                 </div>
-            </div>
+            ) : (<></>)}
             <div className="absolute justify-center items-center rounded-xl p-2.5 flex md:top-4 md:right-4 top-2 right-2 bg-white bg-opacity-[0.93] aspect-square">
                 <HeartSvg />
             </div>

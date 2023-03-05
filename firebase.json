@@ -18,12 +18,12 @@
           "destination": "/bundle.html"
         },
         {
-          "source": "/product**",
-          "destination": "/product.html"
+          "source": "/ticket**",
+          "destination": "/ticket.html"
         },
         {
-          "source": "detail**",
-          "destination": "/detail.html"
+          "source": "/product**",
+          "destination": "/product.html"
         },
         {
           "source": "/terms-of-service/en**",
@@ -40,10 +40,6 @@
         {
           "source": "/model**",
           "destination": "/model.html"
-        },
-        {
-          "source": "/ticket**",
-          "destination": "/ticket.html"
         },
         {
           "source": "/payment-status/**",
@@ -85,8 +81,8 @@
           "destination": "/wv/idax/index.html"
         },
         {
-          "source": "detail**",
-          "destination": "/detail.html"
+          "source": "/ticket**",
+          "destination": "/ticket.html"
         },
         {
           "source": "/bundle**",
@@ -123,10 +119,6 @@
         {
           "source": "/early**",
           "destination": "/early.html"
-        },
-        {
-          "source": "/ticket**",
-          "destination": "/ticket.html"
         },
         {
           "source": "/payment-status/**",
@@ -168,7 +160,11 @@
           "destination": "/privacy-policy/en.html"
         },
         {
-          "source": "detail**",
+          "source": "/ticket**",
+          "destination": "/ticket.html"
+        },
+        {
+          "source": "/detail**",
           "destination": "/detail.html"
         },
         {
@@ -198,10 +194,6 @@
         {
           "source": "/early**",
           "destination": "/early.html"
-        },
-        {
-          "source": "/ticket**",
-          "destination": "/ticket.html"
         },
         {
           "source": "/payment-status/**",

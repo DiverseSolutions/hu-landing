@@ -6,7 +6,7 @@ type Props = {
 
 function BehindNavbar({ children }: Props) {
     return (
-        <div className={`-mt-[80px] md:-mt-[104px]`}>
+        <div className={`-mt-[64px] md:-mt-[104px]`}>
             {children}
         </div>
     )

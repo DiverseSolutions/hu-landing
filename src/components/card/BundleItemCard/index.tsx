@@ -3,6 +3,7 @@ import { useUsdToArdxRateQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art
 import { ArdArtBundleDetailItem } from '@/store/rtk-query/hux-ard-art/types';
 import { useRouter } from 'next/router';
 import React from 'react'
+import HeartSvg from './img/heart.svg'
 import { ClipLoader } from 'react-spinners';
 
 type Props = {
@@ -20,7 +21,7 @@ function BundleItemCard({ item }: Props) {
                 router.push(`/product?id=${item.productId}`)
             }} className='relative w-full p-0 cursor-pointer card'>
                 <div className="p-0 card-body">
-                    <div className="w-full h-[350px] rounded-xl overflow-hidden">
+                    <div className="w-full h-[200px] md:h-[350px] rounded-xl overflow-hidden">
                         <img src={item.product.imageUrl} className="object-cover transform transition-all duration-200 hover:scale-[1.1] w-full h-full" />
                     </div>
                     <div className="mt-2">
@@ -40,10 +41,13 @@ function BundleItemCard({ item }: Props) {
                         </div>
                     </div>
                 </div>
-                <div className="absolute top-4 left-4">
+                <div className="absolute top-2 left-2 md:top-4 md:left-4">
                     <div className="flex capitalize items-center px-2 py-1 text-xs rounded-xl bg-[#ff00a8] text-white font-bold">
                         {item.product.tag}
                     </div>
+                </div>
+                <div className="absolute justify-center items-center rounded-xl p-2.5 flex top-2 right-2 md:top-4 md:right-4 bg-white bg-opacity-[0.93] aspect-square">
+                    <HeartSvg />
                 </div>
             </div>
         </>

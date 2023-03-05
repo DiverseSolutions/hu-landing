@@ -33,10 +33,10 @@ function ItemsSection({ }: Props) {
         <>
             <div className='flex flex-col items-center w-full'>
                 <div className="container px-2 md:px-0">
-                    <p className="font-bold text-[32px]">
+                    <p className="font-bold text-[24px] md:text-[32px]">
                         The Hu in the metaverse collection
                     </p>
-                    <div className="mt-8">
+                    <div className="mt-8 max-w-[100vw] overflow-x-auto no-scrollbar">
                         <CategorySelectList defaultValues={assetCategories} onChanged={setActiveCategory} activeValues={activeCategory} />
                     </div>
                 </div>
@@ -47,7 +47,7 @@ function ItemsSection({ }: Props) {
                             <div className="w-full">
                                 {!isAssetLoading && visibleItems?.length ? (
                                     <>
-                                        <div className="grid grid-cols-1 gap-4 gap-y-8 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-5">
+                                        <div className="grid grid-cols-2 gap-4 gap-y-8 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-5">
                                             {visibleItems.map((item) => (
                                                 <div key={item.id} className="flex cursor-pointer">
                                                     <ItemCard

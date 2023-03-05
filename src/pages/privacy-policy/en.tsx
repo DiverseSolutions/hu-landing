@@ -1,5 +1,4 @@
 import Footer from '@/components/footer/Footer'
-import Navbar from '@/components/Navbar'
 import React from 'react'
 
 type Props = {}
@@ -7,12 +6,11 @@ type Props = {}
 function PrivacyPolicyEN({ }: Props) {
     return (
         <>
-            <Navbar />
-            <div className="h-[100px] w-full" style={{
-                background: `radial-gradient(105.33% 76.33% at 50% 95.88%, #721C1C 0.01%, rgba(0, 0, 0, 0) 100%)`,
-                backgroundColor: 'black'
-            }}>
-                <div className="flex items-center justify-center w-full h-full">
+            <div className="w-full" >
+                <div className="flex items-center h-[100px] justify-center w-full" style={{
+                    background: `radial-gradient(105.33% 76.33% at 50% 95.88%, #721C1C 0.01%, rgba(0, 0, 0, 0) 100%)`,
+                    backgroundColor: 'black'
+                }}>
                     <p className="text-4xl text-center text-white">
                         Law enforcement
                     </p>
@@ -81,7 +79,6 @@ function PrivacyPolicyEN({ }: Props) {
                         </div>
                     </div>
                 </div>
-                <Footer />
             </div>
         </>
     )

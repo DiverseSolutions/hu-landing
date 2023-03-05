@@ -1,10 +1,10 @@
-import { ArdArtAssetDetailEarlyResult } from '@/store/rtk-query/hux-ard-art/types'
+import { ArdArtAssetDetailByIDResult, ArdArtAssetDetailEarlyResult } from '@/store/rtk-query/hux-ard-art/types'
 import React, { useState, useMemo, useEffect } from 'react'
 import { sortBy as _sortBy } from 'lodash'
 import { useDispatch } from 'react-redux'
 import { useAppSelector } from '@/store/hooks'
 import { showAuthModal } from '@/store/reducer/auth-reducer/actions'
-import { useCreateIdaxInvoiceMutation, useGetTicketOrAssetQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
+import { useCreateIdaxInvoiceMutation, useGetTicketOrAssetQuery, useUsdToArdxRateQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
 import { useRouter } from 'next/router'
 import classNames from 'classnames'
 import moment from 'moment'
@@ -18,37 +18,39 @@ import { MdClose, MdOutlineLocationOn } from 'react-icons/md'
 import { formatPrice } from '@/lib/utils'
 import { toast } from 'react-toastify'
 import SystemRequirementsSection from './components/SystemRequirementsSection'
+import TicketMediaSection from './components/TicketMediaSection'
+import { ClipLoader } from 'react-spinners'
 import MediaSection from './components/MediaSection'
-import GalleryOverlay from './components/GalleryOverlay'
 
 
 type Props = {
     ticket: ArdArtAssetDetailEarlyResult,
-    priceToArdxRate: number,
 }
 
 const TICKET_REGIONS = [
     {
         region: 'ASIA',
-        name: 'Early bird ticket ASIA',
+        name: (name: string) => `${name} ticket ASIA`,
         date: 'Thursday, March 30, 2023, 21:00:00 (UTC +08:00)'
     },
     {
         region: 'EUROPE',
-        name: 'Early bird ticket EUROPE',
+        name: (name: string) => `${name} ticket EUROPE`,
         date: 'Thursday, March 30, 2023, 21:00:00 (UTC +00:00)'
     },
     {
         region: 'USA',
-        name: 'Early bird ticket USA',
+        name: (name: string) => `${name} ticket USA`,
         date: 'Thursday, March 30, 2023, 21:00:00 (UTC -08:00)'
     },
 ];
 
-function TicketSection({ ticket, priceToArdxRate }: Props) {
+function EarlyTicketSection({ ticket }: Props) {
 
     const [selectedTicketRegion, setSelectedTicketRegion] = useState<string>()
     const [callCreateIdaxInvoice] = useCreateIdaxInvoiceMutation()
+
+    const { data: usdArdx, isLoading: isRateLoading } = useUsdToArdxRateQuery()
 
     const authSession = useAppSelector(state => state.auth.session)
 
@@ -57,16 +59,6 @@ function TicketSection({ ticket, priceToArdxRate }: Props) {
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
     const dispatch = useDispatch()
     const router = useRouter()
-
-    const [isCountdownFinished, setIsCountdownFinished] = useState(() => {
-        const mFinishDate = moment(ticket.finishDate);
-        if (mFinishDate.isValid()) {
-            const duration = moment.duration(mFinishDate.diff(moment()))
-            return duration.asSeconds() <= 0
-        } else {
-            return false
-        }
-    })
 
     const email = useAppSelector(state => state.auth.profile?.email)
     const accountId = useAppSelector(state => state.auth.ardArt?.accountId)
@@ -79,10 +71,6 @@ function TicketSection({ ticket, priceToArdxRate }: Props) {
         }
         return undefined
     })
-
-    const priceArdx = useMemo(() => {
-        return formatPrice(ticket.price / priceToArdxRate)
-    }, [ticket.price, priceToArdxRate])
 
     const priceFormatted = useMemo(() => {
         return formatPrice(ticket.price)
@@ -142,18 +130,7 @@ function TicketSection({ ticket, priceToArdxRate }: Props) {
                             <div className="md:w-[60%] mw-md:order-2 mw-md:mt-8">
                                 <div className="flex justify-center w-full">
                                     <div className="relative flex justify-center w-full">
-                                        {/* <img src={ticket.imageUrl} alt={ticket.name} className="object-cover w-full h-auto rounded-lg" /> */}
-                                        <div className="relative w-full">
-                                            <video src="/video/ticket-v2.mp4" autoPlay loop muted className='w-full h-auto rounded-md' />
-                                            <div className="absolute top-0 left-0 right-0">
-                                                <div className="flex justify-end w-full">
-                                                    <div className="flex p-4 px-8 mt-4 mr-4 bg-white cursor-pointer rounded-xl">
-                                                        <label htmlFor='ticket-media-modal'><span className="text-base font-bold cursor-pointer">Show all photos ({ticket.medias?.length || 0})</span></label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
+                                        <img src={ticket.imageUrl} alt={ticket.name} className="object-cover w-full h-auto rounded-lg" />
                                     </div>
                                 </div>
                                 <div className="mt-6 ml-4">
@@ -197,15 +174,11 @@ function TicketSection({ ticket, priceToArdxRate }: Props) {
                                         </div>
                                     </div>
                                     <div className="border border-black rounded-lg border-opacity-[0.1] p-6 mt-4">
-                                        <div className='flex items-center'>
-                                            <Clock size={24} />
-                                            <p className='text-black text-sm text-opacity-[0.65] ml-1'>Early Bird Sale ends {moment("2023-03-04").utcOffset("+08:00").format("MMMM D, YYYY")}</p>
-                                        </div>
-                                        <div className="mt-4">
+                                        <div>
                                             <div className="p-4 rounded-lg bg-black bg-opacity-[0.04]">
                                                 <div className="flex flex-col">
                                                     <p className='text-black text-sm text-opacity-[0.65]'>Current price</p>
-                                                    <div className="flex items-center text-2xl font-bold">${priceFormatted} <span className="ml-2 text-sm font-[300] text-black text-opacity-[0.65]">ARDX{priceArdx}</span> </div>
+                                                    <div className="flex items-center text-2xl font-bold">${priceFormatted} {usdArdx ? (<span className="ml-2 text-sm font-[300] text-black text-opacity-[0.65]">ARDX{formatPrice(ticket.price * usdArdx)}</span>) : (<ClipLoader size={14} />)} </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -227,13 +200,13 @@ function TicketSection({ ticket, priceToArdxRate }: Props) {
                                             <div className="mt-4">
                                                 <div className="flex flex-col w-full">
                                                     <div className='flex flex-col w-full space-y-4'>
-                                                        {TICKET_REGIONS.map((ticket) => (
-                                                            <button key={ticket.region}
+                                                        {TICKET_REGIONS.map((ticketRegion) => (
+                                                            <button key={ticketRegion.region}
                                                                 onClick={() => {
-                                                                    setSelectedTicketRegion(ticket.region)
+                                                                    setSelectedTicketRegion(ticketRegion.region)
                                                                 }}
-                                                                className={classNames(`text-sm border text-left`, { 'bg-black text-white p-3 rounded-lg': selectedTicketRegion === ticket.region, 'bg-white hover:bg-black hover:bg-opacity-[0.04] px-4 py-3 border rounded-lg text-black': selectedTicketRegion !== ticket.region })}>
-                                                                {ticket.name} {ticket.date}
+                                                                className={classNames(`text-sm border text-left`, { 'bg-black text-white p-3 rounded-lg': selectedTicketRegion === ticketRegion.region, 'bg-white hover:bg-black hover:bg-opacity-[0.04] px-4 py-3 border rounded-lg text-black': selectedTicketRegion !== ticketRegion.region })}>
+                                                                {ticketRegion.name(ticket.name)} {ticketRegion.date}
                                                             </button>
                                                         ))}
                                                     </div>
@@ -262,9 +235,8 @@ function TicketSection({ ticket, priceToArdxRate }: Props) {
                     </div>
                 </div>
             </div>
-            <GalleryOverlay ticket={ticket} />
         </>
     )
 }
 
-export default TicketSection
+export default EarlyTicketSection

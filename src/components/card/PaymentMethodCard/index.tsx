@@ -11,7 +11,7 @@ import QRImage from "react-qr-image"
 import { useCreateQpayInvoiceMutation, useCreateQposInvoiceMutation, useCreateSocialpayInvoiceMutation } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
 import classNames from 'classnames'
 import { toast } from 'react-toastify'
-import { ArdArtAssetDetailByIDResult } from '@/store/rtk-query/hux-ard-art/types'
+import { ArdArtAssetDetailByIDResult, ArdArtBundleDetailResult } from '@/store/rtk-query/hux-ard-art/types'
 import { useRouter } from 'next/router'
 import { qpayBanks, qposBanks, QPayBank } from './banks'
 import { useAppSelector } from '@/store/hooks';
@@ -27,16 +27,16 @@ visibleMongolianBanks.push({
 })
 
 type Props = {
-    item: ArdArtAssetDetailByIDResult,
+    item: ArdArtAssetDetailByIDResult | ArdArtBundleDetailResult,
     priceToUsdrate: number,
+    isBundle?: boolean;
     region: string,
 }
 
 type PaymentType = 'card' | 'socialpay' | 'ardapp' | 'socialpay' | 'mongolian-banks'
 
 
-
-function PaymentMethodCard({ item, priceToUsdrate, region }: Props) {
+function PaymentMethodCard({ item, priceToUsdrate, region, ...props }: Props) {
 
     const accountId = useAppSelector(state => state.auth.ardArt.accountId)
     const email = useAppSelector(state => state.auth.profile?.email)
@@ -93,8 +93,15 @@ function PaymentMethodCard({ item, priceToUsdrate, region }: Props) {
             }
         } else if (selected === 'ardapp') {
             const r = await callCreateInvoiceQPos({
-                type: 'single',
-                productId: item.id,
+                ...(props.isBundle ? (
+                    {
+                        type: 'bundle',
+                        bundleId: item.id,
+                    }
+                ) : ({
+                    type: 'single',
+                    productId: item.id,
+                })),
                 email: email!,
                 region,
                 amount: 1,
@@ -118,11 +125,18 @@ function PaymentMethodCard({ item, priceToUsdrate, region }: Props) {
             }
             if (qPosBank) {
                 const r = await callCreateInvoiceQPos({
-                    productId: item.id,
+                    ...(props.isBundle ? (
+                        {
+                            type: 'bundle',
+                            bundleId: item.id,
+                        }
+                    ) : ({
+                        type: 'single',
+                        productId: item.id,
+                    })),
                     email: email!,
                     region,
                     accountId,
-                    type: 'single',
                     amount: 1,
                 }).unwrap()
                 if (r.result) {
@@ -131,11 +145,18 @@ function PaymentMethodCard({ item, priceToUsdrate, region }: Props) {
                 return;
             }
             const r = await callCreateInvoiceQPay({
-                productId: item.id,
+                ...(props.isBundle ? (
+                    {
+                        type: 'bundle',
+                        bundleId: item.id,
+                    }
+                ) : ({
+                    type: 'single',
+                    productId: item.id,
+                })),
                 accountId,
                 email: email!,
                 region,
-                type: 'single',
                 amount: 1,
             }).unwrap()
             if (r.result) {

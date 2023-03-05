@@ -14,6 +14,18 @@
           "destination": "/privacy-policy/en.html"
         },
         {
+          "source": "/bundle**",
+          "destination": "/bundle.html"
+        },
+        {
+          "source": "/ticket**",
+          "destination": "/ticket.html"
+        },
+        {
+          "source": "/product**",
+          "destination": "/product.html"
+        },
+        {
           "source": "/terms-of-service/en**",
           "destination": "/terms-of-service/en.html"
         },
@@ -28,10 +40,6 @@
         {
           "source": "/model**",
           "destination": "/model.html"
-        },
-        {
-          "source": "/ticket**",
-          "destination": "/ticket.html"
         },
         {
           "source": "/payment-status/**",
@@ -73,6 +81,18 @@
           "destination": "/wv/idax/index.html"
         },
         {
+          "source": "/ticket**",
+          "destination": "/ticket.html"
+        },
+        {
+          "source": "/bundle**",
+          "destination": "/bundle.html"
+        },
+        {
+          "source": "/product**",
+          "destination": "/product.html"
+        },
+        {
           "source": "/terms-of-service/en**",
           "destination": "/terms-of-service/en.html"
         },
@@ -99,10 +119,6 @@
         {
           "source": "/early**",
           "destination": "/early.html"
-        },
-        {
-          "source": "/ticket**",
-          "destination": "/ticket.html"
         },
         {
           "source": "/payment-status/**",
@@ -144,6 +160,22 @@
           "destination": "/privacy-policy/en.html"
         },
         {
+          "source": "/ticket**",
+          "destination": "/ticket.html"
+        },
+        {
+          "source": "/detail**",
+          "destination": "/detail.html"
+        },
+        {
+          "source": "/bundle**",
+          "destination": "/bundle.html"
+        },
+        {
+          "source": "/product**",
+          "destination": "/product.html"
+        },
+        {
           "source": "/terms-of-service/en**",
           "destination": "/terms-of-service/en.html"
         },
@@ -162,10 +194,6 @@
         {
           "source": "/early**",
           "destination": "/early.html"
-        },
-        {
-          "source": "/ticket**",
-          "destination": "/ticket.html"
         },
         {
           "source": "/payment-status/**",

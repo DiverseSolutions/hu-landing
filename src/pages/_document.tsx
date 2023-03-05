@@ -26,7 +26,7 @@ export default function Document() {
         ) : (<></>)}
         {DEPLOYMENT_ENV !== 'prod' ? (
           <>
-            <script src="//widget.manychat.com/100771372950041.js" defer></script>
+            <script src="//widget.manychat.com/287810938508397.js" defer></script>
             <script src="https://mccdn.me/assets/js/widget.js" defer></script>
           </>
         ) : (<></>)}
@@ -44,6 +44,7 @@ export default function Document() {
                 fbq('track', 'PageView');`
           }} />
         ) : (<></>)}
+        <script async defer id="hu-model-viewer" type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.0.1/model-viewer.min.js"></script>
       </body>
     </Html>
   )

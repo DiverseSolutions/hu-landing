@@ -130,7 +130,7 @@ export default function AuthFeature({
                     setFormType(DEFAULT_MODAL)
                 }
             }} />
-            <div className="modal" onClick={() => {
+            <div className="modal backdrop-blur-[7.5px] bg-black bg-opacity-[0.4]" onClick={() => {
                 dispatch(hideAuthModal())
             }}>
                 <div className="modal-box" onClick={(e) => {

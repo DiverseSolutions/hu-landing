@@ -10,6 +10,8 @@ import AuthFeature from '@/features/auth/AuthFeature';
 import Head from 'next/head';
 
 import { APP_HOST_URL } from '@/lib/consts'
+import PageErrorFeature from '@/features/error/PageErrorFeature';
+import Layout from '@/components/layout/Layout';
 
 export default function App({ Component, pageProps, ...rest }: AppProps) {
   const { store, props } = wrapper.useWrappedStore(rest);
@@ -31,7 +33,11 @@ export default function App({ Component, pageProps, ...rest }: AppProps) {
         <meta name="twitter:image" content={`${APP_HOST_URL}${SocialShareImg.src}`} />
       </Head>
       <Provider store={store}>
-        <Component {...props.pageProps} />
+        <Layout>
+          <PageErrorFeature>
+            <Component {...props.pageProps} />
+          </PageErrorFeature>
+        </Layout>
         <AuthFeature />
         <ToastContainer />
       </Provider>

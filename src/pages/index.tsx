@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <>
       <main>
-        {DEPLOYMENT_ENV === 'prod' ? <HomePage /> : <HomePageV2 />}
+        {DEPLOYMENT_ENV === 'prod' ? <HomePageV2 /> : <HomePageV2 />}
       </main>
     </>
   )

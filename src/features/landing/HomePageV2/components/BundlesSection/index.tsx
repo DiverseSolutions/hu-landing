@@ -90,7 +90,7 @@ function BundlesSection({ }: Props) {
 
                     </div>
                 </div>
-                <div className="flex justify-center w-full px-2 mt-4 md:px-0">
+                <div className="flex justify-center w-full px-2 mt-4 md:hidden md:px-0">
                     <Link href="/bundles" className="font-bold mx-2 md:mx-0 cursor-pointer w-full text-center rounded-xl bg-black bg-opacity-[0.04] px-6 py-[14px]">
                         Show all ({bundleData?.result?.count || 0})
                     </Link>

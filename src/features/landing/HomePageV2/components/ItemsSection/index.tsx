@@ -36,7 +36,7 @@ function ItemsSection({ }: Props) {
                     <p className="font-bold text-[32px]">
                         The Hu in the metaverse collection
                     </p>
-                    <div className="mt-8">
+                    <div className="mt-8 max-w-[100vw] overflow-x-auto no-scrollbar">
                         <CategorySelectList defaultValues={assetCategories} onChanged={setActiveCategory} activeValues={activeCategory} />
                     </div>
                 </div>

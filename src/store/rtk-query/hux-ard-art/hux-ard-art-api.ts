@@ -14,7 +14,9 @@ export const huxArdArtApi = createApi({
             ownerId?: number,
             category?: number,
             minPrice?: number,
-            maxPrice?: number
+            maxPrice?: number,
+            offset?: number;
+            limit?: number;
         } | void>({
             query: (d) => ({
                 url: '/api/v1/asset/get',
@@ -244,6 +246,7 @@ export const huxArdArtApi = createApi({
 
 export const {
     useGetTicketOrAssetQuery,
+    useLazyGetTicketOrAssetQuery,
     useGetBundleQuery,
     useInvoiceBundleMutation,
     useMyOwnedNftQuery,

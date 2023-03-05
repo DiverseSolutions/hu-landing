@@ -44,7 +44,7 @@ export default function EarlyTicketFeature({ }: Props) {
     }
     return (
         <div>
-            <EarlyTicketSection ticket={ticket} usdToArdx={usdToArdxRate} />
+            <EarlyTicketSection ticket={ticket} />
         </div>
     )
 }

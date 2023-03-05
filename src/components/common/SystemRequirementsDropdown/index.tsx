@@ -13,7 +13,7 @@ function SystemRequirementsDropdown({ }: Props) {
     return (
         <div onClick={() => {
             setIsOpen(!isOpen)
-        }} className="flex dropdown dropdown-hover dropdown-top rounded-xl py-[14px] cursor-pointer px-6 items-center bg-black bg-opacity-[0.04]">
+        }} className="flex dropdown dropdown-hover dropdown-bottom dropdown-end rounded-xl py-[14px] cursor-pointer px-6 items-center bg-black bg-opacity-[0.04]">
             <SysReqInfoSvg />
             <p className="ml-6 mr-8 font-bold text-black">System Requirements</p>
             <span tabIndex={0} className={classNames(

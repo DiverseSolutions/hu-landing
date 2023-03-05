@@ -7,17 +7,18 @@ import { useCreateIdaxInvoiceMutation, useUsdToArdxRateQuery } from '@/store/rtk
 import { ArdArtBundleDetailResult } from '@/store/rtk-query/hux-ard-art/types'
 import { useRouter } from 'next/router'
 import PlusGrey from '@/components/icon/svgr/PlusGrey'
+import ExpandSvg from './img/expand.svg'
 import React, { useState, useMemo } from 'react'
 import { toast } from 'react-toastify'
+import HeartWhiteSvg from './img/heart-white.svg'
 import { MdClose, MdOutlineLocationOn } from 'react-icons/md'
+
+import WarningSvg from './img/warning.svg'
 
 import { ASSET_CATEGORY, TICKET_REGIONS } from '@/lib/consts'
 import classNames from 'classnames'
-import dynamic from 'next/dynamic'
 import { ClipLoader } from 'react-spinners'
-import SystemRequirementsSection from '@/components/section/components/SystemRequirementsSection'
 import SystemRequirementsDropdown from '@/components/common/SystemRequirementsDropdown'
-import { IoExpand, IoResize } from 'react-icons/io5'
 import ModelModal from './components/ModelModal'
 import CategorySelectList from '@/components/common/CategorySelectList'
 import { CategoryItemType } from '@/components/common/CategorySelectList/types'
@@ -95,54 +96,80 @@ function BundleDetailFeature({
     return (
         <>
             <div>
-                {isGlb ? (
-                    <div className="flex relative justify-center w-full h-[400px]">
-                        <div dangerouslySetInnerHTML={{
-                            __html: `<model-viewer loading="eager" style="height: 400px; width: 50vw;" poster="${bundle.imageUrl}" src="${bundle.coverUrl}" ar crossorigin="anonymous" camera-controls touch-action="pan-y"></model-viewer>`
-                        }}>
 
-                        </div>
-                        <div onClick={() => {
-                            setIsModelExpanded(true)
-                        }} className="absolute cursor-pointer top-0 right-[35%]">
-                            <IoExpand size={48} />
-                        </div>
-                    </div>
-                ) : (<img src={bundle.imageUrl} className="object-cover rounded-xl w-full h-[400px]" />)}
                 <div className="flex justify-center w-full">
                     <div className="container px-2 mt-8 md:px-0">
                         <div className="flex flex-col w-full md:flex-row">
-                            <div className="flex flex-col md:w-[65%] w-full">
-                                <p className="font-bold text-[32px]">{bundle.name}</p>
-                                <div className="mt-6">
-                                    <div className="flex items-center">
-                                        <p className='text-base'>Powered by <span className="font-bold">ARD</span></p>
-                                        <p className='ml-8 text-base'>Created <span className='font-bold'>Feb 2023</span></p>
+                            <div className="flex w-full">
+                                {isGlb ? (
+                                    <div className="relative flex items-center justify-center w-full h-full border mw-md:aspect-square rounded-xl">
+                                        <div dangerouslySetInnerHTML={{
+                                            __html: `<model-viewer loading="eager" class="hu-model-viewer" poster="${bundle.imageUrl}" src="${bundle.coverUrl}" ar crossorigin="anonymous" camera-controls touch-action="pan-y"></model-viewer>`
+                                        }}>
+
+                                        </div>
+                                        <div onClick={() => {
+                                            setIsModelExpanded(true)
+                                        }} className="absolute bg-black bg-opacity-[0.04] rounded-xl p-4 cursor-pointer top-4 right-4">
+                                            <ExpandSvg />
+                                        </div>
                                     </div>
-                                    <div className="mt-6">
-                                        <p className='text-black text-opacity-[0.54] text-base'>{bundle.description}</p>
+                                ) : (<img src={bundle.imageUrl} className="object-cover rounded-xl w-full h-[25vh] md:h-[25vw]" />)}
+                            </div>
+                            <div className="flex flex-col w-full mt-4 md:ml-4">
+                                <div className='flex flex-col justify-between w-full h-full'>
+                                    <div className="flex flex-col">
+                                        <p className="font-bold text-[24px] leading-[32px] max-w-[300px]">{bundle.name} <span className="text-black text-opacity-[0.35]">(Bundle)</span></p>
+                                        <div className="flex items-center mt-4">
+                                            <p className='text-sm md:text-base'>Powered by <span className="font-bold">ARD</span></p>
+                                            <span className="px-2 py-1 font-bold ml-2 text-xs text-white rounded-xl bg-[#D63333]">Bonus ARDX{formatPrice(bundle.depositAmount)}</span>
+                                            <div className="rounded-full w-0.5 h-0.5 bg-black ml-2">
+
+                                            </div>
+                                            <p className='ml-2 text-sm md:text-base'>Created <span className='font-bold'>Feb 2023</span></p>
+                                        </div>
+                                        <div className="mt-6">
+                                            <p className='text-black text-opacity-[0.54] max-h-[300px] overflow-y-auto no-scrollbar text-sm md:text-base'>{bundle.description}</p>
+                                        </div>
                                     </div>
-                                    <div className="mt-8">
-                                        <div className="flex"><SystemRequirementsDropdown /></div>
-                                    </div>
-                                    <div className="mt-8">
-                                        <div className="flex">
-                                            <div className="flex bg-black bg-opacity-[0.04] rounded-lg">
+                                    <div className="flex w-full mt-8">
+                                        <div className="flex flex-wrap md:flex-nowrap">
+                                            <div className="flex bg-black bg-opacity-[0.04] rounded-xl">
                                                 <div className="flex flex-col items-center justify-center px-4 py-2">
-                                                    <p className='text-2xl font-bold'>{bundle.items?.length}</p>
-                                                    <p className="font-normal text-black text-opacity-[0.65]">Items</p>
+                                                    <p className='text-sm font-bold md:text-base'>{bundle.items?.length}</p>
+                                                    <p className="font-normal text-[10px] text-black text-opacity-[0.65]">Items</p>
                                                 </div>
                                             </div>
-                                            <div className="flex ml-2 bg-black bg-opacity-[0.04] rounded-lg px-4 py-2 md:pr-[120px]">
+                                            <div className="flex ml-2 bg-black bg-opacity-[0.04] rounded-xl px-4 py-2">
                                                 <div className="flex flex-col">
                                                     <div className="flex">
-                                                        <span className="text-2xl font-bold">$ {formatPrice(bundle.price)}</span>
+                                                        <span className="text-sm font-bold md:text-base">$ {formatPrice(bundle.price)}</span>
                                                         {usdArdx ? (
-                                                            <span className='text-sm font-normal ml-1 text-opacity-[0.65] text-black'>ARDX {formatPrice(bundle.price * usdArdx)}</span>
+                                                            <span className='text-xs font-normal ml-1 text-opacity-[0.65] text-black'>ARDX {formatPrice(bundle.price * usdArdx)}</span>
                                                         ) : (<ClipLoader size={14} />)}
                                                     </div>
-                                                    <span className="mt-1 text-sm text-black text-opacity-[0.65]">
+                                                    <span className="text-[10px] text-black text-opacity-[0.65]">
                                                         total bundle price with USD
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div className="flex mt-2 md:mt-0 md:ml-2 bg-black bg-opacity-[0.04] rounded-xl px-4 py-2">
+                                                <div className="flex flex-col">
+                                                    <div className="flex">
+                                                        <span className="text-sm font-bold md:text-base">March 30, 2023</span>
+                                                    </div>
+                                                    <span className="text-[10px] text-black text-opacity-[0.65]">
+                                                        Event Date
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div className="flex ml-2 mt-2 md:mt-0 md:ml-2 bg-black bg-opacity-[0.04] rounded-xl px-4 py-2">
+                                                <div className="flex flex-col">
+                                                    <div className="flex">
+                                                        <span className="text-sm font-bold md:text-base">Metaland</span>
+                                                    </div>
+                                                    <span className="text-[10px] text-black text-opacity-[0.65]">
+                                                        Location
                                                     </span>
                                                 </div>
                                             </div>
@@ -150,15 +177,16 @@ function BundleDetailFeature({
                                     </div>
                                 </div>
                             </div>
-                            <div className="md:w-[35%] w-full md:ml-10">
-                                <div className="mt-4 rounded-lg border-[1px] border-black border-opacity-[0.1] p-6">
+                            <div className="w-full md:ml-10">
+                                <div className="mt-4 rounded-xl">
                                     <div className='flex items-center'>
                                         <MdOutlineLocationOn size={24} opacity={0.65} />
-                                        <p className='text-black text-sm text-opacity-[0.65] ml-1'>Choose timezone that matches you</p>
+                                        <p className='text-black text-xs md:text-sm text-opacity-[0.65] ml-1'>Choose timezone that matches you</p>
                                     </div>
                                     <div className="mt-4">
-                                        <div className="flex w-full p-4 rounded-lg itms-start" style={{ background: 'rgba(255, 140, 0, 0.05)' }}>
-                                            <span className='text-xs'>To make Purchase please select your Time Zone accordingly. Please note that you will be only able to attend the concert in the the Time zone of your selection.</span>
+                                        <div className="flex w-full p-4 rounded-xl itms-start" style={{ background: 'rgba(255, 140, 0, 0.05)' }}>
+                                            <div><WarningSvg /></div>
+                                            <span className='text-xs ml-[18px]'>To make Purchase please select your Time Zone accordingly. Please note that you will be only able to attend the concert in the the Time zone of your selection.</span>
                                         </div>
                                     </div>
                                     <div className="mt-4">
@@ -169,7 +197,7 @@ function BundleDetailFeature({
                                                         onClick={() => {
                                                             setSelectedRegion(ticket.region)
                                                         }}
-                                                        className={classNames(`text-sm border text-left`, { 'bg-black text-white p-3 rounded-lg': selectedRegion === ticket.region, 'bg-white hover:bg-black hover:bg-opacity-[0.04] px-4 py-3 border rounded-lg text-black': selectedRegion !== ticket.region })}>
+                                                        className={classNames(`text-xs md:text-sm border text-left`, { 'bg-black text-white p-3 rounded-xl': selectedRegion === ticket.region, 'bg-white hover:bg-black hover:bg-opacity-[0.04] px-4 py-3 border rounded-xl text-black': selectedRegion !== ticket.region })}>
                                                         {ticket.name} {ticket.date}
                                                     </button>
                                                 ))}
@@ -179,11 +207,11 @@ function BundleDetailFeature({
                                     <div className="mt-4">
                                         <div className="flex w-full">
                                             <div className="flex flex-grow">
-                                                <button onClick={handlePurchase} className={classNames("btn btn-primary rounded-lg btn-block", { 'bg-black bg-opacity-[0.2] text-black text-opacity-[0.2] hover:bg-black hover:bg-opacity-[0.2]': !selectedRegion })}>Purchase</button>
+                                                <button onClick={handlePurchase} className={classNames("btn btn-primary rounded-xl btn-block", { 'bg-black bg-opacity-[0.2] text-black text-opacity-[0.2] hover:bg-black hover:bg-opacity-[0.2]': !selectedRegion })}>Purchase $({formatPrice(bundle.price)})</button>
                                             </div>
-                                            <div className="flex ml-2">
-                                                <div className="btn hover:bg-opacity-[0.12] btn-disabled bg-opacity-[0.2] rounded-lg">
-                                                    <PlusGrey />
+                                            <div className="flex ml-2 cursor-pointer">
+                                                <div className="btn hosver:bg-opacity-[0.12] bg-black btn-disabled rounded-xl">
+                                                    <HeartWhiteSvg />
                                                 </div>
                                             </div>
                                         </div>
@@ -193,12 +221,13 @@ function BundleDetailFeature({
                         </div>
                     </div>
                 </div>
-                <div className="flex justify-center w-full mt-[120px]">
+                <div className="border-b mt-10 w-full bg-black bg-opacity-[0.1]"></div>
+                <div className="flex justify-center w-full mt-4 md:mt-8">
                     <div className="container px-2 md:px-0">
-                        <CategorySelectList defaultValues={categoryList} activeValues={activeCategory} onChanged={setActiveCategory} />
-                        <div className="mt-6">
+                        <p className="font-bold text-xl md:text-[32px]">Minted Items</p>
+                        <div className="mt-6 md:mt-8">
                             {visibleItems?.length ? (
-                                <div className="grid grid-cols-1 gap-x-2 gap-y-6 md:grid-cols-2 xl:grid-cols-5">
+                                <div className="grid grid-cols-2 gap-x-2 gap-y-6 md:grid-cols-2 xl:grid-cols-5">
                                     {visibleItems.map((item) => (
                                         <BundleItemCard key={item.id} item={item} />
                                     ))}

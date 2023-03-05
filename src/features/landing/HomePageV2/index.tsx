@@ -43,7 +43,7 @@ function HomePageV2({ }: Props) {
                                                         }} className="font-bold cursor-pointer text-base flex justify-center items-center md:text-xl text-center py-2.5 md:py-[14px] px-4 md:px-6 hover:bg-white hover:bg-opacity-1 text-black rounded-xl bg-white bg-opacity-[0.93]">
                                                             Buy Ticket
                                                         </button>
-                                                        <Link href="/" className="font-bold text-base flex justify-center text-white items-center md:text-xl text-center ml-4 py-2.5 md:py-[14px] px-4 md:px-6 hover:bg-black hover:bg-opacity-1 rounded-xl bg-black bg-opacity-[0.04]">
+                                                        <Link href="/" className="font-bold text-base flex justify-center text-white items-center md:text-xl text-center ml-4 py-2.5 md:py-[14px] px-4 md:px-6 hover:bg-black hover:bg-opacity-1 bg-white rounded-xl bg-opacity-[0.04]">
                                                             About us
                                                         </Link>
                                                     </div>

@@ -59,7 +59,7 @@ function BundleDetailFeature({
         if (!activeCategory?.length) {
             return bundle.items
         }
-        return bundle.items.filter((i) => activeCategory.find((a) => a.id === i.product.category))
+        return bundle.items.filter((i) => activeCategory.find((a) => a.id === i.product.category || a.id === i.product.tag || a.id === i.product.category))
     }, [bundle.items, activeCategory])
 
     const handlePurchase = async () => {

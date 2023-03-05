@@ -44,7 +44,7 @@ function ItemsSection({ }: Props) {
             if (!activeCategory?.length) {
                 return data
             }
-            return data.filter((item) => activeCategory.find((a) => a.id === item.category))
+            return data.filter((item) => activeCategory.find((a) => a.id === item.category || a.id === item.tag || a.id === item.type))
         }
         return []
     }, [data, activeCategory])

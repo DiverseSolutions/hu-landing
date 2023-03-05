@@ -27,7 +27,7 @@ function BundlesSection({ }: Props) {
             if (!activeCategory?.length) {
                 return bundleData?.result?.records
             }
-            return bundleData?.result?.records.filter((bundle) => activeCategory.find((a) => a.id === bundle.category))
+            return bundleData?.result?.records.filter((bundle) => activeCategory.find((a) => a.id === bundle.category || a.id === bundle.tag))
         }
         return []
     }, [bundleData, activeCategory])

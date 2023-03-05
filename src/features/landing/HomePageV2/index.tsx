@@ -30,7 +30,7 @@ function HomePageV2({ }: Props) {
                                             <div className="flex mt-16 md:mt-0 items-center justify-start md:w-[50%] h-full">
                                                 <div className="flex flex-col w-full">
                                                     <p className="text-[32px] leading-[36px] text-left md:text-left md:text-[40px] md:leading-[44px] font-bold text-white">
-                                                        Be heard in every nation and every<br /> tongue wherever the sun rises
+                                                        Be heard in every<br /> nation and every<br /> tongue wherever the sun rises
                                                     </p>
                                                     <div className="flex w-full mt-8">
                                                         <Link href="/" className="font-bold text-base flex justify-center items-center md:text-xl text-center py-2.5 md:py-[14px] px-4 md:px-6 hover:bg-white hover:bg-opacity-1 text-black rounded-xl bg-white bg-opacity-[0.93]">

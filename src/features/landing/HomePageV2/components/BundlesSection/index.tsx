@@ -27,24 +27,24 @@ function BundlesSection({ }: Props) {
             if (!activeCategory?.length) {
                 return bundleData?.result?.records
             }
-            return bundleData?.result?.records.filter((bundle) => activeCategory.find((a) => a.id === bundle.category))
+            return bundleData?.result?.records.filter((bundle) => activeCategory.find((a) => a.id === bundle.category || a.id === bundle.tag))
         }
         return []
     }, [bundleData, activeCategory])
 
     return (
         <>
-            <div className='flex flex-col items-center w-full'>
+            <div className='flex flex-col items-center w-full px-2 md:px-0'>
                 <div className="container px-2 md:px-0">
-                    <p className="font-bold text-[32px]">
+                    <p className="font-bold px-2 md:px-0 text-[24px] md:text-[32px]">
                         Bundles
                     </p>
-                    <div className="mt-8">
+                    <div className="mt-6 md:mt-4">
                         <div className="flex flex-col justify-between w-full space-y-4 md:space-y-0 md:flex-row">
-                            <div className="flex space-x-4">
+                            <div className="flex space-x-4 overflow-x-auto max-w-[100vw] no-scrollbar">
                                 <CategorySelectList defaultValues={bundleCategories} activeValues={activeCategory} onChanged={setActiveCategory} />
                             </div>
-                            <div className='flex space-x-4'>
+                            <div className='hidden space-x-4 md:flex'>
                                 <Link href="/bundles" className="font-bold cursor-pointer rounded-xl bg-black bg-opacity-[0.04] px-6 py-[14px]">
                                     Show all ({bundleData?.result?.count || 0})
                                 </Link>
@@ -89,6 +89,11 @@ function BundlesSection({ }: Props) {
                     }}>
 
                     </div>
+                </div>
+                <div className="flex justify-center w-full px-2 mt-4 md:hidden md:px-0">
+                    <Link href="/bundles" className="font-bold mx-2 md:mx-0 cursor-pointer w-full text-center rounded-xl bg-black bg-opacity-[0.04] px-6 py-[14px]">
+                        Show all ({bundleData?.result?.count || 0})
+                    </Link>
                 </div>
             </div>
         </>

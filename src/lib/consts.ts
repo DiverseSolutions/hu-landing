@@ -31,13 +31,6 @@ export const ASSET_CATEGORY = [{
 }, {
     slug: 'emote',
     name: 'Emote'
-}, {
-    slug: 'weapon',
-    name: 'Weapon',
-},
-{
-    slug: 'mount',
-    name: 'Mount',
 }
 ]
 

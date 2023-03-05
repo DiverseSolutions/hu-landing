@@ -34,10 +34,6 @@
           "destination": "/spline.html"
         },
         {
-          "source": "/early**",
-          "destination": "/early.html"
-        },
-        {
           "source": "/model**",
           "destination": "/model.html"
         },
@@ -117,10 +113,6 @@
           "destination": "/model.html"
         },
         {
-          "source": "/early**",
-          "destination": "/early.html"
-        },
-        {
           "source": "/payment-status/**",
           "destination": "/payment-status/[invoiceId].html"
         },
@@ -190,10 +182,6 @@
         {
           "source": "/model**",
           "destination": "/model.html"
-        },
-        {
-          "source": "/early**",
-          "destination": "/early.html"
         },
         {
           "source": "/payment-status/**",

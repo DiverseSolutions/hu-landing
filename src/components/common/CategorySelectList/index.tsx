@@ -14,7 +14,7 @@ function CategorySelectList({ onChanged, activeValues, defaultValues }: Props) {
     const [activeList, setActiveList] = useState<CategoryItemType[]>([])
 
     return (
-        <div className="flex flex-wrap space-x-4 space-y-4 md:space-y-0 md:flex-nowrap">
+        <div className="flex space-x-4 md:flex-nowrap">
             {defaultValues.map((c) => {
                 const isActive = activeValues.find((a) => a.id === c.id) ? true : false
                 return <button key={c.id}
@@ -33,10 +33,10 @@ function CategorySelectList({ onChanged, activeValues, defaultValues }: Props) {
                             }
                         }
                     }}
-                    className={classNames('bg-black hover:bg-black transition-all duration-300 hover:text-white font-bold cursor-pointer rounded-xl px-5 py-[14px]',
+                    className={classNames('text-xs md:text-base md:hover:bg-black transition-all duration-300 md:hover:text-white font-bold cursor-pointer rounded-xl px-4 py-2.5',
                         {
                             'bg-black text-white ': isActive,
-                            'text-black text-opacity-[0.65] bg-opacity-[0.04]': !isActive
+                            'text-black text-opacity-[0.35] bg-opacity-[0.04]': !isActive
                         })}>{c.name}</button>
             })}
         </div>

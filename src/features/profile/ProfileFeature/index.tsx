@@ -173,7 +173,7 @@ const ProfileFeature = ({ }: Props) => {
                             <div className="mt-8">
                                 <div className="md:p-8 p-4 rounded-xl w-ful bg-black bg-opacity-[0.04]">
                                     <div className="flex flex-col justify-between w-full space-y-4 md:space-y-0 md:flex-row">
-                                        <div className="flex flex-col max-w-[450px]">
+                                        <div className="flex flex-col">
                                             <p className="text-base font-bold md:text-lg">How to watch the concert?</p>
                                             <p className='md:text-base text-sm mt-4 text-black opacity-[0.65]'>Please download and install this file on a computer that meets the system requirement and runs on Windows OS. By meeting the system requirements you will be able to enjoy the concert in high quality. The final file to watch the concert will be available for download on March 28, 2023. Demo file for installation and testing will be available on March 10, 2023.</p>
                                         </div>
@@ -198,14 +198,14 @@ const ProfileFeature = ({ }: Props) => {
                                 <div>
                                     <div>
                                         <div className="tabs border-b-[1px] border-black border-opacity-[0.2]">
-                                            <a className="text-base tab tab-bordered border-black border-b-[1px] tab-active">My Assets</a>
-                                            <a className="text-base cursor-not-allowed border-b-[1px] tab tab-bordered border-transparent">Activity</a>
+                                            <a className="text-sm md:text-base tab tab-bordered border-black border-b-[1px] tab-active font-bold">My Assets</a>
+                                            <a className="text-sm md:text-base cursor-not-allowed border-b-[1px] tab tab-bordered border-transparent font-bold opacity-[0.35]">Activity</a>
                                         </div>
                                     </div>
                                     <div className="mt-2">
                                         <div className="flex items-center w-full p-4 rounded-lg" style={{ background: 'rgba(255, 140, 0, 0.05)' }}>
                                             <span><WarningSvg /></span>
-                                            <span className='text-xs ml-[18px]'>You can only trasfer one NFT at a time. Please check the NFT before proceeding with trasfer.</span>
+                                            <span className='text-xs md:text-sm ml-[18px]'>You can only transfer one NFT at a time. Please check the NFT before proceeding with transfer.</span>
                                         </div>
                                     </div>
                                     <div className="mt-6">

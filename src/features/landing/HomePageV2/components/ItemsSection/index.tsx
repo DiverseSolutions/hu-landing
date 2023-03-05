@@ -47,7 +47,7 @@ function ItemsSection({ }: Props) {
                             <div className="w-full">
                                 {!isAssetLoading && visibleItems?.length ? (
                                     <>
-                                        <div className="grid grid-cols-1 gap-4 gap-y-8 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-5">
+                                        <div className="grid grid-cols-2 gap-4 gap-y-8 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-5">
                                             {visibleItems.map((item) => (
                                                 <div key={item.id} className="flex cursor-pointer">
                                                     <ItemCard

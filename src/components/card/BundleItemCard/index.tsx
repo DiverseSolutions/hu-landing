@@ -21,7 +21,7 @@ function BundleItemCard({ item }: Props) {
                 router.push(`/product?id=${item.productId}`)
             }} className='relative w-full p-0 cursor-pointer card'>
                 <div className="p-0 card-body">
-                    <div className="w-full h-[200px] m:h-[350px] rounded-xl overflow-hidden">
+                    <div className="w-full h-[200px] md:h-[350px] rounded-xl overflow-hidden">
                         <img src={item.product.imageUrl} className="object-cover transform transition-all duration-200 hover:scale-[1.1] w-full h-full" />
                     </div>
                     <div className="mt-2">

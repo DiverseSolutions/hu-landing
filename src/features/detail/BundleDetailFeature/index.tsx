@@ -10,6 +10,7 @@ import PlusGrey from '@/components/icon/svgr/PlusGrey'
 import ExpandSvg from './img/expand.svg'
 import React, { useState, useMemo } from 'react'
 import { toast } from 'react-toastify'
+import HeartWhiteSvg from './img/heart-white.svg'
 import { MdClose, MdOutlineLocationOn } from 'react-icons/md'
 
 import { ASSET_CATEGORY, TICKET_REGIONS } from '@/lib/consts'
@@ -96,7 +97,7 @@ function BundleDetailFeature({
 
                 <div className="flex justify-center w-full">
                     <div className="container px-2 mt-8 md:px-0">
-                        <div className="flex flex-col w-full md:grid md:grid-cols-3 md:gap-x-8">
+                        <div className="flex flex-col w-full md:flex-row">
                             <div className="flex w-full">
                                 {isGlb ? (
                                     <div className="relative flex items-center justify-center w-full h-full border mw-md:aspect-square rounded-xl">
@@ -113,7 +114,7 @@ function BundleDetailFeature({
                                     </div>
                                 ) : (<img src={bundle.imageUrl} className="object-cover rounded-xl w-full h-[25vh] md:h-[25vw]" />)}
                             </div>
-                            <div className="flex flex-col w-full mt-4">
+                            <div className="flex flex-col w-full mt-4 md:ml-4">
                                 <div className='flex flex-col justify-between w-full h-full'>
                                     <div className="flex flex-col">
                                         <p className="font-bold text-[24px] leading-[32px] max-w-[300px]">{bundle.name} <span className="text-black text-opacity-[0.35]">(Bundle)</span></p>
@@ -126,7 +127,7 @@ function BundleDetailFeature({
                                             <p className='ml-2 text-base'>Created <span className='font-bold'>Feb 2023</span></p>
                                         </div>
                                         <div className="mt-6">
-                                            <p className='text-black text-opacity-[0.54] text-base'>{bundle.description}</p>
+                                            <p className='text-black text-opacity-[0.54] max-h-[300px] overflow-y-auto no-scrollbar text-base'>{bundle.description}</p>
                                         </div>
                                     </div>
                                     <div className="flex w-full mt-8">
@@ -205,9 +206,9 @@ function BundleDetailFeature({
                                             <div className="flex flex-grow">
                                                 <button onClick={handlePurchase} className={classNames("btn btn-primary rounded-xl btn-block", { 'bg-black bg-opacity-[0.2] text-black text-opacity-[0.2] hover:bg-black hover:bg-opacity-[0.2]': !selectedRegion })}>Purchase $({formatPrice(bundle.price)})</button>
                                             </div>
-                                            <div className="flex ml-2">
-                                                <div className="btn hover:bg-opacity-[0.12] btn-disabled bg-opacity-[0.2] rounded-xl">
-                                                    <PlusGrey />
+                                            <div className="flex ml-2 cursor-pointer">
+                                                <div className="btn hosver:bg-opacity-[0.12] bg-black btn-disabled rounded-xl">
+                                                    <HeartWhiteSvg />
                                                 </div>
                                             </div>
                                         </div>
@@ -218,10 +219,10 @@ function BundleDetailFeature({
                     </div>
                 </div>
                 <div className="border-b mt-10 w-full bg-black bg-opacity-[0.1]"></div>
-                <div className="flex justify-center w-full mt-4">
+                <div className="flex justify-center w-full mt-4 md:mt-8">
                     <div className="container px-2 md:px-0">
                         <p className="font-bold text-xl md:text-[32px]">Minted Items</p>
-                        <div className="mt-6">
+                        <div className="mt-6 md:mt-8">
                             {visibleItems?.length ? (
                                 <div className="grid grid-cols-2 gap-x-2 gap-y-6 md:grid-cols-2 xl:grid-cols-5">
                                     {visibleItems.map((item) => (

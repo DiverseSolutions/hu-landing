@@ -2,9 +2,10 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { showAuthModal } from '@/store/reducer/auth-reducer/actions';
 import { useArdxUsdRateQuery, useAssetDetailEarlyQuery, useCreateIdaxInvoiceMutation, useLazyArdxUsdRateQuery, useLazyMonxanshRateQuery, useUsdToArdxRateQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api';
 import { ArdArtAssetDetailResult } from '@/store/rtk-query/hux-ard-art/types';
-import PlusGrey from '@/components/icon/svgr/PlusGrey'
-import LocationSvg from '@/assets/svg/location.svg'
 import { MdClose, MdOutlineLocationOn } from 'react-icons/md'
+import WarningSvg from './img/warning.svg'
+
+import { BiChevronDown, BiChevronUp } from 'react-icons/bi'
 
 import { useRouter } from 'next/router';
 import React, { useState, useMemo, useEffect } from 'react';
@@ -39,6 +40,8 @@ export default function ProductDetailFeature({
     const accountId = useAppSelector(state => state.auth.ardArt?.accountId)
 
     const idaxAuth = useAppSelector(state => state.auth.idax)
+
+    const [isDescSeeMore, setIsDescSeeMore] = useState(false)
 
     const handlePurchase = async () => {
         if (!selectedTicketRegion) {
@@ -86,20 +89,25 @@ export default function ProductDetailFeature({
                                     <img src={item.imageUrl} alt={item.name} className="object-cover w-full h-auto rounded-lg" />
                                 </div>
                             </div>
-                            <div className="flex mt-6 md:hidden">
-                                {item.name}
+                            <div className="flex mt-0 md:hidden">
+                                <div className='flex flex-col'>
+                                    <p className='text-[24px] md:text-2xl mt-4 font-bold max-w-[250px]'>
+                                        {item.name} <span className="capitalize opacity-[0.35]">({item.category})</span>
+                                    </p>
+                                    <p className='text-sm md:text-base'><span className='opacity-[0.65]'>Powered by</span> <span className="font-bold  text-black opacity-[0.93]">ARD</span> & <span className="font-bold  text-black opacity-[0.93]">Metaland</span></p>
+                                </div>
                             </div>
-                            <div className='mt-8'>
+                            <div className='hidden mt-8 md:block'>
                                 <div className="grid grid-cols-3 space-x-2">
                                     <div className="flex items-center ml-2 bg-black bg-opacity-[0.04] rounded-xl px-4 py-2">
                                         <div className="flex flex-col">
                                             <div className="flex">
-                                                <span className="text-base font-bold">$ {formatPrice(item.price)}</span>
+                                                <span className="text-sm font-bold md:text-base">$ {formatPrice(item.price)}</span>
                                                 {usdToArdx ? (
-                                                    <span className='text-sm font-normal ml-1 text-opacity-[0.65] text-black'>ARDX {formatPrice(item.price * usdToArdx)}</span>
+                                                    <span className='text-xs font-normal ml-1 text-opacity-[0.65] text-black'>ARDX {formatPrice(item.price * usdToArdx)}</span>
                                                 ) : (<ClipLoader size={14} />)}
                                             </div>
-                                            <span className=" text-sm text-black text-opacity-[0.65]">
+                                            <span className="text-[10px] text-black text-opacity-[0.65]">
                                                 total bundle price with USD
                                             </span>
                                         </div>
@@ -107,9 +115,9 @@ export default function ProductDetailFeature({
                                     <div className="flex items-center mt-2 md:mt-0 md:ml-2 bg-black bg-opacity-[0.04] rounded-xl px-4 py-2">
                                         <div className="flex flex-col">
                                             <div className="flex">
-                                                <span className="text-base font-bold">March 30, 2023</span>
+                                                <span className="text-sm font-bold md:text-base">March 30, 2023</span>
                                             </div>
-                                            <span className=" text-sm text-black text-opacity-[0.65]">
+                                            <span className="text-[10px] text-black text-opacity-[0.65]">
                                                 Event Date
                                             </span>
                                         </div>
@@ -117,9 +125,9 @@ export default function ProductDetailFeature({
                                     <div className="flex items-center ml-2 mt-2 md:mt-0 md:ml-2 bg-black bg-opacity-[0.04] rounded-xl px-4 py-2">
                                         <div className="flex flex-col">
                                             <div className="flex">
-                                                <span className="text-base font-bold">Metaland</span>
+                                                <span className="text-sm font-bold md:text-base">Metaland</span>
                                             </div>
-                                            <span className=" text-sm text-black text-opacity-[0.65]">
+                                            <span className="text-[10px] text-black text-opacity-[0.65]">
                                                 Location
                                             </span>
                                         </div>
@@ -127,32 +135,75 @@ export default function ProductDetailFeature({
                                 </div>
                             </div>
                             <div className="flex flex-col w-full">
-                                <div className="mt-6 md:ml-4">
-                                    <p className="text-base font-bold md:text-2xl">Description</p>
+                                <div className="mt-4 md:ml-4">
+                                    <p className="text-base font-bold md:text-xl">Description</p>
                                 </div>
-                                <div className="mt-2 md:ml-4 text-black md:text-base text-sm opacity-[0.65]">
+                                <div className={classNames("mt-2 md:ml-4 overflow-y-hidden text-black md:text-base text-sm opacity-[0.65]", {
+                                    'max-h-[100px]': !isDescSeeMore
+                                })}>
                                     {item.description}
+                                </div>
+                                <div onClick={() => setIsDescSeeMore(!isDescSeeMore)} className="flex items-center mt-2 cursor-pointer md:ml-4">
+                                    <span className='text-sm'>See more</span>
+                                    {isDescSeeMore ? <BiChevronUp className='ml-3' size={20} /> : <BiChevronDown className='ml-3' size={20} />}
+                                </div>
+                            </div>
+                            <div className="mt-4 md:hidden">
+                                <div className="grid grid-cols-2 gap-2">
+                                    <div className="flex items-center bg-black bg-opacity-[0.04] rounded-xl px-4 py-2">
+                                        <div className="flex flex-col">
+                                            <div className="flex">
+                                                <span className="text-sm font-bold md:text-base">$ {formatPrice(item.price)}</span>
+                                                {usdToArdx ? (
+                                                    <span className='text-xs font-normal ml-1 text-opacity-[0.65] text-black'>ARDX {formatPrice(item.price * usdToArdx)}</span>
+                                                ) : (<ClipLoader size={14} />)}
+                                            </div>
+                                            <span className="text-[10px] text-black text-opacity-[0.65]">
+                                                total bundle price with USD
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div className="flex h-full items-center md:mt-0 md:ml-2 bg-black bg-opacity-[0.04] rounded-xl px-4 py-2">
+                                        <div className="flex flex-col">
+                                            <div className="flex">
+                                                <span className="text-sm font-bold md:text-base">March 30, 2023</span>
+                                            </div>
+                                            <span className="text-[10px] text-black text-opacity-[0.65]">
+                                                Event Date
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-center md:mt-0 md:ml-2 bg-black bg-opacity-[0.04] rounded-xl px-4 py-2">
+                                        <div className="flex flex-col">
+                                            <div className="flex">
+                                                <span className="text-sm font-bold md:text-base">Metaland</span>
+                                            </div>
+                                            <span className="text-[10px] text-black text-opacity-[0.65]">
+                                                Location
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div className='md:ml-[50px] md:w-[40%] mw-md:order-1'>
+                        <div className='md:ml-[50px] md:w-[40%]'>
                             <div className="flex flex-col w-full">
-                                <div className="rounded-lg">
+                                <div className="hidden rounded-lg md:block">
                                     <div>
-                                        <p className='text-sm'><span className='opacity-[0.65]'>Powered by</span> <span className="font-bold  text-black opacity-[0.93]">ARD</span> & <span className="font-bold  text-black opacity-[0.93]">Metaland</span></p>
-                                        <p className='text-2xl mt-4 font-bold max-w-[250px]'>
+                                        <p className='text-sm md:text-base'><span className='opacity-[0.65]'>Powered by</span> <span className="font-bold  text-black opacity-[0.93]">ARD</span> & <span className="font-bold  text-black opacity-[0.93]">Metaland</span></p>
+                                        <p className='text-[24px] md:text-2xl mt-4 font-bold max-w-[250px]'>
                                             {item.name} <span className="capitalize opacity-[0.35]">({item.category})</span>
                                         </p>
                                     </div>
                                 </div>
                                 <div className="mt-4">
                                     {isTimezoneWarningVisible ? (
-                                        <div className="mt-4">
-                                            <div className="flex w-full p-4 rounded-lg itms-start" style={{ background: 'rgba(255, 140, 0, 0.05)' }}>
-                                                <span className='text-xs'>To make Purchase please select your Time Zone accordingly. Please note that you will be only able to attend the concert in the the Time zone of your selection.</span>
-                                                <span onClick={() => {
-                                                    setIsTimezoneWarningVisible(false)
-                                                }} className='ml-2 cursor-pointer'><MdClose size={16} /></span>
+                                        <div>
+                                            <div className="flex items-start w-full p-4 rounded-lg" style={{ background: 'rgba(255, 140, 0, 0.05)' }}>
+                                                <div>
+                                                    <WarningSvg />
+                                                </div>
+                                                <div className='text-xs ml-[18px]'>To make Purchase please select your Time Zone accordingly. Please note that you will be only able to attend the concert in the the Time zone of your selection.</div>
                                             </div>
                                         </div>
                                     ) : (<></>)}
@@ -169,7 +220,7 @@ export default function ProductDetailFeature({
                                                             onClick={() => {
                                                                 setSelectedTicketRegion(item.region)
                                                             }}
-                                                            className={classNames(`text-sm border text-left`, { 'bg-black text-white p-3 rounded-lg': selectedTicketRegion === item.region, 'bg-white hover:bg-black hover:bg-opacity-[0.04] px-4 py-3 border rounded-lg text-black': selectedTicketRegion !== item.region })}>
+                                                            className={classNames(`text-xs md:text-sm border text-left`, { 'bg-black text-white p-3 rounded-lg': selectedTicketRegion === item.region, 'bg-white hover:bg-black hover:bg-opacity-[0.04] px-4 py-3 border rounded-lg text-black': selectedTicketRegion !== item.region })}>
                                                             {item.name} {item.date}
                                                         </button>
                                                     ))}

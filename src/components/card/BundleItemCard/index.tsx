@@ -25,16 +25,16 @@ function BundleItemCard({ item }: Props) {
                         <img src={item.product.imageUrl} className="object-cover transform transition-all duration-200 hover:scale-[1.1] w-full h-full" />
                     </div>
                     <div className="mt-2">
-                        <p className="text-sm font-light text-black text-opacity-[0.65]">Powered by ARD & Metaforce</p>
-                        <p className="text-base font-light text-black text-opacity-[0.93]">
+                        <p className="text-xs md:text-sm font-light text-black text-opacity-[0.65]">Powered by ARD & Metaforce</p>
+                        <p className="md:text-base text-sm font-light text-black text-opacity-[0.93]">
                             {item.product.name}
                         </p>
                         <div className="flex items-center mt-2">
-                            <span className="text-xl font-bold text-black text-opacity-[0.93]">
+                            <span className="md:text-sm text-base font-bold text-black text-opacity-[0.93]">
                                 ${formatPrice(item.product.price)}
                             </span>
                             {usdToArdx ? (
-                                <span className="rounded-[4px] px-2 py-1 text-opacity-[0.65] font-light text-xs ml-[6px] bg-black bg-opacity-[0.04]">
+                                <span className="rounded-[4px] px-2 py-1 text-opacity-[0.65] font-light text-sm ml-[6px] bg-black bg-opacity-[0.04]">
                                     {formatPrice(item.product.price * usdToArdx)} ARDX
                                 </span>
                             ) : (<ClipLoader size={12} />)}

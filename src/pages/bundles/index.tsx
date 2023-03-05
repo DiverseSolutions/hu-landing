@@ -40,19 +40,20 @@ function Bundles({ }: Props) {
     return (
         <div className='flex justify-center w-full'>
             <div className="flex flex-col items-center w-full">
-                <div className="container">
-                    <div className="flex">
+                <div className="container px-2 md:px-0">
+                    <div className="flex max-w-[100vw] overflow-x-auto no-scrollbar">
                         <div onClick={() => {
                             router.back()
-                        }} className="border cursor-pointer p-[14px] rounded-xl border-black border-opacity-[0.1]">
-                            <MdChevronLeft size={24} />
+                        }} className="border cursor-pointer p-2.5 md:p-[14px] rounded-xl border-black border-opacity-[0.1]">
+                            <span className='hidden md:block'><MdChevronLeft size={24} /></span>
+                            <span className='md:hidden'><MdChevronLeft size={22} /></span>
                         </div>
                         <div className="flex ml-4">
                             <CategorySelectList defaultValues={bundleCategory} onChanged={setActiveCategory} activeValues={activeCategory} />
                         </div>
                     </div>
                 </div>
-                <div className="container mt-6">
+                <div className="container px-2 mt-6 md:px-0">
                     {isBundleLoading ? <ClipLoader /> : <></>}
                     {!isBundleLoading && visibleBundles?.length ? (
                         <div>

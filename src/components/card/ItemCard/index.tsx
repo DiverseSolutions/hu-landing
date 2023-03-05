@@ -26,16 +26,16 @@ function ItemCard({ item }: Props) {
                         </div>
                     </div>
                     <div className="mt-2">
-                        <p className="md:text-sm text-xs font-light text-black text-opacity-[0.65]">Powered by ARD & Metaforce</p>
-                        <p className="md:text-base text-base font-light text-black text-opacity-[0.93]">
+                        <p className="md:text-xs text-sm font-light text-black text-opacity-[0.65]">Powered by ARD & Metaforce</p>
+                        <p className="md:text-base text-sm text-black text-opacity-[0.93]">
                             {item.name}
                         </p>
                         <div className="flex items-center mt-2">
-                            <span className="md:text-xl text-sm font-bold text-black text-opacity-[0.93]">
+                            <span className="md:text-base text-sm font-bold text-black text-opacity-[0.93]">
                                 ${formatPrice(item.price)}
                             </span>
                             {usdToArdx ? (
-                                <span className="rounded-[4px] px-2 py-1 text-opacity-[0.65] font-light text-xs ml-[6px] bg-black bg-opacity-[0.04]">
+                                <span className="rounded-[4px] md:text-sm px-2 py-1 text-opacity-[0.65] font-light text-sm ml-[6px] bg-black bg-opacity-[0.04]">
                                     {formatPrice(item.price * usdToArdx)} ARDX
                                 </span>
                             ) : (<ClipLoader size={12} />)}

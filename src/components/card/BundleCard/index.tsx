@@ -34,12 +34,12 @@ function BundleCard({ bundle }: Props) {
                         </div>
                     </div>
                     <div className="mt-2">
-                        <p className="text-sm text-black text-opacity-[0.65] font-light">Powered by ARD & Metaforce</p>
-                        <p className="text-xl font-bold text-black text-opacity-[0.93]">
+                        <p className="text-xs md:text-sm text-black text-opacity-[0.65] font-light">Powered by ARD & Metaforce</p>
+                        <p className="text-base md:text-xl text-black text-opacity-[0.93]">
                             {bundle.name}
                         </p>
                         <div className="flex items-center justify-start mt-2">
-                            <span className="text-xl font-bold text-black text-opacity-[0.93]">
+                            <span className="text-sm md:text-xl font-bold text-black text-opacity-[0.93]">
                                 ${formatPrice(bundle.price)}
                             </span>
                             {usdToArdx ? (

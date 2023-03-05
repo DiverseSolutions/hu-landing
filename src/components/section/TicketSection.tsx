@@ -117,7 +117,7 @@ function TicketSection({ ticket }: Props) {
                                     <p className="text-2xl font-bold">Description</p>
                                 </div>
                                 <div className="mt-6 ml-4 text-black opacity-[0.65]">
-                                    {ticket.description}
+                                    {ticket.description || `Be a part of history and join the legendary band HU for their first-ever virtual concert in the Metaverse! With this early bird ticket, you'll receive exclusive access to the show and step into the Metaverse dressed in style with a traditional Mongolian outfit. But act fast, as this early bird ticket offer is only available for a limited time. Don't miss out on this opportunity to experience HU's groundbreaking virtual performance and be a part of music history in the Metaverse.`}
                                 </div>
                                 <div className="mt-6 ml-4">
                                     <p className="text-2xl font-bold">Detail</p>

@@ -164,6 +164,7 @@ export interface ArdArtAssetDetailByIDResult {
     category: string;
     tag: string;
     finishDate: string;
+    scheduleDate: string;
     medias: any[];
     price: number;
 }

@@ -16,7 +16,7 @@ jobs:
           node-version: 16.13
       - run: "npm install"
       - name: Provide .env
-        run: echo "${{ secrets.DOTENV_DEV }}" | base64 -d > .env
+        run: copy .env.dev .env
       - run: "npm run build:export"
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:

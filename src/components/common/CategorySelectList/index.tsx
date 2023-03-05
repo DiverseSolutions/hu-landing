@@ -33,7 +33,7 @@ function CategorySelectList({ onChanged, activeValues, defaultValues }: Props) {
                             }
                         }
                     }}
-                    className={classNames('bg-black text-xs md:text-base hover:bg-black transition-all duration-300 hover:text-white font-bold cursor-pointer rounded-xl px-4 py-2.5',
+                    className={classNames('text-xs md:text-base hover:bg-black transition-all duration-300 hover:text-white font-bold cursor-pointer rounded-xl px-4 py-2.5',
                         {
                             'bg-black text-white ': isActive,
                             'text-black text-opacity-[0.35] bg-opacity-[0.04]': !isActive

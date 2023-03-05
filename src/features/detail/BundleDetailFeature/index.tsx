@@ -108,7 +108,7 @@ function BundleDetailFeature({
                             <IoExpand size={48} />
                         </div>
                     </div>
-                ) : (<img src={bundle.coverUrl} className="object-cover rounded-xl w-full h-[400px]" />)}
+                ) : (<img src={bundle.imageUrl} className="object-cover rounded-xl w-full h-[400px]" />)}
                 <div className="flex justify-center w-full">
                     <div className="container px-2 mt-8 md:px-0">
                         <div className="flex flex-col w-full md:flex-row">

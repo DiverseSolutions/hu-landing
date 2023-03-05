@@ -1,6 +1,5 @@
-import TicketSection from '@/components/section/EarlyTicketSection';
-import EarlyTicketSection from '@/components/section/EarlyTicketSection';
-import { useArdxUsdRateQuery, useAssetDetailEarlyQuery, useGetAssetDetailByIdQuery, useLazyArdxUsdRateQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api';
+import TicketSection from '@/components/section/TicketSection';
+import { useGetAssetDetailByIdQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api';
 import { useRouter } from 'next/router';
 import React, { useState, useMemo, useEffect } from 'react';
 

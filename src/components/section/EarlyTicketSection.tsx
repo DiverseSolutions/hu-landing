@@ -20,10 +20,11 @@ import { toast } from 'react-toastify'
 import SystemRequirementsSection from './components/SystemRequirementsSection'
 import TicketMediaSection from './components/TicketMediaSection'
 import { ClipLoader } from 'react-spinners'
+import MediaSection from './components/MediaSection'
 
 
 type Props = {
-    ticket: ArdArtAssetDetailByIDResult,
+    ticket: ArdArtAssetDetailEarlyResult,
 }
 
 const TICKET_REGIONS = [
@@ -44,7 +45,7 @@ const TICKET_REGIONS = [
     },
 ];
 
-function TicketSection({ ticket }: Props) {
+function EarlyTicketSection({ ticket }: Props) {
 
     const [selectedTicketRegion, setSelectedTicketRegion] = useState<string>()
     const [callCreateIdaxInvoice] = useCreateIdaxInvoiceMutation()
@@ -157,7 +158,7 @@ function TicketSection({ ticket }: Props) {
                                     {/* <SystemRequirementsSection /> */}
                                     <div className="mt-6">
                                         <div className="px-8">
-                                            <TicketMediaSection ticket={ticket} />
+                                            <MediaSection ticket={ticket} />
                                         </div>
                                     </div>
                                 </div>
@@ -238,4 +239,4 @@ function TicketSection({ ticket }: Props) {
     )
 }
 
-export default TicketSection
+export default EarlyTicketSection

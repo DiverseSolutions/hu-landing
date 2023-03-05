@@ -26,8 +26,8 @@ function ItemCard({ item }: Props) {
                         </div>
                     </div>
                     <div className="mt-2">
-                        <p className="md:text-sm text-xs font-light text-black text-opacity-[0.65]">Powered by ARD & Metaforce</p>
-                        <p className="md:text-base text-base font-light text-black text-opacity-[0.93]">
+                        <p className="md:text-sm text-sm font-light text-black text-opacity-[0.65]">Powered by ARD & Metaforce</p>
+                        <p className="md:text-base text-base text-black text-opacity-[0.93]">
                             {item.name}
                         </p>
                         <div className="flex items-center mt-2">

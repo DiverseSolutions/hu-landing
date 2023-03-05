@@ -114,7 +114,7 @@ function BundleDetailFeature({
                                             <ExpandSvg />
                                         </div>
                                     </div>
-                                ) : (<img src={bundle.imageUrl} className="object-cover rounded-xl w-full h-[25vh] md:h-[25vw]" />)}
+                                ) : (<img src={bundle.imageUrl} className="object-cover w-full h-auto rounded-xl" />)}
                             </div>
                             <div className="flex flex-col w-full mt-4 md:ml-4">
                                 <div className='flex flex-col justify-between w-full h-full'>

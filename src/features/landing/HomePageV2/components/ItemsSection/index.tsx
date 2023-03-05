@@ -20,24 +20,24 @@ function ItemsSection({ }: Props) {
 
     const [offset, setOffset] = useState(0)
     const [limit, setLimit] = useState(10)
-
+    const [activeCategory, setActiveCategory] = useState<CategoryItemType[]>([])
     const [data, setData] = useState<ArdArtTicketOrAssetRecord[]>([])
 
     const [callTicketOrAsset, { isFetching: isDataFetching, isLoading: isAssetLoading }] = useLazyGetTicketOrAssetQuery()
 
     useEffect(() => {
         (async () => {
+            const isTicket = activeCategory.find((a) => a.id === 'ticket')
             const r = await callTicketOrAsset({
                 offset,
-                limit
+                limit,
+                type: isTicket ? 'ticket' : undefined
             }).unwrap()
             if (r.result?.records?.length) {
                 setData([...data, ...r.result.records])
             }
         })()
-    }, [offset, limit])
-
-    const [activeCategory, setActiveCategory] = useState<CategoryItemType[]>([])
+    }, [offset, limit, activeCategory])
 
     const visibleItems = useMemo(() => {
         if (data.length) {

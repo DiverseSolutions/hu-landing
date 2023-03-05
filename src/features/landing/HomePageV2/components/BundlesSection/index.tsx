@@ -36,10 +36,10 @@ function BundlesSection({ }: Props) {
         <>
             <div className='flex flex-col items-center w-full px-2 md:px-0'>
                 <div className="container px-2 md:px-0">
-                    <p className="font-bold px-2 md:px-0 text-[32px]">
+                    <p className="font-bold px-2 md:px-0 text-[24px] md:text-[32px]">
                         Bundles
                     </p>
-                    <div className="mt-8 ">
+                    <div className="mt-6 md:mt-4">
                         <div className="flex flex-col justify-between w-full space-y-4 md:space-y-0 md:flex-row">
                             <div className="flex space-x-4 overflow-x-auto max-w-[100vw] no-scrollbar">
                                 <CategorySelectList defaultValues={bundleCategories} activeValues={activeCategory} onChanged={setActiveCategory} />

@@ -7,7 +7,7 @@ type Props = {}
 export default function EarlyTicket({ }: Props) {
     return (
         <>
-            <EarlyTicketFeature />
+            {/* <EarlyTicketFeature /> */}
         </>
     )
 }

@@ -43,6 +43,10 @@ export default function ProductDetailFeature({
 
     const [isDescSeeMore, setIsDescSeeMore] = useState(false)
 
+    const isVideo = useMemo(() => {
+        return item?.coverUrl?.endsWith('.mp4')
+    }, [item.coverUrl])
+
     const handlePurchase = async () => {
         if (!selectedTicketRegion) {
             toast('Please select your ticket timezone', {
@@ -74,10 +78,6 @@ export default function ProductDetailFeature({
         }
     }
 
-    const priceFormatted = useMemo(() => {
-        return formatPrice(item.price)
-    }, [item])
-
     return (
         <div>
             <div className="flex justify-center w-full pb-16 mt-4">
@@ -86,7 +86,7 @@ export default function ProductDetailFeature({
                         <div className="md:w-[60%] mw-md:mt-8">
                             <div className="flex justify-center w-full">
                                 <div className="relative flex justify-center w-full">
-                                    <img src={item.imageUrl} alt={item.name} className="object-cover w-full h-auto rounded-lg" />
+                                    {isVideo ? (<video src={item.coverUrl} autoPlay loop muted poster={item.imageUrl} className="object-cover w-full h-auto rounded-lg" />) : (<img src={item.imageUrl} alt={item.name} className="object-cover w-full h-auto rounded-lg" />)}
                                 </div>
                             </div>
                             <div className="flex mt-0 md:hidden">

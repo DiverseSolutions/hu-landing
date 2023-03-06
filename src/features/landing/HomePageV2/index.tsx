@@ -34,7 +34,7 @@ function HomePageV2({ }: Props) {
                                                     </p>
                                                     <div className="flex w-full mt-8">
                                                         <button onClick={() => {
-                                                            const targetEl = document.querySelector('#items-section')
+                                                            const targetEl = document.querySelector('#bundle-section')
                                                             if (targetEl) {
                                                                 const drawerEl = document.querySelector('.drawer-content')
                                                                 const targetY = targetEl.getBoundingClientRect().y - 100

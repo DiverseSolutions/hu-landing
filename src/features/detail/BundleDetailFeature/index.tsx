@@ -178,7 +178,7 @@ function BundleDetailFeature({
                                     </div>
                                 </div>
                             </div>
-                            <div className="w-full md:ml-10">
+                            <div className="w-full md:ml-20">
                                 <div className="mt-4 rounded-xl">
                                     <div className='flex items-center'>
                                         <MdOutlineLocationOn size={24} opacity={0.65} />
@@ -198,8 +198,12 @@ function BundleDetailFeature({
                                                         onClick={() => {
                                                             setSelectedRegion(ticket.region)
                                                         }}
-                                                        className={classNames(`text-xs md:text-sm border text-left`, { 'bg-black text-white p-3 rounded-xl': selectedRegion === ticket.region, 'bg-white hover:bg-black hover:bg-opacity-[0.04] px-4 py-3 border rounded-xl text-black': selectedRegion !== ticket.region })}>
-                                                        {ticket.name} {ticket.date}
+                                                        className={classNames(`text-xs md:text-sm border text-left`,
+                                                            {
+                                                                'bg-black text-white p-3 rounded-xl': selectedRegion === ticket.region,
+                                                                'bg-white hover:bg-black hover:bg-opacity-[0.04] px-4 py-3 border rounded-xl text-black text-opacity-[0.65]': selectedRegion !== ticket.region,
+                                                            })}>
+                                                        {ticket.date}
                                                     </button>
                                                 ))}
                                             </div>

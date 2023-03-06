@@ -220,8 +220,11 @@ export default function ProductDetailFeature({
                                                             onClick={() => {
                                                                 setSelectedTicketRegion(item.region)
                                                             }}
-                                                            className={classNames(`text-xs md:text-sm border text-left`, { 'bg-black text-white p-3 rounded-lg': selectedTicketRegion === item.region, 'bg-white hover:bg-black hover:bg-opacity-[0.04] px-4 py-3 border rounded-lg text-black': selectedTicketRegion !== item.region })}>
-                                                            {item.name} {item.date}
+                                                            className={classNames(`text-xs md:text-sm border text-left`, {
+                                                                'bg-black text-white p-3 rounded-lg': selectedTicketRegion === item.region,
+                                                                'bg-white text-opacity-[0.65] hover:bg-black hover:bg-opacity-[0.04] px-4 py-3 border rounded-lg text-black': selectedTicketRegion !== item.region
+                                                            })}>
+                                                            {item.date}
                                                         </button>
                                                     ))}
                                                 </div>

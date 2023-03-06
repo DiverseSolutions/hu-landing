@@ -34,18 +34,15 @@ export const ASSET_CATEGORY = [{
 export const TICKET_REGIONS = [
     {
         region: 'ASIA',
-        name: 'Early bird ticket ASIA',
-        date: 'Thursday, March 30, 2023, 21:00:00 (UTC +08:00)'
+        date: 'March 30, 2023 at 21:00 Asia Pacific GMT +08:00'
     },
     {
         region: 'EUROPE',
-        name: 'Early bird ticket EUROPE',
-        date: 'Thursday, March 30, 2023, 21:00:00 (UTC +00:00)'
+        date: 'March 30, 2023 at 21:00 Europe GMT 00:00'
     },
     {
         region: 'USA',
-        name: 'Early bird ticket USA',
-        date: 'Thursday, March 30, 2023, 21:00:00 (UTC -08:00)'
+        date: 'March 30, 2023 at 21:00 America GMT -08:00'
     },
 ];
 

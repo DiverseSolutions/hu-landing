@@ -44,7 +44,9 @@ function ItemsSection({ }: Props) {
             if (!activeCategory?.length) {
                 return data
             }
-            return data.filter((item) => activeCategory.find((a) => a.id === item.category || a.id === item.tag || a.id === item.type))
+            return data.filter((item) => {
+                return item.price && activeCategory.find((a) => a.id === item.category || a.id === item.tag || a.id === item.type)
+            })
         }
         return []
     }, [data, activeCategory])

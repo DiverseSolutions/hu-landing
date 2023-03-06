@@ -59,7 +59,7 @@ function MobileDrawer({ children, drawerContent }: Props) {
                                 <div>
                                     <ul className="w-full space-y-4 rounded-lg menu">
                                         <li>
-                                            <Link href="/" rel="noreferrer" className='flex items-center justify-between w-full text-xl font-bold text-white'>About us <span><ArrowRightSvg size={32} /></span></Link>
+                                            <a href="https://www.thehuofficial.com" target="_blank" rel="noreferrer" className='flex items-center justify-between w-full text-xl font-bold text-white'>About us <span><ArrowRightSvg size={32} /></span></a>
                                         </li>
                                         <li>
                                             <a href="https://ardcoin.com/" target="_blank" rel="noreferrer" className='flex items-center justify-between w-full text-xl font-bold text-white'>ArdCoin</a>

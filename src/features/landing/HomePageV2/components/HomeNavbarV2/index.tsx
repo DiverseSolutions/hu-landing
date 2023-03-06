@@ -34,9 +34,9 @@ function HomeNavbarV2({ }: Props) {
                         </Link>
                         <ul className="px-1 ml-8 text-sm font-light menu menu-horizontal">
                             <li>
-                                <Link className='text-black text-base font-bold text-opacity-[0.35] hover:text-opacity-[1]' href="/" rel="noreferrer">
+                                <a href="https://www.thehuofficial.com" target="_blank" rel="noreferrer" className='text-black text-base font-bold text-opacity-[0.35] hover:text-opacity-[1]'>
                                     About us
-                                </Link>
+                                </a>
                             </li>
                             <li>
                                 <Link className='text-black text-base font-bold text-opacity-[0.35] hover:text-opacity-[1]' href="/" rel="noreferrer">

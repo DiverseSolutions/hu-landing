@@ -37,7 +37,7 @@ function ItemsSection({ }: Props) {
                 } : {})
             }).unwrap()
             if (r.result?.records?.length) {
-                setData(r.result.records)
+                setData([...data, ...r.result.records])
             }
         })()
     }, [offset, limit, activeCategory])

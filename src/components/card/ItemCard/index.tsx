@@ -17,7 +17,9 @@ function ItemCard({ item }: Props) {
     return (
         <>
             <div onClick={() => {
-                router.push(`/product?id=${item.id}`)
+                if (item.price) {
+                    router.push(`/product?id=${item.id}`)
+                }
             }} className='relative w-full p-0 cursor-pointer card'>
                 <div className="p-0 card-body">
                     <div className="w-full relative h-[200px] md:h-[350px] rounded-xl overflow-hidden">

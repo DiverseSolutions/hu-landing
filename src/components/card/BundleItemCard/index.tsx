@@ -18,7 +18,9 @@ function BundleItemCard({ item }: Props) {
     return (
         <>
             <div onClick={() => {
-                router.push(`/product?id=${item.productId}`)
+                if (item.product.price) {
+                    router.push(`/product?id=${item.productId}`)
+                }
             }} className='relative w-full p-0 cursor-pointer card'>
                 <div className="p-0 card-body">
                     <div className="w-full h-[200px] md:h-[350px] rounded-xl overflow-hidden">

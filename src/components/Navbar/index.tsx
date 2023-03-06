@@ -34,14 +34,14 @@ function Navbar({ }: Props) {
                         </Link>
                         <ul className="px-1 ml-8 text-sm font-light menu menu-horizontal">
                             <li>
-                                <Link className='text-black hover:bg-transparent text-base font-bold text-opacity-[0.35] hover:text-opacity-[1]' href="/" rel="noreferrer">
+                                <a target="_blank" className='text-black hover:bg-transparent text-base font-bold text-opacity-[0.35] hover:text-opacity-[1]' href="https://ardcoin.com" rel="noreferrer">
                                     ArdCoin
-                                </Link>
+                                </a>
                             </li>
                             <li>
-                                <Link className='text-black hover:bg-transparent text-base font-bold text-opacity-[0.35] hover:text-opacity-[1]' href="/" rel="noreferrer">
+                                <a target="_blank" className='text-black hover:bg-transparent text-base font-bold text-opacity-[0.35] hover:text-opacity-[1]' href="http://metaland.mn" rel="noreferrer">
                                     Metaland
-                                </Link>
+                                </a>
                             </li>
                             <li>
                                 <Link className='text-black hover:bg-transparent text-base font-bold text-opacity-[0.35] hover:text-opacity-[1]' href="/" rel="noreferrer">

@@ -20,6 +20,7 @@ function ItemsSection({ }: Props) {
 
     const [offset, setOffset] = useState(0)
     const [limit, setLimit] = useState(10)
+    const [categoryFilterKey, setCategoryFilterKey] = useState<string>()
     const [activeCategory, setActiveCategory] = useState<CategoryItemType[]>([])
     const [data, setData] = useState<ArdArtTicketOrAssetRecord[]>([])
 
@@ -28,16 +29,23 @@ function ItemsSection({ }: Props) {
     useEffect(() => {
         (async () => {
             const isTicket = activeCategory.find((a) => a.id === 'ticket')
+            const categoryParam = activeCategory.map((a) => a.id)
+            const currentCategoryFilterKey = categoryParam.join(',')
+            setCategoryFilterKey(currentCategoryFilterKey)
             const r = await callTicketOrAsset({
                 offset,
                 limit,
                 type: isTicket ? 'ticket' : undefined,
                 ...(activeCategory?.length ? {
-                    category: activeCategory.map((a) => a.id)
+                    category: categoryParam
                 } : {})
             }).unwrap()
             if (r.result?.records?.length) {
-                setData([...data, ...r.result.records])
+                if (currentCategoryFilterKey === categoryFilterKey) {
+                    setData([...data, ...r.result.records])
+                } else {
+                    setData(r.result.records)
+                }
             }
         })()
     }, [offset, limit, activeCategory])

@@ -214,8 +214,8 @@ function BundleDetailFeature({
                                             <div className="flex flex-grow">
                                                 <button onClick={handlePurchase} className={classNames("btn btn-primary rounded-xl btn-block", { 'bg-black bg-opacity-[0.2] text-black text-opacity-[0.2] hover:bg-black hover:bg-opacity-[0.2]': !selectedRegion })}>Purchase $({formatPrice(bundle.price)})</button>
                                             </div>
-                                            <div className="flex ml-2 cursor-pointer">
-                                                <div className="btn hosver:bg-opacity-[0.12] bg-black btn-disabled rounded-xl">
+                                            <div className="flex ml-2">
+                                                <div className="btn bg-opacity-[0.2] bg-black btn-disabled rounded-xl">
                                                     <HeartWhiteSvg />
                                                 </div>
                                             </div>

@@ -236,8 +236,8 @@ export default function ProductDetailFeature({
                                             <div className="flex flex-grow">
                                                 <button onClick={handlePurchase} className={classNames("btn btn-primary rounded-lg btn-block", { 'bg-black bg-opacity-[0.2] text-black text-opacity-[0.2] hover:bg-black hover:bg-opacity-[0.2]': !selectedTicketRegion })}>Purchase $({formatPrice(item.price)})</button>
                                             </div>
-                                            <div className="flex ml-2 cursor-pointer">
-                                                <div className="btn bg-black hover:bg-opacity-[0.12] btn-disabled rounded-lg">
+                                            <div className="flex ml-2">
+                                                <div className="btn bg-black bg-opacity-[0.2] btn-disabled rounded-lg">
                                                     <HeartWhiteSvg />
                                                 </div>
                                             </div>

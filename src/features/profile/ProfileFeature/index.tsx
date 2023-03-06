@@ -253,7 +253,7 @@ const ProfileFeature = ({ }: Props) => {
                                             </div>
                                         ) : (<></>)}
                                         {!isMyNftFetching ? (
-                                            <div className="grid w-full grid-cols-2 gap-4 px-0 mt-4 gap-y-4 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 md:-ml-4">
+                                            <div className="grid w-full grid-cols-2 gap-4 px-0 mt-4 gap-y-4 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
                                                 {visibleNftsDuplicated}
                                             </div>
                                         ) : (<></>)}

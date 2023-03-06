@@ -61,8 +61,8 @@ function HomePageV2({ }: Props) {
                                                         <div className="flex flex-col mt-4 md:mt-0 md:min-w-[300px] md:ml-6">
                                                             <SystemRequirementsTransparent />
                                                             <div className="mt-4">
-                                                                <div className="bg-white text-sm md:text-base cursor-pointer px-6 py-2.5 md:py-[14px] rounded-xl font-bold text-center">
-                                                                    Download
+                                                                <div className="bg-white text-black text-opacity-[0.65] bg-opacity-[0.04] text-sm md:text-base px-6 py-2.5 md:py-[14px] rounded-xl font-bold text-center">
+                                                                    <span>Download</span>
                                                                 </div>
                                                             </div>
                                                         </div>

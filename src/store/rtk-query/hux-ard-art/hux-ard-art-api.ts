@@ -10,9 +10,9 @@ export const huxArdArtApi = createApi({
         getTicketOrAsset: builder.query<ArdArtTicketOrAssetResponse, {
             type?: "asset" | "ticket",
             tag?: string,
-            subTag?: string,
             ownerId?: number,
-            category?: number,
+            category?: string[],
+            subTag?: string[],
             minPrice?: number,
             maxPrice?: number,
             offset?: number;
@@ -35,11 +35,13 @@ export const huxArdArtApi = createApi({
         getBundle: builder.query<ArdArtBundleResponse, {
             offset?: number;
             limit?: number;
+            category?: string[];
         } | void>({
             query: (d) => ({
                 url: '/api/v1/bundle/get',
                 method: 'POST',
                 body: {
+                    ...d,
                     "offset": d?.offset || 0,
                     "limit": d?.limit || 200
                 }

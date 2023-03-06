@@ -31,7 +31,10 @@ function ItemsSection({ }: Props) {
             const r = await callTicketOrAsset({
                 offset,
                 limit,
-                type: isTicket ? 'ticket' : undefined
+                type: isTicket ? 'ticket' : undefined,
+                ...(activeCategory?.length ? {
+                    category: activeCategory.map((a) => a.id)
+                } : {})
             }).unwrap()
             if (r.result?.records?.length) {
                 setData([...data, ...r.result.records])

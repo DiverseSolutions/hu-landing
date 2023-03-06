@@ -31,22 +31,24 @@ function BundleItemCard({ item }: Props) {
                         <p className="md:text-base text-sm font-light text-black text-opacity-[0.93]">
                             {item.product.name}
                         </p>
-                        <div className="flex items-center mt-2">
-                            <span className="md:text-sm text-base font-bold text-black text-opacity-[0.93]">
-                                ${formatPrice(item.product.price)}
-                            </span>
-                            {usdToArdx ? (
-                                <span className="rounded-[4px] px-2 py-1 text-opacity-[0.65] font-light text-sm ml-[6px] bg-black bg-opacity-[0.04]">
-                                    {formatPrice(item.product.price * usdToArdx)} ARDX
+                        {item.product.price ? (
+                            <div className="flex items-center mt-2">
+                                <span className="md:text-sm text-base font-bold text-black text-opacity-[0.93]">
+                                    ${formatPrice(item.product.price)}
                                 </span>
-                            ) : (<ClipLoader size={12} />)}
-                        </div>
+                                {usdToArdx ? (
+                                    <span className="rounded-[4px] px-2 py-1 text-opacity-[0.65] font-light text-sm ml-[6px] bg-black bg-opacity-[0.04]">
+                                        {formatPrice(item.product.price * usdToArdx)} ARDX
+                                    </span>
+                                ) : (<ClipLoader size={12} />)}
+                            </div>
+                        ) : (<></>)}
                     </div>
                 </div>
-                {item.product.tag?.length ? (
+                {item.product.category?.length ? (
                     <div className="absolute top-2 left-2 md:top-4 md:left-4">
                         <div className="flex capitalize items-center px-2 py-1 text-xs rounded-xl bg-[#ff00a8] text-white font-bold">
-                            {item.product.tag}
+                            {item.product.category}
                         </div>
                     </div>
                 ) : (<></>)}

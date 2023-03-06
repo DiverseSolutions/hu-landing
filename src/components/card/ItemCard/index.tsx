@@ -32,16 +32,18 @@ function ItemCard({ item }: Props) {
                         <p className="md:text-base text-sm text-black text-opacity-[0.93]">
                             {item.name}
                         </p>
-                        <div className="flex items-center mt-2">
-                            <span className="md:text-base text-sm font-bold text-black text-opacity-[0.93]">
-                                ${formatPrice(item.price)}
-                            </span>
-                            {usdToArdx ? (
-                                <span className="rounded-[4px] md:text-sm px-2 py-1 text-opacity-[0.65] font-light text-sm ml-[6px] bg-black bg-opacity-[0.04]">
-                                    {formatPrice(item.price * usdToArdx)} ARDX
+                        {item.price ? (
+                            <div className="flex items-center mt-2">
+                                <span className="md:text-base text-sm font-bold text-black text-opacity-[0.93]">
+                                    ${formatPrice(item.price)}
                                 </span>
-                            ) : (<ClipLoader size={12} />)}
-                        </div>
+                                {usdToArdx ? (
+                                    <span className="rounded-[4px] md:text-sm px-2 py-1 text-opacity-[0.65] font-light text-sm ml-[6px] bg-black bg-opacity-[0.04]">
+                                        {formatPrice(item.price * usdToArdx)} ARDX
+                                    </span>
+                                ) : (<ClipLoader size={12} />)}
+                            </div>) : (<></>)}
+
                     </div>
                 </div>
                 {item.tag?.length ? (

@@ -23,9 +23,6 @@ export const BUNDLE_CATEGORY = [{
 }]
 
 export const ASSET_CATEGORY = [{
-    slug: 'ticket',
-    name: 'Ticket'
-}, {
     slug: 'persona',
     name: 'Persona'
 }, {

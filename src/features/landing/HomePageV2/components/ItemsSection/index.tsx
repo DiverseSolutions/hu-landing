@@ -53,10 +53,10 @@ function ItemsSection({ }: Props) {
     const visibleItems = useMemo(() => {
         if (data.length) {
             if (!activeCategory?.length) {
-                return data.filter((d) => d.price)
+                return data.filter((d) => d.price && d.IsPurchasable)
             }
             return data.filter((item) => {
-                return item.price && activeCategory.find((a) => a.id === item.category || a.id === item.tag || a.id === item.type)
+                return item.price && item.IsPurchasable && activeCategory.find((a) => a.id === item.category || a.id === item.tag || a.id === item.type)
             })
         }
         return []

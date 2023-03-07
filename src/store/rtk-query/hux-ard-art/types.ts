@@ -97,6 +97,7 @@ export type ArdArtTicketOrAssetRecord = {
     updatedAt: string;
     isActive: boolean;
     isOutOfStock: boolean;
+    IsPurchasable: boolean;
     name: string;
     type: 'asset' | 'ticket';
     description: string;

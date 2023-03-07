@@ -102,21 +102,16 @@ const ProfileFeature = ({ }: Props) => {
             _times(nft.ownerAmount, (num) => {
                 const nftIdWithIndex = `${nft.id}_${num}`
                 const isSelected = selectedNftIdIdx === nftIdWithIndex
-                duplicated.push(<div key={nftIdWithIndex} onClick={() => {
-                    if (isSelected) {
-                        setSelectedNftId(undefined)
-                        setSelectedNftId(undefined)
-                    } else {
-                        setSelectedNftIdIdx(nftIdWithIndex)
-                        setSelectedNftId(nft.id)
-                        handleSendNft(nft.id)
-                    }
-                }}
+                duplicated.push(<div key={nftIdWithIndex}
                     className={classNames({
                         'opacity-[0.5]': !isSelected && selectedNftId,
                     })}
                 >
-                    <MyNftCard nft={nft} />
+                    <MyNftCard nft={nft} onSend={() => {
+                        setSelectedNftIdIdx(nftIdWithIndex)
+                        setSelectedNftId(nft.id)
+                        handleSendNft(nft.id)
+                    }} />
                 </div>)
             })
         ))

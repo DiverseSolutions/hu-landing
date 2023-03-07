@@ -6,20 +6,27 @@ import HeartSvg from './img/heart.svg'
 
 type Props = {
     nft: ArdArtMyOwnedNftRecord,
+    onSend: () => void,
 }
 
-export default function MyNftCard({ nft }: Props) {
+export default function MyNftCard({ nft, onSend }: Props) {
 
     const { data: usdToArdx } = useUsdToArdxRateQuery()
 
     return (
-        <div onClick={() => {
-
-        }} className='relative w-full p-0 cursor-pointer card'>
+        <div onClick={onSend} className='relative w-full p-0 cursor-pointer card group'>
             <div className="p-0 card-body">
-                <div className="w-full relative h-[200px] md:h-[350px] rounded-xl overflow-hidden">
+                <div className="w-full group relative h-[200px] md:h-[350px] rounded-xl overflow-hidden">
                     <img src={nft.imageUrl} className="object-cover transform transition-all duration-200 hover:scale-[1.1] w-full h-full" />
                     <div className="absolute top-4 left-4">
+                    </div>
+                    <div className='absolute left-0 right-0 hidden pointer-events-auto bottom-4 md:group-hover:block'>
+                        <div className="flex justify-center w-full">
+                            <div onClick={(e) => {
+                                e.stopPropagation()
+                                onSend()
+                            }} className="py-2 text-sm px-[14px] font-bold flex justify-center items-center rounded-xl bg-white bg-opacity-[0.93]">Send NFT</div>
+                        </div>
                     </div>
                 </div>
                 <div className="mt-2">
@@ -46,7 +53,7 @@ export default function MyNftCard({ nft }: Props) {
                     </div>
                 </div>
             ) : (<></>)}
-            <div className="absolute justify-center items-center rounded-xl p-2.5 flex md:top-4 md:right-4 top-2 right-2 bg-white bg-opacity-[0.93] aspect-square">
+            <div className="absolute hidden group:hover:flex justify-center items-center rounded-xl p-2.5 md:top-4 md:right-4 top-2 right-2 bg-white bg-opacity-[0.93] aspect-square">
                 <HeartSvg />
             </div>
         </div>

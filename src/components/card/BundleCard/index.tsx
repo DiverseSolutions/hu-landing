@@ -21,7 +21,7 @@ function BundleCard({ bundle }: Props) {
             }} className='relative w-full p-0 cursor-pointer card'>
                 <div className="p-0 card-body">
                     <div className="w-full relative h-[330px] rounded-xl overflow-hidden">
-                        <img src={bundle.imageUrl} className="object-cover transform hover:scale-[1.1] transition-all duration-200 w-full h-full" />
+                        <img src={bundle.imageUrl} className="object-top object-cover transform hover:scale-[1.1] transition-all duration-200 w-full h-full" />
                         {bundle.category?.length ? (
                             <div className="absolute top-4 left-4">
                                 <div className="flex capitalize items-center px-2 py-1 text-xs rounded-xl bg-[#ff00a8] text-white font-bold">

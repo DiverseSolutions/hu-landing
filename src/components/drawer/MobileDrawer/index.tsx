@@ -1,6 +1,4 @@
 import React, { useRef, useState } from 'react'
-import CopyRightSvg from '@/assets/svg/copyright.svg'
-import { MdArrowRightAlt } from 'react-icons/md'
 import Link from 'next/link'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { logoutSuccess } from '@/store/reducer/auth-reducer/actions'
@@ -81,10 +79,10 @@ function MobileDrawer({ children, drawerContent }: Props) {
                                             <div>
                                                 <ul className="w-full rounded-lg menu">
                                                     <li>
-                                                        <Link href="/auth?form=signup" className='flex text-white items-center justify-center w-full bg-white bg-opacity-[0.04] text-sm rounded-xl font-bold' rel="noreferrer" >Signup</Link>
+                                                        <Link href="/auth?form=signup" className='flex text-white py-2 items-center justify-center w-full bg-white bg-opacity-[0.04] text-sm rounded-xl font-bold' rel="noreferrer" >Signup</Link>
                                                     </li>
                                                     <li className='mt-2'>
-                                                        <Link href="/auth?form=login" rel="noreferrer" className='flex font-bold text-sm text-black items-center justify-center w-full bg-white bg-opacity-[0.93] rounded-xl'>Log in</Link>
+                                                        <Link href="/auth?form=login" rel="noreferrer" className='flex py-2 font-bold text-sm text-black items-center justify-center w-full bg-white bg-opacity-[0.93] rounded-xl'>Log in</Link>
                                                     </li>
                                                 </ul>
                                             </div>

@@ -104,7 +104,7 @@ function BundleDetailFeature({
                                 {isGlb ? (
                                     <div className="relative flex items-center justify-center w-full h-full border mw-md:aspect-square rounded-xl">
                                         <div dangerouslySetInnerHTML={{
-                                            __html: `<model-viewer loading="eager" class="hu-model-viewer" poster="${bundle.imageUrl}" src="${bundle.coverUrl}" ar crossorigin="anonymous" camera-controls touch-action="pan-y"></model-viewer>`
+                                            __html: `<model-viewer autoplay loading="eager" class="hu-model-viewer" poster="${bundle.imageUrl}" src="${bundle.coverUrl}" ar crossorigin="anonymous" camera-controls touch-action="pan-y"></model-viewer>`
                                         }}>
 
                                         </div>

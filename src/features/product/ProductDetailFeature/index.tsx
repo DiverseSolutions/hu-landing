@@ -94,7 +94,7 @@ export default function ProductDetailFeature({
                 <div className="flex justify-center w-full pb-16 mt-4">
                     <div className="container lg:max-w-[70vw] 2xl:max-w-[1024px] mw-md:px-4">
                         <div className="flex flex-col justify-between w-full md:flex-row">
-                            <div className="md:w-[60%] mw-md:mt-8">
+                            <div className="md:w-[60%] relative mw-md:mt-8">
                                 <div className="flex justify-center w-full">
                                     <div className="relative flex justify-center w-full">
                                         {isVideoLoading ? (
@@ -106,23 +106,24 @@ export default function ProductDetailFeature({
                                             setIsVideoLoading(false)
                                         }} src={item.coverUrl} autoPlay loop muted poster={item.imageUrl} className="object-cover w-full h-auto rounded-lg" />) : (<></>)}
                                         {isGlb ? (
-                                            <div className="relative">
+                                            <div className="relative flex items-center justify-center w-full h-auto aspect-square">
                                                 <div dangerouslySetInnerHTML={{
-                                                    __html: `<model-viewer loading="eager" class="hu-model-viewer" poster="${item.imageUrl}" src="${item.coverUrl}" autoPlay="" ar crossorigin="anonymous" camera-controls touch-action="pan-y"></model-viewer>`
+                                                    __html: `<model-viewer loading="eager" class="hu-product-model-viewer" poster="${item.imageUrl}" src="${item.coverUrl}" autoplay ar crossorigin="anonymous" camera-controls touch-action="pan-y"></model-viewer>`
                                                 }}>
 
                                                 </div>
-                                                <div onClick={() => {
-                                                    setIsModelExpanded(true)
-                                                }} className="absolute bg-black bg-opacity-[0.04] rounded-xl p-4 cursor-pointer top-4 right-4">
-                                                    <ExpandSvg />
-                                                </div>
+
                                             </div>
                                         ) : (<></>)}
                                         {!isVideo && !isGlb ? (
                                             <img src={item.imageUrl} alt={item.name} className="object-cover w-full h-auto rounded-lg" />
                                         ) : (<></>)}
                                     </div>
+                                </div>
+                                <div onClick={() => {
+                                    setIsModelExpanded(true)
+                                }} className="absolute bg-black bg-opacity-[0.04] rounded-xl p-4 cursor-pointer top-4 right-4">
+                                    <ExpandSvg />
                                 </div>
                                 <div className="flex mt-0 md:hidden">
                                     <div className='flex flex-col'>

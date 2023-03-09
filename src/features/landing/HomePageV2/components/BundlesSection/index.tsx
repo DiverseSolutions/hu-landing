@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import BundleCard from '@/components/card/BundleCard'
 import { useGetBundleQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
 import { ClipLoader } from 'react-spinners'
@@ -12,6 +12,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Mousewheel } from "swiper"
 
 import 'swiper/css';
+import useWindowResize from 'beautiful-react-hooks/useWindowResize'
 
 type Props = {}
 
@@ -26,6 +27,17 @@ function BundlesSection({ }: Props) {
 
     const [swiper, setSwiper] = useState<SwiperCore>()
     const { data: bundleData, isLoading: isBundleLoading } = useGetBundleQuery()
+    const [sw, setSw] = useState<number>()
+
+    const onWindowResize = useWindowResize()
+
+    onWindowResize(() => {
+        setSw(window.innerWidth)
+    })
+
+    useEffect(() => {
+        setSw(window.innerWidth)
+    }, [])
 
     const [activeCategory, setActiveCategory] = useState<CategoryItemType[]>([])
 
@@ -93,7 +105,7 @@ function BundlesSection({ }: Props) {
                                             forceToAxis: true
                                         }}
                                         direction="horizontal"
-                                        slidesPerView={3}
+                                        slidesPerView={(sw && sw <= 768) ? 1 : 3}
                                         spaceBetween={16}
                                     >
                                         {visibleBundles.map((bundle) => (

@@ -30,7 +30,7 @@ type Props = {
     item: ArdArtAssetDetailByIDResult | ArdArtBundleDetailResult,
     priceToUsdrate: number,
     isBundle?: boolean;
-    region: string,
+    region?: string,
 }
 
 type PaymentType = 'card' | 'socialpay' | 'ardapp' | 'socialpay' | 'mongolian-banks'
@@ -189,7 +189,7 @@ function PaymentMethodCard({ item, priceToUsdrate, region, ...props }: Props) {
                         <img src={item.imageUrl} alt={item.name} className="max-w-[64px] object-contain rounded-lg h-auto" />
                         <div className="flex justify-between w-full h-full ml-2">
                             <div className="flex flex-col justify-center h-full ">
-                                <h4 className='text-[16px] max-w-[168px]'>{item.name} ({region})</h4>
+                                <h4 className='text-[16px] max-w-[168px]'>{item.name}{region ? ` (${region})` : ``}</h4>
                                 <span className='text-xs text-opacity-[0.35] text-black'>Powered by Ard</span>
                             </div>
                             <div className="flex">

@@ -38,7 +38,7 @@ function ModelModal({ modelUrl, imageUrl, isOpen, onClose }: Props) {
 
     return (
         <>
-            <input ref={modelModalRef} type="checkbox" id="model-modal" className="modal-toggle" onChange={(v) => {
+            <input ref={modelModalRef} type="checkbox" id="product-model-modal" className="modal-toggle" onChange={(v) => {
             }} />
             <div className="modal backdrop-blur-[7.5px] w-full h-full bg-black bg-opacity-[0.4]" onClick={() => {
                 handleClose()
@@ -51,7 +51,7 @@ function ModelModal({ modelUrl, imageUrl, isOpen, onClose }: Props) {
                     }}>
 
                     </div>
-                    <span className="absolute cursor-pointer top-10 right-[30%]">
+                    <span className="absolute cursor-pointer top-10 md:right-[30%] right-10">
                         <MdClose color="white" size={48} onClick={() => {
                             handleClose()
                         }} />

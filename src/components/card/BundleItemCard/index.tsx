@@ -27,7 +27,7 @@ function BundleItemCard({ item }: Props) {
                         <img src={item.product.imageUrl} className="object-cover transform transition-all duration-200 hover:scale-[1.1] w-full h-full" />
                     </div>
                     <div className="mt-2">
-                        <p className="text-xs md:text-sm font-light text-black text-opacity-[0.65]">Powered by ARD & Metaforce</p>
+                        <p className="text-xs md:text-sm font-light text-black text-opacity-[0.65]">Powered by Ard & Metaforce</p>
                         <p className="md:text-base text-sm font-light text-black text-opacity-[0.93]">
                             {item.product.name}
                         </p>

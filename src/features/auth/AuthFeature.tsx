@@ -11,7 +11,9 @@ import { authNotLoggedIn, hideAuthModal, sessionRestored } from '@/store/reducer
 import { useLazyGetUserQuery } from '@/store/rtk-query/cognito/cognito-api'
 import { useLazyIdaxUserInfoQuery } from '@/store/rtk-query/idax/idax-api'
 import { useRouter } from 'next/router'
+import AuthCloseSvg from '@/assets/svg/auth-close.svg'
 import Link from 'next/link'
+import { useSwipeable } from 'react-swipeable'
 
 type Props = {}
 
@@ -62,6 +64,24 @@ export default function AuthFeature({
         }
     }, [authModal])
 
+    const swipeHandlers = useSwipeable({
+        onSwipedRight: () => {
+            hideModal()
+        },
+        onTap: () => {
+            console.log('onTap')
+        },
+        onSwiped: () => {
+            console.log('swiped')
+        },
+        onSwipeStart: () => {
+            console.log('swipe start')
+        },
+        swipeDuration: 1000,
+        trackMouse: true,
+        trackTouch: true,
+        preventScrollOnSwipe: true
+    })
 
     const syncSession = async () => {
         const cognitoIdToken = Cookies.get('cognitoIdToken');
@@ -134,14 +154,16 @@ export default function AuthFeature({
             <div className="modal backdrop-blur-[7.5px] bg-black bg-opacity-[0.4]" onClick={() => {
                 dispatch(hideAuthModal())
             }}>
-                <div className="modal-box" onClick={(e) => {
+                <div {...swipeHandlers} className="px-6 modal-box rounded-xl" onClick={(e) => {
                     e.stopPropagation()
                 }}>
-                    <div onClick={hideModal} className='absolute btn-circle btn btn-sm right-2 top-2 '>
-                        <MdClose size={24} />
+                    <div className="flex">
+                        <div onClick={hideModal} className='flex p-3 cursor-pointer rounded-xl bg-black bg-opacity-[0.04]'>
+                            <AuthCloseSvg />
+                        </div>
                     </div>
                     <label htmlFor=''></label>
-                    <div className='pt-6 mb-4 md:px-8'>
+                    <div className='mt-6'>
                         {formType === 'register' ? (
                             <>
                                 <h2 className='mb-8 text-[32px] font-bold'>Create an account</h2>
@@ -169,7 +191,7 @@ export default function AuthFeature({
                         ) : <></>}
                         {formType === 'login' ? (
                             <>
-                                <h2 className='mb-8 text-[32px] font-bold'>Log In</h2>
+                                <h2 className='mb-8 text-[32px] font-bold'>Log in</h2>
                                 <LoginForm onForgotPassword={() => {
                                     setFormType('forgot-password')
                                 }} onSuccess={() => {

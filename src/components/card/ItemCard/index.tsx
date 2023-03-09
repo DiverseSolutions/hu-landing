@@ -23,12 +23,12 @@ function ItemCard({ item }: Props) {
             }} className='relative w-full p-0 cursor-pointer card group'>
                 <div className="p-0 card-body">
                     <div className="w-full relative h-[200px] md:h-[350px] rounded-xl overflow-hidden">
-                        <img src={item.imageUrl} className="object-cover transform transition-all duration-200 hover:scale-[1.1] w-full h-full" />
+                        <img src={item.imageUrl} className="object-cover object-top transform transition-all duration-200 hover:scale-[1.1] w-full h-full" />
                         <div className="absolute top-4 left-4">
                         </div>
                     </div>
                     <div className="mt-2">
-                        <p className="md:text-xs text-sm font-light text-black text-opacity-[0.65]">Powered by ARD & Metaforce</p>
+                        <p className="md:text-xs text-sm font-light text-black text-opacity-[0.65]">Powered by Ard & Metaforce</p>
                         <p className="md:text-base text-sm text-black text-opacity-[0.93]">
                             {item.name}
                         </p>

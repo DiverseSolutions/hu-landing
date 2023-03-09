@@ -29,7 +29,7 @@ function HomeFooter({ isVisible }: Props) {
                     <div className="flex justify-center w-full mt-8 md:mt-0 md:items-end">
                         <div className="flex items-center">
                             <CopyRightSvg />
-                            <span className='opacity-[0.65] text-sm ml-2'>2023 The HU & ARD</span>
+                            <span className='opacity-[0.65] text-sm ml-2'>2023  The HU & Ard</span>
                         </div>
                     </div>
                     <div className={classNames("flex justify-center w-full mt-8 md:mt-0 md:items-end md:justify-end", {

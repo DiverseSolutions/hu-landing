@@ -11,6 +11,7 @@ import { authNotLoggedIn, hideAuthModal, sessionRestored } from '@/store/reducer
 import { useLazyGetUserQuery } from '@/store/rtk-query/cognito/cognito-api'
 import { useLazyIdaxUserInfoQuery } from '@/store/rtk-query/idax/idax-api'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 
 type Props = {}
 
@@ -150,10 +151,10 @@ export default function AuthFeature({
                                 }} />
                                 <div className="flex justify-center w-full mt-6">
                                     <p className="text-center max-w-[276px] text-sm">
-                                        <span className='opacity-[0.35]'>By creating an account, I agree to idax</span>
-                                        <span className="ml-2 cursor-pointer">terms of service</span>
+                                        <span className='opacity-[0.35]'>By creating an account, I agree to</span>
+                                        <Link href="/terms-of-service/en" target="_blank" rel="noreferrer" className="ml-2 cursor-pointer">terms of service</Link>
                                         <span className='opacity-[0.35] ml-2 mr-2'>and</span>
-                                        <span className='cursor-pointer'>privacy policy.</span>
+                                        <Link href="/privacy-policy/en" target="_blank" rel="noreferrer" className='cursor-pointer'>privacy policy.</Link>
                                     </p>
                                 </div>
                                 <div className="mt-6 cursor-pointer">
@@ -176,10 +177,10 @@ export default function AuthFeature({
                                 }} />
                                 <div className="flex justify-center w-full mt-6">
                                     <p className="text-center max-w-[276px] text-sm">
-                                        <span className='opacity-[0.35]'>By creating an account, I agree to idax</span>
-                                        <span className="ml-2 cursor-pointer">terms of service</span>
+                                        <span className='opacity-[0.35]'>By creating an account, I agree to</span>
+                                        <Link href="/terms-of-service/en" target="_blank" rel="noreferrer" className="ml-2 cursor-pointer">terms of service</Link>
                                         <span className='opacity-[0.35] ml-2 mr-2'>and</span>
-                                        <span className='cursor-pointer'>privacy policy.</span>
+                                        <Link href="/privacy-policy/en" target="_blank" rel="noreferrer" className='cursor-pointer'>privacy policy.</Link>
                                     </p>
                                 </div>
                                 <div className="mt-6 cursor-pointer">

@@ -36,7 +36,7 @@ function BundleCard({ bundle }: Props) {
                         </div>
                     </div>
                     <div className="mt-2">
-                        <p className="text-xs md:text-sm text-black text-opacity-[0.65] font-light">Powered by ARD & Metaforce</p>
+                        <p className="text-xs md:text-sm text-black text-opacity-[0.65] font-light">Powered by Ard & Metaforce</p>
                         <p className="text-base md:text-xl text-black text-opacity-[0.93]">
                             {bundle.name}
                         </p>

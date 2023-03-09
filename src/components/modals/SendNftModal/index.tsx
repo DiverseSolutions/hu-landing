@@ -67,7 +67,7 @@ function SendNftModal({ onClose, nft, onSuccess }: Props) {
                         <div className="flex items-start rounded-xl border p-2 border-black border-opacity-[0.1]">
                             <img src={nft.imageUrl} className="w-[72px] h-auto object-cover rounded-lg" />
                             <div className="flex flex-col ml-4">
-                                <p className='text-opacity-[0.65] text-black text-xs font-light'>Powered by ARD & Metaforce</p>
+                                <p className='text-opacity-[0.65] text-black text-xs font-light'>Powered by Ard & Metaforce</p>
                                 <p className='text-base font-light text-black text-opacity-[0.93]'>{nft.name}</p>
                                 <div className="mt-2">
                                     <span className="text-base font-bold">${formatPrice(nft.price)}</span>

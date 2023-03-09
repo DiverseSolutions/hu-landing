@@ -47,7 +47,7 @@ function ModelModal({ modelUrl, imageUrl, isOpen, onClose }: Props) {
                     e.stopPropagation()
                 }}>
                     <div dangerouslySetInnerHTML={{
-                        __html: `<model-viewer autoPlay="" loading="eager" style="height: 100vh; width: 100vw;" poster="${imageUrl}" src="${modelUrl}" ar crossorigin="anonymous" camera-controls touch-action="pan-y"></model-viewer>`
+                        __html: `<model-viewer autoplay loading="eager" style="height: 100vh; width: 100vw;" poster="${imageUrl}" src="${modelUrl}" ar crossorigin="anonymous" camera-controls touch-action="pan-y"></model-viewer>`
                     }}>
 
                     </div>

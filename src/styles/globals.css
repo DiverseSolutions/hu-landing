@@ -58,10 +58,20 @@ model-viewer {
         width: 100vw;
         height: 100vw;
     }
+
+    .hu-product-model-viewer {
+        width: 100vw;
+        height: 100vw;
+    }
 }
 
 @media only screen and (min-width: 780px) {
     .hu-model-viewer {
+        width: 25vw;
+        height: 25vw;
+    }
+
+    .hu-product-model-viewer {
         width: 25vw;
         height: 25vw;
     }

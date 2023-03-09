@@ -200,7 +200,7 @@ const ProfileFeature = ({ }: Props) => {
                                     <div className="flex flex-col justify-between w-full space-y-4 md:space-y-0 md:flex-row">
                                         <div className="flex flex-col">
                                             <p className="text-base font-bold md:text-lg">How to watch the concert?</p>
-                                            <p className='md:text-base text-sm mt-4 text-black opacity-[0.65]'>Please download and install this file on a computer that meets the system requirement and runs on Windows OS. By meeting the system requirements you will be able to enjoy the concert in high quality. The final file to watch the concert will be available for download on March 28, 2023. Demo file for installation and testing will be available on March 10, 2023.</p>
+                                            <p className='md:text-base text-sm mt-4 text-black opacity-[0.65]'>Please download and install this file on a computer that meets the system requirement and runs on Windows OS. By meeting the system requirements you will be able to enjoy the concert in high quality. The HU in the Metaverse concert package will be available for worldwide download on March 28th, 2023.</p>
                                         </div>
                                         <div className="flex flex-col">
                                             <div className='md:w-[450px] text-sm md:text-[20px] text-black text-opacity-[0.65] py-[14px] bg-white rounded-xl font-bold text-center cursor-pointer dropdown dropdown-top dropdown-hover' tabIndex={0}>

@@ -55,7 +55,7 @@ function HomePageV2({ }: Props) {
                                                         <div className="flex flex-col">
                                                             <p className="text-base font-bold text-white md:text-xl">How to watch the concert?</p>
                                                             <p className="mt-4 text-xs md:text-base text-white text-opacity-[0.65]">
-                                                                Please download and install this file on a computer that meets the system requirement and runs on Windows OS. By meeting the system requirements you will be able to enjoy the concert in high quality. The final file to watch the concert will be available for download on March 28, 2023. Demo file for installation and testing will be available on March 10, 2023.
+                                                                Please download and install this file on a computer that meets the system requirement and runs on Windows OS. By meeting the system requirements you will be able to enjoy the concert in high quality. The HU in the Metaverse concert package will be available for worldwide download on March 28th, 2023.
                                                             </p>
                                                         </div>
                                                         <div className="flex flex-col mt-4 md:mt-0 md:min-w-[300px] md:ml-6">

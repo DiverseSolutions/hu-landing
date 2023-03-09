@@ -38,7 +38,7 @@ function SendNftEmailForm({ ...props }: Props) {
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            <label className='text-sm'>Email</label>
+            <label className='text-sm'>Receiver email address</label>
             <input {...register('email', {
                 pattern: {
                     value: EMAIL_REGEX,
@@ -50,7 +50,7 @@ function SendNftEmailForm({ ...props }: Props) {
                     <span className="label-text-alt text-error">{errors.email?.message}</span>
                 </label>) : <></>}
             <div className="mt-6">
-                <button type="submit" className={classNames("w-full btn btn-black", { 'loading': isSendOtpLoading })}>Confirm & Send</button>
+                <button type="submit" className={classNames("w-full btn btn-black", { 'loading': isSendOtpLoading })}>Send NFT</button>
             </div>
         </form>
     )

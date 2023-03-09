@@ -7,6 +7,8 @@ import { ClipLoader } from 'react-spinners'
 import SendNftEmailForm from '@/components/forms/SendNftEmailForm'
 import SendNftConfirmationForm from '@/components/forms/SendNftConfirmationForm'
 import { toast } from 'react-toastify'
+import SendNftCloseSvg from '@/assets/svg/send-nft-close.svg'
+import SendNftWarning from './components/SendNftWarning'
 
 type Props = {
     nft: ArdArtMyOwnedNftRecord | undefined,
@@ -21,6 +23,7 @@ function SendNftModal({ onClose, nft, onSuccess }: Props) {
     const [formType, setFormType] = useState<SendNftFormType>('email')
     const sendNftModalRef = useRef<HTMLInputElement>(null)
 
+    const [isSuccess, setIsSuccess] = useState(false)
     const { data: usdArdx, isLoading: isRateLoading } = useUsdToArdxRateQuery()
 
     const [otpId, setOtpId] = useState<number>()
@@ -29,6 +32,8 @@ function SendNftModal({ onClose, nft, onSuccess }: Props) {
     const handleClose = () => {
         if (sendNftModalRef.current?.checked) {
             sendNftModalRef.current.click()
+            setIsSuccess(false)
+            setFormType('email')
             onClose()
         }
     }
@@ -41,18 +46,25 @@ function SendNftModal({ onClose, nft, onSuccess }: Props) {
                 }
             }} />
             {nft ? (<div className="modal backdrop-blur-[7.5px] bg-black bg-opacity-[0.4]" onClick={handleClose}>
-                <div className="modal-box max-w-[400px] rounded-xl" onClick={(e) => {
+                <div className="modal-box p-6 md:max-w-[400px] rounded-xl" onClick={(e) => {
                     e.stopPropagation()
                 }}>
-                    <span className='cursor-pointer' onClick={handleClose}>
-                        <GrClose size={16} />
-                    </span>
-                    <div className="mt-8">
-                        <p className='font-bold text-[#272937] text-[24px]'>Send NFT</p>
-                        {nft.name}
+                    <div className="flex">
+                        <div className='p-3 bg-black flex justify-center items-center w-[44px] h-[44px] bg-opacity-[0.04] cursor-pointer rounded-xl' onClick={handleClose}>
+                            <SendNftCloseSvg />
+                        </div>
                     </div>
                     <div className="mt-6">
-                        <div className="flex items-start">
+                        {!isSuccess ? (<p className='font-bold text-[#272937] text-[24px]'>Transfer NFT</p>) : (<></>)}
+                        {isSuccess ? (
+                            <div>
+                                <p className='font-bold text-[#5DD200] text-[24px]'>Transferred Successfully!</p>
+                                <p className="mt-2">You have successfully transfered to {email}</p>
+                            </div>
+                        ) : (<></>)}
+                    </div>
+                    <div className="mt-6">
+                        <div className="flex items-start rounded-xl border p-2 border-black border-opacity-[0.1]">
                             <img src={nft.imageUrl} className="w-[72px] h-auto object-cover rounded-lg" />
                             <div className="flex flex-col ml-4">
                                 <p className='text-opacity-[0.65] text-black text-xs font-light'>Powered by ARD & Metaforce</p>
@@ -67,27 +79,34 @@ function SendNftModal({ onClose, nft, onSuccess }: Props) {
                             </div>
                         </div>
                     </div>
+                    {!isSuccess ? (
+                        <div className="mt-6">
+                            <SendNftWarning />
+                        </div>
+                    ) : (<></>)}
                     <div className="mt-6">
-                        {formType === 'email' ? (
+                        {!isSuccess && formType === 'email' ? (
                             <SendNftEmailForm onSubmit={(v) => {
                                 setEmail(v.email)
                                 setOtpId(v.otpId)
                                 setFormType('otp-confirm')
                             }} />
                         ) : (<></>)}
-                        {formType === 'otp-confirm' && otpId && email ? (
+                        {!isSuccess && formType === 'otp-confirm' && otpId && email ? (
                             <SendNftConfirmationForm productId={nft.id} otpId={otpId} email={email} onSuccess={() => {
-                                toast("Send NFT Success", {
-                                    type: 'success'
-                                })
-                                setFormType('email')
+                                setIsSuccess(true)
                                 onSuccess()
-                                handleClose()
                             }} />
+                        ) : (<></>)}
+                        {isSuccess ? (
+                            <div className="mt-6">
+                                <button onClick={handleClose} className="w-full text-base btn btn-black rounded-xl">Close</button>
+                            </div>
                         ) : (<></>)}
                     </div>
                 </div>
-            </div>) : <></>}
+            </div>) : <></>
+            }
         </>
     )
 }

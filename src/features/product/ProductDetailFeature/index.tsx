@@ -120,11 +120,13 @@ export default function ProductDetailFeature({
                                         ) : (<></>)}
                                     </div>
                                 </div>
-                                <div onClick={() => {
-                                    setIsModelExpanded(true)
-                                }} className="absolute bg-black bg-opacity-[0.04] rounded-xl p-4 cursor-pointer top-4 right-4">
-                                    <ExpandSvg />
-                                </div>
+                                {isGlb ? (
+                                    <div onClick={() => {
+                                        setIsModelExpanded(true)
+                                    }} className="absolute bg-black bg-opacity-[0.04] rounded-xl p-4 cursor-pointer top-4 right-4">
+                                        <ExpandSvg />
+                                    </div>
+                                ) : (<></>)}
                                 <div className="flex mt-0 md:hidden">
                                     <div className='flex flex-col'>
                                         <p className='text-[24px] md:text-2xl mt-4 font-bold max-w-[250px]'>

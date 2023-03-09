@@ -30,6 +30,7 @@ export default function ProductDetailFeature({
 
     const authSession = useAppSelector(state => state.auth.session)
 
+    const [isVideoLoading, setIsVideoLoading] = useState(false)
     const [isTimezoneWarningVisible, setIsTimezoneWarningVisible] = useState(true)
 
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
@@ -86,7 +87,14 @@ export default function ProductDetailFeature({
                         <div className="md:w-[60%] mw-md:mt-8">
                             <div className="flex justify-center w-full">
                                 <div className="relative flex justify-center w-full">
-                                    {isVideo ? (<video src={item.coverUrl} autoPlay loop muted poster={item.imageUrl} className="object-cover w-full h-auto rounded-lg" />) : (<img src={item.imageUrl} alt={item.name} className="object-cover w-full h-auto rounded-lg" />)}
+                                    {isVideoLoading ? (
+                                        <div className='absolute top-4 right-4'><ClipLoader /></div>
+                                    ) : (<></>)}
+                                    {isVideo ? (<video onLoadStart={() => {
+                                        setIsVideoLoading(true)
+                                    }} onLoadedData={() => {
+                                        setIsVideoLoading(false)
+                                    }} src={item.coverUrl} autoPlay loop muted poster={item.imageUrl} className="object-cover w-full h-auto rounded-lg" />) : (<img src={item.imageUrl} alt={item.name} className="object-cover w-full h-auto rounded-lg" />)}
                                 </div>
                             </div>
                             <div className="flex mt-0 md:hidden">

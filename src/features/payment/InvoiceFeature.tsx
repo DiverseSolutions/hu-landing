@@ -6,7 +6,7 @@ import React from 'react'
 type Props = {
     product: ArdArtAssetDetailByIDResult | ArdArtBundleDetailResult,
     isBundle: boolean;
-    region: string,
+    region?: string,
     priceToUsdRate: number,
 }
 

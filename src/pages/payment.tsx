@@ -90,15 +90,7 @@ const Payment = (props: Props) => {
             setPageErrorMessage("Product or Bundle not found.")
             return;
         }
-        const region = router.query.region as string;
-        if (!region) {
-            setPageErrorMessage("Region not found.")
-            return
-        }
-        if (!SUPPORTED_REGIONS.includes(region)) {
-            setPageErrorMessage(`${region} region is not supported.`)
-            return
-        }
+        const region = router.query.region as string | undefined;
         setRegion(region)
         if (!accountId) {
             console.log(`accountId not found`)
@@ -109,12 +101,12 @@ const Payment = (props: Props) => {
             const asset = await callAssetDetailById({
                 id: productId,
             })
-            if (asset.data?.result) {
-                setAssetData(asset.data?.result)
-            } else {
+            const assetData = asset.data?.result
+            if (!assetData) {
                 setPageErrorMessage("Product not found")
                 return;
             }
+            setAssetData(assetData)
         } else if (bundleId) {
             const bundle = await callBundleDetail({
                 id: bundleId,
@@ -192,7 +184,7 @@ const Payment = (props: Props) => {
                             </div>
                         </div>
                         <div className="absolute inset-0 overflow-y-auto">
-                            {(assetData || bundleData) && region ? (
+                            {(assetData || bundleData) ? (
                                 <>
                                     <div className="flex items-center justify-center w-full h-full">
                                         <div className="flex">
@@ -202,7 +194,6 @@ const Payment = (props: Props) => {
                                 </>
                             ) : <></>}
                             {!(assetData || bundleData) ? <p>Asset or Bundle not found</p> : <></>}
-                            {!region ? <p>Region not found</p> : <></>}
                         </div>
                     </div>
                 </div>

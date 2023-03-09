@@ -58,7 +58,7 @@ export default function ProductDetailFeature({
     }, [item.coverUrl])
 
     const handlePurchase = async () => {
-        if (!selectedTicketRegion) {
+        if (!selectedTicketRegion && item.type === 'ticket') {
             toast('Please select your ticket timezone', {
                 type: 'warning'
             })
@@ -84,7 +84,7 @@ export default function ProductDetailFeature({
                 window.location.href = r.result.response.url
             }
         } else {
-            router.push(`/payment?productId=${item.id}&region=${selectedTicketRegion}`)
+            router.push(`/payment?productId=${item.id}${selectedTicketRegion ? `&region=${selectedTicketRegion}` : ''}`)
         }
     }
 
@@ -120,11 +120,13 @@ export default function ProductDetailFeature({
                                         ) : (<></>)}
                                     </div>
                                 </div>
-                                <div onClick={() => {
-                                    setIsModelExpanded(true)
-                                }} className="absolute bg-black bg-opacity-[0.04] rounded-xl p-4 cursor-pointer top-4 right-4">
-                                    <ExpandSvg />
-                                </div>
+                                {isGlb ? (
+                                    <div onClick={() => {
+                                        setIsModelExpanded(true)
+                                    }} className="absolute bg-black bg-opacity-[0.04] rounded-xl p-4 cursor-pointer top-4 right-4">
+                                        <ExpandSvg />
+                                    </div>
+                                ) : (<></>)}
                                 <div className="flex mt-0 md:hidden">
                                     <div className='flex flex-col'>
                                         <p className='text-[24px] md:text-2xl mt-4 font-bold max-w-[250px]'>
@@ -233,7 +235,7 @@ export default function ProductDetailFeature({
                                         </div>
                                     </div>
                                     <div className="mt-4">
-                                        {isTimezoneWarningVisible ? (
+                                        {item.type === 'ticket' && isTimezoneWarningVisible ? (
                                             <div>
                                                 <div className="flex items-start w-full p-4 rounded-lg" style={{ background: 'rgba(255, 140, 0, 0.05)' }}>
                                                     <div>
@@ -243,34 +245,36 @@ export default function ProductDetailFeature({
                                                 </div>
                                             </div>
                                         ) : (<></>)}
-                                        <div className="mt-4">
-                                            <div className='flex items-center'>
-                                                <MdOutlineLocationOn size={24} opacity={0.65} />
-                                                <p className='text-black text-sm text-opacity-[0.65] ml-1'>Choose timezone that matches you</p>
-                                            </div>
+                                        {item.type === 'ticket' ? (
                                             <div className="mt-4">
-                                                <div className="flex flex-col w-full">
-                                                    <div className='flex flex-col w-full space-y-4'>
-                                                        {TICKET_REGIONS.map((item) => (
-                                                            <button key={item.region}
-                                                                onClick={() => {
-                                                                    setSelectedTicketRegion(item.region)
-                                                                }}
-                                                                className={classNames(`text-xs md:text-sm border text-left`, {
-                                                                    'bg-black text-white p-3 rounded-lg': selectedTicketRegion === item.region,
-                                                                    'bg-white text-opacity-[0.65] hover:bg-black hover:bg-opacity-[0.04] px-4 py-3 border rounded-lg text-black': selectedTicketRegion !== item.region
-                                                                })}>
-                                                                {item.date}
-                                                            </button>
-                                                        ))}
+                                                <div className='flex items-center'>
+                                                    <MdOutlineLocationOn size={24} opacity={0.65} />
+                                                    <p className='text-black text-sm text-opacity-[0.65] ml-1'>Choose timezone that matches you</p>
+                                                </div>
+                                                <div className="mt-4">
+                                                    <div className="flex flex-col w-full">
+                                                        <div className='flex flex-col w-full space-y-4'>
+                                                            {TICKET_REGIONS.map((item) => (
+                                                                <button key={item.region}
+                                                                    onClick={() => {
+                                                                        setSelectedTicketRegion(item.region)
+                                                                    }}
+                                                                    className={classNames(`text-xs md:text-sm border text-left`, {
+                                                                        'bg-black text-white p-3 rounded-lg': selectedTicketRegion === item.region,
+                                                                        'bg-white text-opacity-[0.65] hover:bg-black hover:bg-opacity-[0.04] px-4 py-3 border rounded-lg text-black': selectedTicketRegion !== item.region
+                                                                    })}>
+                                                                    {item.date}
+                                                                </button>
+                                                            ))}
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        ) : (<></>)}
                                         <div className="mt-4">
                                             <div className="flex w-full">
                                                 <div className="flex flex-grow">
-                                                    <button onClick={handlePurchase} className={classNames("btn btn-primary rounded-lg btn-block", { 'bg-black bg-opacity-[0.2] text-black text-opacity-[0.2] hover:bg-black hover:bg-opacity-[0.2]': !selectedTicketRegion })}>Purchase $({formatPrice(item.price)})</button>
+                                                    <button onClick={handlePurchase} className={classNames("btn btn-primary rounded-lg btn-block ", { '': !selectedTicketRegion })}>Purchase $({formatPrice(item.price)})</button>
                                                 </div>
                                                 <div className="flex ml-2">
                                                     <div className="btn bg-black bg-opacity-[0.2] btn-disabled rounded-lg">

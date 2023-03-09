@@ -8,8 +8,14 @@ import CategorySelectList from '@/components/common/CategorySelectList'
 import { CategoryItemType } from '@/components/common/CategorySelectList/types'
 import { BUNDLE_CATEGORY } from '@/lib/consts'
 import Link from 'next/link'
+import { Swiper, SwiperSlide } from 'swiper/react';
+import SwiperCore, { Mousewheel } from "swiper"
+
+import 'swiper/css';
 
 type Props = {}
+
+SwiperCore.use([Mousewheel])
 
 const bundleCategories: CategoryItemType[] = BUNDLE_CATEGORY.map((b) => ({
     id: b.slug,
@@ -18,6 +24,7 @@ const bundleCategories: CategoryItemType[] = BUNDLE_CATEGORY.map((b) => ({
 
 function BundlesSection({ }: Props) {
 
+    const [swiper, setSwiper] = useState<SwiperCore>()
     const { data: bundleData, isLoading: isBundleLoading } = useGetBundleQuery()
 
     const [activeCategory, setActiveCategory] = useState<CategoryItemType[]>([])
@@ -49,12 +56,20 @@ function BundlesSection({ }: Props) {
                                     Show all ({bundleData?.result?.count || 0})
                                 </Link>
                                 <div className="rounded-xl cursor-pointer flex justify-center items-center bg-black bg-opacity-[0.04]">
-                                    <div className="flex items-center justify-center w-12 h-12">
+                                    <div onClick={() => {
+                                        if (swiper) {
+                                            swiper.slidePrev()
+                                        }
+                                    }} className="flex items-center justify-center w-12 h-12">
                                         <MdChevronLeft />
                                     </div>
                                 </div>
                                 <div className="rounded-xl cursor-pointer flex justify-center items-center bg-black bg-opacity-[0.04]">
-                                    <div className="flex items-center justify-center w-12 h-12">
+                                    <div onClick={() => {
+                                        if (swiper) {
+                                            swiper.slideNext()
+                                        }
+                                    }} className="flex items-center justify-center w-12 h-12">
                                         <MdChevronRight />
                                     </div>
                                 </div>
@@ -64,30 +79,42 @@ function BundlesSection({ }: Props) {
                 </div>
                 <div className="relative w-screen">
                     <div className="flex justify-center mt-8 overflow-auto no-scrollbar">
-                        <div className="container px-2 overflow-x-visible md:px-0">
+                        <div className="container relative px-2 overflow-x-visible md:px-0">
                             {isBundleLoading ? (<ClipLoader />) : (<></>)}
                             {!isBundleLoading && visibleBundles?.length ? (
                                 <>
-                                    <div className="flex flex-row space-x-4">
+                                    <Swiper
+                                        onSwiper={(sw) => setSwiper(sw)}
+                                        modules={[
+                                            Mousewheel,
+                                        ]} speed={500}
+                                        preventInteractionOnTransition
+                                        mousewheel={{
+                                            forceToAxis: true
+                                        }}
+                                        direction="horizontal"
+                                        slidesPerView={3}
+                                        spaceBetween={16}
+                                    >
                                         {visibleBundles.map((bundle) => (
-                                            <div key={bundle.id} className="cursor-pointer flex-grow flex-shrink-0 basis-[80vw] md:min-w-[450px] md:basis-[30vw]">
-                                                <BundleCard
-                                                    bundle={bundle}
-                                                />
-                                            </div>
+                                            <SwiperSlide key={bundle.id}>
+                                                <div>
+                                                    <BundleCard
+                                                        bundle={bundle}
+                                                    />
+                                                </div>
+                                            </SwiperSlide>
                                         ))}
-                                        <div className="w-[200px]">
-                                        </div>
-                                    </div>
+                                    </Swiper>
                                 </>
                             ) : (<></>)}
-                        </div>
-                    </div>
-                    <div className="absolute top-0 bottom-0 right-0 z-10 w-[40px]" style={{
-                        background: `linear-gradient(90deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%)`,
-                        transform: `matrix(-1, 0, 0, 1, 0, 0)`
-                    }}>
+                            <div className="absolute top-0 bottom-0 right-0 z-10 w-[40px]" style={{
+                                background: `linear-gradient(90deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%)`,
+                                transform: `matrix(-1, 0, 0, 1, 0, 0)`
+                            }}>
 
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div className="flex justify-center w-full px-2 mt-4 md:hidden md:px-0">

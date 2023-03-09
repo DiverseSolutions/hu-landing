@@ -147,7 +147,7 @@ function TicketSection({ ticket }: Props) {
                                 <div className="flex flex-col w-full">
                                     <div className="rounded-lg border-[1px] border-black border-opacity-[0.1] p-6">
                                         <div>
-                                            <p className='text-sm opacity-[0.65]'>Powered by ARD</p>
+                                            <p className='text-sm opacity-[0.65]'>Powered by Ard</p>
                                             <p className='text-2xl font-bold max-w-[250px]'>
                                                 {ticket.name}
                                             </p>

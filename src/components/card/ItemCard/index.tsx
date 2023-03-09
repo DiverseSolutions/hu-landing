@@ -28,7 +28,7 @@ function ItemCard({ item }: Props) {
                         </div>
                     </div>
                     <div className="mt-2">
-                        <p className="md:text-xs text-sm font-light text-black text-opacity-[0.65]">Powered by ARD & Metaforce</p>
+                        <p className="md:text-xs text-sm font-light text-black text-opacity-[0.65]">Powered by Ard & Metaforce</p>
                         <p className="md:text-base text-sm text-black text-opacity-[0.93]">
                             {item.name}
                         </p>

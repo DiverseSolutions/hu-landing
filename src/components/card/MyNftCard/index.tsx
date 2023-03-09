@@ -30,7 +30,7 @@ export default function MyNftCard({ nft, onSend }: Props) {
                     </div>
                 </div>
                 <div className="mt-2">
-                    <p className="md:text-sm text-xs font-light text-black text-opacity-[0.65]">Powered by ARD & Metaforce</p>
+                    <p className="md:text-sm text-xs font-light text-black text-opacity-[0.65]">Powered by Ard & Metaforce</p>
                     <p className="md:text-base text-sm font-light text-black text-opacity-[0.93]">
                         {nft.name}
                     </p>

@@ -4,7 +4,7 @@ import { ClipLoader } from 'react-spinners'
 type Props = {}
 
 function BackgroundVideo({ }: Props) {
-    const [isVideoLoading, setIsVideoLoading] = useState(false)
+    const [isVideoLoading, setIsVideoLoading] = useState(true)
     return (
         <div className="absolute inset-0">
             <video onLoadStart={() => setIsVideoLoading(true)} onLoadedData={() => setIsVideoLoading(false)} src="/hu-bg.mp4" autoPlay muted loop className='object-cover w-full h-full md:w-screen md:h-screen' />

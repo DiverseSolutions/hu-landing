@@ -10,8 +10,6 @@ type Props = {}
 
 function HomePageV2({ }: Props) {
 
-    const [isVideoLoading, setIsVideoLoading] = useState(false)
-
     return (
         <>
             <div>

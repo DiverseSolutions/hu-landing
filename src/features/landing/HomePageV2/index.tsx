@@ -1,28 +1,23 @@
-import React from 'react'
+import React, { useState } from 'react'
 import BundlesSection from './components/BundlesSection'
 
-import HomeCoverImg from '@/assets/img/hu-home-cover.jpg'
 import ItemsSection from './components/ItemsSection'
 import SystemRequirementsTransparent from './components/SystemRequirementsTransparent'
-import Navbar from '@/components/Navbar'
-import Link from 'next/link'
 import DesktopBehindNavbar from '@/components/layout/DesktopBehindNavbar'
+import BackgroundVideo from './components/BackgroundVideo'
 
 type Props = {}
 
 function HomePageV2({ }: Props) {
+
+    const [isVideoLoading, setIsVideoLoading] = useState(false)
+
     return (
         <>
             <div>
                 <DesktopBehindNavbar>
                     <div className="w-full block md:block md:mt-0 relative md:h-screen bg-[#982626] md:overflow-hidden">
-                        <div className="absolute inset-0">
-                            {/* <img src={HomeCoverImg.src} className="object-cover w-full h-full md:w-screen md:h-screen mix-blend-darken" /> */}
-                            <video src="/hu-bg.mp4" autoPlay muted loop className='object-cover w-full h-full md:w-screen md:h-screen' />
-                            <div className="absolute inset-0" style={{
-                                background: `linear-gradient(90deg, #000000 19.27%, rgba(0, 0, 0, 0) 100%)`
-                            }}></div>
-                        </div>
+                        <BackgroundVideo />
                         <div className="inset-0 md:absolute">
                             <div className="relative w-full h-full">
                                 <div className="flex justify-center w-full h-full">

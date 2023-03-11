@@ -1,37 +1,34 @@
-import React from 'react'
+import React, { useState } from 'react'
 import BundlesSection from './components/BundlesSection'
 
-import HomeCoverImg from '@/assets/img/hu-home-cover.jpg'
 import ItemsSection from './components/ItemsSection'
 import SystemRequirementsTransparent from './components/SystemRequirementsTransparent'
-import Navbar from '@/components/Navbar'
-import Link from 'next/link'
 import DesktopBehindNavbar from '@/components/layout/DesktopBehindNavbar'
+import BackgroundVideo from './components/BackgroundVideo'
 
 type Props = {}
 
 function HomePageV2({ }: Props) {
+
     return (
         <>
             <div>
                 <DesktopBehindNavbar>
                     <div className="w-full block md:block md:mt-0 relative md:h-screen bg-[#982626] md:overflow-hidden">
-                        <div className="absolute inset-0">
-                            <img src={HomeCoverImg.src} className="object-cover w-full h-full md:w-screen md:h-screen mix-blend-darken" />
-                            <div className="absolute inset-0" style={{
-                                background: `linear-gradient(90deg, #000000 19.27%, rgba(0, 0, 0, 0) 100%)`
-                            }}></div>
-                        </div>
+                        <BackgroundVideo />
                         <div className="inset-0 md:absolute">
                             <div className="relative w-full h-full">
                                 <div className="flex justify-center w-full h-full">
                                     <div className="container h-full px-2 md:px-0">
                                         <div className="flex flex-col justify-between w-full h-full pb-16">
-                                            <div className="flex mt-16 md:mt-0 items-center justify-start md:w-[50%] h-full">
+                                            <div className="flex mt-16 md:mt-0 items-center justify-start md:w-[65%] h-full">
                                                 <div className="flex flex-col w-full">
                                                     <p className="text-[32px] leading-[36px] text-left md:text-left md:text-[40px] md:leading-[44px] font-bold text-white">
                                                         Experience Hunnu Rock and<br />Mongolian culture like never before
                                                     </p>
+                                                    <div className="mt-8">
+                                                        <p className='text-[24px] font-bold text-[#B3B3B3]'>Join The HU for their first-ever interactive virtual concert on March 30, 2023.</p>
+                                                    </div>
                                                     <div className="flex w-full mt-8">
                                                         <button onClick={() => {
                                                             const targetEl = document.querySelector('#bundle-section')

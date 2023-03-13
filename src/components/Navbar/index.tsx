@@ -44,7 +44,7 @@ function Navbar({ }: Props) {
                                 </a>
                             </li>
                             <li>
-                                <Link className='text-black hover:bg-transparent text-base font-bold text-opacity-[0.35] hover:text-opacity-[1]' href="/" rel="noreferrer">
+                                <Link className='text-black hover:bg-transparent text-base font-bold text-opacity-[0.35] hover:text-opacity-[1]' href="/help" rel="noreferrer">
                                     Help Center
                                 </Link>
                             </li>

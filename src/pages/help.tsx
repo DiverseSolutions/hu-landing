@@ -1,7 +1,9 @@
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useState, useEffect } from 'react'
 
-import { BiChevronLeft, BiChevronDown } from 'react-icons/bi'
+import { BiChevronLeft, BiChevronDown, BiChevronUp } from 'react-icons/bi'
+import { MdChevronRight } from 'react-icons/md'
 
 type Props = {}
 
@@ -89,6 +91,8 @@ function HelpCenterPage({ }: Props) {
 
     const [activeAq, setActiveQa] = useState<Faq>()
 
+    const [isTopQuestionsVisible, setIsTopQuestionsVisible] = useState(true)
+
     useEffect(() => {
         if (!router.isReady) {
             return
@@ -136,7 +140,22 @@ function HelpCenterPage({ }: Props) {
                 <div className="mt-8">
                     <div className="flex justify-center w-full">
                         <div className="md:w-[800px] px-2 md:px-0">
-                            <div className="flex items-center">
+                            <div>
+                                <p className="font-bold text-[24px]">Law Enforcement</p>
+                                <div className="mt-4">
+                                    <div className="flex items-center w-full">
+                                        <Link href={"/terms-of-service/en"} className="h-full cursor-pointer mr-2 items-center flex w-full justify-between p-6 rounded-lg border border-black border-opacity-[0.2]">
+                                            <p className="font-bold">Terms of Service</p>
+                                            <MdChevronRight />
+                                        </Link>
+                                        <Link href={"/privacy-policy/en"} className="h-full cursor-pointer ml-2 items-center flex w-full justify-between p-6 rounded-lg border border-black border-opacity-[0.2]">
+                                            <p className="font-bold">Privacy Policy</p>
+                                            <MdChevronRight />
+                                        </Link>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="flex items-center mt-12">
                                 <p>Help center</p>
                                 <span className='ml-2 opacity-[0.2]'>&gt;</span>
                                 <p className='ml-2'>FAQ</p>
@@ -173,11 +192,13 @@ function HelpCenterPage({ }: Props) {
                             ) : (
                                 <div className="mt-8">
                                     <div className="w-full p-6 rounded-lg border border-black border-opacity-[0.2]">
-                                        <div className="flex justify-between w-full">
+                                        <div onClick={() => {
+                                            setIsTopQuestionsVisible(!isTopQuestionsVisible)
+                                        }} className="flex justify-between w-full cursor-pointer">
                                             <p className="font-bold">Top questions</p>
-                                            <BiChevronDown size={24} />
+                                            {isTopQuestionsVisible ? <BiChevronDown size={24} /> : <BiChevronUp size={24} />}
                                         </div>
-                                        {FAQ.map((faq) => (
+                                        {isTopQuestionsVisible ? (FAQ.map((faq) => (
                                             <button key={faq.question} onClick={() => {
                                                 const q = encodeURIComponent(faq.question)
                                                 router.push({
@@ -187,7 +208,7 @@ function HelpCenterPage({ }: Props) {
                                                     },
                                                 })
                                             }} className='mt-6 w-full text-left cursor-pointer border-b border-opacity-[0.2] border-black py-4'>{faq.question}</button>
-                                        ))}
+                                        ))) : (<></>)}
                                     </div>
                                 </div>
                             )}

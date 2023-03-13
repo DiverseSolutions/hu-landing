@@ -1,9 +1,13 @@
-import Footer from '@/components/footer/Footer'
+import { useRouter } from 'next/router'
 import React from 'react'
+import { BiChevronLeft } from 'react-icons/bi'
 
 type Props = {}
 
 function PrivacyPolicyEN({ }: Props) {
+
+    const router = useRouter()
+
     return (
         <>
             <div className="w-full" >
@@ -11,9 +15,18 @@ function PrivacyPolicyEN({ }: Props) {
                     background: `radial-gradient(105.33% 76.33% at 50% 95.88%, #721C1C 0.01%, rgba(0, 0, 0, 0) 100%)`,
                     backgroundColor: 'black'
                 }}>
-                    <p className="text-4xl text-center text-white">
-                        Law enforcement
-                    </p>
+                    <div className="relative overflow-x-auto w-full md:w-[800px] px-2 md:px-0 flex items-center h-full">
+                        <p className="w-full text-4xl text-center text-white">
+                            Law enforcement
+                        </p>
+                        <div className="absolute left-0">
+                            <div onClick={() => {
+                                router.back()
+                            }} className="flex cursor-pointer">
+                                <BiChevronLeft size={32} color="white" />
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div className="mt-8">
                     <div className="flex justify-center w-full">

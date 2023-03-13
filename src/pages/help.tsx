@@ -125,7 +125,7 @@ function HelpCenterPage({ }: Props) {
                     }}>
                         <div className="relative overflow-x-auto w-full md:w-[800px] px-2 md:px-0 flex items-center h-full">
                             <p className="w-full text-4xl text-center text-white">
-                                FAQ
+                                {activeAq ? 'FAQ' : 'Help Center'}
                             </p>
                             <div className="absolute left-0">
                                 <div onClick={() => {

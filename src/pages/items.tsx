@@ -6,7 +6,9 @@ import { useGetBundleQuery, useGetTicketOrAssetQuery, useLazyGetTicketOrAssetQue
 import { ArdArtTicketOrAssetRecord } from '@/store/rtk-query/hux-ard-art/types'
 import classNames from 'classnames'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import React, { useState, useMemo, useEffect } from 'react'
+import { MdChevronLeft } from 'react-icons/md'
 import { ClipLoader } from 'react-spinners'
 
 type Props = {}
@@ -24,6 +26,8 @@ function ItemsPage({ }: Props) {
     const [categoryFilterKey, setCategoryFilterKey] = useState<string>()
     const [activeCategory, setActiveCategory] = useState<CategoryItemType[]>([])
     const [data, setData] = useState<ArdArtTicketOrAssetRecord[]>([])
+
+    const router = useRouter()
 
     const [callTicketOrAsset, { isFetching: isDataFetching, data: queryData, isLoading: isAssetLoading }] = useLazyGetTicketOrAssetQuery()
 
@@ -70,12 +74,18 @@ function ItemsPage({ }: Props) {
                     <p className="font-bold text-[24px] md:text-[32px]">
                         The Hu in the metaverse collection
                     </p>
-                    <div className="mt-6 md:mt-8 md:max-w-[910px]">
+                    <div className="mt-8 md:mt-8 md:max-w-[910px]">
                         <p className='text-[#B3B3B3] text-sm md:text-[24px]'>Collect and dress up your virtual avatar with traditional Mongolian garments</p>
                         <p className='text-[#FF000080] text-sm md:text-[24px] mt-2'>(Single items do not include tickets)</p>
                     </div>
-                    <div className="flex flex-col w-full mt-6 md:items-center md:justify-between md:flex-row md:mt-8">
-                        <div className="max-w-[100vw] overflow-x-auto no-scrollbar">
+                    <div className="flex max-w-[100vw] mt-6 overflow-x-auto no-scrollbar">
+                        <div onClick={() => {
+                            router.back()
+                        }} className="border cursor-pointer p-2.5 md:p-[14px] rounded-xl border-black border-opacity-[0.1]">
+                            <span className='hidden md:block'><MdChevronLeft size={24} /></span>
+                            <span className='md:hidden'><MdChevronLeft size={22} /></span>
+                        </div>
+                        <div className="flex ml-4">
                             <CategorySelectList defaultValues={assetCategories} onChanged={setActiveCategory} activeValues={activeCategory} />
                         </div>
                     </div>

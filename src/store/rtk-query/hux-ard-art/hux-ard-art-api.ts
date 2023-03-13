@@ -102,7 +102,7 @@ export const huxArdArtApi = createApi({
             productId?: number;
             bundleId?: number;
             amount: number;
-            accountId: number;
+            accountId?: number;
             email: string;
             idaxUserId: string;
             idaxUserCode: string;

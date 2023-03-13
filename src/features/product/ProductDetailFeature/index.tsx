@@ -64,16 +64,10 @@ export default function ProductDetailFeature({
             })
             return
         }
-        if (!isLoggedIn || !accountId) {
-            dispatch(showAuthModal({
-                type: 'login'
-            }))
-            return;
-        }
+
         if (authSession === 'idax-wv') {
             const r = await callCreateIdaxInvoice({
                 productId: item.id,
-                accountId: accountId,
                 email: email!,
                 type: 'single',
                 amount: 1,
@@ -84,6 +78,12 @@ export default function ProductDetailFeature({
                 window.location.href = r.result.response.url
             }
         } else {
+            if (!isLoggedIn || !accountId) {
+                dispatch(showAuthModal({
+                    type: 'login'
+                }))
+                return;
+            }
             router.push(`/payment?productId=${item.id}${selectedTicketRegion ? `&region=${selectedTicketRegion}` : ''}`)
         }
     }

@@ -1,21 +1,32 @@
-import Footer from '@/components/footer/Footer'
-import Navbar from '@/components/Navbar'
+import { useRouter } from 'next/router'
 import React from 'react'
+import { BiChevronLeft } from 'react-icons/bi'
 
 type Props = {}
 
 function PrivacyPolicyEN({ }: Props) {
+
+    const router = useRouter()
+
     return (
         <>
-            <Navbar />
-            <div className="h-[100px] w-full" style={{
-                background: `radial-gradient(105.33% 76.33% at 50% 95.88%, #721C1C 0.01%, rgba(0, 0, 0, 0) 100%)`,
-                backgroundColor: 'black'
-            }}>
-                <div className="flex items-center justify-center w-full h-full">
-                    <p className="text-4xl text-center text-white">
-                        Law enforcement
-                    </p>
+            <div className="w-full" >
+                <div className="flex items-center h-[100px] justify-center w-full" style={{
+                    background: `radial-gradient(105.33% 76.33% at 50% 95.88%, #721C1C 0.01%, rgba(0, 0, 0, 0) 100%)`,
+                    backgroundColor: 'black'
+                }}>
+                    <div className="relative overflow-x-auto w-full md:w-[800px] px-2 md:px-0 flex items-center h-full">
+                        <p className="w-full text-4xl text-center text-white">
+                            Law enforcement
+                        </p>
+                        <div className="absolute left-0">
+                            <div onClick={() => {
+                                router.back()
+                            }} className="flex cursor-pointer">
+                                <BiChevronLeft size={32} color="white" />
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div className="mt-8">
                     <div className="flex justify-center w-full">
@@ -81,7 +92,6 @@ function PrivacyPolicyEN({ }: Props) {
                         </div>
                     </div>
                 </div>
-                <Footer />
             </div>
         </>
     )

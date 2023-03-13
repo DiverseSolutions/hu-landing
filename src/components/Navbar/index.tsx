@@ -1,117 +1,126 @@
+import React, { useEffect } from 'react'
+import TheHuImg from './img/the-hu.png'
 import Link from 'next/link'
-import React from 'react'
+import TheHuMobileImg from './img/the-hu-mobile.png'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
-import { ClipLoader } from 'react-spinners'
 import { logoutSuccess, showAuthModal } from '@/store/reducer/auth-reducer/actions'
-import TheHuBlackSvg from '@/assets/svg/the-hu-black.svg'
-import CartBlackSvg from '@/assets/svg/cart-black.svg'
+import HeartSvg from './img/heart.svg'
 import ChevronDownSvg from '@/assets/svg/chevron-down.svg'
 import ExitBlackSvg from '@/assets/svg/exit-black.svg'
-import { BiMenuAltRight } from 'react-icons/bi'
-import Avatar from '../avatar/Avatar'
-import MobileDrawer from '../drawer/MobileDrawer'
-import { useRouter } from 'next/router'
+import MenuSvg from './img/menu.svg'
+import PersonSvg from './img/person.svg'
 
 type Props = {}
 
-export default function Navbar({ }: Props) {
+function Navbar({ }: Props) {
 
     const dispatch = useAppDispatch()
-    const isAuthLoading = useAppSelector(state => state.auth.isLoading)
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+    const isAuthLoading = useAppSelector(state => state.auth.isLoading)
     const profile = useAppSelector(state => state.auth.profile)
 
-    const router = useRouter()
-
     return (
-        <>
-            <div className="z-50 h-[100px] flex justify-center w-full py-6 border-b-2 navbar bg-base-100">
-                <div className="container">
-                    <div className="flex items-center w-full">
-                        <div className="flex-1">
-                            <Link href="/" className="text-xl normal-case btn btn-ghost">
-                                <div className='mw-md:transform mw-md:scale-[0.72] mw-md:w-[128px]'><TheHuBlackSvg /></div>
-                            </Link>
-                        </div>
-                        <div className="flex items-center ml-4 md:ml-0">
-                            <div className="p-3 mr-4 hidden md:block rounded-lg disabled dropdown dropdown-left md:dropdown-end bg-black bg-opacity-[0.04]">
-                                <label tabIndex={0} className="">
-                                    <div className="indicator">
-                                        <CartBlackSvg />
+        <div className="flex transition-all duration-100 fixed z-[100] top-0 justify-center w-full backdrop-blur-[7.5px] h-[64px] md:h-[96px] bg-white bg-opacity-[0.93]">
+            <div className="container w-full h-full px-2 md:px-0">
+                <div className="h-full px-0 navbar">
+                    <div className="px-0 navbar-start md:hidden">
+                        <Link href="/" className="text-xl normal-case">
+                            <img src={TheHuMobileImg.src} className="object-contain w-auto h-3" />
+                        </Link>
+                    </div>
+                    <div className="hidden pl-0 navbar-start lg:flex">
+                        <Link href="/" className="text-xl normal-case">
+                            <img src={TheHuImg.src} className="w-auto h-full max-h-[16px]" />
+                        </Link>
+                        <ul className="px-1 ml-8 text-sm font-light menu menu-horizontal">
+                            <li>
+                                <a target="_blank" className='text-black hover:bg-transparent text-base font-bold text-opacity-[0.35] hover:text-opacity-[1]' href="https://ardcoin.com" rel="noreferrer">
+                                    ArdCoin
+                                </a>
+                            </li>
+                            <li>
+                                <a target="_blank" className='text-black hover:bg-transparent text-base font-bold text-opacity-[0.35] hover:text-opacity-[1]' href="http://metaland.mn" rel="noreferrer">
+                                    Metaland
+                                </a>
+                            </li>
+                            <li>
+                                <Link className='text-black hover:bg-transparent text-base font-bold text-opacity-[0.35] hover:text-opacity-[1]' href="/help" rel="noreferrer">
+                                    Help Center
+                                </Link>
+                            </li>
+                        </ul>
+                    </div>
+                    <div className="navbar-end">
+                        {!isAuthLoading && isLoggedIn ? (
+                            <>
+                                <div className="items-center hidden md:flex">
+                                    <div className="dropdown mw-md:dropdown-end dropdown-bottom md:dropdown-end">
+                                        <label tabIndex={0} className="text-white rounded-lg btn btn-primary">
+                                            {profile.username || profile.email || "User"}
+                                            <div className="w-4 h-4 mx-2 bg-green-400 rounded-full">
+                                            </div>
+                                            <ChevronDownSvg />
+                                        </label>
+                                        <ul tabIndex={0} className="p-4 mt-3 space-y-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52">
+                                            <li>
+                                                <Link href="/profile" className="justify-between p-0">
+                                                    <div className="p-4">Profile</div>
+                                                </Link>
+                                            </li>
+                                            <li>
+                                                <div onClick={() => {
+                                                    dispatch(logoutSuccess())
+                                                }} className="justify-between p-4">
+                                                    Logout
+                                                </div>
+                                            </li>
+                                        </ul>
                                     </div>
+                                </div>
+                                <button onClick={() => {
+                                    dispatch(logoutSuccess())
+                                }} className='rounded-lg hidden md:block bg-opacity-[0.04] p-3 bg-black ml-4'>
+                                    <ExitBlackSvg />
+                                </button>
+                            </>
+                        ) : (
+                            <div className="items-center hidden space-x-2 md:flex">
+                                <button onClick={() => {
+                                    dispatch(showAuthModal({
+                                        type: 'login'
+                                    }))
+                                }} className="py-2.5 px-4 bg-black text-white text-sm text-opacity-[0.93] rounded-xl">
+                                    Login
+                                </button>
+                                <button onClick={() => {
+                                    dispatch(showAuthModal({
+                                        type: 'register'
+                                    }))
+                                }} className="py-2.5 px-4 h-full hover:bg-black hover:bg-opacity-[0.04] text-sm text-opacity-[0.93] font-bold bg-opacity-[0.04] text-black bg-black cursor-pointer rounded-xl">
+                                    Signup
+                                </button>
+                                <div className='flex cursor-pointer justify-center items-center bg-black bg-opacity-[0.04] rounded-xl p-3'>
+                                    <HeartSvg />
+                                </div>
+                            </div>
+                        )}
+                        <div className="md:hidden">
+                            <div className="flex space-x-2">
+                                {isLoggedIn ? (
+                                    <Link href="/profile" className='bg-black flex justify-center items-center w-[44px] h-[44px] bg-opacity-[0.04] rounded-xl p-3'><PersonSvg size={20} /></Link>
+                                ) : (<></>)}
+                                <div className='bg-black flex justify-center items-center w-[44px] h-[44px] bg-opacity-[0.04] rounded-xl p-3'><HeartSvg size={20} /></div>
+                                <label htmlFor='hu-drawer'>
+                                    {/* <BiMenuAltRight color='black' size={48} /> */}
+                                    <div className='bg-black flex justify-center items-center w-[44px] h-[44px] bg-opacity-[0.04] rounded-xl p-3'><MenuSvg size={20} /></div>
                                 </label>
                             </div>
-                            {isAuthLoading ? (
-                                <ClipLoader
-                                    color={"black"}
-                                    loading={true}
-                                    cssOverride={{
-                                        display: "block",
-                                        margin: "0 auto",
-                                        borderColor: "#fff",
-                                    }}
-                                    size={32}
-                                    aria-label="Loading Spinner"
-                                    data-testid="loader"
-                                />
-                            ) : (<></>)}
-                            {!isAuthLoading && isLoggedIn ? (
-                                <>
-                                    <div className="flex items-center">
-                                        <div className="dropdown mw-md:dropdown-end dropdown-bottom md:dropdown-end">
-                                            <label tabIndex={0} className="text-white rounded-lg btn btn-primary">
-                                                {profile.username || profile.email || "User"}
-                                                <div className="w-4 h-4 mx-2 bg-green-400 rounded-full">
-                                                </div>
-                                                <ChevronDownSvg />
-                                            </label>
-                                            <ul tabIndex={0} className="p-4 mt-3 space-y-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52">
-                                                <li>
-                                                    <Link href="/profile" className="justify-between p-0">
-                                                        <div className="p-4">Profile</div>
-                                                    </Link>
-                                                </li>
-                                                <li>
-                                                    <div onClick={() => {
-                                                        dispatch(logoutSuccess())
-                                                    }} className="justify-between p-4">
-                                                        Logout
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <button onClick={() => {
-                                        dispatch(logoutSuccess())
-                                    }} className='rounded-lg hidden md:block bg-opacity-[0.04] p-3 bg-black ml-4'>
-                                        <ExitBlackSvg />
-                                    </button>
-                                </>
-                            ) : (
-                                <>
-                                </>
-                            )}
-                            {!isAuthLoading && !isLoggedIn ? (
-                                <>
-                                    <div className="flex justify-end">
-                                        <label className='md:hidden' htmlFor="hu-drawer"><BiMenuAltRight size={48} /></label>
-                                        <div onClick={() => {
-                                            router.push('/auth?form=login')
-                                        }} className="hidden btn btn-black md:flex">
-                                            Login
-                                        </div>
-                                        <div onClick={() => {
-                                            router.push('/auth?form=signup')
-                                        }} className="hidden ml-2 rounded-lg border font-bold px-3 text-sm py-2 items-center justify-center cursor-pointer border-black border-opacity-[0.2] md:flex">
-                                            <span className='opacity-[0.65]'>Sign Up</span>
-                                        </div>
-                                    </div>
-                                </>
-                            ) : (<></>)}
                         </div>
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
+
+export default Navbar

@@ -14,6 +14,7 @@ import { idaxApi } from './rtk-query/idax/idax-api'
 
 import authReducer from './reducer/auth-reducer';
 import alertReducer from './reducer/alert-reducer';
+import errorReducer from './reducer/error-reducer';
 import { rtkErrorAlert } from './rtk-query/middleware/rtk-error-alert';
 
 export const store = configureStore({
@@ -28,6 +29,7 @@ export const store = configureStore({
     [cognitoUserDataApi.reducerPath]: cognitoUserDataApi.reducer,
     auth: authReducer,
     alert: alertReducer,
+    error: errorReducer,
   },
   middleware(getDefaultMiddleware) {
     return getDefaultMiddleware().concat(

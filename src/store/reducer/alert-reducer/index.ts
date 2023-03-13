@@ -6,7 +6,7 @@ type AlertState = {
 }
 
 const initialState: AlertState = {
-    isArtArtVisible: false,
+    isArtArtVisible: true,
 }
 
 const alertSlice = createSlice({

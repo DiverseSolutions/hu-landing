@@ -37,7 +37,7 @@ function ReleaseMobileDrawer({ children, drawerContent }: Props) {
                                 <div className='flex justify-center w-full'>
                                     <div className="flex items-center">
                                         <div className="mr-1 "><CopyRightSvg /></div>
-                                        <p className="font-medium text-white uppercase">The HU & ARD</p>
+                                        <p className="font-medium text-white uppercase">2023 The HU & Ard</p>
                                     </div>
                                 </div>
                             </div>

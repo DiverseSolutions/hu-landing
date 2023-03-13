@@ -1,20 +1,23 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import Cookies from 'js-cookie'
 import ArdImg from '@/assets/img/ard.jpg'
 import SocialPayImg from '@/assets/img/socialpay.png'
 import VisaSvg from '@/assets/svg/visa.svg'
 import BankLineSvg from '@/assets/svg/bank-line.svg'
 import { MdExpandMore, MdExpandLess, MdChevronLeft } from 'react-icons/md'
+import { BiCheck } from 'react-icons/bi'
 import BxCheck from '@/assets/svg/bx-check.svg'
 import Image from 'next/image'
 import QRImage from "react-qr-image"
-import { useCreateQpayInvoiceMutation, useCreateQposInvoiceMutation, useCreateSocialpayInvoiceMutation } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
+import { useCreateQpayInvoiceMutation, useCreateQposInvoiceMutation, useCreateSocialpayInvoiceMutation, useLazyPromoQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
 import classNames from 'classnames'
 import { toast } from 'react-toastify'
-import { ArdArtAssetDetailByIDResult } from '@/store/rtk-query/hux-ard-art/types'
+import { ArdArtAssetDetailByIDResult, ArdArtBundleDetailResult } from '@/store/rtk-query/hux-ard-art/types'
 import { useRouter } from 'next/router'
 import { qpayBanks, qposBanks, QPayBank } from './banks'
 import { useAppSelector } from '@/store/hooks';
+import { useForm } from 'react-hook-form'
+import { formatPrice } from '@/lib/utils'
 
 type MongolianBank = QPayBank
 
@@ -27,16 +30,19 @@ visibleMongolianBanks.push({
 })
 
 type Props = {
-    item: ArdArtAssetDetailByIDResult,
+    item: ArdArtAssetDetailByIDResult | ArdArtBundleDetailResult,
     priceToUsdrate: number,
-    region: string,
+    isBundle?: boolean;
+    region?: string,
 }
 
 type PaymentType = 'card' | 'socialpay' | 'ardapp' | 'socialpay' | 'mongolian-banks'
 
+type PromoCodeFormData = {
+    promo: string;
+}
 
-
-function PaymentMethodCard({ item, priceToUsdrate, region }: Props) {
+function PaymentMethodCard({ item, priceToUsdrate, region, ...props }: Props) {
 
     const accountId = useAppSelector(state => state.auth.ardArt.accountId)
     const email = useAppSelector(state => state.auth.profile?.email)
@@ -50,12 +56,40 @@ function PaymentMethodCard({ item, priceToUsdrate, region }: Props) {
     const [callCreateInvoiceQPos, { isLoading: isCreateInvoiceQPosLoading }] = useCreateQposInvoiceMutation()
     const [isBanksExpanded, setIsBanksExpanded] = useState(false)
 
+    const [callPromo, { isFetching: isPromoFetching, data: promoData, }] = useLazyPromoQuery()
+
+    const { register: registerPromo,
+        handleSubmit: handleSubmitPromo,
+        watch: watchPromo,
+        setError: setPromoError,
+        formState: {
+            errors: promoErrors
+        } } = useForm<PromoCodeFormData>({
+            defaultValues: {
+                promo: ''
+            }
+        })
+
+    const enteredPromo = watchPromo('promo')
+
+    const isPromoValid = useMemo(() => {
+        return promoData?.result?.isActive ? true : false
+    }, [promoData?.result?.isActive])
+
     const priceUsd = useMemo(() => {
         return new Intl.NumberFormat('en-US', {
             style: 'currency',
             currency: 'USD',
         }).format(item.price)
     }, [item.price])
+
+    useEffect(() => {
+        if (!enteredPromo?.length) {
+            setPromoError('promo', {
+                message: ''
+            })
+        }
+    }, [enteredPromo])
 
     const priceFormatted = useMemo(() => {
         return new Intl.NumberFormat('en-US', {
@@ -85,6 +119,9 @@ function PaymentMethodCard({ item, priceToUsdrate, region }: Props) {
                 productId: item.id,
                 amount: 1,
                 accountId,
+                ...(isPromoValid ? ({
+                    promoCode: enteredPromo
+                }) : ({}))
             }).unwrap()
             if (r.result) {
                 if (r.result?.response?.invoice) {
@@ -93,12 +130,22 @@ function PaymentMethodCard({ item, priceToUsdrate, region }: Props) {
             }
         } else if (selected === 'ardapp') {
             const r = await callCreateInvoiceQPos({
-                type: 'single',
-                productId: item.id,
+                ...(props.isBundle ? (
+                    {
+                        type: 'bundle',
+                        bundleId: item.id,
+                    }
+                ) : ({
+                    type: 'single',
+                    productId: item.id,
+                })),
                 email: email!,
                 region,
                 amount: 1,
                 accountId,
+                ...(isPromoValid ? ({
+                    promoCode: enteredPromo
+                }) : ({}))
             }).unwrap()
             if (r.result) {
                 router.push(`/payment-status/${r.result.invoiceId}?&type=${selected}`)
@@ -118,12 +165,22 @@ function PaymentMethodCard({ item, priceToUsdrate, region }: Props) {
             }
             if (qPosBank) {
                 const r = await callCreateInvoiceQPos({
-                    productId: item.id,
+                    ...(props.isBundle ? (
+                        {
+                            type: 'bundle',
+                            bundleId: item.id,
+                        }
+                    ) : ({
+                        type: 'single',
+                        productId: item.id,
+                    })),
                     email: email!,
                     region,
                     accountId,
-                    type: 'single',
                     amount: 1,
+                    ...(isPromoValid ? ({
+                        promoCode: enteredPromo
+                    }) : ({}))
                 }).unwrap()
                 if (r.result) {
                     router.push(`/payment-status/${r.result.invoiceId}?type=${selected}&bank=${encodeURIComponent(selectedMongolianBank.name)}`)
@@ -131,12 +188,22 @@ function PaymentMethodCard({ item, priceToUsdrate, region }: Props) {
                 return;
             }
             const r = await callCreateInvoiceQPay({
-                productId: item.id,
+                ...(props.isBundle ? (
+                    {
+                        type: 'bundle',
+                        bundleId: item.id,
+                    }
+                ) : ({
+                    type: 'single',
+                    productId: item.id,
+                })),
                 accountId,
                 email: email!,
                 region,
-                type: 'single',
                 amount: 1,
+                ...(isPromoValid ? ({
+                    promoCode: enteredPromo
+                }) : ({}))
             }).unwrap()
             if (r.result) {
                 router.push(`/payment-status/${r.result.invoiceId}?&type=${selected}&bank=${encodeURIComponent(selectedMongolianBank.name)}`)
@@ -155,6 +222,24 @@ function PaymentMethodCard({ item, priceToUsdrate, region }: Props) {
         setIsInvoiceUpdateLoading(false)
     }
 
+    const handleCheckPromo = async () => {
+        const resp = await callPromo({
+            code: enteredPromo,
+        })
+        if (resp.data) {
+            const r = resp.data
+            if (!r.result) {
+                setPromoError('promo', {
+                    message: r.message
+                })
+            } else if (!r.result.isActive) {
+                setPromoError('promo', {
+                    message: 'Promo code is not active'
+                })
+            }
+        }
+    }
+
     return (
         <div className="md:shadow-xl card shadow-none max-w-[90vw] w-[464px] bg-base-100 text-[14px]">
             <div className="card-body mw-md:p-0">
@@ -168,8 +253,8 @@ function PaymentMethodCard({ item, priceToUsdrate, region }: Props) {
                         <img src={item.imageUrl} alt={item.name} className="max-w-[64px] object-contain rounded-lg h-auto" />
                         <div className="flex justify-between w-full h-full ml-2">
                             <div className="flex flex-col justify-center h-full ">
-                                <h4 className='text-[16px] max-w-[168px]'>{item.name} ({region})</h4>
-                                <span className='text-xs text-opacity-[0.35] text-black'>Powered by ARD</span>
+                                <h4 className='text-[16px] max-w-[168px]'>{item.name}{region ? ` (${region})` : ``}</h4>
+                                <span className='text-xs text-opacity-[0.35] text-black'>Powered by Ard</span>
                             </div>
                             <div className="flex">
                                 <span className='text-sm' style={{ color: 'rgba(39, 41, 55, 0.75)' }}>US{priceUsd}</span>
@@ -279,17 +364,50 @@ function PaymentMethodCard({ item, priceToUsdrate, region }: Props) {
                             <span className='text-terteriary'>Subtotal with ARDX</span>
                             <span className='text-dark-secondary'>ARDX{priceFormatted}</span>
                         </div>
+                        {promoData?.result?.isActive ? (
+                            <div className="flex justify-between w-full">
+                                <span className='text-terteriary'>Promo code discount</span>
+                                <span className='text-dark-secondary'>{promoData.result.discountPercentage}% (-US$ {formatPrice(item.price * promoData.result.discountPercentage / 100)})</span>
+                            </div>
+                        ) : (<></>)}
                     </div>
                 </div>
                 <div className="my-1 border-b-[1px] border-black border-opacity-[0.1]">
                 </div>
                 <div className="flex justify-between w-full">
                     <span className='font-bold'>Total</span>
-                    <span className='font-bold'>US{priceUsd}</span>
+                    {promoData?.result?.discountPercentage ? (
+                        <span className='font-bold'>US${formatPrice(item.price - item.price * promoData.result.discountPercentage / 100)}</span>
+                    ) : (<span className='font-bold'>US${formatPrice(item.price)}</span>)}
                 </div>
-                <div className="justify-end mt-6 card-actions">
-                    <button onClick={handleConfirm} className={classNames("btn btn-primary btn-block", { 'loading': isInvoiceUpdateLoading })}>Confirm</button>
-                </div>
+                <form onSubmit={handleSubmitPromo(handleCheckPromo)}>
+                    <div className="mt-6">
+                        <div className="w-full form-control">
+                            <label className="label">
+                                <span className="label-text">Promo code</span>
+                            </label>
+                            <div className="relative w-full">
+                                <input onSubmit={handleCheckPromo} type="text" className="w-full text-sm input input-bordered"
+                                    {...registerPromo('promo')}
+                                />
+                                <div className="absolute top-0 bottom-0 right-2">
+                                    <div className="flex items-center h-full cursor-pointer">
+                                        {!isPromoFetching && promoData?.result?.isActive ? <BiCheck size={24} /> : <></>}
+                                    </div>
+                                </div>
+                            </div>
+                            <label className="label">
+                                <span className="label-text-alt text-error">{promoErrors.promo?.message}</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div className="justify-end mt-6 card-actions">
+                        {enteredPromo?.length && !promoData?.result ?
+                            <button type="submit" onClick={handleCheckPromo} className={classNames("btn btn-primary btn-block", { 'loading': isPromoFetching })}>Check</button>
+                            :
+                            <button onClick={handleConfirm} className={classNames("btn btn-primary btn-block", { 'loading': isInvoiceUpdateLoading })}>Confirm</button>}
+                    </div>
+                </form>
                 <div className="mt-4">
                     <div className="flex justify-center w-full cursor-pointer" onClick={() => {
                         window.history.back()

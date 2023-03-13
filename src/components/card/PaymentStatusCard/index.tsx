@@ -17,6 +17,7 @@ import { useRouter } from 'next/router'
 import { qpayBanks, QPayBank } from './banks'
 import { useLazyCheckInvoiceQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api';
 import { BeatLoader, ClipLoader } from 'react-spinners';
+import { formatPrice } from '@/lib/utils';
 
 type MongolianBank = QPayBank
 
@@ -38,7 +39,7 @@ function PaymentStatusCard({ invoice: invoiceData, checkInvoice, priceToUsdrate,
     const [invoice, setInvoice] = useState(invoiceData)
 
     const item = useMemo(() => {
-        return invoice.product
+        return invoice.product || invoice.bundle as any
     }, [invoice])
 
     const [checkInvoiceData, setCheckInvoiceData] = useState<ArdArtCheckInvoiceResult | undefined>(checkInvoice)
@@ -127,7 +128,7 @@ function PaymentStatusCard({ invoice: invoiceData, checkInvoice, priceToUsdrate,
                         <div className="flex justify-between w-full h-full ml-2">
                             <div className="flex flex-col justify-center h-full ">
                                 <h4 className='text-[16px] max-w-[168px]'>{item.name}</h4>
-                                <span className='text-xs text-opacity-[0.35] text-black'>Powered by ARD</span>
+                                <span className='text-xs text-opacity-[0.35] text-black'>Powered by Ard</span>
                             </div>
                             <div className="flex">
                                 <span className='text-sm' style={{ color: 'rgba(39, 41, 55, 0.75)' }}>US{priceUsd}</span>
@@ -198,19 +199,25 @@ function PaymentStatusCard({ invoice: invoiceData, checkInvoice, priceToUsdrate,
                         </div>
                         <div className="flex justify-between w-full">
                             <span className='text-terteriary'>Subtotal with USD</span>
-                            <span className='text-dark-secondary'>{priceUsd}</span>
+                            <span className='text-dark-secondary'>${formatPrice(invoiceData.price)}</span>
                         </div>
                         {/* <div className="flex justify-between w-full">
                             <span className='text-terteriary'>Subtotal with ARDX</span>
                             <span className='text-dark-secondary'>ARDX{priceFormatted}</span>
                         </div> */}
+                        {invoiceData?.discountPercentage ? (
+                            <div className="flex justify-between w-full">
+                                <span className='text-terteriary'>Promo code discount</span>
+                                <span className='text-dark-secondary'>{invoiceData.discountPercentage}% (-US$ {formatPrice(item.price * invoiceData.discountPercentage / 100)})</span>
+                            </div>
+                        ) : (<></>)}
                     </div>
                 </div>
                 <div className="my-1 border-b-[1px] border-black border-opacity-[0.1]">
                 </div>
                 <div className="flex justify-between w-full">
                     <span className='font-bold'>Total</span>
-                    <span className='font-bold'>US{priceUsd}</span>
+                    <span className='font-bold'>US${formatPrice(invoiceData.price)}</span>
                 </div>
                 {!isSuccess ? (
                     <div>

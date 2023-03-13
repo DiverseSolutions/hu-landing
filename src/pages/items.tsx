@@ -17,7 +17,7 @@ const assetCategories: CategoryItemType[] = ASSET_CATEGORY.map((a) => ({
 }))
 
 
-function ItemsSection({ }: Props) {
+function ItemsPage({ }: Props) {
 
     const [offset, setOffset] = useState(0)
     const [limit, setLimit] = useState(10)
@@ -78,11 +78,6 @@ function ItemsSection({ }: Props) {
                         <div className="max-w-[100vw] overflow-x-auto no-scrollbar">
                             <CategorySelectList defaultValues={assetCategories} onChanged={setActiveCategory} activeValues={activeCategory} />
                         </div>
-                        <div className="flex mt-6 md:mt-0">
-                            <Link href="/items" className="font-bold text-xs md:text-base cursor-pointer rounded-xl bg-black bg-opacity-[0.04] px-4 py-2.5 md:px-6 md:py-[14px]">
-                                Show all ({queryData?.result?.count || 0})
-                            </Link>
-                        </div>
                     </div>
                 </div>
                 <div className="relative w-screen">
@@ -121,4 +116,4 @@ function ItemsSection({ }: Props) {
     )
 }
 
-export default ItemsSection
+export default ItemsPage

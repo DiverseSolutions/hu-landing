@@ -18,6 +18,14 @@
           "destination": "/bundle.html"
         },
         {
+          "source": "/bundles**",
+          "destination": "/bundles.html"
+        },
+        {
+          "source": "/items**",
+          "destination": "/items.html"
+        },
+        {
           "source": "/ticket**",
           "destination": "/ticket.html"
         },
@@ -83,6 +91,14 @@
         {
           "source": "/bundle**",
           "destination": "/bundle.html"
+        },
+        {
+          "source": "/bundles**",
+          "destination": "/bundles.html"
+        },
+        {
+          "source": "/items**",
+          "destination": "/items.html"
         },
         {
           "source": "/product**",
@@ -154,6 +170,14 @@
         {
           "source": "/ticket**",
           "destination": "/ticket.html"
+        },
+        {
+          "source": "/bundles**",
+          "destination": "/bundles.html"
+        },
+        {
+          "source": "/items**",
+          "destination": "/items.html"
         },
         {
           "source": "/detail**",

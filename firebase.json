@@ -14,12 +14,20 @@
           "destination": "/privacy-policy/en.html"
         },
         {
+          "source": "/help**",
+          "destination": "/help.html"
+        },
+        {
           "source": "/bundle**",
           "destination": "/bundle.html"
         },
         {
-          "source": "/ticket**",
-          "destination": "/ticket.html"
+          "source": "/bundles**",
+          "destination": "/bundles.html"
+        },
+        {
+          "source": "/items**",
+          "destination": "/items.html"
         },
         {
           "source": "/product**",
@@ -77,12 +85,20 @@
           "destination": "/wv/idax/index.html"
         },
         {
-          "source": "/ticket**",
-          "destination": "/ticket.html"
+          "source": "/help**",
+          "destination": "/help.html"
         },
         {
           "source": "/bundle**",
           "destination": "/bundle.html"
+        },
+        {
+          "source": "/bundles**",
+          "destination": "/bundles.html"
+        },
+        {
+          "source": "/items**",
+          "destination": "/items.html"
         },
         {
           "source": "/product**",
@@ -152,8 +168,16 @@
           "destination": "/privacy-policy/en.html"
         },
         {
-          "source": "/ticket**",
-          "destination": "/ticket.html"
+          "source": "/help**",
+          "destination": "/help.html"
+        },
+        {
+          "source": "/bundles**",
+          "destination": "/bundles.html"
+        },
+        {
+          "source": "/items**",
+          "destination": "/items.html"
         },
         {
           "source": "/detail**",

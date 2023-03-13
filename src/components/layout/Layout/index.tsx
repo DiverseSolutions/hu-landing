@@ -35,7 +35,7 @@ function Layout({ children }: Props) {
                     {isLayoutVisible ? (
                         <>
                             <Navbar />
-                            <div className='mt-[64px] md:mt-[104px] min-h-[50vh]'>
+                            <div className='mt-[64px] md:mt-[104px] min-h-[70vh]'>
                                 {children}
                             </div>
                             <Footer />

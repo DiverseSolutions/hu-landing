@@ -53,6 +53,12 @@ function Bundles({ }: Props) {
                         </div>
                     </div>
                 </div>
+                <div className="container w-full px-2 text-left md:px-0">
+                    <div className="mt-6 md:mt-8 md:max-w-[910px]">
+                        <p className='text-[#B3B3B3] text-sm md:text-[24px]'>Buy bundles and dress up your virtual avatar with traditional Mongolian garments</p>
+                        <p className='text-[#FF000080] text-sm md:text-[24px] mt-2'>(Bundles include a ticket to experience the concert)</p>
+                    </div>
+                </div>
                 <div className="container px-2 mt-6 md:px-0">
                     {isBundleLoading ? <ClipLoader /> : <></>}
                     {!isBundleLoading && visibleBundles?.length ? (

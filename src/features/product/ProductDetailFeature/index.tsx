@@ -172,20 +172,6 @@ export default function ProductDetailFeature({
                                         </div>
                                     </div>
                                 </div>
-                                <div className="flex flex-col w-full">
-                                    <div className="mt-4 md:ml-4">
-                                        <p className="text-base font-bold md:text-xl">Description</p>
-                                    </div>
-                                    <div className={classNames("mt-2 md:ml-4 overflow-y-hidden text-black md:text-base text-sm opacity-[0.65]", {
-                                        'max-h-[100px]': !isDescSeeMore
-                                    })}>
-                                        {item.description}
-                                    </div>
-                                    <div onClick={() => setIsDescSeeMore(!isDescSeeMore)} className="flex items-center mt-2 cursor-pointer md:ml-4">
-                                        <span className='text-sm'>See more</span>
-                                        {isDescSeeMore ? <BiChevronUp className='ml-3' size={20} /> : <BiChevronDown className='ml-3' size={20} />}
-                                    </div>
-                                </div>
                                 <div className="mt-4 md:hidden">
                                     <div className="grid grid-cols-2 gap-2">
                                         <div className="flex items-center bg-black bg-opacity-[0.04] rounded-xl px-4 py-2">
@@ -235,16 +221,6 @@ export default function ProductDetailFeature({
                                         </div>
                                     </div>
                                     <div className="mt-4">
-                                        {item.type === 'ticket' && isTimezoneWarningVisible ? (
-                                            <div>
-                                                <div className="flex items-start w-full p-4 rounded-lg" style={{ background: 'rgba(255, 140, 0, 0.05)' }}>
-                                                    <div>
-                                                        <WarningSvg />
-                                                    </div>
-                                                    <div className='text-xs ml-[18px]'>To make Purchase please select your Time Zone accordingly. Please note that you will be only able to attend the concert in the the Time zone of your selection.</div>
-                                                </div>
-                                            </div>
-                                        ) : (<></>)}
                                         {item.type === 'ticket' ? (
                                             <div className="mt-4">
                                                 <div className='flex items-center'>
@@ -272,7 +248,29 @@ export default function ProductDetailFeature({
                                             </div>
                                         ) : (<></>)}
                                         <div className="mt-4">
-                                            <div className="flex w-full">
+                                            <div className="flex flex-col w-full">
+                                                <div className="mt-4">
+                                                    <p className="text-base font-bold md:text-xl">Description</p>
+                                                </div>
+                                                <div className={classNames("mt-2 overflow-y-hidden text-black md:text-base text-sm opacity-[0.65]", {
+                                                    'max-h-[100px]': !isDescSeeMore
+                                                })}>
+                                                    {item.description}
+                                                </div>
+                                                <div onClick={() => setIsDescSeeMore(!isDescSeeMore)} className="flex items-center mt-2 cursor-pointer">
+                                                    <span className='text-sm'>See more</span>
+                                                    {isDescSeeMore ? <BiChevronUp className='ml-3' size={20} /> : <BiChevronDown className='ml-3' size={20} />}
+                                                </div>
+                                            </div>
+                                            <div className="mt-4">
+                                                <div className="flex items-start w-full p-4 rounded-lg" style={{ background: 'rgba(255, 140, 0, 0.05)' }}>
+                                                    <div>
+                                                        <WarningSvg />
+                                                    </div>
+                                                    <div className='text-xs ml-[18px]'>Single items do not include tickets.</div>
+                                                </div>
+                                            </div>
+                                            <div className="flex w-full mt-4">
                                                 <div className="flex flex-grow">
                                                     <button onClick={handlePurchase} className={classNames("btn btn-primary rounded-lg btn-block ", { '': !selectedTicketRegion })}>Purchase $({formatPrice(item.price)})</button>
                                                 </div>

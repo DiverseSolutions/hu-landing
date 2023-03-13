@@ -1,5 +1,5 @@
 import { ArdArtResponse } from './../ard-art/types';
-import { ArdArtBundleResponse, ArdArtBundleInvoiceResponse, ArdArtAssetDetailByIDResult, ArdArtTicketOrAssetResponse, ArdArtMyOwnedNftResponse, ArdArtCreateSocialpayInvoiceResult, ArdArtCreateQpayInvoiceResult, ArdArtCreateQposInvoiceResult, ArdArtGetInvoiceByIdResult, ArdArtCheckInvoiceResult, ArdArtAssetDetailEarlyResult, ArdArtCognitoUserDetailResult, ArdArtMyNftCountResult, ArdArtArdxUsdRateResult, ArdArtIdaxInvoiceResult, ArdArtBundleDetailResult, ArdArtAssetDetailResult } from './types';
+import { ArdArtBundleResponse, ArdArtBundleInvoiceResponse, ArdArtAssetDetailByIDResult, ArdArtTicketOrAssetResponse, ArdArtMyOwnedNftResponse, ArdArtCreateSocialpayInvoiceResult, ArdArtCreateQpayInvoiceResult, ArdArtCreateQposInvoiceResult, ArdArtGetInvoiceByIdResult, ArdArtCheckInvoiceResult, ArdArtAssetDetailEarlyResult, ArdArtCognitoUserDetailResult, ArdArtMyNftCountResult, ArdArtArdxUsdRateResult, ArdArtIdaxInvoiceResult, ArdArtBundleDetailResult, ArdArtAssetDetailResult, ArdArtPromoResult } from './types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { MonXanshRateResponse } from '../monxansh/types';
 
@@ -242,7 +242,14 @@ export const huxArdArtApi = createApi({
                 return 1 / baseQueryReturnValue.result?.buy
             },
         }),
-
+        promo: builder.query<ArdArtResponse<ArdArtPromoResult>, {
+            code: string
+        }>({
+            query: (d) => ({
+                url: `/api/v1/market/promo/${d.code}`,
+                method: 'GET',
+            })
+        }),
     }),
 })
 
@@ -280,4 +287,6 @@ export const {
     useAssetDetailQuery,
     useLazyAssetDetailQuery,
     useSendNftMutation,
+    usePromoQuery,
+    useLazyPromoQuery,
 } = huxArdArtApi;

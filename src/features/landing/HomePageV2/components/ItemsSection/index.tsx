@@ -71,8 +71,8 @@ function ItemsSection({ }: Props) {
                         The Hu in the metaverse collection
                     </p>
                     <div className="mt-6 md:mt-8 md:max-w-[910px]">
-                        <p className='text-[#B3B3B3] text-sm md:text-[24px]'>Collect and dress up your virtual avatar with traditional Mongolian garments</p>
-                        <p className='text-[#FF000080] text-sm md:text-[24px] mt-2'>(Single items do not include tickets)</p>
+                        <p className='text-[#B3B3B3] text-sm md:text-[20px]'>Collect and dress up your virtual avatar with traditional Mongolian garments</p>
+                        <p className='text-[#FF000080] text-sm md:text-[20px] mt-2'>(Single items do not include tickets)</p>
                     </div>
                     <div className="flex flex-col w-full mt-6 md:items-center md:justify-between md:flex-row md:mt-8">
                         <div className="max-w-[100vw] overflow-x-auto no-scrollbar">

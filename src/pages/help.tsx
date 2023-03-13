@@ -172,9 +172,7 @@ function HelpCenterPage({ }: Props) {
                                 <>
                                     <div className="mt-9">
                                         <div className="flex items-center">
-                                            <span className='text-black opacity-[0.65]'>HU Support</span>
-                                            <div className="w-1 h-1 ml-4 bg-black rounded-full opacity-[0.65]"></div>
-                                            <div className="ml-4 opacity-[0.65]">Updated on 2023-03-13</div>
+                                            <div className="opacity-[0.65]">Updated on 2023-03-13</div>
                                         </div>
                                     </div>
                                     <div className='mt-3'>

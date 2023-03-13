@@ -7,3 +7,43 @@ export const GOOGLE_ANALYTICS_ID = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID
 export const ERROR_CURRENCY = 'Currency error. Please try reload the page'
 
 export const APP_HOST_URL = process.env.NEXT_PUBLIC_APP_HOST_URL as string
+
+export const BUNDLE_CATEGORY = [{
+    slug: 'legendary',
+    name: 'Legendary'
+}, {
+    slug: 'epic',
+    name: 'Epic'
+}, {
+    slug: 'rare',
+    name: 'Rare'
+}, {
+    slug: 'common',
+    name: 'Common',
+}]
+
+export const ASSET_CATEGORY = [{
+    slug: 'persona',
+    name: 'Persona'
+}, {
+    slug: 'emote',
+    name: 'Emote'
+}
+]
+
+export const TICKET_REGIONS = [
+    {
+        region: 'ASIA',
+        date: 'March 30, 2023 at 21:00 Asia Pacific GMT +08:00'
+    },
+    {
+        region: 'EUROPE',
+        date: 'March 30, 2023 at 21:00 Europe GMT 00:00'
+    },
+    {
+        region: 'USA',
+        date: 'March 30, 2023 at 21:00 America GMT -08:00'
+    },
+];
+
+export const ERR_UNKNOWN = "An unknown error occured. Please try reload the page."

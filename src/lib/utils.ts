@@ -6,6 +6,7 @@ export const isValidEmail = (email: string) => {
 }
 
 const priceFormatter = formatNumber({ integerSeparator: `'`, round: 2, })
+const smallPriceFormatter = formatNumber({ integerSeparator: `'`, round: 4, })
 export const formatPrice = (v: number) => {
-    return priceFormatter(v)
+    return v >= 0.01 ? priceFormatter(v) : smallPriceFormatter(v)
 }

@@ -112,11 +112,18 @@ function PaymentMethodCard({ item, priceToUsdrate, region, ...props }: Props) {
         if (selected === 'socialpay' || selected === 'card') {
             const linkParam = selected === 'card' ? 'card' : 'socialpay'
             const r = await callCreateInvoiceSocialPay({
-                type: 'single',
                 method: selected,
                 region,
                 email: email!,
-                productId: item.id,
+                ...(props.isBundle ? (
+                    {
+                        type: 'bundle',
+                        bundleId: item.id,
+                    }
+                ) : ({
+                    type: 'single',
+                    productId: item.id,
+                })),
                 amount: 1,
                 accountId,
                 ...(isPromoValid ? ({

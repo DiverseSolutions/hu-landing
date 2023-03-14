@@ -36,7 +36,7 @@ function TicketCard({ ticket }: Props) {
                     <p className="text-base md:text-xl text-white text-opacity-[0.93]">
                         {ticket.name}
                     </p>
-                    <p className="mt-2 text-sm text-white text-opacity-[0.65]">{ticket.description}</p>
+                    <p className="mt-2 text-sm text-white text-opacity-[0.65] h-[60px] overflow-y-auto no-scrollbar">{ticket.description}</p>
                     <div className="flex items-center justify-start mt-2">
                         <span className="text-sm md:text-base font-bold text-white text-opacity-[0.93]">
                             ${formatPrice(ticket.price)}

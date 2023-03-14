@@ -6,6 +6,9 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Mousewheel } from "swiper"
 
 import 'swiper/css';
+import { useGetTicketOrAssetQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api';
+import { ClipLoader } from 'react-spinners';
+import TicketsResponsive from './components/TicketsResponsive';
 
 type Props = {}
 
@@ -30,6 +33,11 @@ const TICKETS = [
 SwiperCore.use([Mousewheel])
 
 function TicketSection({ }: Props) {
+
+    const { data: tickets, isLoading: isTicketsLoading } = useGetTicketOrAssetQuery({
+        type: 'ticket'
+    })
+
     return (
         <>
             <div className='flex justify-center w-full'>
@@ -45,34 +53,8 @@ function TicketSection({ }: Props) {
                                 Powered by <a href="#" rel="noreferrer" className='text-black text-opacity-[0.93] underline'>Ard</a> & <a href="#" rel="noreferrer" className='text-black text-opacity-[0.93] underline'>Metaforce</a>
                             </p>
                         </div>
-                        <div className="flex-grow hidden mt-8 ml-16 space-x-16 md:flex md:mt-0">
-                            {TICKETS.map((ticket) => <TicketCard key={ticket.id} ticket={ticket} />)}
-                        </div>
-                        <div className='w-full mt-8 md:hidden'>
-                            <Swiper
-                                modules={[
-                                    Mousewheel,
-                                ]} speed={500}
-                                preventInteractionOnTransition
-                                mousewheel={{
-                                    forceToAxis: true
-                                }}
-                                autoHeight
-                                direction="horizontal"
-                                slidesPerView={1.2}
-                                spaceBetween={8}
-                            >
-                                {TICKETS.map((ticket) => (
-                                    <SwiperSlide key={ticket.id}>
-                                        <div>
-                                            <TicketCard
-                                                ticket={ticket}
-                                            />
-                                        </div>
-                                    </SwiperSlide>
-                                ))}
-                            </Swiper>
-                        </div>
+                        {isTicketsLoading ? (<div className='flex items-center justify-center w-full h-full'><ClipLoader /></div>) : (<></>)}
+                        {!isTicketsLoading && tickets?.result?.records?.length ? <TicketsResponsive tickets={tickets?.result?.records} /> : <></>}
                     </div>
                 </div>
             </div>

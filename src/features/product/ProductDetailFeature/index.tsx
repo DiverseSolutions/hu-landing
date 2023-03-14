@@ -262,14 +262,6 @@ export default function ProductDetailFeature({
                                                     {isDescSeeMore ? <BiChevronUp className='ml-3' size={20} /> : <BiChevronDown className='ml-3' size={20} />}
                                                 </div>
                                             </div>
-                                            <div className="mt-4">
-                                                <div className="flex items-start w-full p-4 rounded-lg" style={{ background: 'rgba(255, 140, 0, 0.05)' }}>
-                                                    <div>
-                                                        <WarningSvg />
-                                                    </div>
-                                                    <div className='text-xs ml-[18px]'>Single items do not include tickets.</div>
-                                                </div>
-                                            </div>
                                             <div className="flex w-full mt-4">
                                                 <div className="flex flex-grow">
                                                     <button onClick={handlePurchase} className={classNames("btn btn-primary rounded-lg btn-block ", { '': !selectedTicketRegion })}>Purchase $({formatPrice(item.price)})</button>

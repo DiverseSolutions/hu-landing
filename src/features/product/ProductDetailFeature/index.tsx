@@ -250,7 +250,7 @@ export default function ProductDetailFeature({
                                         <div className="mt-4">
                                             <div className="flex flex-col w-full">
                                                 <div className="mt-4">
-                                                    <p className="text-base font-bold md:text-xl">Description</p>
+                                                    <p className="text-base font-bold md:text-xl">Detail</p>
                                                 </div>
                                                 <div className={classNames("mt-2 overflow-y-hidden text-black md:text-base text-sm opacity-[0.65]", {
                                                     'max-h-[100px]': !isDescSeeMore

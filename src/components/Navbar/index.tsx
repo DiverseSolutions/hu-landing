@@ -39,7 +39,12 @@ function Navbar({ }: Props) {
                                 </a>
                             </li>
                             <li>
-                                <a target="_blank" className='text-black hover:bg-transparent text-base font-bold text-opacity-[0.35] hover:text-opacity-[1]' href="http://metaland.mn" rel="noreferrer">
+                                <a target="_blank" className='text-black hover:bg-transparent text-base font-bold text-opacity-[0.35] hover:text-opacity-[1]' href="https://www.thehuofficial.com/merch-1" rel="noreferrer">
+                                    HU Official Merch
+                                </a>
+                            </li>
+                            <li>
+                                <a target="_blank" className='text-black hover:bg-transparent text-base font-bold text-opacity-[0.35] hover:text-opacity-[1]' href="https://metaland.mn" rel="noreferrer">
                                     Metaland
                                 </a>
                             </li>

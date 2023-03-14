@@ -106,6 +106,7 @@ export type ArdArtTicketOrAssetRecord = {
     link: string;
     imageUrl: string;
     objectUrl: string;
+    cardImageUrl: string | null;
     category: string;
     ownerAmount: null;
     price: number;

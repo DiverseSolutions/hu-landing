@@ -1,6 +1,8 @@
+import { CATEGORY_COLORS } from '@/lib/consts';
 import { formatPrice } from '@/lib/utils';
 import { useUsdToArdxRateQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api';
 import { ArdArtBundleRecord } from '@/store/rtk-query/hux-ard-art/types';
+import classNames from 'classnames';
 import { useRouter } from 'next/router';
 import React from 'react'
 import { ClipLoader } from 'react-spinners';
@@ -24,7 +26,9 @@ function BundleCard({ bundle }: Props) {
                         <img src={bundle.imageUrl} className="object-top object-cover transform hover:scale-[1.1] transition-all duration-200 w-full h-full" />
                         {bundle.category?.length ? (
                             <div className="absolute top-4 left-4">
-                                <div className="flex capitalize items-center px-2 py-1 text-xs rounded-xl bg-[#ff00a8] text-white font-bold">
+                                <div style={{
+                                    backgroundColor: CATEGORY_COLORS[bundle.category] || '',
+                                }} className={classNames(`flex capitalize items-center px-2 py-1 text-xs rounded-xl text-white font-bold`)}>
                                     {bundle.category}
                                 </div>
                             </div>

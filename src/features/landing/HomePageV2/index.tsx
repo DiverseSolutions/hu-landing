@@ -5,6 +5,7 @@ import ItemsSection from './components/ItemsSection'
 import SystemRequirementsTransparent from './components/SystemRequirementsTransparent'
 import DesktopBehindNavbar from '@/components/layout/DesktopBehindNavbar'
 import BackgroundVideo from './components/BackgroundVideo'
+import TicketSection from './components/TicketSection'
 
 type Props = {}
 
@@ -72,8 +73,11 @@ function HomePageV2({ }: Props) {
                             </div>
                         </div>
                     </div>
-                    <div id="bundle-section">
-                        <div className="flex justify-center w-full px-4 mt-8">
+                    <div id="ticket-section" className='mt-12 md:mt-16'>
+                        <TicketSection />
+                    </div>
+                    <div id="bundle-section" className='mt-12 md:mt-16'>
+                        <div className="flex justify-center w-full px-4">
                             <div className="min-h-[50vh]">
                                 <BundlesSection />
                             </div>

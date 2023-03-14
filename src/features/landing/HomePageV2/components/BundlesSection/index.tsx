@@ -56,11 +56,10 @@ function BundlesSection({ }: Props) {
             <div className='flex flex-col items-center w-full px-2 md:px-0'>
                 <div className="container px-2 md:px-0">
                     <p className="font-bold px-2 md:px-0 text-[24px] md:text-[32px]">
-                        Bundles
+                        Bundles <span className="font-normal">(Tickets included)</span>
                     </p>
                     <div className="mt-6 md:mt-8 md:max-w-[910px]">
-                        <p className='text-[#B3B3B3] text-sm md:text-[20px]'>Buy bundles and dress up your virtual avatar with traditional Mongolian garments</p>
-                        <p className='text-[#FF000080] text-sm md:text-[20px] mt-2'>(Bundles include a ticket to experience the concert)</p>
+                        <p className='text-[#B3B3B3] text-sm md:text-[20px]'>Bundles include concert tickets, personas and emotes for a discounted price.</p>
                     </div>
                     <div className="mt-6 md:mt-8">
                         <div className="flex flex-col justify-between w-full space-y-4 md:space-y-0 md:flex-row">

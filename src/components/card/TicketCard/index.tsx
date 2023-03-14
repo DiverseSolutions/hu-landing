@@ -22,7 +22,7 @@ function TicketCard({ ticket }: Props) {
     return (
         <div onClick={() => {
             router.push(`/product?id=${ticket.id}`)
-        }} className='relative w-full cursor-pointer card bg-black bg-opacity-[0.65] p-4 rounded-xl'>
+        }} className='relative w-full cursor-pointer card md:max-w-[352px] bg-black bg-opacity-[0.65] p-4 rounded-xl'>
             <div className="p-0 card-body">
                 <div className="relative w-full h-auto overflow-hidden aspect-square rounded-xl">
                     <img src={ticket.imageUrl} className="object-top object-cover transform hover:scale-[1.1] transition-all duration-200 w-full h-full" />

@@ -18,7 +18,7 @@ function TicketsResponsive({
 }: Props) {
     return (
         <>
-            <div className="flex-grow hidden mt-8 ml-16 space-x-16 md:flex md:mt-0">
+            <div className="justify-center flex-grow hidden mt-8 ml-16 space-x-16 md:flex md:mt-0">
                 {tickets.map((ticket) => <TicketCard key={ticket.id} ticket={ticket} />)}
             </div>
             <div className='w-full mt-8 md:hidden'>

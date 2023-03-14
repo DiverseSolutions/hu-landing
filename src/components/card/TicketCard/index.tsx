@@ -1,5 +1,7 @@
+import { CATEGORY_COLORS } from '@/lib/consts';
 import { formatPrice } from '@/lib/utils';
 import { useUsdToArdxRateQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api';
+import classNames from 'classnames';
 import { useRouter } from 'next/router';
 import React from 'react'
 import { ClipLoader } from 'react-spinners';
@@ -11,6 +13,7 @@ type Props = {
         description: string;
         price: number;
         imageUrl: string;
+        category?: string;
         level?: number;
     }
 }
@@ -32,8 +35,10 @@ function TicketCard({ ticket }: Props) {
                 <div className="relative w-full h-auto overflow-hidden aspect-square rounded-xl">
                     <img src={ticket.imageUrl} className="object-top object-cover transform hover:scale-[1.1] transition-all duration-200 w-full h-full" />
                     <div className="absolute top-4 left-4">
-                        <div className="flex capitalize items-center px-2 py-1 text-xs rounded-xl bg-[#2663FF] text-white font-bold">
-                            Ticket
+                        <div style={{
+                            backgroundColor: ticket.category ? (CATEGORY_COLORS[ticket.category] || '#2663FF') : '#2663FF'
+                        }} className={classNames("flex items-center px-2 py-1 text-xs font-bold text-white capitalize rounded-xl")}>
+                            {ticket.category}
                         </div>
                     </div>
                 </div>

@@ -1,5 +1,4 @@
 import TicketCard from '@/components/card/TicketCard'
-import { ArdArtTicketOrAssetRecord } from '@/store/rtk-query/hux-ard-art/types'
 import React from 'react'
 
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -10,7 +9,13 @@ import 'swiper/css';
 SwiperCore.use([Mousewheel])
 
 type Props = {
-    tickets: ArdArtTicketOrAssetRecord[]
+    tickets: {
+        id: number;
+        name: string;
+        description: string;
+        price: number;
+        imageUrl: string;
+    }[]
 }
 
 function TicketsResponsive({

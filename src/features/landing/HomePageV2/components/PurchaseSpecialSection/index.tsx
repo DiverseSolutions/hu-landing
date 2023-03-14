@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 
 import TicketImage from '@/assets/img/ticket.webp'
 import TicketCard from '@/components/card/TicketCard'
@@ -6,7 +6,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Mousewheel } from "swiper"
 
 import 'swiper/css';
-import { useGetTicketOrAssetQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api';
+import { useGetBundleQuery, useGetTicketOrAssetQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api';
 import { ClipLoader } from 'react-spinners';
 import TicketsResponsive from './components/TicketsResponsive';
 
@@ -32,11 +32,25 @@ const TICKETS = [
 
 SwiperCore.use([Mousewheel])
 
-function TicketSection({ }: Props) {
+function PurchaseSpecialSection({ }: Props) {
 
     const { data: tickets, isLoading: isTicketsLoading } = useGetTicketOrAssetQuery({
         type: 'ticket'
     })
+
+    const { data: bundles, isLoading: isBundlesLoading } = useGetBundleQuery({
+        level: 1,
+    })
+
+    const data = useMemo(() => {
+        if (isTicketsLoading || isTicketsLoading) {
+            return []
+        }
+        if (tickets?.result?.records && bundles?.result?.records?.length) {
+            return [...tickets.result.records, ...bundles.result.records]
+        }
+        return []
+    }, [bundles, tickets, isBundlesLoading, isTicketsLoading])
 
     return (
         <>
@@ -53,8 +67,8 @@ function TicketSection({ }: Props) {
                                 Powered by <a href="#" rel="noreferrer" className='text-black text-opacity-[0.93] underline'>Ard</a> & <a href="#" rel="noreferrer" className='text-black text-opacity-[0.93] underline'>Metaforce</a>
                             </p>
                         </div>
-                        {isTicketsLoading ? (<div className='flex items-center justify-center w-full h-full'><ClipLoader /></div>) : (<></>)}
-                        {!isTicketsLoading && tickets?.result?.records?.length ? <TicketsResponsive tickets={tickets?.result?.records} /> : <></>}
+                        {isTicketsLoading || isBundlesLoading ? (<div className='flex items-center justify-center w-full h-full'><ClipLoader /></div>) : (<></>)}
+                        {(!isTicketsLoading && !isBundlesLoading) && tickets?.result?.records?.length ? <TicketsResponsive tickets={data} /> : <></>}
                     </div>
                 </div>
             </div>
@@ -62,4 +76,4 @@ function TicketSection({ }: Props) {
     )
 }
 
-export default TicketSection
+export default PurchaseSpecialSection

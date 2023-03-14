@@ -15,6 +15,7 @@ type Props = {
         description: string;
         price: number;
         imageUrl: string;
+        type: string;
     }[]
 }
 

@@ -11,6 +11,7 @@ type Props = {
         description: string;
         price: number;
         imageUrl: string;
+        level?: number;
     }
 }
 
@@ -21,7 +22,11 @@ function TicketCard({ ticket }: Props) {
 
     return (
         <div onClick={() => {
-            router.push(`/product?id=${ticket.id}`)
+            if (ticket.level !== undefined) {
+                router.push(`/bundle?id=${ticket.id}`)
+            } else {
+                router.push(`/product?id=${ticket.id}`)
+            }
         }} className='relative w-full cursor-pointer card md:max-w-[352px] bg-black bg-opacity-[0.65] p-4 rounded-xl'>
             <div className="p-0 card-body">
                 <div className="relative w-full h-auto overflow-hidden aspect-square rounded-xl">

@@ -28,11 +28,11 @@ export const CATEGORY_COLORS: {
 }
 
 export const ASSET_CATEGORY = [{
-    slug: 'persona',
-    name: 'Persona'
+    slug: 'avatar',
+    name: 'Avatar'
 }, {
-    slug: 'emote',
-    name: 'Emote'
+    slug: 'signature movement',
+    name: 'Signature movement'
 }
 ]
 

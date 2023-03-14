@@ -58,7 +58,7 @@ function PurchaseSpecialSection({ }: Props) {
                 <div className="container">
                     <div className="md:p-16 p-4 flex flex-col md:flex-row w-full items-center rounded-xl md:bg-[rgba(62,59,222,0.08)]">
                         <div className="flex flex-col">
-                            <p className="font-bold text-[32px] leading-[44px] md:text-[40px] md:w-[350px]">Buy tickets for<br />The Hu in the<br />Metaverse<br />Concert</p>
+                            <p className="font-bold text-[32px] leading-[44px] md:text-[38px] md:w-[350px]">Buy tickets for<br />The Hu in the<br />Metaverse Concert</p>
                             <p className='whitespace-pre-line mt-6 md:w-[450px] text-[20px] leading-[25px] text-[#1A1A1A]'>Purchase the basic entry ticket for the full interactive experience and directors cut ticket for the cinematic experience.</p>
                             <p className="mt-6 text-black text-opacity-[0.65]">
                                 Powered by <a href="#" rel="noreferrer" className='text-black text-opacity-[0.93] underline'>Ard</a> & <a href="#" rel="noreferrer" className='text-black text-opacity-[0.93] underline'>Metaforce</a>

@@ -132,7 +132,7 @@ export default function ProductDetailFeature({
                                         <p className='text-[24px] md:text-2xl mt-4 font-bold max-w-[250px]'>
                                             {item.name} {item.category?.length ? (<span className="capitalize opacity-[0.35]">({item.category})</span>) : (<></>)}
                                         </p>
-                                        <p className='text-sm md:text-base'><span className='opacity-[0.65]'>Powered by</span> <span className="font-bold  text-black opacity-[0.93]">ARD</span> & <span className="font-bold  text-black opacity-[0.93]">Metaland</span></p>
+                                        <p className='text-sm md:text-base'><span className='opacity-[0.65]'>Powered by</span> <span className="font-bold  text-black opacity-[0.93]">Ard</span> & <span className="font-bold  text-black opacity-[0.93]">Metaland</span></p>
                                     </div>
                                 </div>
                                 <div className='hidden mt-8 md:block'>
@@ -214,7 +214,7 @@ export default function ProductDetailFeature({
                                 <div className="flex flex-col w-full">
                                     <div className="hidden rounded-lg md:block">
                                         <div>
-                                            <p className='text-sm md:text-base'><span className='opacity-[0.65]'>Powered by</span> <span className="font-bold  text-black opacity-[0.93]">ARD</span> & <span className="font-bold  text-black opacity-[0.93]">Metaland</span></p>
+                                            <p className='text-sm md:text-base'><span className='opacity-[0.65]'>Powered by</span> <span className="font-bold  text-black opacity-[0.93]">Ard</span> & <span className="font-bold  text-black opacity-[0.93]">Metaland</span></p>
                                             <p className='text-[24px] md:text-2xl mt-4 font-bold max-w-[250px]'>
                                                 {item.name} {item.category?.length ? (<span className="capitalize opacity-[0.35]">({item.category})</span>) : (<></>)}
                                             </p>
@@ -264,7 +264,7 @@ export default function ProductDetailFeature({
                                             </div>
                                             <div className="flex w-full mt-4">
                                                 <div className="flex flex-grow">
-                                                    <button onClick={handlePurchase} className={classNames("btn btn-primary rounded-lg btn-block ", { '': !selectedTicketRegion })}>Purchase $({formatPrice(item.price)})</button>
+                                                    <button onClick={handlePurchase} className={classNames("btn btn-primary rounded-lg btn-block ", { 'bg-black bg-opacity-[0.2] text-black text-opacity-[0.2] hover:bg-black hover:bg-opacity-[0.2]': !selectedTicketRegion && item.type === 'ticket' })}>Purchase $({formatPrice(item.price)})</button>
                                                 </div>
                                                 <div className="flex ml-2">
                                                     <div className="btn bg-black bg-opacity-[0.2] btn-disabled rounded-lg">

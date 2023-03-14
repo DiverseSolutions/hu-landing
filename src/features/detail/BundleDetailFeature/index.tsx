@@ -123,7 +123,7 @@ function BundleDetailFeature({
                                     <div className="flex flex-col">
                                         <p className="font-bold text-[24px] leading-[32px] max-w-[300px]">{bundle.name} <span className="text-black text-opacity-[0.35]">(Bundle)</span></p>
                                         <div className="flex items-center mt-4">
-                                            <p className='text-sm md:text-base'>Powered by <span className="font-bold">ARD</span></p>
+                                            <p className='text-sm md:text-base'>Powered by <span className="font-bold">Ard</span></p>
                                             <span className="px-2 py-1 font-bold ml-2 text-xs text-white rounded-xl bg-[#D63333]">Bonus ARDX{formatPrice(bundle.depositAmount)}</span>
                                             <div className="rounded-full w-0.5 h-0.5 bg-black ml-2">
 

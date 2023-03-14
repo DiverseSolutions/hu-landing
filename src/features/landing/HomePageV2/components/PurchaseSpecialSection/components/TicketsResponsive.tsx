@@ -13,6 +13,7 @@ type Props = {
         id: number;
         name: string;
         description: string;
+        shortDesc?: string;
         price: number;
         imageUrl: string;
         level?: number;

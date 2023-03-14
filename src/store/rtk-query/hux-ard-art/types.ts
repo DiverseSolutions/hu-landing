@@ -115,6 +115,7 @@ export type ArdArtTicketOrAssetRecord = {
     scheduleDateCustom: string;
     tag: string;
     subTag: string;
+    shortDesc?: string;
 }
 
 export type ArdArtTicketOrAssetResponse = ArdArtResponse<{

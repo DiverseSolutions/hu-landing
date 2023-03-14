@@ -71,14 +71,11 @@ function ItemsPage({ }: Props) {
         <>
             <div id="items-section" className='flex flex-col items-center w-full'>
                 <div className="container px-4 md:px-0">
-                    <p className="font-bold text-[24px] md:text-[32px]">
-                        The Hu in the metaverse collection
-                    </p>
-                    <div className="mt-8 md:mt-8 md:max-w-[910px]">
-                        <p className='text-[#B3B3B3] text-sm md:text-[24px]'>Collect and dress up your virtual avatar with traditional Mongolian garments</p>
-                        <p className='text-[#FF000080] text-sm md:text-[24px] mt-2'>(Single items do not include tickets)</p>
+                    <div className="mt-4 hidden md:block md:mt-4 md:max-w-[910px]">
+                        <p className='text-[#B3B3B3] text-sm md:text-[24px]'>Collect and dress up your virtual avatar with traditional Mongolian garments.
+                            Please note that single items do not include concert tickets. </p>
                     </div>
-                    <div className="flex max-w-[100vw] mt-6 overflow-x-auto no-scrollbar">
+                    <div className="flex max-w-[100vw] mt-4 md:mt-6 overflow-x-auto no-scrollbar">
                         <div onClick={() => {
                             router.back()
                         }} className="border cursor-pointer p-2.5 md:p-[14px] rounded-xl border-black border-opacity-[0.1]">
@@ -88,6 +85,10 @@ function ItemsPage({ }: Props) {
                         <div className="flex ml-4">
                             <CategorySelectList defaultValues={assetCategories} onChanged={setActiveCategory} activeValues={activeCategory} />
                         </div>
+                    </div>
+                    <div className="mt-6 block md:hidden md:max-w-[910px]">
+                        <p className='text-[#B3B3B3] text-sm md:text-[24px]'>Collect and dress up your virtual avatar with traditional Mongolian garments.
+                            Please note that single items do not include concert tickets. </p>
                     </div>
                 </div>
                 <div className="relative w-screen">

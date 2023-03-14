@@ -63,6 +63,9 @@ function MobileDrawer({ children, drawerContent }: Props) {
                                             <a href="https://ardcoin.com/" target="_blank" rel="noreferrer" className='flex items-center justify-between w-full text-xl font-bold text-white'>ArdCoin</a>
                                         </li>
                                         <li>
+                                            <a href="https://www.thehuofficial.com/merch-1" target="_blank" rel="noreferrer" className='flex items-center justify-between w-full text-xl font-bold text-white'>HU Official Merch</a>
+                                        </li>
+                                        <li>
                                             <a href="https://metaland.mn/en" className='flex items-center justify-between w-full text-xl font-bold text-white' target="_blank" rel="noreferrer" >Metaland</a>
                                         </li>
                                         <li>

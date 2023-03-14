@@ -238,7 +238,7 @@ function BundleDetailFeature({
                 <div className="border-b mt-10 w-full bg-black bg-opacity-[0.1]"></div>
                 <div className="flex justify-center w-full mt-4 md:mt-8">
                     <div className="container px-4 md:px-0">
-                        <p className="font-bold text-xl md:text-[32px]">Minted Items</p>
+                        <p className="font-bold text-xl md:text-[32px]">Included items</p>
                         <div className="mt-6 md:mt-8">
                             {visibleItems?.length ? (
                                 <div className="grid grid-cols-2 gap-x-2 gap-y-6 md:grid-cols-2 xl:grid-cols-5">

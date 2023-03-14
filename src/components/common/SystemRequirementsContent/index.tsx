@@ -33,8 +33,8 @@ const systemRequirementSpecs = [
             },
             {
                 name: `Director's cut`,
-                value: <span className="font-bold text-sm opacity-[0.65]">"Your computer(phone, tablet?) doesn’t meet the requirement?<br />
-                    No problem, we got you covered! In our exclusive, cinematic version of the director’s cut edition you will be able to view the FULL concert from the comfort of your home or wherever you have internet access."</span>
+                value: <span className="font-bold text-sm opacity-[0.65]">&quot;Your computer(phone, tablet?) doesn&apos;t meet the requirement?<br />
+                    No problem, we got you covered! In our exclusive, cinematic version of the director’s cut edition you will be able to view the FULL concert from the comfort of your home or wherever you have internet access.&quot;</span>
             },
         ]
     },

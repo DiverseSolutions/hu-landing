@@ -34,7 +34,7 @@ function TicketSection({ }: Props) {
         <>
             <div className='flex justify-center w-full'>
                 <div className="container">
-                    <div className="md:p-16 p-2 flex flex-col md:flex-row w-full items-center rounded-xl md:bg-[rgba(62,59,222,0.08)]">
+                    <div className="md:p-16 p-4 flex flex-col md:flex-row w-full items-center rounded-xl md:bg-[rgba(62,59,222,0.08)]">
                         <div className="flex flex-col">
                             <p className="font-bold text-[32px] leading-[44px] md:text-[40px] md:w-[350px]">Buy tickets for The Hu in the Metaverse Concert</p>
                             <p className='whitespace-pre-line mt-6 md:w-[450px] text-[20px] leading-[25px] text-[#1A1A1A]'>Purchase either the Jade ticket for cinematic digital experience  or the Bronze ticket for the full virtual experience here.

@@ -66,7 +66,7 @@ function ItemsSection({ }: Props) {
     return (
         <>
             <div id="items-section" className='flex flex-col items-center w-full'>
-                <div className="container px-2 md:px-0">
+                <div className="container px-4 md:px-0">
                     <p className="font-bold text-[24px] md:text-[32px]">
                         Single item collection <span className='font-normal'>(Tickets not included!)</span>
                     </p>
@@ -87,7 +87,7 @@ function ItemsSection({ }: Props) {
                 </div>
                 <div className="relative w-screen">
                     <div className="flex flex-wrap justify-center max-w-full mt-8">
-                        <div className="container px-2 overflow-x-visible md:px-0">
+                        <div className="container px-4 overflow-x-visible md:px-0">
                             {isAssetLoading ? (<ClipLoader />) : (<></>)}
                             <div className="w-full">
                                 {!isAssetLoading && visibleItems?.length ? (

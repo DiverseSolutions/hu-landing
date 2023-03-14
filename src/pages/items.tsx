@@ -70,7 +70,7 @@ function ItemsPage({ }: Props) {
     return (
         <>
             <div id="items-section" className='flex flex-col items-center w-full'>
-                <div className="container px-2 md:px-0">
+                <div className="container px-4 md:px-0">
                     <p className="font-bold text-[24px] md:text-[32px]">
                         The Hu in the metaverse collection
                     </p>

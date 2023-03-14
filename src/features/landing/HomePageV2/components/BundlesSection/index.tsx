@@ -53,9 +53,9 @@ function BundlesSection({ }: Props) {
 
     return (
         <>
-            <div className='flex flex-col items-center w-full px-2 md:px-0'>
-                <div className="container px-2 md:px-0">
-                    <p className="font-bold px-2 md:px-0 text-[24px] md:text-[32px]">
+            <div className='flex flex-col items-center w-full px-4 md:px-0'>
+                <div className="container px-4 md:px-0">
+                    <p className="font-bold text-[24px] md:text-[32px]">
                         Bundles <span className="font-normal">(Tickets included)</span>
                     </p>
                     <div className="mt-6 md:mt-8 md:max-w-[910px]">
@@ -67,7 +67,7 @@ function BundlesSection({ }: Props) {
                                 <CategorySelectList defaultValues={bundleCategories} activeValues={activeCategory} onChanged={setActiveCategory} />
                             </div>
                             <div className='hidden space-x-4 md:flex'>
-                                <Link href="/bundles" className="font-bold cursor-pointer rounded-xl bg-black bg-opacity-[0.04] px-6 py-[14px]">
+                                <Link href="/bundles" className="font-bold cursor-pointer rounded-xl bg-black bg-opacity-[0.04] md:px-6 py-[14px]">
                                     Show all ({bundleData?.result?.count || 0})
                                 </Link>
                                 <div className="rounded-xl cursor-pointer flex justify-center items-center bg-black bg-opacity-[0.04]">
@@ -94,7 +94,7 @@ function BundlesSection({ }: Props) {
                 </div>
                 <div className="relative w-screen">
                     <div className="flex justify-center mt-8 overflow-auto no-scrollbar">
-                        <div className="container relative px-2 overflow-x-visible md:px-0">
+                        <div className="container relative px-4 overflow-x-visible md:px-0">
                             {isBundleLoading ? (<ClipLoader />) : (<></>)}
                             {!isBundleLoading && visibleBundles?.length ? (
                                 <>
@@ -132,8 +132,8 @@ function BundlesSection({ }: Props) {
                         </div>
                     </div>
                 </div>
-                <div className="flex justify-center w-full px-2 mt-4 md:hidden md:px-0">
-                    <Link href="/bundles" className="font-bold mx-2 md:mx-0 cursor-pointer w-full text-center rounded-xl bg-black bg-opacity-[0.04] px-6 py-[14px]">
+                <div className="flex justify-center w-full px-4 mt-4 md:hidden md:px-0">
+                    <Link href="/bundles" className="font-bold mx-0 md:mx-2 cursor-pointer w-full text-center rounded-xl bg-black bg-opacity-[0.04] px-6 py-[14px]">
                         Show all ({bundleData?.result?.count || 0})
                     </Link>
                 </div>

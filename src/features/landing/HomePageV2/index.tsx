@@ -20,7 +20,7 @@ function HomePageV2({ }: Props) {
                         <div className="inset-0 md:absolute">
                             <div className="relative w-full h-full">
                                 <div className="flex justify-center w-full h-full">
-                                    <div className="container h-full px-2 md:px-0">
+                                    <div className="container h-full px-4 md:px-0">
                                         <div className="flex flex-col justify-between w-full h-full pb-16">
                                             <div className="flex mt-16 md:mt-0 items-center justify-start md:w-[65%] h-full">
                                                 <div className="flex flex-col w-full">

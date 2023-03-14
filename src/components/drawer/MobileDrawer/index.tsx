@@ -66,7 +66,7 @@ function MobileDrawer({ children, drawerContent }: Props) {
                                             <a href="https://metaland.mn/en" className='flex items-center justify-between w-full text-xl font-bold text-white' target="_blank" rel="noreferrer" >Metaland</a>
                                         </li>
                                         <li>
-                                            <Link href="/terms-of-service/en" rel="noreferrer" className='flex items-center justify-between w-full text-xl font-bold text-white'>Help Center</Link>
+                                            <Link href="/help" rel="noreferrer" className='flex items-center justify-between w-full text-xl font-bold text-white'>Help Center</Link>
                                         </li>
                                         {!isAuthLoading && isLoggedIn ? (
                                             <li>

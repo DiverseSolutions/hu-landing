@@ -98,7 +98,7 @@ function BundleDetailFeature({
             <div>
 
                 <div className="flex justify-center w-full">
-                    <div className="container px-2 mt-8 md:px-0">
+                    <div className="container px-4 mt-8 md:px-0">
                         <div className="flex flex-col w-full md:flex-row">
                             <div className="flex w-full">
                                 {isGlb ? (
@@ -228,7 +228,7 @@ function BundleDetailFeature({
                 </div>
                 <div className="border-b mt-10 w-full bg-black bg-opacity-[0.1]"></div>
                 <div className="flex justify-center w-full mt-4 md:mt-8">
-                    <div className="container px-2 md:px-0">
+                    <div className="container px-4 md:px-0">
                         <p className="font-bold text-xl md:text-[32px]">Minted Items</p>
                         <div className="mt-6 md:mt-8">
                             {visibleItems?.length ? (

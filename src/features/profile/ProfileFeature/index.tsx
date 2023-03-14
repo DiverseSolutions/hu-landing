@@ -153,7 +153,7 @@ const ProfileFeature = ({ }: Props) => {
     return (
         <>
             <div className="relative w-full overflow-x-hidden">
-                <div className="w-full px-5 pb-16 transform md:px-0">
+                <div className="w-full px-4 pb-16 transform md:px-0">
                     <div className="flex justify-center w-full">
                         <div className="container">
                             <div className="flex flex-col justify-center w-full md:justify-between md:flex-row">

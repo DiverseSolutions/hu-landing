@@ -66,13 +66,13 @@ function ItemsSection({ }: Props) {
     return (
         <>
             <div id="items-section" className='flex flex-col items-center w-full'>
-                <div className="container px-2 md:px-0">
+                <div className="container px-4 md:px-0">
                     <p className="font-bold text-[24px] md:text-[32px]">
-                        The Hu in the metaverse collection
+                        Single item collection <span className='font-normal'>(Tickets not included!)</span>
                     </p>
                     <div className="mt-6 md:mt-8 md:max-w-[910px]">
-                        <p className='text-[#B3B3B3] text-sm md:text-[20px]'>Collect and dress up your virtual avatar with traditional Mongolian garments</p>
-                        <p className='text-[#FF000080] text-sm md:text-[20px] mt-2'>(Single items do not include tickets)</p>
+                        <p className='text-[#B3B3B3] text-sm md:text-[20px]'>Collect and dress up your virtual avatar with traditional Mongolian garments.
+                            Please note that single items do not include concert tickets. </p>
                     </div>
                     <div className="flex flex-col w-full mt-6 md:items-center md:justify-between md:flex-row md:mt-8">
                         <div className="max-w-[100vw] overflow-x-auto no-scrollbar">
@@ -87,7 +87,7 @@ function ItemsSection({ }: Props) {
                 </div>
                 <div className="relative w-screen">
                     <div className="flex flex-wrap justify-center max-w-full mt-8">
-                        <div className="container px-2 overflow-x-visible md:px-0">
+                        <div className="container px-4 overflow-x-visible md:px-0">
                             {isAssetLoading ? (<ClipLoader />) : (<></>)}
                             <div className="w-full">
                                 {!isAssetLoading && visibleItems?.length ? (

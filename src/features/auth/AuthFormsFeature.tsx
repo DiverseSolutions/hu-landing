@@ -50,7 +50,7 @@ const AuthFormsFeature = (props: Props) => {
                 <div className="w-full md:ml-12 h-[calc(100vh - 100px)]" style={{
                     height: `calc(100vh - 100px)`
                 }}>
-                    <div className='h-full px-6 pt-6 mb-4 overflow-y-auto md:px-8'>
+                    <div className='h-full px-4 pt-6 mb-4 overflow-y-auto md:px-8'>
                         <div className="flex items-center justify-center w-full h-full min-h-[700px]">
                             <div className="w-[90vw] md:w-[500px]">
                                 {formType === 'signup' ? (

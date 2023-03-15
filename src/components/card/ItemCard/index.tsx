@@ -45,16 +45,16 @@ function ItemCard({ item }: Props) {
                             </div>) : (<></>)}
                     </div>
                 </div>
-                {item.category?.length ? (
+                {item.subTag?.length ? (
                     <div className="absolute top-2 left-2 md:top-4 md:left-4">
                         <div className="flex flex-col items-start">
                             <div className="flex capitalize items-center px-2 py-1 text-xs rounded-xl bg-[#ff00a8] text-white font-bold">
-                                {item.category}
+                                {item.subTag}
                             </div>
                             {item.subTag?.length ? (
                                 <div className='flex mt-2'>
                                     <div className="hidden mt-2 group-hover:flex">
-                                        <div className="px-2 capitalize py-1 rounded-xl bg-black bg-opacity-[0.04] font-bold text-xs">{item.subTag}</div>
+                                        <div className="px-2 capitalize py-1 rounded-xl bg-black bg-opacity-[0.04] font-bold text-xs">{item.category}</div>
                                     </div>
                                 </div>
                             ) : (<></>)}

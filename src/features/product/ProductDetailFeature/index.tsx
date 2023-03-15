@@ -145,7 +145,7 @@ export default function ProductDetailFeature({
                                         <p>{item.description}</p>
                                         {item.about ? (
                                             <>
-                                                <p className='mt-2'>About the Ardwork</p>
+                                                <p className='mt-2'>About the Artwork</p>
                                                 <p>{item.about}</p>
                                             </>
                                         ) : (<></>)}

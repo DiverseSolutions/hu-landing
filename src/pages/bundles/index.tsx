@@ -42,7 +42,7 @@ function Bundles({ }: Props) {
             <div className="flex flex-col items-center w-full">
                 <div className="container hidden w-full px-2 mt-6 text-left md:px-0 md:block">
                     <div className="md:max-w-[910px]">
-                        <p className='text-[#B3B3B3] text-sm md:text-[20px]'>Bundles include concert tickets, personas and emotes for a discounted price.</p>
+                        <p className='text-[#B3B3B3] text-sm md:text-[20px]'>Bundles include concert tickets, avatars and signature movements for a discounted price</p>
                     </div>
                 </div>
                 <div className="container px-2 mt-4 md:mt-8 md:px-0">
@@ -60,7 +60,7 @@ function Bundles({ }: Props) {
                 </div>
                 <div className="container w-full px-2 mt-6 text-left md:hidden md:px-0">
                     <div className="md:max-w-[910px]">
-                        <p className='text-[#B3B3B3] text-sm md:text-[20px]'>Bundles include concert tickets, personas and emotes for a discounted price.</p>
+                        <p className='text-[#B3B3B3] text-sm md:text-[20px]'>Bundles include concert tickets, avatars and signature movements for a discounted price</p>
                     </div>
                 </div>
                 <div className="container px-2 mt-6 md:px-0">

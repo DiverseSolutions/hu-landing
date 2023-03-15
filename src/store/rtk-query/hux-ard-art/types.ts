@@ -386,6 +386,7 @@ export interface ArdArtBundleDetailResult {
     id: number;
     name: string;
     description: string;
+    about?: string;
     price: number;
     imageUrl: string;
     coverUrl: string;

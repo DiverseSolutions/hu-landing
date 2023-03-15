@@ -130,11 +130,17 @@ function BundleDetailFeature({
                                             </div>
                                             <p className='ml-2 text-sm md:text-base'>Created <span className='font-bold'>Feb 2023</span></p>
                                         </div>
-                                        <div className="mt-6">
-                                            <p className={classNames('text-black text-opacity-[0.54] overflow-y-auto no-scrollbar text-sm md:text-base', {
-                                                'overflow-hidden max-h-[300px]': !isDescSeeMore,
-                                                'overflow-y-auto max-h-[100px]': isDescSeeMore
-                                            })}>{bundle.description}</p>
+                                        <div className={classNames("mt-6 overflow-y-auto no-scrollbar", {
+                                            'overflow-hidden max-h-[300px]': !isDescSeeMore,
+                                            'overflow-y-auto max-h-[100px]': isDescSeeMore
+                                        })}>
+                                            <p className={'text-black text-opacity-[0.54] text-sm md:text-base'}>{bundle.description}</p>
+                                            {bundle.about ? (
+                                                <div>
+                                                    <p className='text-black text-opacity-[0.54] text-sm md:text-base mt-2'>About the Artwork</p>
+                                                    <p className='text-black text-opacity-[0.54] text-sm md:text-base'>{bundle.about}</p>
+                                                </div>
+                                            ) : <></>}
                                         </div>
                                         <div onClick={() => setIsDescSeeMore(!isDescSeeMore)} className="flex items-center mt-2 cursor-pointer">
                                             <span className='text-sm'>See more</span>

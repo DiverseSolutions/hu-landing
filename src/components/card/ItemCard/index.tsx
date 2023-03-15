@@ -1,3 +1,4 @@
+import { CATEGORY_COLORS } from '@/lib/consts';
 import { formatPrice } from '@/lib/utils';
 import { useUsdToArdxRateQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api';
 import { ArdArtTicketOrAssetRecord } from '@/store/rtk-query/hux-ard-art/types';
@@ -48,7 +49,9 @@ function ItemCard({ item }: Props) {
                 {item.subTag?.length ? (
                     <div className="absolute top-2 left-2 md:top-4 md:left-4">
                         <div className="flex flex-col items-start">
-                            <div className="flex capitalize items-center px-2 py-1 text-xs rounded-xl bg-[#ff00a8] text-white font-bold">
+                            <div style={{
+                                backgroundColor: CATEGORY_COLORS[item.subTag] || ""
+                            }} className="flex items-center px-2 py-1 text-xs font-bold text-white capitalize rounded-xl">
                                 {item.subTag}
                             </div>
                             {item.subTag?.length ? (

@@ -31,12 +31,12 @@ const systemRequirementSpecs = [
                 name: 'Storage',
                 value: <span className="font-bold text-sm opacity-[0.65]">20 GB available space</span>
             },
-            {
-                name: `Director's cut`,
-                value: <span className="font-bold text-sm opacity-[0.65]">&quot;Your computer(phone, tablet?) doesn&apos;t meet the requirement?<br />
-                    No problem, we got you covered! In our exclusive, cinematic version of the director’s cut edition you will be able to view the FULL concert from the comfort of your home or wherever you have internet access.&quot;</span>
-            },
         ]
+    },
+    {
+        name: 'Doesn’t meet the requirements?',
+        content: `Your computer(phone, tablet?) doesn’t meet the requirement?<br />
+        No problem, we got you covered! In our exclusive, cinematic version of the director’s cut edition you will be able to view the FULL concert from the comfort of your home or wherever you have internet access.`
     },
 ]
 
@@ -49,30 +49,40 @@ function SystemRequirementsContent({
 }: Props) {
 
     const [activeIndex, setActiveIndex] = useState(systemRequirementSpecs[0].name)
-    const fields = useMemo(() => {
+    const specs = useMemo(() => {
         const spec = systemRequirementSpecs.find((spec) => spec.name === activeIndex)
-        return spec?.fields || []
+        return {
+            fields: spec?.fields || [],
+            content: spec?.content || undefined
+        }
     }, [activeIndex, systemRequirementSpecs])
 
     return (
-        <div className="w-full">
-            <div className="border-2 p-6 rounded-xl border-black border-opacity-[0.2] space-y-4">
+        <div className="w-full h-full">
+            <div className="h-full p-6 space-y-4">
                 <div className="flex items-center justify-between w-full">
                     <div className="flex items-center">
                         <div className="flex items-center w-full tabs">
                             {systemRequirementSpecs.map((spec) => (
-                                <a key={spec.name} onClick={() => setActiveIndex(spec.name)} className={classNames('text-base tab', { 'tab-active tab-bordered border-b': activeIndex === spec.name })}>{spec.name}</a>
+                                <a key={spec.name} onClick={() => setActiveIndex(spec.name)} className={classNames('text-sm md:text-base tab', { 'tab-active tab-bordered border-b': activeIndex === spec.name })}>{spec.name}</a>
                             ))}
                         </div>
                     </div>
                 </div>
-                <div className='mt-8'>
-                    {fields.map((field, idx) => (
+                <div className='h-full mt-8'>
+                    {specs?.fields ? (specs?.fields.map((field, idx) => (
                         <div key={field.name} className={classNames("flex w-full justify-between border-b border-black border-opacity-[0.1] pb-1", { 'mt-6': idx !== 0 })}>
-                            <span className="text-sm opacity-[0.65] mr-4">{field.name}:</span>
+                            <span className="text-sm opacity-[0.65]">{field.name}:</span>
                             {field.value}
                         </div>
-                    ))}
+                    ))) : <></>}
+                    {specs?.content ? (
+                        <div dangerouslySetInnerHTML={{
+                            __html: specs.content
+                        }}>
+
+                        </div>
+                    ) : (<></>)}
                 </div>
             </div>
         </div>

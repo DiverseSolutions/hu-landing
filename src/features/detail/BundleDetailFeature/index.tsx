@@ -144,7 +144,7 @@ function BundleDetailFeature({
                                         </div>
                                         <div onClick={() => setIsDescSeeMore(!isDescSeeMore)} className="flex items-center mt-2 cursor-pointer">
                                             <span className='text-sm'>See more</span>
-                                            {isDescSeeMore ? <BiChevronUp className='ml-3' size={20} /> : <BiChevronDown className='ml-3' size={20} />}
+                                            {isDescSeeMore ? <BiChevronDown className='ml-3' size={20} /> : <BiChevronUp className='ml-3' size={20} />}
                                         </div>
                                     </div>
                                     <div className="flex w-full mt-8">

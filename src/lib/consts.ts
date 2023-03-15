@@ -10,13 +10,13 @@ export const APP_HOST_URL = process.env.NEXT_PUBLIC_APP_HOST_URL as string
 
 export const BUNDLE_CATEGORY = [{
     slug: 'gold',
-    name: 'Gold'
+    name: 'Gold Bundle'
 }, {
     slug: 'silver',
-    name: 'Silver'
+    name: 'Silver Bundle'
 }, {
     slug: 'bronze',
-    name: 'Bronze'
+    name: 'Bronze Bundle'
 }]
 
 export const CATEGORY_COLORS: {

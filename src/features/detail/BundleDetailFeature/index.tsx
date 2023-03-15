@@ -131,8 +131,8 @@ function BundleDetailFeature({
                                             <p className='ml-2 text-sm md:text-base'>Created <span className='font-bold'>Feb 2023</span></p>
                                         </div>
                                         <div className={classNames("mt-6 overflow-y-auto no-scrollbar", {
-                                            'overflow-hidden max-h-[300px]': !isDescSeeMore,
-                                            'overflow-y-auto max-h-[100px]': isDescSeeMore
+                                            'overflow-hidden max-h-[300px]': isDescSeeMore,
+                                            'overflow-y-auto max-h-[100px]': !isDescSeeMore
                                         })}>
                                             <p className={'text-black text-opacity-[0.54] text-sm md:text-base'}>{bundle.description}</p>
                                             {bundle.about ? (
@@ -144,7 +144,7 @@ function BundleDetailFeature({
                                         </div>
                                         <div onClick={() => setIsDescSeeMore(!isDescSeeMore)} className="flex items-center mt-2 cursor-pointer">
                                             <span className='text-sm'>See more</span>
-                                            {isDescSeeMore ? <BiChevronDown className='ml-3' size={20} /> : <BiChevronUp className='ml-3' size={20} />}
+                                            {isDescSeeMore ? <BiChevronUp className='ml-3' size={20} /> : <BiChevronDown className='ml-3' size={20} />}
                                         </div>
                                     </div>
                                     <div className="flex w-full mt-8">

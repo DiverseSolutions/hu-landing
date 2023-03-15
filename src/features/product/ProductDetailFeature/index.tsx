@@ -267,8 +267,15 @@ export default function ProductDetailFeature({
                                                 </div>
                                             </div>
                                         ) : (<></>)}
-                                        <div className="mt-4">
-                                            <div className="flex w-full">
+                                        <div>
+                                            {item.type !== 'ticket' ? (
+                                                <div>
+                                                    <div className="flex w-full p-4 rounded-xl itms-start" style={{ background: 'rgba(255, 140, 0, 0.05)' }}>
+                                                        <div><WarningSvg /></div>
+                                                        <span className='text-xs ml-[18px]'>Single items do not include tickets.</span>
+                                                    </div>
+                                                </div>) : <></>}
+                                            <div className="flex w-full mt-4">
                                                 <div className="flex flex-grow">
                                                     <button onClick={handlePurchase} className={classNames("btn btn-primary rounded-lg btn-block ", { 'bg-black bg-opacity-[0.2] text-black text-opacity-[0.2] hover:bg-black hover:bg-opacity-[0.2]': !selectedTicketRegion && item.type === 'ticket' })}>Purchase $({formatPrice(item.price)})</button>
                                                 </div>

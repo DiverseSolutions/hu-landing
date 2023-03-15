@@ -228,6 +228,12 @@ export default function ProductDetailFeature({
                                                     <p className='text-black text-sm text-opacity-[0.65] ml-1'>Choose timezone that matches you</p>
                                                 </div>
                                                 <div className="mt-4">
+                                                    <div className="flex w-full p-4 rounded-xl itms-start" style={{ background: 'rgba(255, 140, 0, 0.05)' }}>
+                                                        <div><WarningSvg /></div>
+                                                        <span className='text-xs ml-[18px]'>To make Purchase please select your Time Zone accordingly. Please note that you will be only able to attend the concert in the the Time zone of your selection.</span>
+                                                    </div>
+                                                </div>
+                                                <div className="mt-4">
                                                     <div className="flex flex-col w-full">
                                                         <div className='flex flex-col w-full space-y-4'>
                                                             {TICKET_REGIONS.map((item) => (

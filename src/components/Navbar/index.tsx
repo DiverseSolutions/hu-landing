@@ -21,7 +21,7 @@ function Navbar({ }: Props) {
 
     return (
         <div className="flex transition-all duration-100 fixed z-[100] top-0 justify-center w-full backdrop-blur-[7.5px] h-[64px] md:h-[96px] bg-white bg-opacity-[0.93]">
-            <div className="container w-full h-full px-2 md:px-0">
+            <div className="container w-full h-full px-4 md:px-0">
                 <div className="h-full px-0 navbar">
                     <div className="px-0 navbar-start md:hidden">
                         <Link href="/" className="text-xl normal-case">
@@ -39,7 +39,12 @@ function Navbar({ }: Props) {
                                 </a>
                             </li>
                             <li>
-                                <a target="_blank" className='text-black hover:bg-transparent text-base font-bold text-opacity-[0.35] hover:text-opacity-[1]' href="http://metaland.mn" rel="noreferrer">
+                                <a target="_blank" className='text-black hover:bg-transparent text-base font-bold text-opacity-[0.35] hover:text-opacity-[1]' href="https://www.thehuofficial.com/merch-1" rel="noreferrer">
+                                    HU Official Merch
+                                </a>
+                            </li>
+                            <li>
+                                <a target="_blank" className='text-black hover:bg-transparent text-base font-bold text-opacity-[0.35] hover:text-opacity-[1]' href="https://metaland.mn" rel="noreferrer">
                                     Metaland
                                 </a>
                             </li>

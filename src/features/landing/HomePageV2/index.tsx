@@ -5,6 +5,7 @@ import ItemsSection from './components/ItemsSection'
 import SystemRequirementsTransparent from './components/SystemRequirementsTransparent'
 import DesktopBehindNavbar from '@/components/layout/DesktopBehindNavbar'
 import BackgroundVideo from './components/BackgroundVideo'
+import PurchaseSpecialSection from './components/PurchaseSpecialSection'
 
 type Props = {}
 
@@ -19,7 +20,7 @@ function HomePageV2({ }: Props) {
                         <div className="inset-0 md:absolute">
                             <div className="relative w-full h-full">
                                 <div className="flex justify-center w-full h-full">
-                                    <div className="container h-full px-2 md:px-0">
+                                    <div className="container h-full px-4 md:px-0">
                                         <div className="flex flex-col justify-between w-full h-full pb-16">
                                             <div className="flex mt-16 md:mt-0 items-center justify-start md:w-[65%] h-full">
                                                 <div className="flex flex-col w-full">
@@ -31,17 +32,17 @@ function HomePageV2({ }: Props) {
                                                     </div>
                                                     <div className="flex w-full mt-8">
                                                         <button onClick={() => {
-                                                            const targetEl = document.querySelector('#bundle-section')
+                                                            const targetEl = document.querySelector('#ticket-section')
                                                             if (targetEl) {
                                                                 const drawerEl = document.querySelector('.drawer-content')
-                                                                const targetY = targetEl.getBoundingClientRect().y - 100
+                                                                const targetY = targetEl.getBoundingClientRect().y - 200
                                                                 drawerEl?.scrollTo({ top: targetY, behavior: 'smooth' })
                                                             }
                                                         }} className="font-bold cursor-pointer text-base flex justify-center items-center md:text-xl text-center py-2.5 md:py-[14px] px-4 md:px-6 hover:bg-white hover:bg-opacity-1 text-black rounded-xl bg-white bg-opacity-[0.93]">
                                                             Buy Ticket
                                                         </button>
                                                         <a href="https://www.thehuofficial.com" target="_blank" rel="noreferrer" className="font-bold text-base flex justify-center text-white items-center md:text-xl text-center ml-4 py-2.5 md:py-[14px] px-4 md:px-6 hover:bg-black hover:bg-opacity-1 bg-white rounded-xl bg-opacity-[0.04]">
-                                                            About us
+                                                            About The HU
                                                         </a>
                                                     </div>
                                                 </div>
@@ -72,8 +73,11 @@ function HomePageV2({ }: Props) {
                             </div>
                         </div>
                     </div>
-                    <div id="bundle-section">
-                        <div className="flex justify-center w-full px-4 mt-8">
+                    <div id="ticket-section" className='mt-12 md:mt-16'>
+                        <PurchaseSpecialSection />
+                    </div>
+                    <div id="bundle-section" className='mt-12 md:mt-16'>
+                        <div className="flex justify-center w-full px-4">
                             <div className="min-h-[50vh]">
                                 <BundlesSection />
                             </div>

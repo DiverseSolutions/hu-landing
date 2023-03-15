@@ -106,6 +106,7 @@ export type ArdArtTicketOrAssetRecord = {
     link: string;
     imageUrl: string;
     objectUrl: string;
+    cardImageUrl: string | null;
     category: string;
     ownerAmount: null;
     price: number;
@@ -114,6 +115,7 @@ export type ArdArtTicketOrAssetRecord = {
     scheduleDateCustom: string;
     tag: string;
     subTag: string;
+    shortDesc?: string;
 }
 
 export type ArdArtTicketOrAssetResponse = ArdArtResponse<{
@@ -384,6 +386,7 @@ export interface ArdArtBundleDetailResult {
     id: number;
     name: string;
     description: string;
+    about?: string;
     price: number;
     imageUrl: string;
     coverUrl: string;

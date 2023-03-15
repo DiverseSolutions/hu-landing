@@ -33,6 +33,11 @@ const systemRequirementSpecs = [
             },
         ]
     },
+    {
+        name: 'Doesn’t meet the requirements',
+        content: `Your computer(phone, tablet?) doesn’t meet the requirement?<br />
+        No problem, we got you covered! In our exclusive, cinematic version of the director’s cut edition you will be able to view the FULL concert from the comfort of your home or wherever you have internet access.`
+    },
 ]
 
 type Props = {
@@ -44,9 +49,12 @@ function SystemRequirementsSection({
 
     const [activeIndex, setActiveIndex] = useState(systemRequirementSpecs[0].name)
     const [isRequirementsVisible, setIsRequirementsVisible] = useState(defaultVisible === undefined ? true : defaultVisible)
-    const fields = useMemo(() => {
+    const specs = useMemo(() => {
         const spec = systemRequirementSpecs.find((spec) => spec.name === activeIndex)
-        return spec?.fields || []
+        return {
+            fields: spec?.fields || [],
+            content: spec?.content || undefined
+        }
     }, [activeIndex, systemRequirementSpecs])
 
     return (
@@ -71,12 +79,19 @@ function SystemRequirementsSection({
                     </div>
                     {isRequirementsVisible ? (
                         <div className='mt-8'>
-                            {fields.map((field, idx) => (
+                            {specs?.fields ? (specs?.fields.map((field, idx) => (
                                 <div key={field.name} className={classNames("flex w-full justify-between border-b border-black border-opacity-[0.1] pb-1", { 'mt-6': idx !== 0 })}>
                                     <span className="text-sm opacity-[0.65]">{field.name}:</span>
                                     {field.value}
                                 </div>
-                            ))}
+                            ))) : <></>}
+                            {specs?.content ? (
+                                <div dangerouslySetInnerHTML={{
+                                    __html: specs.content
+                                }}>
+
+                                </div>
+                            ) : (<></>)}
                         </div>
                     ) : (<></>)}
                 </div>

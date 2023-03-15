@@ -1,3 +1,4 @@
+import { CATEGORY_COLORS } from '@/lib/consts';
 import { formatPrice } from '@/lib/utils';
 import { useUsdToArdxRateQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api';
 import { ArdArtTicketOrAssetRecord } from '@/store/rtk-query/hux-ard-art/types';
@@ -23,7 +24,7 @@ function ItemCard({ item }: Props) {
             }} className='relative w-full p-0 cursor-pointer card group'>
                 <div className="p-0 card-body">
                     <div className="w-full relative h-[200px] md:h-[350px] rounded-xl overflow-hidden">
-                        <img src={item.imageUrl} className="object-cover object-top transform transition-all duration-200 hover:scale-[1.1] w-full h-full" />
+                        <img src={item.cardImageUrl || item.imageUrl} className="object-cover object-top transform transition-all duration-200 hover:scale-[1.1] w-full h-full" />
                         <div className="absolute top-4 left-4">
                         </div>
                     </div>
@@ -48,14 +49,18 @@ function ItemCard({ item }: Props) {
                 {item.subTag?.length ? (
                     <div className="absolute top-2 left-2 md:top-4 md:left-4">
                         <div className="flex flex-col items-start">
-                            <div className="flex capitalize items-center px-2 py-1 text-xs rounded-xl bg-[#ff00a8] text-white font-bold">
+                            <div style={{
+                                backgroundColor: CATEGORY_COLORS[item.subTag] || ""
+                            }} className="flex items-center px-2 py-1 text-xs font-bold text-white capitalize rounded-xl">
                                 {item.subTag}
                             </div>
-                            <div className='flex mt-2'>
-                                <div className="hidden mt-2 group-hover:flex">
-                                    <div className="px-2 capitalize py-1 rounded-xl bg-black bg-opacity-[0.04] font-bold text-xs">{item.category}</div>
+                            {item.subTag?.length ? (
+                                <div className='flex mt-2'>
+                                    <div className="hidden mt-2 group-hover:flex">
+                                        <div className="px-2 capitalize py-1 rounded-xl bg-black bg-opacity-[0.04] font-bold text-xs">{item.category}</div>
+                                    </div>
                                 </div>
-                            </div>
+                            ) : (<></>)}
                         </div>
                     </div>
                 ) : (<></>)}

@@ -22,6 +22,7 @@ import SystemRequirementsDropdown from '@/components/common/SystemRequirementsDr
 import ModelModal from './components/ModelModal'
 import CategorySelectList from '@/components/common/CategorySelectList'
 import { CategoryItemType } from '@/components/common/CategorySelectList/types'
+import { BiChevronDown, BiChevronUp } from 'react-icons/bi'
 
 type Props = {
     bundle: ArdArtBundleDetailResult
@@ -36,6 +37,7 @@ function BundleDetailFeature({
     bundle
 }: Props) {
 
+    const [isDescSeeMore, setIsDescSeeMore] = useState(false)
     const [activeCategory, setActiveCategory] = useState<CategoryItemType[]>([])
     const [isModelExpanded, setIsModelExpanded] = useState(false)
     const router = useRouter()
@@ -98,7 +100,7 @@ function BundleDetailFeature({
             <div>
 
                 <div className="flex justify-center w-full">
-                    <div className="container px-2 mt-8 md:px-0">
+                    <div className="container px-4 mt-8 md:px-0">
                         <div className="flex flex-col w-full md:flex-row">
                             <div className="flex w-full">
                                 {isGlb ? (
@@ -121,15 +123,28 @@ function BundleDetailFeature({
                                     <div className="flex flex-col">
                                         <p className="font-bold text-[24px] leading-[32px] max-w-[300px]">{bundle.name} <span className="text-black text-opacity-[0.35]">(Bundle)</span></p>
                                         <div className="flex items-center mt-4">
-                                            <p className='text-sm md:text-base'>Powered by <span className="font-bold">ARD</span></p>
+                                            <p className='text-sm md:text-base'>Powered by <span className="font-bold">Ard</span></p>
                                             <span className="px-2 py-1 font-bold ml-2 text-xs text-white rounded-xl bg-[#D63333]">Bonus ARDX{formatPrice(bundle.depositAmount)}</span>
                                             <div className="rounded-full w-0.5 h-0.5 bg-black ml-2">
 
                                             </div>
                                             <p className='ml-2 text-sm md:text-base'>Created <span className='font-bold'>Feb 2023</span></p>
                                         </div>
-                                        <div className="mt-6">
-                                            <p className='text-black text-opacity-[0.54] max-h-[300px] overflow-y-auto no-scrollbar text-sm md:text-base'>{bundle.description}</p>
+                                        <div className={classNames("mt-6 overflow-y-auto no-scrollbar", {
+                                            'overflow-hidden max-h-[300px]': isDescSeeMore,
+                                            'overflow-y-auto max-h-[100px]': !isDescSeeMore
+                                        })}>
+                                            <p className={'text-black text-opacity-[0.54] text-sm md:text-base'}>{bundle.description}</p>
+                                            {bundle.about ? (
+                                                <div>
+                                                    <p className='text-black text-opacity-[0.54] text-sm md:text-base mt-2'>About the Artwork</p>
+                                                    <p className='text-black text-opacity-[0.54] text-sm md:text-base'>{bundle.about}</p>
+                                                </div>
+                                            ) : <></>}
+                                        </div>
+                                        <div onClick={() => setIsDescSeeMore(!isDescSeeMore)} className="flex items-center mt-2 cursor-pointer">
+                                            <span className='text-sm'>See more</span>
+                                            {isDescSeeMore ? <BiChevronUp className='ml-3' size={20} /> : <BiChevronDown className='ml-3' size={20} />}
                                         </div>
                                     </div>
                                     <div className="flex w-full mt-8">
@@ -228,8 +243,8 @@ function BundleDetailFeature({
                 </div>
                 <div className="border-b mt-10 w-full bg-black bg-opacity-[0.1]"></div>
                 <div className="flex justify-center w-full mt-4 md:mt-8">
-                    <div className="container px-2 md:px-0">
-                        <p className="font-bold text-xl md:text-[32px]">Minted Items</p>
+                    <div className="container px-4 md:px-0">
+                        <p className="font-bold text-xl md:text-[32px]">Included items</p>
                         <div className="mt-6 md:mt-8">
                             {visibleItems?.length ? (
                                 <div className="grid grid-cols-2 gap-x-2 gap-y-6 md:grid-cols-2 xl:grid-cols-5">

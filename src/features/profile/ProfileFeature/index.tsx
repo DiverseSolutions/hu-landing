@@ -153,7 +153,7 @@ const ProfileFeature = ({ }: Props) => {
     return (
         <>
             <div className="relative w-full overflow-x-hidden">
-                <div className="w-full px-5 pb-16 transform md:px-0">
+                <div className="w-full px-4 pb-16 transform md:px-0">
                     <div className="flex justify-center w-full">
                         <div className="container">
                             <div className="flex flex-col justify-center w-full md:justify-between md:flex-row">
@@ -206,7 +206,7 @@ const ProfileFeature = ({ }: Props) => {
                                             <div className='md:w-[450px] text-sm md:text-[20px] text-black text-opacity-[0.65] py-[14px] bg-white rounded-xl font-bold text-center cursor-pointer dropdown dropdown-top dropdown-hover' tabIndex={0}>
                                                 Download
                                             </div>
-                                            <div tabIndex={0} className="mt-4 z-50 dropdown bg-black bg-opacity-[0.04] dropdown-hover md:dropdown-bottom dropdown-top cursor-pointer items-center flex w-full justify-center py-[14px] backdrop-blur-[7.5px] rounded-xl">
+                                            <div tabIndex={0} className="mt-4 z-50 dropdown bg-black bg-opacity-[0.04] md:dropdown-hover md:dropdown-bottom dropdown-top cursor-pointer items-center flex w-full justify-center py-[14px] backdrop-blur-[7.5px] rounded-xl">
                                                 <InfoGreySvg />
                                                 <span className="ml-2  text-black text-opacity-[0.65] text-sm md:text-[20px] font-bold">System Requirements</span>
                                                 <div tabIndex={0} className="dropdown-content">

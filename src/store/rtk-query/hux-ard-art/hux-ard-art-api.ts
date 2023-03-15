@@ -36,6 +36,7 @@ export const huxArdArtApi = createApi({
             offset?: number;
             limit?: number;
             category?: string[];
+            level?: number;
         } | void>({
             query: (d) => ({
                 url: '/api/v1/bundle/get',

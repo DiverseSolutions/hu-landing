@@ -135,6 +135,20 @@ export default function ProductDetailFeature({
                                         <p className='text-sm md:text-base'><span className='opacity-[0.65]'>Powered by</span> <span className="font-bold  text-black opacity-[0.93]">Ard</span> & <span className="font-bold  text-black opacity-[0.93]">Metaland</span></p>
                                     </div>
                                 </div>
+                                <div className="flex flex-col w-full">
+                                    <div className="mt-4">
+                                        <p className="text-base font-bold md:text-xl">Detail</p>
+                                    </div>
+                                    <div className={classNames("mt-2 overflow-y-hidden text-black md:text-base text-sm opacity-[0.65]", {
+                                        'max-h-[100px]': !isDescSeeMore
+                                    })}>
+                                        {item.description}
+                                    </div>
+                                    <div onClick={() => setIsDescSeeMore(!isDescSeeMore)} className="flex items-center mt-2 cursor-pointer">
+                                        <span className='text-sm'>See more</span>
+                                        {isDescSeeMore ? <BiChevronUp className='ml-3' size={20} /> : <BiChevronDown className='ml-3' size={20} />}
+                                    </div>
+                                </div>
                                 <div className='hidden mt-8 md:block'>
                                     <div className="grid grid-cols-3 space-x-2">
                                         <div className="flex items-center ml-2 bg-black bg-opacity-[0.04] rounded-xl px-4 py-2">
@@ -254,21 +268,7 @@ export default function ProductDetailFeature({
                                             </div>
                                         ) : (<></>)}
                                         <div className="mt-4">
-                                            <div className="flex flex-col w-full">
-                                                <div className="mt-4">
-                                                    <p className="text-base font-bold md:text-xl">Detail</p>
-                                                </div>
-                                                <div className={classNames("mt-2 overflow-y-hidden text-black md:text-base text-sm opacity-[0.65]", {
-                                                    'max-h-[100px]': !isDescSeeMore
-                                                })}>
-                                                    {item.description}
-                                                </div>
-                                                <div onClick={() => setIsDescSeeMore(!isDescSeeMore)} className="flex items-center mt-2 cursor-pointer">
-                                                    <span className='text-sm'>See more</span>
-                                                    {isDescSeeMore ? <BiChevronUp className='ml-3' size={20} /> : <BiChevronDown className='ml-3' size={20} />}
-                                                </div>
-                                            </div>
-                                            <div className="flex w-full mt-4">
+                                            <div className="flex w-full">
                                                 <div className="flex flex-grow">
                                                     <button onClick={handlePurchase} className={classNames("btn btn-primary rounded-lg btn-block ", { 'bg-black bg-opacity-[0.2] text-black text-opacity-[0.2] hover:bg-black hover:bg-opacity-[0.2]': !selectedTicketRegion && item.type === 'ticket' })}>Purchase $({formatPrice(item.price)})</button>
                                                 </div>

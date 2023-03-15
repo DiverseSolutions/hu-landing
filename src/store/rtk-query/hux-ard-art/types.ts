@@ -439,6 +439,7 @@ export interface ArdArtAssetDetailResult {
     name: string;
     type: string;
     description: string;
+    about?: string;
     link: string;
     imageUrl: string;
     coverUrl: string;

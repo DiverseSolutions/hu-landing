@@ -142,7 +142,13 @@ export default function ProductDetailFeature({
                                     <div className={classNames("mt-2 overflow-y-hidden text-black md:text-base text-sm opacity-[0.65]", {
                                         'max-h-[100px]': !isDescSeeMore
                                     })}>
-                                        {item.description}
+                                        <p>{item.description}</p>
+                                        {item.about ? (
+                                            <>
+                                                <p className='mt-2'>About the Ardwork</p>
+                                                <p>{item.about}</p>
+                                            </>
+                                        ) : (<></>)}
                                     </div>
                                     <div onClick={() => setIsDescSeeMore(!isDescSeeMore)} className="flex items-center mt-2 cursor-pointer">
                                         <span className='text-sm'>See more</span>

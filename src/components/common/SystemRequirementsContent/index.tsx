@@ -35,8 +35,7 @@ const systemRequirementSpecs = [
     },
     {
         name: 'Doesn’t meet the requirements?',
-        content: `Your computer(phone, tablet?) doesn’t meet the requirement?<br />
-        No problem, we got you covered! In our exclusive, cinematic version of the director’s cut edition you will be able to view the FULL concert from the comfort of your home or wherever you have internet access.`
+        content: `No problem, we got you covered! In our exclusive, cinematic version of the director’s cut edition you will be able to view the FULL concert from the comfort of your home or wherever you have internet access.`
     },
 ]
 

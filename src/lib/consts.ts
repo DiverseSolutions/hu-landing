@@ -22,7 +22,7 @@ export const BUNDLE_CATEGORY = [{
 export const CATEGORY_COLORS: {
     [key: string]: string
 } = {
-    'gold': '#d79232',
+    'gold': '#ffd700',
     'silver': '#C0C0C0',
     'bronze': '#CD7F32'
 }

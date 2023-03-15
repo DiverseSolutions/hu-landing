@@ -157,7 +157,7 @@ export default function ProductDetailFeature({
                                 </div>
                                 <div className='hidden mt-8 md:block'>
                                     <div className="grid grid-cols-3 space-x-2">
-                                        <div className="flex items-center ml-2 bg-black bg-opacity-[0.04] rounded-xl px-4 py-2">
+                                        <div className="flex items-center ml-2 md:ml-0 bg-black bg-opacity-[0.04] rounded-xl px-4 py-2">
                                             <div className="flex flex-col">
                                                 <div className="flex">
                                                     <span className="text-sm font-bold md:text-base">$ {formatPrice(item.price)}</span>

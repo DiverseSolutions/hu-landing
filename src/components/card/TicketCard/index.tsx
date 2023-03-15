@@ -14,6 +14,7 @@ type Props = {
         shortDesc?: string;
         price: number;
         imageUrl: string;
+        cardImageUrl?: string;
         category?: string;
         level?: number;
     }
@@ -34,7 +35,7 @@ function TicketCard({ ticket }: Props) {
         }} className='relative w-full cursor-pointer card md:max-w-[352px] bg-black bg-opacity-[0.65] p-4 rounded-xl'>
             <div className="p-0 card-body">
                 <div className="relative w-full h-auto overflow-hidden aspect-square rounded-xl">
-                    <img src={ticket.imageUrl} className="object-top object-cover transform hover:scale-[1.1] transition-all duration-200 w-full h-full" />
+                    <img src={ticket.cardImageUrl || ticket.imageUrl} className="object-top object-cover transform hover:scale-[1.1] transition-all duration-200 w-full h-full" />
                     <div className="absolute top-4 left-4">
                         <div style={{
                             backgroundColor: ticket.category ? (CATEGORY_COLORS[ticket.category] || '#2663FF') : '#2663FF'

@@ -77,7 +77,7 @@ function CouponModal({ }: Props) {
                         {coupon && formType === 'result' ? (
                             <div className="mt-6 space-y-2">
                                 {coupon.records.map((item) => (
-                                    <div onClick={() => {
+                                    <div key={item.id} onClick={() => {
                                         handleClose()
                                         router.push(`/bundle?id=${item.id}&coupon=${couponCode}`)
                                     }} className="flex cursor-pointer items-start rounded-xl border p-2 border-black border-opacity-[0.1]">

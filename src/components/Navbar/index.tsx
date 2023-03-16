@@ -28,7 +28,9 @@ function Navbar({ }: Props) {
                             <img src={TheHuMobileImg.src} className="object-contain w-auto h-3" />
                         </Link>
                     </div>
-                    <div className="hidden pl-0 navbar-start lg:flex">
+                    <div className="hidden pl-0 navbar-start lg:flex" style={{
+                        width: '100%',
+                    }}>
                         <Link href="/" className="text-xl normal-case">
                             <img src={TheHuImg.src} className="w-auto h-full max-h-[16px]" />
                         </Link>
@@ -52,6 +54,13 @@ function Navbar({ }: Props) {
                                 <Link className='text-black hover:bg-transparent text-base font-bold text-opacity-[0.35] hover:text-opacity-[1]' href="/help" rel="noreferrer">
                                     Help Center
                                 </Link>
+                            </li>
+                            <li>
+                                <span onClick={() => {
+                                    document.getElementById('coupon-modal')?.click()
+                                }} className='text-black hover:bg-transparent text-base font-bold text-opacity-[0.35] hover:text-opacity-[1]'>
+                                    Use Coupon Code
+                                </span>
                             </li>
                         </ul>
                     </div>

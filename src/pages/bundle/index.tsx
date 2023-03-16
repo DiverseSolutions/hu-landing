@@ -4,7 +4,8 @@ import BundleDetailFeature from '@/features/detail/BundleDetailFeature'
 import ProductDetailFeature from '@/features/product/ProductDetailFeature'
 import { useAppDispatch } from '@/store/hooks'
 import { pageError } from '@/store/reducer/error-reducer/actions'
-import { useAssetDetailQuery, useBundleDetailQuery, useUsdToArdxRateQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
+import { useAssetDetailQuery, useBundleDetailQuery, useLazyBundleDetailQuery, useLazyCheckCouponQuery, useUsdToArdxRateQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
+import { ArdArtCheckCouponResult } from '@/store/rtk-query/hux-ard-art/types'
 import { useRouter } from 'next/router'
 import React, { useState, useEffect, useMemo } from 'react'
 import { MdChevronLeft } from 'react-icons/md'
@@ -15,31 +16,39 @@ type Props = {}
 function DetailPage({ }: Props) {
 
     const router = useRouter()
-    const [bundleId, setBundleId] = useState<number>()
     const dispatch = useAppDispatch()
-
-    const { data: bundleData, isLoading: isBundleLoading } = useBundleDetailQuery({
-        id: bundleId!
-    }, {
-        skip: !bundleId
-    })
-
-    const isLoading = useMemo(() => {
-        return !bundleData
-    }, [bundleData])
+    const [isLoading, setIsLoading] = useState(false)
+    const [couponCode, setCouponCode] = useState<string>()
+    const [callBundle, { data: bundleData }] = useLazyBundleDetailQuery()
+    const [callCoupon, { data: couponData }] = useLazyCheckCouponQuery()
 
     useEffect(() => {
         if (!router.isReady) {
             return
         }
-        if (!router.query.id) {
+        const bundleId = parseInt(`${router.query.id}`)
+        if (!bundleId) {
             dispatch(pageError({
                 message: `Bundle not found.`
             }))
-        } else {
-            setBundleId(parseInt(`${router.query.id}`))
+            return;
         }
-    }, [router.isReady, bundleData, isBundleLoading])
+        (async () => {
+            setIsLoading(true)
+            await callBundle({
+                id: bundleId,
+            })
+
+            const coupon = router.query.coupon as string | undefined
+            if (coupon) {
+                setCouponCode(coupon)
+                await callCoupon({
+                    code: coupon,
+                })
+            }
+            setIsLoading(false)
+        })()
+    }, [router.isReady])
 
     if (isLoading) {
         return (
@@ -57,7 +66,10 @@ function DetailPage({ }: Props) {
         return (
             <>
                 <div>
-                    <BundleDetailFeature bundle={bundleData.result} />
+                    <BundleDetailFeature bundle={bundleData.result} coupon={couponData?.result && couponCode ? {
+                        coupon: couponData.result,
+                        code: couponCode,
+                    } : undefined} />
                 </div>
             </>
         )

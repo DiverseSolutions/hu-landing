@@ -76,6 +76,13 @@ function MobileDrawer({ children, drawerContent }: Props) {
                                                 <Link href="/profile" rel="noreferrer" className='flex items-center justify-between w-full text-xl font-bold text-white'>My Profile</Link>
                                             </li>
                                         ) : (<></>)}
+                                        <li>
+                                            <span onClick={() => {
+                                                document.getElementById('coupon-modal')?.click()
+                                            }} className='flex items-center justify-between w-full text-xl font-bold text-white'>
+                                                Use Coupon Code
+                                            </span>
+                                        </li>
                                     </ul>
                                     <div className='mt-6'>
                                         {!isLoggedIn ? (

@@ -1,6 +1,7 @@
 import { EMAIL_REGEX, PASSWORD_MIN_ERROR, PASSWORD_MIN_REGEX } from '@/lib/consts';
 import { useAppSelector } from '@/store/hooks';
 import { useSignupMutation } from '@/store/rtk-query/cognito/cognito-api';
+import { useLazyCognitoUserQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api';
 import classNames from 'classnames';
 import React from 'react'
 import { useForm } from "react-hook-form";
@@ -21,6 +22,7 @@ export default function SignupForm({ ...props }: Props) {
 
   const idaxUserId = useAppSelector(state => state.auth.idax?.id)
   const [callSignup, { data: signupResp, isLoading: isSignupLoading, }] = useSignupMutation()
+  const [callCogintoUser] = useLazyCognitoUserQuery()
 
   const { register, handleSubmit, watch, formState: {
     errors
@@ -36,6 +38,21 @@ export default function SignupForm({ ...props }: Props) {
   const password = watch('password')
 
   const onSubmit = async (d: SignupFormData) => {
+    const cognitoUser = await callCogintoUser({
+      email: d.email
+    }).unwrap()
+
+    const user = cognitoUser.result?.Response?.Users[0];
+    if (user && user.UserStatus === 'UNCONFIRMED') {
+      props.onSuccess({
+        email: d.email,
+        username: user.Username!,
+        password,
+        password2: password,
+      })
+      return
+    }
+
     try {
       const resp = await callSignup({
         Username: d.username,

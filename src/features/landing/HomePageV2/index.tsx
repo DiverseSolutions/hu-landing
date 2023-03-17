@@ -6,7 +6,6 @@ import SystemRequirementsTransparent from './components/SystemRequirementsTransp
 import DesktopBehindNavbar from '@/components/layout/DesktopBehindNavbar'
 import BackgroundVideo from './components/BackgroundVideo'
 import PurchaseSpecialSection from './components/PurchaseSpecialSection'
-import CouponModal from '@/components/modals/CouponModal'
 
 type Props = {}
 
@@ -89,7 +88,6 @@ function HomePageV2({ }: Props) {
                     </div>
                 </DesktopBehindNavbar>
             </div>
-            <CouponModal />
         </>
     )
 }

@@ -12,6 +12,7 @@ import Head from 'next/head';
 import { APP_HOST_URL } from '@/lib/consts'
 import PageErrorFeature from '@/features/error/PageErrorFeature';
 import Layout from '@/components/layout/Layout';
+import CouponModal from '@/components/modals/CouponModal';
 
 export default function App({ Component, pageProps, ...rest }: AppProps) {
   const { store, props } = wrapper.useWrappedStore(rest);
@@ -36,6 +37,7 @@ export default function App({ Component, pageProps, ...rest }: AppProps) {
         <Layout>
           <PageErrorFeature>
             <Component {...props.pageProps} />
+            <CouponModal />
           </PageErrorFeature>
         </Layout>
         <AuthFeature />

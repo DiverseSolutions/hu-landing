@@ -1,12 +1,10 @@
-import FilterTag from '@/components/btn/FilterTag'
 import BundleItemCard from '@/components/card/BundleItemCard'
 import { formatPrice } from '@/lib/utils'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { showAuthModal } from '@/store/reducer/auth-reducer/actions'
-import { useCreateIdaxInvoiceMutation, useUsdToArdxRateQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
-import { ArdArtBundleDetailResult } from '@/store/rtk-query/hux-ard-art/types'
+import { useCreateIdaxInvoiceMutation, useUsdToArdxRateQuery, useUseCouponMutation } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
+import { ArdArtBundleDetailResult, ArdArtCheckCouponResult } from '@/store/rtk-query/hux-ard-art/types'
 import { useRouter } from 'next/router'
-import PlusGrey from '@/components/icon/svgr/PlusGrey'
 import ExpandSvg from './img/expand.svg'
 import React, { useState, useMemo } from 'react'
 import { toast } from 'react-toastify'
@@ -15,28 +13,27 @@ import { MdClose, MdOutlineLocationOn } from 'react-icons/md'
 
 import WarningSvg from './img/warning.svg'
 
-import { ASSET_CATEGORY, TICKET_REGIONS } from '@/lib/consts'
+import { TICKET_REGIONS } from '@/lib/consts'
 import classNames from 'classnames'
 import { ClipLoader } from 'react-spinners'
-import SystemRequirementsDropdown from '@/components/common/SystemRequirementsDropdown'
 import ModelModal from './components/ModelModal'
-import CategorySelectList from '@/components/common/CategorySelectList'
 import { CategoryItemType } from '@/components/common/CategorySelectList/types'
 import { BiChevronDown, BiChevronUp } from 'react-icons/bi'
 
 type Props = {
-    bundle: ArdArtBundleDetailResult
+    bundle: ArdArtBundleDetailResult,
+    coupon?: {
+        coupon: ArdArtCheckCouponResult,
+        code: string
+    } | undefined,
 }
 
-const categoryList = ASSET_CATEGORY.map((a) => ({
-    id: a.slug,
-    name: a.name
-}))
-
 function BundleDetailFeature({
-    bundle
+    bundle,
+    coupon
 }: Props) {
 
+    const [couponCode, setCouponCode] = useState<string>()
     const [isDescSeeMore, setIsDescSeeMore] = useState(false)
     const [activeCategory, setActiveCategory] = useState<CategoryItemType[]>([])
     const [isModelExpanded, setIsModelExpanded] = useState(false)
@@ -49,9 +46,11 @@ function BundleDetailFeature({
     const idaxAuth = useAppSelector(state => state.auth.idax)
     const dispatch = useAppDispatch()
 
+    const [callUseCoupon, { isLoading: isUseCouponLoading }] = useUseCouponMutation()
+
     const { data: usdArdx } = useUsdToArdxRateQuery()
 
-    const [callCreateIdaxInvoice] = useCreateIdaxInvoiceMutation()
+    const [callCreateIdaxInvoice, { isLoading: isIdaxInvoiceLoading }] = useCreateIdaxInvoiceMutation()
 
     const isGlb = useMemo(() => {
         return bundle.coverUrl?.endsWith('.glb')
@@ -93,6 +92,30 @@ function BundleDetailFeature({
             }
         } else {
             router.push(`/payment?bundleId=${bundle.id}&region=${selectedRegion}`)
+        }
+    }
+
+    const handleCoupon = async () => {
+        if (!selectedRegion) {
+            toast('Please select your ticket timezone', {
+                type: 'warning'
+            })
+            return
+        }
+        if (!isLoggedIn || !accountId) {
+            dispatch(showAuthModal({
+                type: 'login'
+            }))
+            return;
+        }
+        if (coupon) {
+            const r = await callUseCoupon({
+                code: coupon.code,
+                bundleId: bundle.id,
+                region: selectedRegion,
+                accountId,
+                email: email!
+            }).unwrap()
         }
     }
 
@@ -228,7 +251,10 @@ function BundleDetailFeature({
                                     <div className="mt-4">
                                         <div className="flex w-full">
                                             <div className="flex flex-grow">
-                                                <button onClick={handlePurchase} className={classNames("btn btn-primary rounded-xl btn-block", { 'bg-black bg-opacity-[0.2] text-black text-opacity-[0.2] hover:bg-black hover:bg-opacity-[0.2]': !selectedRegion })}>Purchase $({formatPrice(bundle.price)})</button>
+                                                {coupon ?
+                                                    (<button onClick={handleCoupon} className={classNames("btn btn-primary rounded-xl btn-block", { 'bg-black bg-opacity-[0.2] text-black text-opacity-[0.2] hover:bg-black hover:bg-opacity-[0.2]': !selectedRegion, 'loading': isUseCouponLoading })}>{coupon ? 'Purchase Using Coupon Code' : `Purchase (${formatPrice(bundle.price)})`}</button>) : (
+                                                        <button onClick={handlePurchase} className={classNames("btn btn-primary rounded-xl btn-block", { 'bg-black bg-opacity-[0.2] text-black text-opacity-[0.2] hover:bg-black hover:bg-opacity-[0.2]': !selectedRegion, 'loading': isIdaxInvoiceLoading })}>{`Purchase (${formatPrice(bundle.price)})`}</button>
+                                                    )}
                                             </div>
                                             <div className="flex ml-2">
                                                 <div className="btn bg-opacity-[0.2] bg-black btn-disabled rounded-xl">

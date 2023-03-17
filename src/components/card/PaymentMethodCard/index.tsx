@@ -9,7 +9,7 @@ import { BiCheck } from 'react-icons/bi'
 import BxCheck from '@/assets/svg/bx-check.svg'
 import Image from 'next/image'
 import QRImage from "react-qr-image"
-import { useCreateQpayInvoiceMutation, useCreateQposInvoiceMutation, useCreateSocialpayInvoiceMutation, useLazyPromoQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
+import { useCreateQpayInvoiceMutation, useCreateQposInvoiceMutation, useCreateSocialpayInvoiceMutation, useLazyCheckPromoQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
 import classNames from 'classnames'
 import { toast } from 'react-toastify'
 import { ArdArtAssetDetailByIDResult, ArdArtBundleDetailResult } from '@/store/rtk-query/hux-ard-art/types'
@@ -56,7 +56,7 @@ function PaymentMethodCard({ item, priceToUsdrate, region, ...props }: Props) {
     const [callCreateInvoiceQPos, { isLoading: isCreateInvoiceQPosLoading }] = useCreateQposInvoiceMutation()
     const [isBanksExpanded, setIsBanksExpanded] = useState(false)
 
-    const [callPromo, { isFetching: isPromoFetching, data: promoData, }] = useLazyPromoQuery()
+    const [callPromo, { isFetching: isPromoFetching, data: promoData, }] = useLazyCheckPromoQuery()
 
     const { register: registerPromo,
         handleSubmit: handleSubmitPromo,
@@ -73,8 +73,8 @@ function PaymentMethodCard({ item, priceToUsdrate, region, ...props }: Props) {
     const enteredPromo = watchPromo('promo')
 
     const isPromoValid = useMemo(() => {
-        return promoData?.result?.isActive ? true : false
-    }, [promoData?.result?.isActive])
+        return enteredPromo?.length && promoData?.result?.isActive ? true : false
+    }, [promoData?.result?.isActive, enteredPromo])
 
     const priceUsd = useMemo(() => {
         return new Intl.NumberFormat('en-US', {
@@ -82,14 +82,6 @@ function PaymentMethodCard({ item, priceToUsdrate, region, ...props }: Props) {
             currency: 'USD',
         }).format(item.price)
     }, [item.price])
-
-    useEffect(() => {
-        if (!enteredPromo?.length) {
-            setPromoError('promo', {
-                message: ''
-            })
-        }
-    }, [enteredPromo])
 
     const priceFormatted = useMemo(() => {
         return new Intl.NumberFormat('en-US', {
@@ -230,8 +222,17 @@ function PaymentMethodCard({ item, priceToUsdrate, region, ...props }: Props) {
     }
 
     const handleCheckPromo = async () => {
+        if (!enteredPromo?.length) {
+            return
+        }
         const resp = await callPromo({
             code: enteredPromo,
+            type: props.isBundle ? 'bundle' : 'single',
+            ...(props.isBundle ? {
+                bundleId: item.id,
+            } : {
+                productId: item.id,
+            })
         })
         if (resp.data) {
             const r = resp.data
@@ -371,7 +372,7 @@ function PaymentMethodCard({ item, priceToUsdrate, region, ...props }: Props) {
                             <span className='text-terteriary'>Subtotal with ARDX</span>
                             <span className='text-dark-secondary'>ARDX{priceFormatted}</span>
                         </div>
-                        {promoData?.result?.isActive ? (
+                        {enteredPromo?.length && promoData?.result?.isActive ? (
                             <div className="flex justify-between w-full">
                                 <span className='text-terteriary'>Promo code discount</span>
                                 <span className='text-dark-secondary'>{promoData.result.discountPercentage}% (-US$ {formatPrice(item.price * promoData.result.discountPercentage / 100)})</span>
@@ -383,12 +384,14 @@ function PaymentMethodCard({ item, priceToUsdrate, region, ...props }: Props) {
                 </div>
                 <div className="flex justify-between w-full">
                     <span className='font-bold'>Total</span>
-                    {promoData?.result?.discountPercentage ? (
+                    {enteredPromo?.length && promoData?.result?.discountPercentage ? (
                         <span className='font-bold'>US${formatPrice(item.price - item.price * promoData.result.discountPercentage / 100)}</span>
                     ) : (<span className='font-bold'>US${formatPrice(item.price)}</span>)}
                 </div>
                 <form onSubmit={handleSubmitPromo(handleCheckPromo)}>
-                    <div className="mt-6">
+                    <div className={classNames("mt-6", {
+                        'hidden': !item.isPromoAble
+                    })}>
                         <div className="w-full form-control">
                             <label className="label">
                                 <span className="label-text">Promo code</span>

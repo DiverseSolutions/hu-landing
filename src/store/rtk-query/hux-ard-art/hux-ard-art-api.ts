@@ -1,5 +1,5 @@
 import { ArdArtResponse } from './../ard-art/types';
-import { ArdArtBundleResponse, ArdArtBundleInvoiceResponse, ArdArtAssetDetailByIDResult, ArdArtTicketOrAssetResponse, ArdArtMyOwnedNftResponse, ArdArtCreateSocialpayInvoiceResult, ArdArtCreateQpayInvoiceResult, ArdArtCreateQposInvoiceResult, ArdArtGetInvoiceByIdResult, ArdArtCheckInvoiceResult, ArdArtAssetDetailEarlyResult, ArdArtCognitoUserDetailResult, ArdArtMyNftCountResult, ArdArtArdxUsdRateResult, ArdArtIdaxInvoiceResult, ArdArtBundleDetailResult, ArdArtAssetDetailResult, ArdArtPromoResult } from './types';
+import { ArdArtBundleResponse, ArdArtBundleInvoiceResponse, ArdArtAssetDetailByIDResult, ArdArtTicketOrAssetResponse, ArdArtMyOwnedNftResponse, ArdArtCreateSocialpayInvoiceResult, ArdArtCreateQpayInvoiceResult, ArdArtCreateQposInvoiceResult, ArdArtGetInvoiceByIdResult, ArdArtCheckInvoiceResult, ArdArtAssetDetailEarlyResult, ArdArtCognitoUserDetailResult, ArdArtMyNftCountResult, ArdArtArdxUsdRateResult, ArdArtIdaxInvoiceResult, ArdArtBundleDetailResult, ArdArtAssetDetailResult, ArdArtPromoResult, ArdArtCheckPromoResult, ArdArtCheckCouponResult } from './types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { MonXanshRateResponse } from '../monxansh/types';
 
@@ -253,6 +253,39 @@ export const huxArdArtApi = createApi({
                 method: 'GET',
             })
         }),
+        checkPromo: builder.query<ArdArtResponse<ArdArtCheckPromoResult>, {
+            code: string,
+            type: string,
+            bundleId?: number;
+            productId?: number;
+        }>({
+            query: (d) => ({
+                url: `/api/v1/market/promo/check`,
+                method: 'POST',
+                body: d,
+            })
+        }),
+        checkCoupon: builder.query<ArdArtResponse<ArdArtCheckCouponResult>, {
+            code: string,
+        }>({
+            query: (d) => ({
+                url: `/api/v1/coupon/check/${d.code}`,
+                method: 'GET',
+            })
+        }),
+        useCoupon: builder.mutation<ArdArtResponse<{}>, {
+            bundleId: number,
+            email: string,
+            region: string,
+            accountId: number,
+            code: string,
+        }>({
+            query: (d) => ({
+                url: `/api/v1/coupon/use`,
+                method: 'POST',
+                body: d,
+            })
+        }),
     }),
 })
 
@@ -292,4 +325,9 @@ export const {
     useSendNftMutation,
     usePromoQuery,
     useLazyPromoQuery,
+    useCheckPromoQuery,
+    useLazyCheckPromoQuery,
+    useCheckCouponQuery,
+    useLazyCheckCouponQuery,
+    useUseCouponMutation,
 } = huxArdArtApi;

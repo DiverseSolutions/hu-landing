@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 import BundlesSection from './components/BundlesSection'
 
 import ItemsSection from './components/ItemsSection'

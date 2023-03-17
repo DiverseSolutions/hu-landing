@@ -1,4 +1,5 @@
 import { EMAIL_REGEX, PASSWORD_MIN_ERROR, PASSWORD_MIN_REGEX } from '@/lib/consts';
+import { useAppSelector } from '@/store/hooks';
 import { useSignupMutation } from '@/store/rtk-query/cognito/cognito-api';
 import classNames from 'classnames';
 import React from 'react'
@@ -18,13 +19,14 @@ type SignupFormData = {
 
 export default function SignupForm({ ...props }: Props) {
 
+  const idaxUserId = useAppSelector(state => state.auth.idax?.id)
   const [callSignup, { data: signupResp, isLoading: isSignupLoading, }] = useSignupMutation()
 
   const { register, handleSubmit, watch, formState: {
     errors
   } } = useForm<SignupFormData>({
     defaultValues: {
-      username: '',
+      username: idaxUserId ? `${idaxUserId}` : '',
       password: '',
       password2: '',
       email: '',

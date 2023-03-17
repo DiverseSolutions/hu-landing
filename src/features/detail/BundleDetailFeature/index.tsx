@@ -71,12 +71,19 @@ function BundleDetailFeature({
             })
             return
         }
+        if (!isLoggedIn || !accountId) {
+            dispatch(showAuthModal({
+                type: authSession === 'web' ? 'login' : 'register'
+            }))
+            return;
+        }
         if (authSession === 'idax-wv') {
             const r = await callCreateIdaxInvoice({
                 productId: bundle.id,
                 accountId: accountId,
-                email: email! || "test@gmail.com",
+                email: email!,
                 type: 'bundle',
+                region: selectedRegion,
                 amount: 1,
                 idaxUserId: `${idaxAuth?.id}`,
                 idaxUserCode: idaxAuth?.code as string
@@ -85,12 +92,6 @@ function BundleDetailFeature({
                 window.location.href = r.result.response.url
             }
         } else {
-            if (!isLoggedIn || !accountId) {
-                dispatch(showAuthModal({
-                    type: 'login'
-                }))
-                return;
-            }
             router.push(`/payment?bundleId=${bundle.id}&region=${selectedRegion}`)
         }
     }

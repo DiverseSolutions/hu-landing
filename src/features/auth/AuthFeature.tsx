@@ -21,6 +21,13 @@ type FormType = 'login' | 'register' | 'register-otp' | 'forgot-password' | 'for
 
 const DEFAULT_MODAL = 'login';
 
+type IdaxUserData = {
+    id: number;
+    code: string;
+    emailMasked: string;
+    nickName: string;
+}
+
 export default function AuthFeature({
 
 }: Props) {
@@ -84,58 +91,43 @@ export default function AuthFeature({
     })
 
     const syncSession = async () => {
+        let idaxUserData: IdaxUserData | null = null
+        const idaxExToken = Cookies.get('ex_token') || Cookies.get('token')
+        const idaxUserCode = router.query.code as string | undefined || Cookies.get('idax_user_code')
+        if (idaxExToken && idaxUserCode) {
+            const data = await callIdaxUserInfo()
+            if (data.data) {
+                const idaxUserInfo = data.data?.data
+                if (idaxUserInfo) {
+                    if (router.query.code) {
+                        Cookies.set('idax_user_code', router.query.code as string)
+                    }
+                    idaxUserData = {
+                        id: idaxUserInfo.id,
+                        emailMasked: idaxUserInfo.email,
+                        nickName: idaxUserInfo.nickName,
+                        code: idaxUserCode,
+                    }
+                }
+            }
+        }
         const cognitoIdToken = Cookies.get('cognitoIdToken');
         const cognitoAccessToken = Cookies.get('cognitoAccessToken');
         const ardArtAccessToken = Cookies.get('ardArtAccessToken');
         const ardArtAccountId = Cookies.get('ardArtAccountId');
-        if (!cognitoIdToken || !cognitoAccessToken || !ardArtAccessToken || !ardArtAccountId) {
-            const idaxExToken = Cookies.get('ex_token') || Cookies.get('token')
-            const idaxUserCode = router.query.code as string | undefined || Cookies.get('idax_user_code')
-            if (idaxExToken && idaxUserCode) {
-                const data = await callIdaxUserInfo()
-                if (data.data) {
-                    const idaxUserInfo = data.data?.data
-                    if (idaxUserInfo) {
-                        if (router.query.code) {
-                            Cookies.set('idax_user_code', router.query.code as string)
-                        }
-                        dispatch(sessionRestored({
-                            session: 'idax-wv',
-                            idax: {
-                                id: idaxUserInfo.id,
-                                code: idaxUserCode,
-                                name: idaxUserInfo.nickName,
-                                email: idaxUserInfo.email,
-                            },
-                            profile: {
-                                username: idaxUserInfo.nickName,
-                                email: idaxUserInfo.email
-                            }
-                        }))
-                        return
-                    } else {
-                        console.log('idax user not found')
-                        console.log(data)
-                    }
-                }
-            } else {
-                console.log('not logged in')
-                console.log(`ex token: ${idaxExToken}, user code: ${idaxUserCode}`)
-                dispatch(authNotLoggedIn())
-            }
-        } else {
+        if (cognitoIdToken && cognitoAccessToken && ardArtAccessToken && ardArtAccountId) {
             const cognitoUserResp = await callGetUser({
                 AccessToken: cognitoAccessToken,
             }).unwrap();
             dispatch(sessionRestored({
-                session: 'web',
+                session: idaxUserData ? 'idax-wv' : 'web',
                 ardArt: {
                     accessToken: {
                         value: ardArtAccessToken,
                     },
                     accountId: {
                         value: parseInt(ardArtAccountId),
-                    }
+                    },
                 },
                 cognito: {
                     idToken: {
@@ -149,7 +141,18 @@ export default function AuthFeature({
                     email: cognitoUserResp.UserAttributes.find((a) => a.Name === 'email')!.Value,
                     username: cognitoUserResp.Username,
                 },
+                ...(idaxUserData ? {
+                    idax: {
+                        id: idaxUserData.id,
+                        email: idaxUserData.emailMasked,
+                        name: idaxUserData.nickName,
+                        code: idaxUserData.code,
+                    }
+                } : {})
             }))
+        }
+        if (!ardArtAccessToken) {
+            dispatch(authNotLoggedIn())
         }
     }
 

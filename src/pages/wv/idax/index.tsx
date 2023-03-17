@@ -27,7 +27,6 @@ function WebViewIdax({ }: Props) {
         if (!isAuthLoading && (session === 'idax-wv') && isLoggedIn) {
             router.push('/')
         }
-        console.log(session)
     }, [session, isLoggedIn, isAuthLoading, isLoading, router.isReady])
 
 

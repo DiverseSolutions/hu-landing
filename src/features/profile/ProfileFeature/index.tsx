@@ -142,10 +142,17 @@ const ProfileFeature = ({ }: Props) => {
 
     if (!isLoggedIn && !isLoginLoading) {
         return (
-            <div className="flex items-center justify-center w-full min-h-[600px]">
+            <div className="flex px-4 md:px-0 flex-col items-center justify-center w-full min-h-[600px]">
                 <p onClick={() => dispatch(showAuthModal({
                     type: 'login'
-                }))} className="text-xl font-medium">Please sign in to continue.</p>
+                }))} className="text-xl font-medium">Please log in to continue.</p>
+                <button onClick={() => {
+                    dispatch(showAuthModal({
+                        type: 'login'
+                    }))
+                }} className="px-4 md:max-w-[300px] py-2 mt-4 btn-block btn btn-black">
+                    Login
+                </button>
             </div>
         )
     }

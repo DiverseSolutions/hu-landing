@@ -218,6 +218,7 @@ export const huxArdArtApi = createApi({
             otpId: string;
             accountId: number;
             receiverEmail: string;
+            email: string;
             productId: number;
             amount: number
         }>({

@@ -19,6 +19,7 @@ type SendNftConfirmationFormData = {
 function SendNftConfirmationForm({ ...props }: Props) {
 
     const accountId = useAppSelector(state => state.auth.ardArt.accountId)
+    const email = useAppSelector(state => state.auth.profile?.email)
     const dispatch = useAppDispatch()
     const [callSendNft, { isLoading: isSendNftLoading }] = useSendNftMutation()
 
@@ -31,7 +32,7 @@ function SendNftConfirmationForm({ ...props }: Props) {
     })
 
     const onSubmit = async (d: SendNftConfirmationFormData) => {
-        if (!accountId) {
+        if (!accountId || !email) {
             dispatch(showAuthModal({
                 type: 'login'
             }))
@@ -42,6 +43,7 @@ function SendNftConfirmationForm({ ...props }: Props) {
             otpCode: d.otp,
             accountId,
             receiverEmail: props.email,
+            email: email,
             productId: props.productId,
             amount: 1,
         }).unwrap()

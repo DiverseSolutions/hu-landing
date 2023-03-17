@@ -31,7 +31,7 @@ export default function ProductDetailFeature({
     const [isModelExpanded, setIsModelExpanded] = useState(false)
     const { data: usdToArdx } = useUsdToArdxRateQuery()
     const [selectedTicketRegion, setSelectedTicketRegion] = useState<string>()
-    const [callCreateIdaxInvoice] = useCreateIdaxInvoiceMutation()
+    const [callCreateIdaxInvoice, { isLoading: isIdaxInvoiceLoading }] = useCreateIdaxInvoiceMutation()
 
     const authSession = useAppSelector(state => state.auth.session)
 
@@ -283,7 +283,7 @@ export default function ProductDetailFeature({
                                                 </div>) : <></>}
                                             <div className="flex w-full mt-4">
                                                 <div className="flex flex-grow">
-                                                    <button onClick={handlePurchase} className={classNames("btn btn-primary rounded-lg btn-block ", { 'bg-black bg-opacity-[0.2] text-black text-opacity-[0.2] hover:bg-black hover:bg-opacity-[0.2]': !selectedTicketRegion && item.type === 'ticket' })}>Purchase $({formatPrice(item.price)})</button>
+                                                    <button onClick={handlePurchase} className={classNames("btn btn-primary rounded-lg btn-block ", { 'bg-black bg-opacity-[0.2] text-black text-opacity-[0.2] hover:bg-black hover:bg-opacity-[0.2]': !selectedTicketRegion && item.type === 'ticket', 'loading': isIdaxInvoiceLoading })}>Purchase $({formatPrice(item.price)})</button>
                                                 </div>
                                                 <div className="flex ml-2">
                                                     <div className="btn bg-black bg-opacity-[0.2] btn-disabled rounded-lg">

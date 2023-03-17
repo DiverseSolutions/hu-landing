@@ -50,7 +50,7 @@ function BundleDetailFeature({
 
     const { data: usdArdx } = useUsdToArdxRateQuery()
 
-    const [callCreateIdaxInvoice] = useCreateIdaxInvoiceMutation()
+    const [callCreateIdaxInvoice, { isLoading: isIdaxInvoiceLoading }] = useCreateIdaxInvoiceMutation()
 
     const isGlb = useMemo(() => {
         return bundle.coverUrl?.endsWith('.glb')
@@ -251,8 +251,8 @@ function BundleDetailFeature({
                                         <div className="flex w-full">
                                             <div className="flex flex-grow">
                                                 {coupon ?
-                                                    (<button onClick={handleCoupon} className={classNames("btn btn-primary rounded-xl btn-block", { 'bg-black bg-opacity-[0.2] text-black text-opacity-[0.2] hover:bg-black hover:bg-opacity-[0.2]': !selectedRegion })}>{coupon ? 'Purchase Using Coupon Code' : `Purchase (${formatPrice(bundle.price)})`}</button>) : (
-                                                        <button onClick={handlePurchase} className={classNames("btn btn-primary rounded-xl btn-block", { 'bg-black bg-opacity-[0.2] text-black text-opacity-[0.2] hover:bg-black hover:bg-opacity-[0.2]': !selectedRegion })}>{`Purchase (${formatPrice(bundle.price)})`}</button>
+                                                    (<button onClick={handleCoupon} className={classNames("btn btn-primary rounded-xl btn-block", { 'bg-black bg-opacity-[0.2] text-black text-opacity-[0.2] hover:bg-black hover:bg-opacity-[0.2]': !selectedRegion, 'loading': isUseCouponLoading })}>{coupon ? 'Purchase Using Coupon Code' : `Purchase (${formatPrice(bundle.price)})`}</button>) : (
+                                                        <button onClick={handlePurchase} className={classNames("btn btn-primary rounded-xl btn-block", { 'bg-black bg-opacity-[0.2] text-black text-opacity-[0.2] hover:bg-black hover:bg-opacity-[0.2]': !selectedRegion, 'loading': isIdaxInvoiceLoading })}>{`Purchase (${formatPrice(bundle.price)})`}</button>
                                                     )}
                                             </div>
                                             <div className="flex ml-2">

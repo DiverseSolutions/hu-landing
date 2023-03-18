@@ -6,10 +6,23 @@ import SystemRequirementsTransparent from './components/SystemRequirementsTransp
 import DesktopBehindNavbar from '@/components/layout/DesktopBehindNavbar'
 import BackgroundVideo from './components/BackgroundVideo'
 import PurchaseSpecialSection from './components/PurchaseSpecialSection'
+import { useRouter } from 'next/router'
 
 type Props = {}
 
 function HomePageV2({ }: Props) {
+
+    const router = useRouter()
+
+    useEffect(() => {
+        if (!router.isReady) {
+            return
+        }
+        if (router.asPath.startsWith('/payment-status')) {
+            router.replace(router.asPath)
+        }
+    }, [router.isReady])
+
 
     return (
         <>

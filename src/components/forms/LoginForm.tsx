@@ -8,8 +8,11 @@ import classNames from 'classnames';
 import React, { useState } from 'react'
 import { useForm } from "react-hook-form";
 import { IoEye, IoEyeOff } from 'react-icons/io5'
+import Cookies from 'js-cookie'
 
 import { toast } from 'react-toastify';
+import { useLazyIdaxUserInfoQuery } from '@/store/rtk-query/idax/idax-api';
+import { getIdaxCookie } from '@/lib/cookie';
 
 type Props = {
   onSuccess: () => void;
@@ -21,6 +24,13 @@ type LoginFormData = {
   password: string;
 }
 
+type IdaxUserData = {
+  id: number;
+  code: string;
+  emailMasked: string;
+  nickName: string;
+}
+
 export default function LoginForm({ ...props }: Props) {
 
   const [isShowPwd, setIsShowPwd] = useState(false)
@@ -29,6 +39,7 @@ export default function LoginForm({ ...props }: Props) {
   const [isLoginLoading, setIsLoginLoading] = useState(false)
   const [callMetalandLogin, { isLoading: isMetalandLoginLoading }] = useMetalandLoginMutation()
   const [callLogin, { isLoading: isCognitoLoginLoading }] = useLoginMutation()
+  const [callIdaxUserInfo] = useLazyIdaxUserInfoQuery()
   const [callCognitoUser] = useLazyCognitoUserQuery()
 
   const { register, handleSubmit, formState: {
@@ -41,6 +52,26 @@ export default function LoginForm({ ...props }: Props) {
   })
 
   const handleLogin = async (d: LoginFormData) => {
+
+    let idaxUserData: IdaxUserData | null = null
+    const {
+      idaxExToken,
+      idaxUserCode
+    } = getIdaxCookie()
+    if (idaxExToken && idaxUserCode) {
+      const data = await callIdaxUserInfo()
+      if (data.data) {
+        const idaxUserInfo = data.data?.data
+        if (idaxUserInfo) {
+          idaxUserData = {
+            id: idaxUserInfo.id,
+            emailMasked: idaxUserInfo.email,
+            nickName: idaxUserInfo.nickName,
+            code: idaxUserCode,
+          }
+        }
+      }
+    }
 
     let userInputUsername = d.username.trim()
     let cognitoUsername = userInputUsername
@@ -69,7 +100,7 @@ export default function LoginForm({ ...props }: Props) {
       return;
     }
     dispatch(authSuccess({
-      session: 'web',
+      session: idaxUserData ? 'idax-wv' : 'web',
       ardArt: {
         accessToken: {
           value: metalandResp.result.jwtToken,
@@ -94,6 +125,14 @@ export default function LoginForm({ ...props }: Props) {
         email: cognitoUserResp.UserAttributes.find((a) => a.Name === 'email')!.Value,
         username: cognitoUserResp.Username,
       },
+      ...(idaxUserData ? {
+        idax: {
+          id: idaxUserData.id,
+          email: idaxUserData.emailMasked,
+          name: idaxUserData.nickName,
+          code: idaxUserData.code,
+        }
+      } : {})
     }))
     if (metalandResp.status === 'success') {
       toast('Logged In Successfully.', {

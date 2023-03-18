@@ -14,6 +14,7 @@ import { useRouter } from 'next/router'
 import AuthCloseSvg from '@/assets/svg/auth-close.svg'
 import Link from 'next/link'
 import { useSwipeable } from 'react-swipeable'
+import { getIdaxCookie, storeIdaxCookie } from '@/lib/cookie'
 
 type Props = {}
 
@@ -92,15 +93,20 @@ export default function AuthFeature({
 
     const syncSession = async () => {
         let idaxUserData: IdaxUserData | null = null
-        const idaxExToken = Cookies.get('ex_token') || Cookies.get('token')
-        const idaxUserCode = router.query.code as string | undefined || Cookies.get('idax_user_code')
+        const {
+            idaxExToken,
+            idaxUserCode: idaxUserCodeCookie
+        } = getIdaxCookie()
+        const idaxUserCode = router.query.code as string | undefined || idaxUserCodeCookie
         if (idaxExToken && idaxUserCode) {
             const data = await callIdaxUserInfo()
             if (data.data) {
                 const idaxUserInfo = data.data?.data
                 if (idaxUserInfo) {
                     if (router.query.code) {
-                        Cookies.set('idax_user_code', router.query.code as string)
+                        storeIdaxCookie({
+                            idaxUserCode: idaxUserCode
+                        })
                     }
                     idaxUserData = {
                         id: idaxUserInfo.id,

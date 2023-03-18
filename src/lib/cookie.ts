@@ -1,4 +1,5 @@
 import Cookies from "js-cookie"
+import { NextRouter } from "next/router";
 
 type StoreAuthCookieParams = {
     cognito: {
@@ -38,3 +39,18 @@ export const clearAuthcookie = () => {
 }
 
 export const getArdArdAccessToken = () => Cookies.get('ardArtAccessToken')
+
+export const getIdaxCookie = () => {
+    const idaxExToken = Cookies.get('ex_token') || Cookies.get('token')
+    const idaxUserCode = Cookies.get('idax_user_code')
+    return {
+        idaxExToken,
+        idaxUserCode
+    }
+}
+
+export const storeIdaxCookie = (d: {
+    idaxUserCode: string
+}) => {
+    Cookies.set('idax_user_code', d.idaxUserCode)
+}

@@ -52,7 +52,7 @@ const authSlice = createSlice({
             state.isLoading = false;
         })
         builder.addCase(authSuccess, (state, { payload }) => {
-            state.session = state.idax ? 'idax-wv' : payload.session
+            state.session = payload.session
             state.isLoggedIn = true;
             state.isLoading = false;
             if (payload.ardArt) {
@@ -76,6 +76,14 @@ const authSlice = createSlice({
                     cognito: payload.cognito,
                     ardArt: payload.ardArt,
                 })
+            }
+            if (payload.idax) {
+                state.idax = {
+                    id: payload.idax.id,
+                    email: payload.idax.email,
+                    code: payload.idax.code,
+                    name: payload.idax.name,
+                }
             }
             state.profile = payload.profile;
         })

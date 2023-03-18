@@ -54,3 +54,9 @@ export const storeIdaxCookie = (d: {
 }) => {
     Cookies.set('idax_user_code', d.idaxUserCode)
 }
+
+export const clearIdaxCookie = () => {
+    Cookies.remove('ex_token')
+    Cookies.remove('token')
+    Cookies.remove('idax_user_code')
+}

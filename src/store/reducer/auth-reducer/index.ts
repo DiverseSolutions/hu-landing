@@ -1,4 +1,4 @@
-import { clearAuthcookie, storeAuthCookie } from "@/lib/cookie";
+import { clearAuthcookie, clearIdaxCookie, storeAuthCookie } from "@/lib/cookie";
 import { createSlice } from "@reduxjs/toolkit"
 import { authNotLoggedIn, authSuccess, hideAuthModal, logoutSuccess, sessionExpired, sessionRestored, showAuthModal, AuthModalType } from "./actions"
 import { AuthSessionType } from './actions'
@@ -115,6 +115,7 @@ const authSlice = createSlice({
                 isLoading: false,
             };
             clearAuthcookie()
+            clearIdaxCookie()
             return state;
         })
         builder.addCase(sessionExpired, (state, action) => {

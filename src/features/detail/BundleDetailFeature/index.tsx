@@ -78,7 +78,7 @@ function BundleDetailFeature({
         }
         if (authSession === 'idax-wv') {
             const r = await callCreateIdaxInvoice({
-                productId: bundle.id,
+                bundleId: bundle.id,
                 accountId: accountId,
                 email: email!,
                 type: 'bundle',

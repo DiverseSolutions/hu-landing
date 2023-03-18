@@ -112,7 +112,7 @@ export default function ProductDetailFeature({
                                         {isGlb ? (
                                             <div className="relative flex items-center justify-center w-full h-auto aspect-square">
                                                 <div dangerouslySetInnerHTML={{
-                                                    __html: `<model-viewer loading="eager" class="hu-product-model-viewer" poster="${item.imageUrl}" src="${item.coverUrl}" autoplay ar crossorigin="anonymous" camera-controls touch-action="pan-y"></model-viewer>`
+                                                    __html: `<model-viewer loading="eager" class="hu-product-model-viewer" powerPreference="low-power" poster="${item.imageUrl}" src="${item.coverUrl}" autoplay ar crossorigin="anonymous" camera-controls touch-action="pan-y"></model-viewer>`
                                                 }}>
 
                                                 </div>

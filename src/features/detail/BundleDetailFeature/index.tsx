@@ -102,7 +102,7 @@ function BundleDetailFeature({
                 region: region,
                 amount: 1,
                 idaxUserId: idaxAuth.id.toString(),
-                idaxUserCode: idaxAuth.code
+                idaxUserCode: idaxUserCode
             }).unwrap()
             if (r.result) {
                 window.location.href = r.result.response.url

@@ -65,6 +65,7 @@ export default function ProductDetailFeature({
         }
         const idaxUserCode = router.query.idaxUserCode as string | undefined
         const action = router.query.action as string | undefined
+        const region = router.query.region as string | undefined
         if (action !== 'idaxPurchase') {
             return
         }
@@ -86,7 +87,7 @@ export default function ProductDetailFeature({
                 accountId,
                 email: email!,
                 type: 'single',
-                region: selectedTicketRegion,
+                region: region,
                 amount: 1,
                 idaxUserId: `${idaxAuth?.id}`,
                 idaxUserCode: idaxUserCode

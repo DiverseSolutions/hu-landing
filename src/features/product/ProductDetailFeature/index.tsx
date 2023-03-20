@@ -16,7 +16,7 @@ import { ClipLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
 import { formatPrice } from '@/lib/utils';
 import classNames from 'classnames';
-import { TICKET_REGIONS } from '@/lib/consts';
+import { TICKET_REGIONS, WV_IDAX_CODE_URL } from '@/lib/consts';
 
 import ModelModal from './components/ModelModal';
 import * as idaxWvPersistence from '@/lib/wv/idax/persistence'
@@ -114,26 +114,12 @@ export default function ProductDetailFeature({
         }
 
         if (authSession === 'idax-wv') {
-            console.log('create idax invoixe')
-            const r = await callCreateIdaxInvoice({
-                productId: item.id,
-                accountId,
-                email: email!,
-                type: 'single',
-                region: selectedTicketRegion,
-                amount: 1,
-                idaxUserId: `${idaxAuth?.id}`,
-                idaxUserCode: idaxAuth?.code as string
-            }).unwrap()
-            if (r.result) {
-                window.location.href = r.result.response.url
-            }
             idaxWvPersistence.storeProduct({
                 productId: item.id,
                 region: selectedTicketRegion
             })
-            if (process.env.NEXT_PUBLIC_WV_IDAX_CODE_URL) {
-                window.location.href = process.env.NEXT_PUBLIC_WV_IDAX_CODE_URL as string
+            if (WV_IDAX_CODE_URL) {
+                window.location.href = WV_IDAX_CODE_URL
             }
         } else {
             router.push(`/payment?productId=${item.id}${selectedTicketRegion ? `&region=${selectedTicketRegion}` : ''}`)

@@ -6,19 +6,20 @@ import { useCreateIdaxInvoiceMutation, useUsdToArdxRateQuery, useUseCouponMutati
 import { ArdArtBundleDetailResult, ArdArtCheckCouponResult } from '@/store/rtk-query/hux-ard-art/types'
 import { useRouter } from 'next/router'
 import ExpandSvg from './img/expand.svg'
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import { toast } from 'react-toastify'
 import HeartWhiteSvg from './img/heart-white.svg'
 import { MdClose, MdOutlineLocationOn } from 'react-icons/md'
 
 import WarningSvg from './img/warning.svg'
 
-import { TICKET_REGIONS } from '@/lib/consts'
+import { TICKET_REGIONS, WV_IDAX_CODE_URL } from '@/lib/consts'
 import classNames from 'classnames'
 import { ClipLoader } from 'react-spinners'
 import ModelModal from './components/ModelModal'
 import { CategoryItemType } from '@/components/common/CategorySelectList/types'
 import { BiChevronDown, BiChevronUp } from 'react-icons/bi'
+import { storeBundle } from '@/lib/wv/idax/persistence'
 
 type Props = {
     bundle: ArdArtBundleDetailResult,
@@ -63,6 +64,52 @@ function BundleDetailFeature({
         return bundle.items.filter((i) => activeCategory.find((a) => a.id === i.product.category || a.id === i.product.tag || a.id === i.product.category))
     }, [bundle.items, activeCategory])
 
+    // IDAX Purchase Effect
+    useEffect(() => {
+        if (!router.isReady) {
+            return
+        }
+        const idaxUserCode = router.query.idaxUserCode as string | undefined
+        const action = router.query.action as string | undefined
+        const region = router.query.region as string
+        if (!region) {
+            toast('Region not found', {
+                type: 'error'
+            })
+            return
+        }
+        if (action !== 'idaxPurchase') {
+            return
+        }
+        if (!idaxUserCode) {
+            return
+        }
+        if (!idaxAuth?.id || !idaxUserCode) {
+            return
+        }
+        if (!accountId) {
+            return
+        }
+        if (authSession !== 'idax-wv') {
+            return
+        }
+        (async () => {
+            const r = await callCreateIdaxInvoice({
+                bundleId: bundle.id,
+                accountId: accountId,
+                email: email!,
+                type: 'bundle',
+                region: region,
+                amount: 1,
+                idaxUserId: idaxAuth.id.toString(),
+                idaxUserCode: idaxAuth.code
+            }).unwrap()
+            if (r.result) {
+                window.location.href = r.result.response.url
+            }
+        })()
+    }, [authSession, accountId, isLoggedIn, idaxAuth, router.isReady])
+
     const handlePurchase = async () => {
         if (!selectedRegion) {
             toast('Please select your ticket timezone', {
@@ -77,18 +124,12 @@ function BundleDetailFeature({
             return;
         }
         if (authSession === 'idax-wv') {
-            const r = await callCreateIdaxInvoice({
+            storeBundle({
                 bundleId: bundle.id,
-                accountId: accountId,
-                email: email!,
-                type: 'bundle',
-                region: selectedRegion,
-                amount: 1,
-                idaxUserId: `${idaxAuth?.id}`,
-                idaxUserCode: idaxAuth?.code as string
-            }).unwrap()
-            if (r.result) {
-                window.location.href = r.result.response.url
+                region: selectedRegion
+            })
+            if (WV_IDAX_CODE_URL) {
+                window.location.href = WV_IDAX_CODE_URL
             }
         } else {
             router.push(`/payment?bundleId=${bundle.id}&region=${selectedRegion}`)

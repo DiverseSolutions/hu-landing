@@ -52,3 +52,5 @@ export const TICKET_REGIONS = [
 ];
 
 export const ERR_UNKNOWN = "An unknown error occured. Please try reload the page."
+
+export const WV_IDAX_CODE_URL = process.env.NEXT_PUBLIC_WV_IDAX_CODE_URL as string | undefined

@@ -22,7 +22,6 @@ type AuthState = {
     },
     idax?: {
         id: number;
-        code: string;
         name: string;
         email: string;
     },
@@ -67,7 +66,6 @@ const authSlice = createSlice({
                 state.idax = {
                     id: payload.idax.id,
                     email: payload.idax.email,
-                    code: payload.idax.code,
                     name: payload.idax.name,
                 }
             }
@@ -81,7 +79,6 @@ const authSlice = createSlice({
                 state.idax = {
                     id: payload.idax.id,
                     email: payload.idax.email,
-                    code: payload.idax.code,
                     name: payload.idax.name,
                 }
             }
@@ -103,7 +100,6 @@ const authSlice = createSlice({
                 state.idax = {
                     id: payload.idax.id,
                     email: payload.idax.email,
-                    code: payload.idax.code,
                     name: payload.idax.name,
                 }
             }

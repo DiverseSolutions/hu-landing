@@ -71,7 +71,7 @@ export default function ProductDetailFeature({
         if (!idaxUserCode) {
             return
         }
-        if (!idaxAuth?.id || idaxUserCode) {
+        if (!idaxAuth?.id || !idaxUserCode) {
             return
         }
         if (!accountId) {

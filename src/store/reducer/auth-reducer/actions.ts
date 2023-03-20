@@ -26,7 +26,6 @@ export const authSuccess = createAction<{
     },
     idax?: {
         id: number;
-        code: string;
         name: string;
         email: string;
     },
@@ -56,7 +55,6 @@ export const sessionRestored = createAction<{
     },
     idax?: {
         id: number;
-        code: string;
         name: string;
         email: string;
     },

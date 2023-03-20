@@ -14,7 +14,7 @@ import { useRouter } from 'next/router'
 import AuthCloseSvg from '@/assets/svg/auth-close.svg'
 import Link from 'next/link'
 import { useSwipeable } from 'react-swipeable'
-import { getIdaxCookie, storeIdaxCookie } from '@/lib/cookie'
+import { getIdaxCookie } from '@/lib/cookie'
 
 type Props = {}
 
@@ -24,7 +24,6 @@ const DEFAULT_MODAL = 'login';
 
 type IdaxUserData = {
     id: number;
-    code: string;
     emailMasked: string;
     nickName: string;
 }
@@ -95,24 +94,16 @@ export default function AuthFeature({
         let idaxUserData: IdaxUserData | null = null
         const {
             idaxExToken,
-            idaxUserCode: idaxUserCodeCookie
         } = getIdaxCookie()
-        const idaxUserCode = router.query.code as string | undefined || idaxUserCodeCookie
-        if (idaxExToken && idaxUserCode) {
+        if (idaxExToken) {
             const data = await callIdaxUserInfo()
             if (data.data) {
                 const idaxUserInfo = data.data?.data
                 if (idaxUserInfo) {
-                    if (router.query.code) {
-                        storeIdaxCookie({
-                            idaxUserCode: idaxUserCode
-                        })
-                    }
                     idaxUserData = {
                         id: idaxUserInfo.id,
                         emailMasked: idaxUserInfo.email,
                         nickName: idaxUserInfo.nickName,
-                        code: idaxUserCode,
                     }
                 }
             }
@@ -152,7 +143,6 @@ export default function AuthFeature({
                         id: idaxUserData.id,
                         email: idaxUserData.emailMasked,
                         name: idaxUserData.nickName,
-                        code: idaxUserData.code,
                     }
                 } : {})
             }))

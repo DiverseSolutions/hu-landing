@@ -26,7 +26,6 @@ type LoginFormData = {
 
 type IdaxUserData = {
   id: number;
-  code: string;
   emailMasked: string;
   nickName: string;
 }
@@ -56,9 +55,8 @@ export default function LoginForm({ ...props }: Props) {
     let idaxUserData: IdaxUserData | null = null
     const {
       idaxExToken,
-      idaxUserCode
     } = getIdaxCookie()
-    if (idaxExToken && idaxUserCode) {
+    if (idaxExToken) {
       const data = await callIdaxUserInfo()
       if (data.data) {
         const idaxUserInfo = data.data?.data
@@ -67,7 +65,6 @@ export default function LoginForm({ ...props }: Props) {
             id: idaxUserInfo.id,
             emailMasked: idaxUserInfo.email,
             nickName: idaxUserInfo.nickName,
-            code: idaxUserCode,
           }
         }
       }
@@ -130,7 +127,6 @@ export default function LoginForm({ ...props }: Props) {
           id: idaxUserData.id,
           email: idaxUserData.emailMasked,
           name: idaxUserData.nickName,
-          code: idaxUserData.code,
         }
       } : {})
     }))

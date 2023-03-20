@@ -1,3 +1,4 @@
+import { retrieveBundle, retrieveProduct } from '@/lib/wv/idax/persistence'
 import { useAppSelector } from '@/store/hooks'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
@@ -15,9 +16,23 @@ function WebViewIdax({ }: Props) {
         if (!router.isReady) {
             return
         }
+        const idaxUserCode = router.query.code as string | undefined
+        if (!idaxUserCode) {
+            router.push('/')
+            return
+        }
+        const product = retrieveProduct()
+        if (product) {
+            router.push(`/product/?id=${product.productId}&action=idaxPurchase&idaxUserCode=${idaxUserCode}${product.region ? `&region=${product.region}` : ''}`)
+            return
+        }
+        const bundle = retrieveBundle()
+        if (bundle) {
+            router.push(`/bundle/?id=${bundle.bundleId}&region=${bundle.region}&action=idaxPurchase&idaxUserCode=${idaxUserCode}`)
+            return
+        }
         router.push('/')
     }, [router.isReady])
-
 
     if (pageError) {
         return (

@@ -19,6 +19,7 @@ import classNames from 'classnames';
 import { TICKET_REGIONS } from '@/lib/consts';
 
 import ModelModal from './components/ModelModal';
+import * as idaxWvPersistence from '@/lib/wv/idax/persistence'
 
 type Props = {
     item: ArdArtAssetDetailResult,
@@ -57,6 +58,45 @@ export default function ProductDetailFeature({
         return item?.coverUrl?.replace('\n', '')?.endsWith('.glb')
     }, [item.coverUrl])
 
+    // IDAX Purchase Effect
+    useEffect(() => {
+        if (!router.isReady) {
+            return
+        }
+        const idaxUserCode = router.query.idaxUserCode as string | undefined
+        const action = router.query.action as string | undefined
+        if (action !== 'idaxPurchase') {
+            return
+        }
+        if (!idaxUserCode) {
+            return
+        }
+        if (!idaxAuth?.id || idaxUserCode) {
+            return
+        }
+        if (!accountId) {
+            return
+        }
+        if (authSession !== 'idax-wv') {
+            return
+        }
+        (async () => {
+            const r = await callCreateIdaxInvoice({
+                productId: item.id,
+                accountId,
+                email: email!,
+                type: 'single',
+                region: selectedTicketRegion,
+                amount: 1,
+                idaxUserId: `${idaxAuth?.id}`,
+                idaxUserCode: idaxUserCode
+            }).unwrap()
+            if (r.result) {
+                window.location.href = r.result.response.url
+            }
+        })()
+    }, [authSession, accountId, isLoggedIn, idaxAuth, router.isReady])
+
     const handlePurchase = async () => {
         if (!selectedTicketRegion && item.type === 'ticket') {
             toast('Please select your ticket timezone', {
@@ -86,6 +126,13 @@ export default function ProductDetailFeature({
             }).unwrap()
             if (r.result) {
                 window.location.href = r.result.response.url
+            }
+            idaxWvPersistence.storeProduct({
+                productId: item.id,
+                region: selectedTicketRegion
+            })
+            if (process.env.NEXT_PUBLIC_WV_IDAX_CODE_URL) {
+                window.location.href = process.env.NEXT_PUBLIC_WV_IDAX_CODE_URL as string
             }
         } else {
             router.push(`/payment?productId=${item.id}${selectedTicketRegion ? `&region=${selectedTicketRegion}` : ''}`)

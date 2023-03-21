@@ -81,6 +81,12 @@ export default function ProductDetailFeature({
         if (authSession !== 'idax-wv') {
             return
         }
+        if (!region && (item.type === 'ticket')) {
+            toast('Region not found', {
+                type: 'error'
+            })
+            return
+        }
         (async () => {
             const r = await callCreateIdaxInvoice({
                 productId: item.id,

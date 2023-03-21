@@ -32,7 +32,6 @@ export default function ProductDetailFeature({
     const [isModelExpanded, setIsModelExpanded] = useState(false)
     const { data: usdToArdx } = useUsdToArdxRateQuery()
     const [selectedTicketRegion, setSelectedTicketRegion] = useState<string>()
-    const [callCreateIdaxInvoice, { isLoading: isIdaxInvoiceLoading }] = useCreateIdaxInvoiceMutation()
 
     const authSession = useAppSelector(state => state.auth.session)
 
@@ -57,52 +56,6 @@ export default function ProductDetailFeature({
     const isGlb = useMemo(() => {
         return item?.coverUrl?.replace('\n', '')?.endsWith('.glb')
     }, [item.coverUrl])
-
-    // IDAX Purchase Effect
-    useEffect(() => {
-        if (!router.isReady) {
-            return
-        }
-        const idaxUserCode = router.query.idaxUserCode as string | undefined
-        const action = router.query.action as string | undefined
-        const region = router.query.region as string | undefined
-        if (action !== 'idaxPurchase') {
-            return
-        }
-        if (!idaxUserCode) {
-            return
-        }
-        if (!idaxAuth?.id || !idaxUserCode) {
-            return
-        }
-        if (!accountId) {
-            return
-        }
-        if (authSession !== 'idax-wv') {
-            return
-        }
-        if (!region && (item.type === 'ticket')) {
-            toast('Region not found', {
-                type: 'error'
-            })
-            return
-        }
-        (async () => {
-            const r = await callCreateIdaxInvoice({
-                productId: item.id,
-                accountId,
-                email: email!,
-                type: 'single',
-                region: region,
-                amount: 1,
-                idaxUserId: `${idaxAuth?.id}`,
-                idaxUserCode: idaxUserCode
-            }).unwrap()
-            if (r.result) {
-                window.location.href = r.result.response.url
-            }
-        })()
-    }, [authSession, accountId, isLoggedIn, idaxAuth, router.isReady])
 
     const handlePurchase = async () => {
         if (!selectedTicketRegion && item.type === 'ticket') {
@@ -327,7 +280,7 @@ export default function ProductDetailFeature({
                                                 </div>) : <></>}
                                             <div className="flex w-full mt-4">
                                                 <div className="flex flex-grow">
-                                                    <button onClick={handlePurchase} className={classNames("btn btn-primary rounded-lg btn-block ", { 'bg-black bg-opacity-[0.2] text-black text-opacity-[0.2] hover:bg-black hover:bg-opacity-[0.2]': !selectedTicketRegion && item.type === 'ticket', 'loading': isIdaxInvoiceLoading })}>Purchase $({formatPrice(item.price)})</button>
+                                                    <button onClick={handlePurchase} className={classNames("btn btn-primary rounded-lg btn-block ", { 'bg-black bg-opacity-[0.2] text-black text-opacity-[0.2] hover:bg-black hover:bg-opacity-[0.2]': !selectedTicketRegion && item.type === 'ticket' })}>Purchase $({formatPrice(item.price)})</button>
                                                 </div>
                                                 <div className="flex ml-2">
                                                     <div className="btn bg-black bg-opacity-[0.2] btn-disabled rounded-lg">

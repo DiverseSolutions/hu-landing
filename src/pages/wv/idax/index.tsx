@@ -1,5 +1,6 @@
 import { retrieveBundle, retrieveProduct } from '@/lib/wv/idax/persistence'
 import { useAppSelector } from '@/store/hooks'
+import { useCreateIdaxInvoiceMutation } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { ClipLoader } from 'react-spinners'
@@ -10,29 +11,90 @@ function WebViewIdax({ }: Props) {
 
     const router = useRouter()
     const [pageError, setPageError] = useState<string>()
+    const [callCreateIdaxInvoice] = useCreateIdaxInvoiceMutation()
     const isLoading = !pageError
+    const accountId = useAppSelector(state => state.auth.ardArt.accountId)
+    const email = useAppSelector(state => state.auth.profile.email)
+    const idaxUserId = useAppSelector(state => state.auth.idax?.id)
 
     useEffect(() => {
         if (!router.isReady) {
             return
         }
+        if (!accountId) {
+            return
+        }
         const idaxUserCode = router.query.code as string | undefined
         if (!idaxUserCode) {
-            router.push('/')
+            setPageError("IDAX User code not found")
+            return
+        }
+        if (!idaxUserId) {
             return
         }
         const product = retrieveProduct()
         if (product) {
-            router.push(`/product/?id=${product.productId}&action=idaxPurchase&idaxUserCode=${idaxUserCode}${product.region ? `&region=${product.region}` : ''}`)
+            handlePurchaseProduct({
+                id: product.productId,
+                region: product.region || undefined,
+                idaxUserId: idaxUserId.toString(),
+                idaxUserCode,
+            })
             return
         }
         const bundle = retrieveBundle()
         if (bundle) {
-            router.push(`/bundle/?id=${bundle.bundleId}&region=${bundle.region}&action=idaxPurchase&idaxUserCode=${idaxUserCode}`)
+            handlePurchaseBundle({
+                id: bundle.bundleId,
+                region: bundle.region,
+                idaxUserId: idaxUserId.toString(),
+                idaxUserCode
+            })
             return
         }
-        router.push('/')
-    }, [router.isReady])
+    }, [router.isReady, accountId, email, idaxUserId])
+
+    const handlePurchaseProduct = async (d: {
+        id: number,
+        region?: string,
+        idaxUserId: string,
+        idaxUserCode: string
+    }) => {
+        const r = await callCreateIdaxInvoice({
+            productId: d.id,
+            accountId,
+            email: email!,
+            type: 'single',
+            region: d.region,
+            amount: 1,
+            idaxUserId: d.idaxUserId,
+            idaxUserCode: d.idaxUserCode
+        }).unwrap()
+        if (r.result) {
+            window.location.href = r.result.response.url
+        }
+    }
+
+    const handlePurchaseBundle = async (d: {
+        id: number,
+        region: string,
+        idaxUserId: string,
+        idaxUserCode: string
+    }) => {
+        const r = await callCreateIdaxInvoice({
+            bundleId: d.id,
+            accountId: accountId,
+            email: email!,
+            type: 'bundle',
+            region: d.region,
+            amount: 1,
+            idaxUserId: d.idaxUserId,
+            idaxUserCode: d.idaxUserCode
+        }).unwrap()
+        if (r.result) {
+            window.location.href = r.result.response.url
+        }
+    }
 
     if (pageError) {
         return (

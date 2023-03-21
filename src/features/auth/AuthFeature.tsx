@@ -136,7 +136,7 @@ export default function AuthFeature({
                 },
                 profile: {
                     email: cognitoUserResp.UserAttributes.find((a) => a.Name === 'email')!.Value,
-                    username: idaxUserData ? idaxUserData.id.toString() : cognitoUserResp.Username,
+                    username: cognitoUserResp.Username,
                 },
                 ...(idaxUserData ? {
                     idax: {

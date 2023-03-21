@@ -34,7 +34,6 @@ function BundleDetailFeature({
     coupon
 }: Props) {
 
-    const [couponCode, setCouponCode] = useState<string>()
     const [isDescSeeMore, setIsDescSeeMore] = useState(false)
     const [activeCategory, setActiveCategory] = useState<CategoryItemType[]>([])
     const [isModelExpanded, setIsModelExpanded] = useState(false)
@@ -51,8 +50,6 @@ function BundleDetailFeature({
 
     const { data: usdArdx } = useUsdToArdxRateQuery()
 
-    const [callCreateIdaxInvoice, { isLoading: isIdaxInvoiceLoading }] = useCreateIdaxInvoiceMutation()
-
     const isGlb = useMemo(() => {
         return bundle.coverUrl?.endsWith('.glb')
     }, [bundle.coverUrl])
@@ -63,52 +60,6 @@ function BundleDetailFeature({
         }
         return bundle.items.filter((i) => activeCategory.find((a) => a.id === i.product.category || a.id === i.product.tag || a.id === i.product.category))
     }, [bundle.items, activeCategory])
-
-    // IDAX Purchase Effect
-    useEffect(() => {
-        if (!router.isReady) {
-            return
-        }
-        const idaxUserCode = router.query.idaxUserCode as string | undefined
-        const action = router.query.action as string | undefined
-        const region = router.query.region as string
-        if (action !== 'idaxPurchase') {
-            return
-        }
-        if (!idaxUserCode) {
-            return
-        }
-        if (!idaxAuth?.id || !idaxUserCode) {
-            return
-        }
-        if (!accountId) {
-            return
-        }
-        if (authSession !== 'idax-wv') {
-            return
-        }
-        if (!region) {
-            toast('Region not found', {
-                type: 'error'
-            })
-            return
-        }
-        (async () => {
-            const r = await callCreateIdaxInvoice({
-                bundleId: bundle.id,
-                accountId: accountId,
-                email: email!,
-                type: 'bundle',
-                region: region,
-                amount: 1,
-                idaxUserId: idaxAuth.id.toString(),
-                idaxUserCode: idaxUserCode
-            }).unwrap()
-            if (r.result) {
-                window.location.href = r.result.response.url
-            }
-        })()
-    }, [authSession, accountId, isLoggedIn, idaxAuth, router.isReady])
 
     const handlePurchase = async () => {
         if (!selectedRegion) {
@@ -300,7 +251,7 @@ function BundleDetailFeature({
                                             <div className="flex flex-grow">
                                                 {coupon ?
                                                     (<button onClick={handleCoupon} className={classNames("btn btn-primary rounded-xl btn-block", { 'bg-black bg-opacity-[0.2] text-black text-opacity-[0.2] hover:bg-black hover:bg-opacity-[0.2]': !selectedRegion, 'loading': isUseCouponLoading })}>Purchase Using Coupon Code</button>) : (
-                                                        <button onClick={handlePurchase} className={classNames("btn btn-primary rounded-xl btn-block", { 'bg-black bg-opacity-[0.2] text-black text-opacity-[0.2] hover:bg-black hover:bg-opacity-[0.2]': !selectedRegion, 'loading': isIdaxInvoiceLoading })}>{`Purchase ($${formatPrice(bundle.price)})`}</button>
+                                                        <button onClick={handlePurchase} className={classNames("btn btn-primary rounded-xl btn-block", { 'bg-black bg-opacity-[0.2] text-black text-opacity-[0.2] hover:bg-black hover:bg-opacity-[0.2]': !selectedRegion })}>{`Purchase ($${formatPrice(bundle.price)})`}</button>
                                                     )}
                                             </div>
                                             <div className="flex ml-2">

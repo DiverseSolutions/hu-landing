@@ -21,7 +21,7 @@ import { formatPrice } from '@/lib/utils';
 
 type MongolianBank = QPayBank
 
-type PaymentType = 'card' | 'socialpay' | 'ardapp' | 'socialpay' | 'mongolian-banks'
+type PaymentType = 'card' | 'socialpay' | 'ardapp' | 'socialpay' | 'mongolian-banks' | 'idax'
 
 
 type Props = {
@@ -155,6 +155,9 @@ function PaymentStatusCard({ invoice: invoiceData, checkInvoice, priceToUsdrate,
 
                                         }} icon={<Image src={SocialPayImg} width={32} height={32} alt="Social Pay" />}
                                             name="Social Pay" active={selected === 'socialpay'} />
+                                    ) : (<></>)}
+                                    {selected === 'idax' ? (
+                                        <PaymentTypeCard onClick={() => { }} icon={<></>} name="IDAX" active={selected === 'idax'} />
                                     ) : (<></>)}
                                 </div>
                             </div>

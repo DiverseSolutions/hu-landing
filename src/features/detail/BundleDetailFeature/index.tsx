@@ -119,7 +119,7 @@ function BundleDetailFeature({
         }
         if (!isLoggedIn || !accountId) {
             dispatch(showAuthModal({
-                type: authSession === 'web' ? 'login' : 'register'
+                type: authSession === 'idax-wv' ? 'register' : 'login'
             }))
             return;
         }

@@ -72,12 +72,6 @@ function BundleDetailFeature({
         const idaxUserCode = router.query.idaxUserCode as string | undefined
         const action = router.query.action as string | undefined
         const region = router.query.region as string
-        if (!region) {
-            toast('Region not found', {
-                type: 'error'
-            })
-            return
-        }
         if (action !== 'idaxPurchase') {
             return
         }
@@ -91,6 +85,12 @@ function BundleDetailFeature({
             return
         }
         if (authSession !== 'idax-wv') {
+            return
+        }
+        if (!region) {
+            toast('Region not found', {
+                type: 'error'
+            })
             return
         }
         (async () => {

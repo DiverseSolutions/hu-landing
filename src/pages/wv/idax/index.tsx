@@ -92,32 +92,32 @@ function WebViewIdax({ }: Props) {
             idaxUserCode: d.idaxUserCode
         }).unwrap()
         if (r.result) {
-            window.location.href = r.result.response.url
+            window.location.replace(r.result.response.url)
         }
     }
 
     if (pageError) {
         return (
-            <div className="w-full h-screen overflow-hidden bg-black">
+            <div className="w-full h-screen overflow-hidden bg-white">
                 <div className="flex items-center justify-center w-full h-full">
-                    <p className="text-white">{pageError}</p>
+                    <p className="text-black text-opacity-[0.93]">{pageError}</p>
                 </div>
             </div>
         )
     }
     if (isLoading) {
         return (
-            <div className="w-full h-screen overflow-hidden bg-black">
+            <div className="w-full h-screen overflow-hidden bg-white">
                 <div className="flex items-center justify-center w-full h-full">
-                    <ClipLoader color='white' />
+                    <ClipLoader color='black' />
                 </div>
             </div>
         )
     }
     return (
-        <div className="w-full h-screen overflow-hidden bg-black">
+        <div className="w-full h-screen overflow-hidden bg-white">
             <div className="flex items-center justify-center w-full h-full">
-                <p className="text-white">An unknown error occured. Please try reload the page.</p>
+                <p className="text-black">An unknown error occured. Please try reload the page.</p>
             </div>
         </div>
     )

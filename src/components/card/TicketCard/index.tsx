@@ -1,10 +1,13 @@
 import { CATEGORY_COLORS } from '@/lib/consts';
+import { getIdaxCookie } from '@/lib/cookie';
 import { formatPrice } from '@/lib/utils';
+import { useAppSelector } from '@/store/hooks';
 import { useUsdToArdxRateQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api';
 import classNames from 'classnames';
 import { useRouter } from 'next/router';
 import React from 'react'
 import { ClipLoader } from 'react-spinners';
+import { toast } from 'react-toastify';
 
 type Props = {
     ticket: {
@@ -25,8 +28,19 @@ function TicketCard({ ticket }: Props) {
     const router = useRouter()
     const { data: usdToArdx } = useUsdToArdxRateQuery()
 
+    const authSession = useAppSelector(state => state.auth.session)
+
     return (
         <div onClick={() => {
+            if (authSession === 'idax-wv') {
+                const { idaxExToken } = getIdaxCookie()
+                if (!idaxExToken) {
+                    toast('Please Log In to your IDAX Account', {
+                        type: 'info'
+                    })
+                    return
+                }
+            }
             if (ticket.level !== undefined) {
                 router.push(`/bundle?id=${ticket.id}`)
             } else {

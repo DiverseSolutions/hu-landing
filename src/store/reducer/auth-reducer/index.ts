@@ -1,6 +1,6 @@
 import { clearAuthcookie, clearIdaxCookie, storeAuthCookie } from "@/lib/cookie";
 import { createSlice } from "@reduxjs/toolkit"
-import { authNotLoggedIn, authSuccess, hideAuthModal, logoutSuccess, sessionExpired, sessionRestored, showAuthModal, AuthModalType } from "./actions"
+import { authNotLoggedIn, authSuccess, hideAuthModal, logoutSuccess, sessionExpired, sessionRestored, showAuthModal, AuthModalType, authSession } from "./actions"
 import { AuthSessionType } from './actions'
 
 type AuthState = {
@@ -49,6 +49,9 @@ const authSlice = createSlice({
         builder.addCase(authNotLoggedIn, (state, action) => {
             state.isLoggedIn = false;
             state.isLoading = false;
+        })
+        builder.addCase(authSession, (state, action) => {
+            state.session = action.payload.session;
         })
         builder.addCase(authSuccess, (state, { payload }) => {
             state.session = payload.session

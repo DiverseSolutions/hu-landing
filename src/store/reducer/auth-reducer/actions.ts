@@ -35,6 +35,10 @@ export const authSuccess = createAction<{
     }
 }>("AUTH_SUCCESS")
 
+export const authSession = createAction<{
+    session: AuthSessionType
+}>("AUTH_SESSION")
+
 export const sessionRestored = createAction<{
     session: AuthSessionType,
     ardArt?: {

@@ -7,7 +7,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { MdClose } from 'react-icons/md'
 import Cookies from 'js-cookie'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
-import { authNotLoggedIn, hideAuthModal, sessionRestored } from '@/store/reducer/auth-reducer/actions'
+import { authNotLoggedIn, authSession, hideAuthModal, sessionRestored } from '@/store/reducer/auth-reducer/actions'
 import { useLazyGetUserQuery } from '@/store/rtk-query/cognito/cognito-api'
 import { useLazyIdaxUserInfoQuery } from '@/store/rtk-query/idax/idax-api'
 import { useRouter } from 'next/router'
@@ -91,6 +91,15 @@ export default function AuthFeature({
     })
 
     const syncSession = async () => {
+        if (location.hostname === 'hu.idax.exchange') {
+            dispatch(authSession({
+                session: 'idax-wv'
+            }))
+        } else {
+            dispatch(authSession({
+                session: 'web'
+            }))
+        }
         let idaxUserData: IdaxUserData | null = null
         const {
             idaxExToken,

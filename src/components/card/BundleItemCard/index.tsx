@@ -5,6 +5,9 @@ import { useRouter } from 'next/router';
 import React from 'react'
 import HeartSvg from './img/heart.svg'
 import { ClipLoader } from 'react-spinners';
+import { useAppSelector } from '@/store/hooks';
+import { getIdaxCookie } from '@/lib/cookie';
+import { toast } from 'react-toastify';
 
 type Props = {
     item: ArdArtBundleDetailItem;
@@ -15,9 +18,20 @@ function BundleItemCard({ item }: Props) {
     const { data: usdToArdx } = useUsdToArdxRateQuery()
     const router = useRouter()
 
+    const authSession = useAppSelector(state => state.auth.session)
+
     return (
         <>
             <div onClick={() => {
+                if (authSession === 'idax-wv') {
+                    const { idaxExToken } = getIdaxCookie()
+                    if (!idaxExToken) {
+                        toast('Please Log In to your IDAX Account', {
+                            type: 'info'
+                        })
+                        return
+                    }
+                }
                 if (item.product.price) {
                     router.push(`/product?id=${item.productId}`)
                 }

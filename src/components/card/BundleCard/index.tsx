@@ -1,11 +1,14 @@
 import { CATEGORY_COLORS } from '@/lib/consts';
+import { getIdaxCookie } from '@/lib/cookie';
 import { formatPrice } from '@/lib/utils';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { useUsdToArdxRateQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api';
 import { ArdArtBundleRecord } from '@/store/rtk-query/hux-ard-art/types';
 import classNames from 'classnames';
 import { useRouter } from 'next/router';
 import React from 'react'
 import { ClipLoader } from 'react-spinners';
+import { toast } from 'react-toastify';
 
 type Props = {
     bundle: ArdArtBundleRecord
@@ -16,9 +19,20 @@ function BundleCard({ bundle }: Props) {
     const router = useRouter()
     const { data: usdToArdx } = useUsdToArdxRateQuery()
 
+    const authSession = useAppSelector(state => state.auth.session)
+
     return (
         <>
             <div onClick={() => {
+                if (authSession === 'idax-wv') {
+                    const { idaxExToken } = getIdaxCookie()
+                    if (!idaxExToken) {
+                        toast('Please Log In to your IDAX Account', {
+                            type: 'info'
+                        })
+                        return
+                    }
+                }
                 router.push(`/bundle?id=${bundle.id}`)
             }} className='relative w-full p-0 cursor-pointer card'>
                 <div className="p-0 card-body">

@@ -1,10 +1,13 @@
 import { CATEGORY_COLORS } from '@/lib/consts';
+import { getIdaxCookie } from '@/lib/cookie';
 import { formatPrice } from '@/lib/utils';
+import { useAppSelector } from '@/store/hooks';
 import { useUsdToArdxRateQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api';
 import { ArdArtTicketOrAssetRecord } from '@/store/rtk-query/hux-ard-art/types';
 import { useRouter } from 'next/router';
 import React from 'react'
 import { ClipLoader } from 'react-spinners';
+import { toast } from 'react-toastify';
 
 type Props = {
     item: ArdArtTicketOrAssetRecord;
@@ -15,9 +18,20 @@ function ItemCard({ item }: Props) {
     const { data: usdToArdx } = useUsdToArdxRateQuery()
     const router = useRouter()
 
+    const authSession = useAppSelector(state => state.auth.session)
+
     return (
         <>
             <div onClick={() => {
+                if (authSession === 'idax-wv') {
+                    const { idaxExToken } = getIdaxCookie()
+                    if (!idaxExToken) {
+                        toast('Please Log In to your IDAX Account', {
+                            type: 'info'
+                        })
+                        return
+                    }
+                }
                 if (item.price) {
                     router.push(`/product?id=${item.id}`)
                 }

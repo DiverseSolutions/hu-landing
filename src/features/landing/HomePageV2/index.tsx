@@ -7,12 +7,15 @@ import DesktopBehindNavbar from '@/components/layout/DesktopBehindNavbar'
 import BackgroundVideo from './components/BackgroundVideo'
 import PurchaseSpecialSection from './components/PurchaseSpecialSection'
 import { useRouter } from 'next/router'
+import { useAppDispatch } from '@/store/hooks'
+import { authSession } from '@/store/reducer/auth-reducer/actions'
 
 type Props = {}
 
 function HomePageV2({ }: Props) {
 
     const router = useRouter()
+    const dispatch = useAppDispatch()
 
     useEffect(() => {
         if (!router.isReady) {
@@ -20,6 +23,15 @@ function HomePageV2({ }: Props) {
         }
         if (router.asPath.startsWith('/payment-status')) {
             router.replace(router.asPath)
+        }
+        if (location.hostname === 'hu.idax.exchange') {
+            dispatch(authSession({
+                session: 'idax-wv'
+            }))
+        } else {
+            dispatch(authSession({
+                session: 'web'
+            }))
         }
     }, [router.isReady])
 

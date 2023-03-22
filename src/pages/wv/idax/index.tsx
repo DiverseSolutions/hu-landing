@@ -71,7 +71,7 @@ function WebViewIdax({ }: Props) {
             idaxUserCode: d.idaxUserCode
         }).unwrap()
         if (r.result) {
-            window.location.href = r.result.response.url
+            window.location.replace(r.result.response.url)
         }
     }
 

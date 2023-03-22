@@ -41,7 +41,7 @@ export const clearAuthcookie = () => {
 export const getArdArdAccessToken = () => Cookies.get('ardArtAccessToken')
 
 export const getIdaxCookie = () => {
-    const idaxExToken = Cookies.get('ex_token') || Cookies.get('token')
+    const idaxExToken = Cookies.get('exchange-token') || Cookies.get('ex_token') || Cookies.get('token')
     const idaxUserCode = Cookies.get('idax_user_code')
     return {
         idaxExToken,
@@ -57,6 +57,7 @@ export const storeIdaxCookie = (d: {
 
 export const clearIdaxCookie = () => {
     Cookies.remove('ex_token')
+    Cookies.remove('exchange-token')
     Cookies.remove('token')
     Cookies.remove('idax_user_code')
 }

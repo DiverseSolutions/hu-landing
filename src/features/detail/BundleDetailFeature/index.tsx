@@ -70,7 +70,7 @@ function BundleDetailFeature({
         }
         if (!isLoggedIn || !accountId) {
             dispatch(showAuthModal({
-                type: authSession === 'idax-wv' ? 'register' : 'login'
+                type: 'login'
             }))
             return;
         }

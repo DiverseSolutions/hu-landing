@@ -104,6 +104,7 @@ function BundleDetailFeature({
             const r = await callUseCoupon({
                 code: coupon.code,
                 bundleId: bundle.id,
+                type: 'bundle',
                 region: selectedRegion,
                 accountId,
                 email: email!

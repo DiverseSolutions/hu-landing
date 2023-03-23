@@ -76,8 +76,8 @@ function CouponModal({ }: Props) {
                         ) : (<></>)}
                         {coupon && formType === 'result' ? (
                             <div className="mt-6 space-y-2">
-                                {coupon.records.map((item) => (
-                                    <div key={item.id} onClick={() => {
+                                {coupon.bundles.map((item) => (
+                                    <div key={`bundle-${item.id}`} onClick={() => {
                                         handleClose()
                                         router.push(`/bundle?id=${item.id}&coupon=${couponCode}`)
                                     }} className="flex cursor-pointer items-start rounded-xl border p-2 border-black border-opacity-[0.1]">
@@ -95,7 +95,26 @@ function CouponModal({ }: Props) {
                                         </div>
                                     </div>
                                 ))}
-                                <div className="mt-6">
+                                {coupon.products.map((item) => (
+                                    <div key={`product-${item.id}`} onClick={() => {
+                                        handleClose()
+                                        router.push(`/product?id=${item.id}&coupon=${couponCode}`)
+                                    }} className="flex cursor-pointer items-start rounded-xl border p-2 border-black border-opacity-[0.1]">
+                                        <img src={item.imageUrl} className="w-[72px] h-auto object-cover rounded-lg" />
+                                        <div className="flex flex-col ml-4">
+                                            <p className='text-opacity-[0.65] text-black text-xs font-light'>Powered by Ard & Metaforce</p>
+                                            <p className='text-base font-light text-black text-opacity-[0.93]'>{item.name}</p>
+                                            <div className="mt-2">
+                                                <span className="text-base font-bold">${formatPrice(item.price)}</span>
+                                                {!usdArdx ? (<ClipLoader size={12} />) : (
+                                                    <span className="ml-[6px] text-xs py-1 px-2 font-light bg-black bg-opacity-[0.04] rounded-sm">
+                                                        {formatPrice(item.price * usdArdx)} ARDX
+                                                    </span>)}
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                                <div className="pt-8">
                                     <button onClick={handleClose} className="w-full text-base btn btn-black rounded-xl">Close</button>
                                 </div>
                             </div>

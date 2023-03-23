@@ -36,29 +36,29 @@ function Navbar({ }: Props) {
                         </Link>
                         <ul className="px-1 ml-8 text-sm font-light menu menu-horizontal">
                             <li>
-                                <a target="_blank" className='text-black hover:bg-transparent text-base font-bold text-opacity-[0.35] hover:text-opacity-[1]' href="https://ardcoin.com" rel="noreferrer">
+                                <a target="_blank" className='text-black focus:bg-transparent focus:text-opacity-[0.93] hover:bg-transparent text-base font-bold text-opacity-[0.35] hover:text-opacity-[1]' href="https://ardcoin.com" rel="noreferrer">
                                     ArdCoin
                                 </a>
                             </li>
                             <li>
-                                <a target="_blank" className='text-black hover:bg-transparent text-base font-bold text-opacity-[0.35] hover:text-opacity-[1]' href="https://www.thehuofficial.com/merch-1" rel="noreferrer">
+                                <a target="_blank" className='text-black focus:bg-transparent focus:text-opacity-[0.93] hover:bg-transparent text-base font-bold text-opacity-[0.35] hover:text-opacity-[1]' href="https://www.thehuofficial.com/merch-1" rel="noreferrer">
                                     HU Official Merch
                                 </a>
                             </li>
                             <li>
-                                <a target="_blank" className='text-black hover:bg-transparent text-base font-bold text-opacity-[0.35] hover:text-opacity-[1]' href="https://metaland.mn" rel="noreferrer">
+                                <a target="_blank" className='text-black focus:bg-transparent focus:text-opacity-[0.93] hover:bg-transparent text-base font-bold text-opacity-[0.35] hover:text-opacity-[1]' href="https://metaland.mn" rel="noreferrer">
                                     Metaland
                                 </a>
                             </li>
                             <li>
-                                <Link className='text-black hover:bg-transparent text-base font-bold text-opacity-[0.35] hover:text-opacity-[1]' href="/help" rel="noreferrer">
+                                <Link className='text-black hover:bg-transparent focus:bg-transparent focus:text-opacity-[0.93] text-base font-bold text-opacity-[0.35] hover:text-opacity-[1]' href="/help" rel="noreferrer">
                                     Help Center
                                 </Link>
                             </li>
                             <li>
                                 <span onClick={() => {
                                     document.getElementById('coupon-modal')?.click()
-                                }} className='text-black hover:bg-transparent text-base font-bold text-opacity-[0.35] hover:text-opacity-[1]'>
+                                }} className='text-black hover:bg-transparent focus:bg-transparent focus:text-opacity-[0.93] text-base font-bold text-opacity-[0.35] hover:text-opacity-[1]'>
                                     Use Coupon Code
                                 </span>
                             </li>

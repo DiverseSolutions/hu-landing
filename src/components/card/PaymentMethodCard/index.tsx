@@ -36,7 +36,7 @@ type Props = {
     region?: string,
 }
 
-type PaymentType = 'card' | 'socialpay' | 'ardapp' | 'socialpay' | 'mongolian-banks'
+type PaymentType = 'card' | 'socialpay' | 'ardapp' | 'socialpay' | 'mongolian-banks' | 'idax'
 
 type PromoCodeFormData = {
     promo: string;
@@ -249,7 +249,7 @@ function PaymentMethodCard({ item, priceToUsdrate, region, ...props }: Props) {
     }
 
     return (
-        <div className="md:shadow-xl card shadow-none max-w-[90vw] w-[464px] bg-base-100 text-[14px]">
+        <div className="md:shadow-xl md:mt-[100px] mt-[200px] card shadow-none max-w-[90vw] w-[464px] bg-base-100 text-[14px]">
             <div className="card-body mw-md:p-0">
                 <div>
                     <MdChevronLeft className='cursor-pointer' size={24} color="black" onClick={() => {
@@ -299,6 +299,12 @@ function PaymentMethodCard({ item, priceToUsdrate, region, ...props }: Props) {
                         <div className="mt-4">
                             <PaymentTypeCard onClick={() => setSelected('ardapp')} icon={<Image src={ArdImg} width={32} height={32} alt="Ard" />}
                                 name="Ard App (available with ARDX)" active={selected === 'ardapp'} />
+                        </div>
+                        <div className="mt-4">
+                            <PaymentTypeCard onClick={() => {
+                                window.location.href = 'https://hu.idax.exchange'
+                            }} icon={<Image src={ArdImg} width={32} height={32} alt="Ard" />}
+                                name="IDAX (available with ARDX)" active={selected === 'idax'} />
                         </div>
                         <div className="mt-4">
                             <PaymentTypeCard onClick={() => setSelected('card')} icon={<VisaSvg />} name="Credit & Debit Card" active={selected === 'card'} />

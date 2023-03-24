@@ -275,9 +275,11 @@ export const huxArdArtApi = createApi({
             })
         }),
         useCoupon: builder.mutation<ArdArtResponse<{}>, {
-            bundleId: number,
+            bundleId?: number,
+            productId?: number,
+            type: 'single' | 'bundle',
             email: string,
-            region: string,
+            region?: string,
             accountId: number,
             code: string,
         }>({

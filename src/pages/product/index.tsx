@@ -2,7 +2,7 @@ import Navbar from '@/components/Navbar'
 import ProductDetailFeature from '@/features/product/ProductDetailFeature'
 import { useAppDispatch } from '@/store/hooks'
 import { pageError } from '@/store/reducer/error-reducer/actions'
-import { useAssetDetailQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
+import { useAssetDetailQuery, useLazyAssetDetailQuery, useLazyBundleDetailQuery, useLazyCheckCouponQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
 import { useRouter } from 'next/router'
 import React, { useState, useEffect, useMemo } from 'react'
 import { ClipLoader } from 'react-spinners'
@@ -13,17 +13,11 @@ type Props = {
 function ProductPage({ }: Props) {
 
     const router = useRouter()
-    const [productId, setProductId] = useState<number>()
     const dispatch = useAppDispatch()
-    const { data: itemData } = useAssetDetailQuery({
-        id: productId!
-    }, {
-        skip: !productId
-    })
-
-    const isLoading = useMemo(() => {
-        return !itemData
-    }, [itemData])
+    const [isLoading, setIsLoading] = useState(false)
+    const [callAsset, { data: itemData }] = useLazyAssetDetailQuery()
+    const [callCoupon, { data: couponData }] = useLazyCheckCouponQuery()
+    const [couponCode, setCouponCode] = useState<string>()
 
     useEffect(() => {
         if (!router.isReady) {
@@ -32,7 +26,28 @@ function ProductPage({ }: Props) {
         if (!router.query.id) {
             dispatch(pageError({ message: "Product not found" }))
         }
-        setProductId(parseInt(`${router.query.id}`))
+        const productId = parseInt(`${router.query.id}`)
+        if (!productId) {
+            dispatch(pageError({
+                message: `Product ID not found.`
+            }))
+            return;
+        }
+        (async () => {
+            setIsLoading(true)
+            await callAsset({
+                id: productId,
+            })
+
+            const coupon = router.query.coupon as string | undefined
+            if (coupon) {
+                setCouponCode(coupon)
+                await callCoupon({
+                    code: coupon,
+                })
+            }
+            setIsLoading(false)
+        })()
     }, [router.isReady])
 
     if (isLoading) {
@@ -51,7 +66,12 @@ function ProductPage({ }: Props) {
         return (
             <>
                 <div>
-                    <ProductDetailFeature item={itemData?.result} />
+                    <ProductDetailFeature
+                        item={itemData?.result}
+                        coupon={couponData?.result && couponCode ? {
+                            coupon: couponData.result,
+                            code: couponCode,
+                        } : undefined} />
                 </div>
             </>
         )

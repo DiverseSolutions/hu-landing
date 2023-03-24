@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { showAuthModal } from '@/store/reducer/auth-reducer/actions';
-import { useArdxUsdRateQuery, useAssetDetailEarlyQuery, useCreateIdaxInvoiceMutation, useLazyArdxUsdRateQuery, useLazyMonxanshRateQuery, useUsdToArdxRateQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api';
-import { ArdArtAssetDetailResult } from '@/store/rtk-query/hux-ard-art/types';
+import { useArdxUsdRateQuery, useAssetDetailEarlyQuery, useCreateIdaxInvoiceMutation, useLazyArdxUsdRateQuery, useLazyMonxanshRateQuery, useUsdToArdxRateQuery, useUseCouponMutation } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api';
+import { ArdArtAssetDetailResult, ArdArtCheckCouponResult } from '@/store/rtk-query/hux-ard-art/types';
 import { MdClose, MdOutlineLocationOn } from 'react-icons/md'
 import WarningSvg from './img/warning.svg'
 
@@ -23,16 +23,22 @@ import * as idaxWvPersistence from '@/lib/wv/idax/persistence'
 
 type Props = {
     item: ArdArtAssetDetailResult,
+    coupon?: {
+        coupon: ArdArtCheckCouponResult,
+        code: string
+    } | undefined,
 }
 
 export default function ProductDetailFeature({
     item,
+    coupon
 }: Props) {
 
     const [isModelExpanded, setIsModelExpanded] = useState(false)
     const { data: usdToArdx } = useUsdToArdxRateQuery()
     const [selectedTicketRegion, setSelectedTicketRegion] = useState<string>()
 
+    const [callUseCoupon, { isLoading: isUseCouponLoading }] = useUseCouponMutation()
     const authSession = useAppSelector(state => state.auth.session)
 
     const [isVideoLoading, setIsVideoLoading] = useState(false)
@@ -82,6 +88,37 @@ export default function ProductDetailFeature({
             }
         } else {
             router.push(`/payment?productId=${item.id}${selectedTicketRegion ? `&region=${selectedTicketRegion}` : ''}`)
+        }
+    }
+
+    const handleCoupon = async () => {
+        if (!selectedTicketRegion && item.type === 'ticket') {
+            toast('Please select your ticket timezone', {
+                type: 'warning'
+            })
+            return
+        }
+        if (!isLoggedIn || !accountId) {
+            dispatch(showAuthModal({
+                type: 'login'
+            }))
+            return;
+        }
+        if (coupon) {
+            const r = await callUseCoupon({
+                type: 'single',
+                code: coupon.code,
+                productId: item.id,
+                region: selectedTicketRegion,
+                accountId,
+                email: email!
+            }).unwrap()
+            if (r.result) {
+                toast(`Purchase Successful`, {
+                    type: 'success'
+                })
+                router.push('/profile')
+            }
         }
     }
 
@@ -280,7 +317,9 @@ export default function ProductDetailFeature({
                                                 </div>) : <></>}
                                             <div className="flex w-full mt-4">
                                                 <div className="flex flex-grow">
-                                                    <button onClick={handlePurchase} className={classNames("btn btn-primary rounded-lg btn-block ", { 'bg-black bg-opacity-[0.2] text-black text-opacity-[0.2] hover:bg-black hover:bg-opacity-[0.2]': !selectedTicketRegion && item.type === 'ticket' })}>Purchase $({formatPrice(item.price)})</button>
+                                                    {coupon ? (
+                                                        <button onClick={handleCoupon} className={classNames("btn btn-primary rounded-xl btn-block", { 'bg-black bg-opacity-[0.2] text-black text-opacity-[0.2] hover:bg-black hover:bg-opacity-[0.2]': !selectedTicketRegion && item.type === 'ticket', 'loading': isUseCouponLoading })}>Purchase Using Coupon Code</button>
+                                                    ) : (<button onClick={handlePurchase} className={classNames("btn btn-primary rounded-lg btn-block ", { 'bg-black bg-opacity-[0.2] text-black text-opacity-[0.2] hover:bg-black hover:bg-opacity-[0.2]': !selectedTicketRegion && item.type === 'ticket' })}>Purchase $({formatPrice(item.price)})</button>)}
                                                 </div>
                                                 <div className="flex ml-2">
                                                     <div className="btn bg-black bg-opacity-[0.2] btn-disabled rounded-lg">

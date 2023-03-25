@@ -34,6 +34,31 @@ const systemRequirementSpecs = [
         ]
     },
     {
+        name: 'MacOS',
+        fields: [
+            {
+                name: 'Name',
+                value: <span className="font-bold text-sm opacity-[0.65]">Macbook Pro 2021</span>,
+            },
+            {
+                name: 'Processor',
+                value: <span className="font-bold text-sm opacity-[0.65] text-right">Apple M1 pro chip</span>
+            },
+            {
+                name: 'Memory',
+                value: <span className="font-bold text-sm opacity-[0.65]">16GB RAM</span>
+            },
+            {
+                name: 'OS',
+                value: <span className="font-bold text-sm opacity-[0.65]">MacOS 13 Ventura</span>
+            },
+            {
+                name: 'Storage',
+                value: <span className="font-bold text-sm opacity-[0.65]">20 GB available space</span>
+            },
+        ]
+    },
+    {
         name: 'Doesn’t meet the requirements?',
         content: `No problem, we got you covered! In our exclusive, cinematic version of the director’s cut edition you will be able to view the FULL concert from the comfort of your home or wherever you have internet access.`
     },

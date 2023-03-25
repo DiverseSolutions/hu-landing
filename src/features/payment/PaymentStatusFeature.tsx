@@ -11,7 +11,7 @@ type Props = {
     bank?: string
 }
 
-export type PaymentType = 'card' | 'socialpay' | 'ardapp' | 'socialpay' | 'mongolian-banks' | 'idax'
+export type PaymentType = 'card' | 'socialpay' | 'ardapp' | 'socialpay' | 'mongolian-banks' | 'idax' | 'paypal'
 
 function PaymentStatusFeature({ invoice, priceToUsdRate, type, ...props }: Props) {
     return (

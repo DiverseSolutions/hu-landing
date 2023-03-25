@@ -19,6 +19,8 @@ import { useAppSelector } from '@/store/hooks';
 import { useForm } from 'react-hook-form'
 import { formatPrice } from '@/lib/utils'
 
+import IdaxPaymentSvg from '@/assets/svg/idax-payment.svg'
+
 type MongolianBank = QPayBank
 
 const visibleMongolianBanks = qpayBanks.filter((qb) => qb.name !== 'Ard App')
@@ -302,8 +304,8 @@ function PaymentMethodCard({ item, priceToUsdrate, region, ...props }: Props) {
                         </div>
                         <div className="mt-4">
                             <PaymentTypeCard onClick={() => {
-                                window.location.href = 'https://hu.idax.exchange'
-                            }} icon={<Image src={ArdImg} width={32} height={32} alt="Ard" />}
+                                window.location.href = 'https://www.idax.exchange'
+                            }} icon={<Image src={'/idax-payment.svg'} width={32} height={32} alt="idax" />}
                                 name="IDAX (available with ARDX)" active={selected === 'idax'} />
                         </div>
                         <div className="mt-4">

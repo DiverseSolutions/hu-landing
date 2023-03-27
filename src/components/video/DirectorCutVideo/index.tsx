@@ -1,5 +1,5 @@
 import { useHelperLiveQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
-import React, { useMemo, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { ClipLoader } from 'react-spinners'
 import Cookies from 'js-cookie'
 import ReactPlayer from 'react-player'
@@ -9,10 +9,7 @@ type Props = {}
 function DirectorCutVideo({ }: Props) {
 
     const { isFetching: isHelperLiveFetching, data: liveData, error: liveError } = useHelperLiveQuery()
-
-    const isLoading = useMemo(() => {
-        return isHelperLiveFetching
-    }, [isHelperLiveFetching])
+    const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
         if (!isHelperLiveFetching && liveData?.result) {
@@ -23,6 +20,7 @@ function DirectorCutVideo({ }: Props) {
                     secure: c.Secure,
                 })
             })
+            setIsLoading(false)
         }
     }, [isHelperLiveFetching, liveData, liveError])
 
@@ -35,15 +33,19 @@ function DirectorCutVideo({ }: Props) {
     }
 
     if (liveData?.result) {
-        return <ReactPlayer url={liveData.result.url} config={{
-            file: {
-                hlsOptions: {
-                    xhrSetup: function (xhr: any, url: any) {
-                        xhr.withCredentials = true // send cookies
+        return <ReactPlayer
+            controls
+            playing
+            muted
+            url={liveData.result.url} config={{
+                file: {
+                    hlsOptions: {
+                        xhrSetup: function (xhr: any, url: any) {
+                            xhr.withCredentials = true // send cookies
+                        }
                     }
                 }
-            }
-        }} />
+            }} />
     }
 
     return (

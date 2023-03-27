@@ -277,7 +277,7 @@ function PaymentMethodCard({ item, priceToUsdrate, region, ...props }: Props) {
     }
 
     return (
-        <div className="md:shadow-xl md:mt-[100px] mt-[200px] card shadow-none max-w-[90vw] w-[464px] bg-base-100 text-[14px]">
+        <div className="md:shadow-xl md:mt-[100px] mt-[100px] card shadow-none max-w-[90vw] w-[464px] bg-base-100 text-[14px]">
             <div className="card-body mw-md:p-0">
                 <div>
                     <MdChevronLeft className='cursor-pointer' size={24} color="black" onClick={() => {

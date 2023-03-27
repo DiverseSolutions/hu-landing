@@ -155,7 +155,7 @@ const Payment = (props: Props) => {
     return (
         <>
             <BehindNavbar>
-                <div className="w-full h-screen overflow-y-auto">
+                <div className="w-full">
                     <div className="relative w-full h-full">
                         <div className="absolute inset-0 hidden overflow-auto md:block">
                             <div className="relative w-full h-full">
@@ -183,10 +183,10 @@ const Payment = (props: Props) => {
                                 </div>
                             </div>
                         </div>
-                        <div className="absolute inset-0 overflow-y-auto">
+                        <div className="relative pb-8">
                             {(assetData || bundleData) ? (
                                 <>
-                                    <div className="flex items-center justify-center w-full h-full">
+                                    <div className="flex justify-center w-full h-full md:items-center">
                                         <div className="flex">
                                             <InvoiceFeature isBundle={bundleData ? true : false} region={region} product={(assetData || bundleData)!} priceToUsdRate={ardxToUsdRate} />
                                         </div>

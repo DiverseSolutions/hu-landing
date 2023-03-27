@@ -1,5 +1,6 @@
 import { useHelperLiveQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
 import React, { useState, useEffect, useRef } from 'react'
+import { isSafari } from 'react-device-detect'
 import { ClipLoader } from 'react-spinners'
 import Cookies from 'js-cookie'
 import ReactPlayer from 'react-player'
@@ -64,6 +65,11 @@ function DirectorCutVideo({ }: Props) {
                     muted
                     url={liveData.result.url} config={{
                         file: {
+                            attributes: {
+                                preload: 'none',
+                            },
+                            forceHLS: !isSafari,
+                            forceVideo: true,
                             hlsOptions: {
                                 xhrSetup: function (xhr: any, url: any) {
                                     xhr.withCredentials = true

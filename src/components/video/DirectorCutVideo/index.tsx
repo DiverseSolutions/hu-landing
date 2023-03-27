@@ -25,10 +25,11 @@ function DirectorCutVideo({ }: Props) {
                 setCfPolicy(cookies.find((c) => c.Name === 'CloudFront-Policy', '')?.Value || '')
                 setCfSig(cookies.find((c) => c.Name === 'CloudFront-Signature', '')?.Value || '')
                 setCfKeyPair(cookies.find((c) => c.Name === 'CloudFront-Key-Pair-Id', '')?.Value || '')
+                const url = new URL(liveData.result.url)
                 liveData.result.cookie.forEach((c) => {
                     Cookies.remove(c.Name)
                     Cookies.set(c.Name, c.Value, {
-                        domain: c.Domain,
+                        domain: url.hostname || url.host,
                         path: c.Path
                     })
                 })

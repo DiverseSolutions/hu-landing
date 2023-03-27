@@ -67,7 +67,6 @@ function DirectorCutVideo({ }: Props) {
                             hlsOptions: {
                                 xhrSetup: function (xhr: any, url: any) {
                                     xhr.withCredentials = true
-                                    xhr.setRequestHeader('Cookie', `CloudFront-Policy=${cfPolicy}; CloudFront-Signature=${cfSig}; CloudFront-Key-Pair-Id=${cfKeyPair}`)
                                 }
                             }
                         }

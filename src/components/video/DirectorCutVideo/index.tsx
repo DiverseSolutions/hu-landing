@@ -13,15 +13,22 @@ function DirectorCutVideo({ }: Props) {
     const { isFetching: isHelperLiveFetching, data: liveData, error: liveError } = useHelperLiveQuery()
     const [isLoading, setIsLoading] = useState(true)
 
+    const [cfPolicy, setCfPolicy] = useState('')
+    const [cfSig, setCfSig] = useState('')
+    const [cfKeyPair, setCfKeyPair] = useState('')
+
     useEffect(() => {
         if (!isHelperLiveFetching && liveData?.result) {
-            console.log(liveData?.result)
-            liveData?.result?.cookie.forEach((c) => {
-                Cookies.set(c.Name, c.Value, {
-                    domain: c.Domain,
-                    secure: c.Secure,
+            if (liveData.result.cookie?.length) {
+                const cookies = liveData.result.cookie;
+                setCfPolicy(cookies.find((c) => c.Name === 'CloudFront-Policy', '')?.Value || '')
+                setCfSig(cookies.find((c) => c.Name === 'CloudFront-Signature', '')?.Value || '')
+                setCfKeyPair(cookies.find((c) => c.Name === 'CloudFront-Key-Pair-Id', '')?.Value || '')
+                liveData.result.cookie.forEach((c) => {
+                    Cookies.remove(c.Name)
+                    Cookies.set(c.Name, c.Value)
                 })
-            })
+            }
             setIsLoading(false)
         }
     }, [isHelperLiveFetching, liveData, liveError])
@@ -56,7 +63,11 @@ function DirectorCutVideo({ }: Props) {
                         file: {
                             hlsOptions: {
                                 xhrSetup: function (xhr: any, url: any) {
-                                    xhr.withCredentials = true // send cookies
+                                    xhr.withCredentials = true
+                                    xhr.setRequestHeader('cookie', `CloudFront-Policy=${cfPolicy}; CloudFront-Signature=${cfSig}; CloudFront-Key-Pair-Id=${cfKeyPair}`)
+                                    xhr.setRequestHeader('test', `val`)
+                                    console.log('xhr:')
+                                    console.log(xhr)
                                 }
                             }
                         }

@@ -16,6 +16,7 @@ import { useLazyIdaxTickerQuery } from '@/store/rtk-query/idax-openapi/idax-open
 import { PaymentType } from '@/features/payment/PaymentStatusFeature'
 import { alertVisibility } from '@/store/reducer/alert-reducer/actions'
 import BehindNavbar from '@/components/layout/BehindNavbar'
+import DesktopBehindNavbar from '@/components/layout/DesktopBehindNavbar'
 type Props = {}
 
 
@@ -169,7 +170,7 @@ const PaymentStatus = (props: Props) => {
     }
     return (
         <>
-            <BehindNavbar>
+            <DesktopBehindNavbar>
                 <div className="w-full h-screen overflow-y-auto">
                     <div className="relative w-full h-full">
                         <div className="absolute inset-0 hidden overflow-auto md:block">
@@ -201,8 +202,8 @@ const PaymentStatus = (props: Props) => {
                         <div className="absolute inset-0 overflow-y-auto">
                             {invoiceData ? (
                                 <>
-                                    <div className="flex items-center justify-center w-full h-full">
-                                        <div className="flex">
+                                    <div className="flex justify-center w-full h-full md:items-center">
+                                        <div className="flex mt-4">
                                             {paymentType ? <PaymentStatusFeature checkInvoice={checkInvoiceData} bank={bank} type={paymentType} invoice={invoiceData} priceToUsdRate={ardxToUsdRate} /> : <><p>Payment type not found.</p></>}
                                         </div>
                                     </div>
@@ -212,7 +213,7 @@ const PaymentStatus = (props: Props) => {
                         </div>
                     </div>
                 </div>
-            </BehindNavbar>
+            </DesktopBehindNavbar>
         </>
     )
 }

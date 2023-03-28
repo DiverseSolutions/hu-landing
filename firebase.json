@@ -10,6 +10,10 @@
       ],
       "rewrites": [
         {
+          "source": "/live**",
+          "destination": "/live.html"
+        },
+        {
           "source": "/privacy-policy/en**",
           "destination": "/privacy-policy/en.html"
         },
@@ -83,6 +87,10 @@
         {
           "source": "/wv/idax**",
           "destination": "/wv/idax/index.html"
+        },
+        {
+          "source": "/live**",
+          "destination": "/live.html"
         },
         {
           "source": "/help**",
@@ -166,6 +174,10 @@
         {
           "source": "/privacy-policy/en**",
           "destination": "/privacy-policy/en.html"
+        },
+        {
+          "source": "/live**",
+          "destination": "/live.html"
         },
         {
           "source": "/help**",

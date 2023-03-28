@@ -1,5 +1,5 @@
 import { ArdArtResponse } from './../ard-art/types';
-import { ArdArtBundleResponse, ArdArtBundleInvoiceResponse, ArdArtAssetDetailByIDResult, ArdArtTicketOrAssetResponse, ArdArtMyOwnedNftResponse, ArdArtCreateSocialpayInvoiceResult, ArdArtCreateQpayInvoiceResult, ArdArtCreateQposInvoiceResult, ArdArtGetInvoiceByIdResult, ArdArtCheckInvoiceResult, ArdArtAssetDetailEarlyResult, ArdArtCognitoUserDetailResult, ArdArtMyNftCountResult, ArdArtArdxUsdRateResult, ArdArtIdaxInvoiceResult, ArdArtBundleDetailResult, ArdArtAssetDetailResult, ArdArtPromoResult, ArdArtCheckPromoResult, ArdArtCheckCouponResult, ArdArtPaypalInvoiceResult } from './types';
+import { ArdArtBundleResponse, ArdArtBundleInvoiceResponse, ArdArtAssetDetailByIDResult, ArdArtTicketOrAssetResponse, ArdArtMyOwnedNftResponse, ArdArtCreateSocialpayInvoiceResult, ArdArtCreateQpayInvoiceResult, ArdArtCreateQposInvoiceResult, ArdArtGetInvoiceByIdResult, ArdArtCheckInvoiceResult, ArdArtAssetDetailEarlyResult, ArdArtCognitoUserDetailResult, ArdArtMyNftCountResult, ArdArtArdxUsdRateResult, ArdArtIdaxInvoiceResult, ArdArtBundleDetailResult, ArdArtAssetDetailResult, ArdArtPromoResult, ArdArtCheckPromoResult, ArdArtCheckCouponResult, ArdArtPaypalInvoiceResult, ArdArtHelperLiveResult } from './types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { MonXanshRateResponse } from '../monxansh/types';
 
@@ -308,6 +308,12 @@ export const huxArdArtApi = createApi({
                 body: d,
             })
         }),
+        helperLive: builder.query<ArdArtResponse<ArdArtHelperLiveResult>, void>({
+            query: () => ({
+                url: `/api/v1/helper/live`,
+                method: 'GET',
+            })
+        }),
     }),
 })
 
@@ -353,4 +359,6 @@ export const {
     useCheckCouponQuery,
     useLazyCheckCouponQuery,
     useUseCouponMutation,
+    useHelperLiveQuery,
+    useLazyHelperLiveQuery,
 } = huxArdArtApi;

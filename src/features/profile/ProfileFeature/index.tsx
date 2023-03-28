@@ -22,6 +22,8 @@ import SendNftModal from '@/components/modals/SendNftModal'
 import WarningSvg from './img/warning.svg'
 import BiUserSvg from './img/BiUser.svg'
 import BiUserDesktop from './img/BiUserDesktop.svg'
+import DirectorCutVideo from '@/components/video/DirectorCutVideo'
+import DirectorCutVideoFeature from '@/features/video/DirectorCutVideoFeature'
 
 type Props = {
 
@@ -225,6 +227,9 @@ const ProfileFeature = ({ }: Props) => {
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div className="mt-16">
+                                <DirectorCutVideoFeature />
                             </div>
                             <div className="mt-16">
                                 <div>

@@ -1,5 +1,5 @@
 import { ArdArtResponse } from './../ard-art/types';
-import { ArdArtBundleResponse, ArdArtBundleInvoiceResponse, ArdArtAssetDetailByIDResult, ArdArtTicketOrAssetResponse, ArdArtMyOwnedNftResponse, ArdArtCreateSocialpayInvoiceResult, ArdArtCreateQpayInvoiceResult, ArdArtCreateQposInvoiceResult, ArdArtGetInvoiceByIdResult, ArdArtCheckInvoiceResult, ArdArtAssetDetailEarlyResult, ArdArtCognitoUserDetailResult, ArdArtMyNftCountResult, ArdArtArdxUsdRateResult, ArdArtIdaxInvoiceResult, ArdArtBundleDetailResult, ArdArtAssetDetailResult, ArdArtPromoResult, ArdArtCheckPromoResult, ArdArtCheckCouponResult } from './types';
+import { ArdArtBundleResponse, ArdArtBundleInvoiceResponse, ArdArtAssetDetailByIDResult, ArdArtTicketOrAssetResponse, ArdArtMyOwnedNftResponse, ArdArtCreateSocialpayInvoiceResult, ArdArtCreateQpayInvoiceResult, ArdArtCreateQposInvoiceResult, ArdArtGetInvoiceByIdResult, ArdArtCheckInvoiceResult, ArdArtAssetDetailEarlyResult, ArdArtCognitoUserDetailResult, ArdArtMyNftCountResult, ArdArtArdxUsdRateResult, ArdArtIdaxInvoiceResult, ArdArtBundleDetailResult, ArdArtAssetDetailResult, ArdArtPromoResult, ArdArtCheckPromoResult, ArdArtCheckCouponResult, ArdArtPaypalInvoiceResult, ArdArtHelperLiveResult } from './types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { MonXanshRateResponse } from '../monxansh/types';
 
@@ -81,7 +81,7 @@ export const huxArdArtApi = createApi({
         createSocialpayInvoice: builder.mutation<ArdArtResponse<ArdArtCreateSocialpayInvoiceResult>, {
             type: 'single' | 'bundle';
             region?: string;
-            method: 'socialpay' | 'card' | 'idax';
+            method: 'socialpay' | 'card';
             productId?: number;
             bundleId?: number;
             amount: number;
@@ -94,6 +94,25 @@ export const huxArdArtApi = createApi({
                 body: {
                     ...d,
                     method: d.method,
+                    callback: `${process.env.NEXT_PUBLIC_APP_HOST_URL}/payment-status`
+                }
+            })
+        }),
+        createPaypalInvoice: builder.mutation<ArdArtResponse<ArdArtPaypalInvoiceResult>, {
+            type: 'single' | 'bundle';
+            region?: string;
+            productId?: number;
+            bundleId?: number;
+            amount: number;
+            accountId: number;
+            email: string;
+        }>({
+            query: (d) => ({
+                url: '/api/v1/market/invoice/create',
+                method: 'POST',
+                body: {
+                    ...d,
+                    method: 'paypal',
                     callback: `${process.env.NEXT_PUBLIC_APP_HOST_URL}/payment-status`
                 }
             })
@@ -289,6 +308,12 @@ export const huxArdArtApi = createApi({
                 body: d,
             })
         }),
+        helperLive: builder.query<ArdArtResponse<ArdArtHelperLiveResult>, void>({
+            query: () => ({
+                url: `/api/v1/helper/live`,
+                method: 'GET',
+            })
+        }),
     }),
 })
 
@@ -304,6 +329,7 @@ export const {
     useCreateSocialpayInvoiceMutation,
     useCreateQpayInvoiceMutation,
     useCreateQposInvoiceMutation,
+    useCreatePaypalInvoiceMutation,
     useGetInvoiceByIdQuery,
     useLazyGetInvoiceByIdQuery,
     useCheckInvoiceQuery,
@@ -333,4 +359,6 @@ export const {
     useCheckCouponQuery,
     useLazyCheckCouponQuery,
     useUseCouponMutation,
+    useHelperLiveQuery,
+    useLazyHelperLiveQuery,
 } = huxArdArtApi;

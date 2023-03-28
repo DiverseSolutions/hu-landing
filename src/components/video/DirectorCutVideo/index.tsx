@@ -28,12 +28,10 @@ function DirectorCutVideo({ }: Props) {
                 const url = new URL(liveData.result.url)
                 liveData.result.cookie.forEach((c) => {
                     Cookies.remove(c.Name, {
-                        domain: url.hostname || url.host,
-                        path: c.Path
+                        domain: '.hu.rocks',
                     })
                     Cookies.set(c.Name, c.Value, {
-                        domain: url.hostname || url.host,
-                        path: c.Path
+                        domain: '.hu.rocks',
                     })
                 })
             }

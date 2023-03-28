@@ -33,7 +33,7 @@ function BundleItemCard({ item }: Props) {
                     }
                 }
                 if (item.product.price) {
-                    router.push(`/product?id=${item.productId}`)
+                    router.push(`/product?id=${item.product.id}`)
                 }
             }} className='relative w-full p-0 cursor-pointer card'>
                 <div className="p-0 card-body">

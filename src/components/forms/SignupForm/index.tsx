@@ -39,32 +39,32 @@ export default function SignupForm({ ...props }: Props) {
 
   const onSubmit = async (d: SignupFormData) => {
     const cognitoUser = await callCogintoUser({
-      email: d.email
+      email: d.email.trim()
     }).unwrap()
 
     const user = cognitoUser.result?.Response?.Users[0];
     if (user && user.UserStatus === 'UNCONFIRMED') {
       props.onSuccess({
-        email: d.email,
-        username: user.Username!,
-        password,
-        password2: password,
+        email: d.email.trim(),
+        username: user.Username.trim(),
+        password: password.trim(),
+        password2: password.trim(),
       })
       return
     }
 
     try {
       const resp = await callSignup({
-        Username: d.username,
-        Password: d.password,
+        Username: d.username.trim(),
+        Password: d.password.trim(),
         UserAttributes: [
           {
             Name: "email",
-            Value: d.email,
+            Value: d.email.trim(),
           },
           {
             Name: "nickname",
-            Value: d.username,
+            Value: d.username.trim(),
           },
         ]
       }).unwrap()

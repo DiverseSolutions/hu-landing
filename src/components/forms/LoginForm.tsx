@@ -84,7 +84,7 @@ export default function LoginForm({ ...props }: Props) {
     const cognitoResp = await callLogin({
       AuthParameters: {
         USERNAME: cognitoUsername,
-        PASSWORD: d.password
+        PASSWORD: d.password.trim()
       }
     }).unwrap();
     const cognitoUserResp = await callGetUser({

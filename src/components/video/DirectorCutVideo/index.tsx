@@ -26,7 +26,6 @@ function DirectorCutVideo({ }: Props) {
                 setCfSig(cookies.find((c) => c.Name === 'CloudFront-Signature', '')?.Value || '')
                 setCfKeyPair(cookies.find((c) => c.Name === 'CloudFront-Key-Pair-Id', '')?.Value || '')
                 const url = new URL(liveData.result.url)
-                console.log(url.hostname)
                 liveData.result.cookie.forEach((c) => {
                     Cookies.remove(c.Name, {
                         domain: url.hostname || url.host,

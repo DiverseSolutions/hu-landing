@@ -9,14 +9,9 @@ function DirectorCutVideoFeature({ }: Props) {
 
     return (
         <>
-            <button className='btn btn-black' onClick={() => {
-                setIsVisible(!isVisible)
-            }}>{isVisible ? 'Hide Preview Video' : 'Show Preview Video'}</button>
-            {isVisible ? (
-                <div className='mt-2'>
-                    <DirectorCutVideo />
-                </div>
-            ) : <></>}
+            <div className='flex flex-col items-center w-full mt-8'>
+                <DirectorCutVideo />
+            </div>
         </>
     )
 }

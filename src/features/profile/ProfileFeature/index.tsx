@@ -154,10 +154,7 @@ const ProfileFeature = ({ }: Props) => {
         if (!isLoggedIn) {
             return
         }
-        const action = router.query.action as string | undefined
-        if (action === 'play') {
-            handleWatchConcert()
-        }
+        handleWatchConcert()
     }, [router, isLoggedIn])
 
     const handleWatchConcert = async () => {

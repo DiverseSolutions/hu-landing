@@ -217,7 +217,7 @@ const ProfileFeature = ({ }: Props) => {
                                         </div>
                                         <div className="flex flex-col">
                                             {isMounted && isMacOs ? (
-                                                <a href="https://d36xgupx7xb4yr.cloudfront.net/public/TheHU.app.zip" target="_blank" rel="noreferrer" className="md:w-[450px]">
+                                                <a href="https://d36xgupx7xb4yr.cloudfront.net/public/TheHU.zip" target="_blank" rel="noreferrer" className="md:w-[450px]">
                                                     <div className="bg-white w-full text-black text-opacity-[0.93] bg-opacity-[0.93] text-sm md:text-[20px] py-[14px] px-6 md:py-[14px] rounded-xl font-bold text-center">
                                                         <span>Download (MacOS)</span>
                                                     </div>

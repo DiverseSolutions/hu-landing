@@ -62,7 +62,7 @@ const systemRequirementSpecs = [
             },
             {
                 name: 'Download Link',
-                value: <a href="https://d36xgupx7xb4yr.cloudfront.net/public/TheHU.app.zip" rel="noreferrer" target="_blank" className="font-bold text-sm text-opacity-[0.93] bg-black bg-opacity-[0.93] mb-2 text-white rounded-xl p-1 px-4 py-2">MacOS Download</a>
+                value: <a href="https://d36xgupx7xb4yr.cloudfront.net/public/TheHU.zip" rel="noreferrer" target="_blank" className="font-bold text-sm text-opacity-[0.93] bg-black bg-opacity-[0.93] mb-2 text-white rounded-xl p-1 px-4 py-2">MacOS Download</a>
             },
         ]
     },

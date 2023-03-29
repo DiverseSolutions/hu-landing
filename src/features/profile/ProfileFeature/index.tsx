@@ -2,7 +2,7 @@ import MyNftCard from '@/components/card/MyNftCard'
 import { times as _times } from 'lodash'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { showAuthModal } from '@/store/reducer/auth-reducer/actions'
-import { useLazyMyNftCountQuery, useLazyMyOwnedNftQuery, useMyNftCountQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
+import { useHelperLiveQuery, useLazyHelperLiveQuery, useLazyMyNftCountQuery, useLazyMyOwnedNftQuery, useMyNftCountQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
 import { BiHide } from 'react-icons/bi'
 import React, { useEffect, useState, useMemo } from 'react'
 import { ClipLoader } from 'react-spinners'
@@ -23,6 +23,8 @@ import WarningSvg from './img/warning.svg'
 import BiUserSvg from './img/BiUser.svg'
 import BiUserDesktop from './img/BiUserDesktop.svg'
 import { isMacOs } from 'react-device-detect'
+import DirectorCutVideo from '@/components/video/DirectorCutVideo'
+import { useRouter } from 'next/router'
 
 type Props = {
 
@@ -48,9 +50,11 @@ const ProfileFeature = ({ }: Props) => {
     const accountId = useAppSelector(state => state.auth.ardArt.accountId)
     const profile = useAppSelector(state => state.auth.profile)
     const dispatch = useAppDispatch()
+    const router = useRouter()
 
     const [callMyNftCount, { data: myNftCountData, isFetching: isMyNftCountFetching }] = useLazyMyNftCountQuery()
     const [callMyOwnedNft, { data: myNftData, isLoading: isMyNftLoading, isFetching: isMyNftFetching }] = useLazyMyOwnedNftQuery()
+    const [callHelperLive, { isFetching: isHelperLiveFetching, data: helperLiveData, error: helperLiveError }] = useLazyHelperLiveQuery()
 
     useEffect(() => {
         setIsMounted(true)
@@ -67,6 +71,7 @@ const ProfileFeature = ({ }: Props) => {
         }
     }, [isLoggedIn, accountId])
 
+    const [liveErrorCode, setLiveErrorCode] = useState(0)
     const [selectedNftId, setSelectedNftId] = useState<number>()
     const [selectedNftIdIdx, setSelectedNftIdIdx] = useState<string>()
     const [selectedSendNft, setSelectedSendNft] = useState<ArdArtMyOwnedNftRecord>()
@@ -142,9 +147,34 @@ const ProfileFeature = ({ }: Props) => {
         }
     }
 
+    useEffect(() => {
+        if (!router.isReady) {
+            return
+        }
+        if (!isLoggedIn) {
+            return
+        }
+        handleWatchConcert()
+    }, [router, isLoggedIn])
+
+    const handleWatchConcert = async () => {
+        if (process.env.NEXT_PUBLIC_DEPLOYMENT_ENV === 'prod') {
+            return
+        }
+        if (helperLiveData?.result) {
+            return
+        }
+        const r = await callHelperLive()
+        if (r.data?.code) {
+            setLiveErrorCode(r.data.code)
+        }
+    }
+
+
     if (isLoginLoading) {
         return <PageLoader />
     }
+
 
     if (!isLoggedIn && !isLoginLoading) {
         return (
@@ -171,7 +201,7 @@ const ProfileFeature = ({ }: Props) => {
                         <div className="container">
                             <div className="flex flex-col justify-center w-full md:justify-between md:flex-row">
                                 <div className="mt-12">
-                                    <div className="flex justify-start w-full">
+                                    <div className="flex justify-start w-full h-full">
                                         <div className="w-10 md:w-[68px] md:h-[68px] overflow-hidden relative h-10 rounded-xl bg-black bg-opacity-[0.04]">
                                             <div className='transform md:hidden flex translate-y-[8px]'><BiUserSvg /></div>
                                             <div className='transform hidden md:flex translate-y-[16px]'><BiUserDesktop /></div>
@@ -195,6 +225,17 @@ const ProfileFeature = ({ }: Props) => {
                                             <span className='mr-2 text-xs opacity-[0.65]'>Balance</span>
                                             {isBalanceLoading ? (<ClipLoader size={14} />) : (<p className="text-sm font-bold">ARDX{ardxBalance?.amount || 0}</p>)}
                                         </div>
+                                        <button onClick={handleWatchConcert} className={classNames("h-full hidden md:block max-h-full ml-2 btn btn-black text-[20px]", {
+                                            'pointer-events-none': true,
+                                        })}>
+                                            <div className="flex items-center">
+                                                {isHelperLiveFetching ? <ClipLoader size={24} color="white" /> : <></>}
+                                                <div className="flex flex-col items-start ml-2">
+                                                    {helperLiveData?.result ? <div className='text-[#FF00A8] text-xs font-bold block'>Live</div> : <div className='text-[#FF00A8] text-xs font-bold block'>Soon</div>}
+                                                    <div>Watch Concert</div>
+                                                </div>
+                                            </div>
+                                        </button>
                                     </div>
                                 </div>
                                 <div className="flex mt-2 md:hidden">
@@ -207,7 +248,35 @@ const ProfileFeature = ({ }: Props) => {
                                         <p className='text-xs opacity-[0.65]'>Sent</p>
                                     </div>
                                 </div>
+                                <button onClick={handleWatchConcert} className={classNames("h-full block md:hidden mt-2 max-h-full py-3 ml-2 btn btn-black text-[20px]")}>
+                                    <div className="flex items-center justify-between">
+                                        <div className="flex flex-col items-start ml-2">
+                                            {helperLiveData?.result ? <div className='text-[#FF00A8] text-xs font-bold block'>Live</div> : <div className='text-[#FF00A8] text-xs font-bold block'>Soon</div>}
+                                            <div>Watch Concert</div>
+                                        </div>
+                                        {isHelperLiveFetching ? <ClipLoader size={24} color="white" /> : <></>}
+                                    </div>
+                                </button>
                             </div>
+                            {helperLiveData?.result ? (
+                                <div className="relative mt-8">
+                                    <DirectorCutVideo live={helperLiveData.result} />
+                                    <div className="absolute top-4 left-4">
+                                        <div className="flex items-center px-4 py-2 bg-black rounded-xl">
+                                            <span className="w-2.5 h-2.5 mr-2 bg-red-600 rounded-full">
+
+                                            </span>
+                                            <p className="font-bold text-white uppercase ">Live</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            ) : (<></>)}
+                            {liveErrorCode === 1066 ? (
+                                <div className="flex p-4 mt-4 w-f8ll rounded-xl itms-start" style={{ background: 'rgba(255, 140, 0, 0.05)' }}>
+                                    <div><WarningSvg /></div>
+                                    <span className='text-xs ml-[18px]'>The live concert has not yet begun. The start time of the concert will depend on the region you have chosen and the timezone that is currently set. We want to remind all users with entry tickets that they will have access to the concert as soon as it begins in their respective region.</span>
+                                </div>
+                            ) : (<></>)}
                             <div className="mt-8">
                                 <div className="md:p-8 p-4 rounded-xl w-ful bg-black bg-opacity-[0.04]">
                                     <div className="flex flex-col justify-between w-full space-y-4 md:space-y-0 md:flex-row">

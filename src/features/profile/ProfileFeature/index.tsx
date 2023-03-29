@@ -271,7 +271,7 @@ const ProfileFeature = ({ }: Props) => {
                             {liveErrorCode === 1066 ? (
                                 <div className="flex p-4 mt-4 w-f8ll rounded-xl itms-start" style={{ background: 'rgba(255, 140, 0, 0.05)' }}>
                                     <div><WarningSvg /></div>
-                                    <span className='text-xs ml-[18px]'>The LIVE Concert has not started yet. It will start in your chosen time zone.</span>
+                                    <span className='text-xs ml-[18px]'>The live concert has not yet begun. The start time of the concert will depend on the region you have chosen and the timezone that is currently set. We want to remind all users with entry tickets that they will have access to the concert as soon as it begins in their respective region.</span>
                                 </div>
                             ) : (<></>)}
                             <div className="mt-8">

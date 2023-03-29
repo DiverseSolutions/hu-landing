@@ -158,6 +158,9 @@ const ProfileFeature = ({ }: Props) => {
     }, [router, isLoggedIn])
 
     const handleWatchConcert = async () => {
+        if (process.env.NEXT_PUBLIC_DEPLOYMENT_ENV === 'prod') {
+            return
+        }
         if (helperLiveData?.result) {
             return
         }

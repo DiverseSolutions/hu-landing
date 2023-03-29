@@ -40,6 +40,7 @@ const tagList = ASSET_CATEGORY.map((b) => ({
 
 const ProfileFeature = ({ }: Props) => {
 
+    const [isMounted, setIsMounted] = useState(false)
     const [activeCategory, setActiveCategory] = useState<CategoryItemType[]>([])
     const [activeTag, setActiveTag] = useState<CategoryItemType[]>([])
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
@@ -50,6 +51,10 @@ const ProfileFeature = ({ }: Props) => {
 
     const [callMyNftCount, { data: myNftCountData, isFetching: isMyNftCountFetching }] = useLazyMyNftCountQuery()
     const [callMyOwnedNft, { data: myNftData, isLoading: isMyNftLoading, isFetching: isMyNftFetching }] = useLazyMyOwnedNftQuery()
+
+    useEffect(() => {
+        setIsMounted(true)
+    }, [])
 
     useEffect(() => {
         if (isLoggedIn && accountId) {
@@ -211,7 +216,7 @@ const ProfileFeature = ({ }: Props) => {
                                             <p className='md:text-base text-sm mt-4 text-black opacity-[0.65]'>Please download and install this file on a computer that meets the system requirement and runs on Windows OS. By meeting the system requirements you will be able to enjoy the concert in high quality. The HU in the Metaverse concert package will be available for worldwide download on March 28th, 2023.</p>
                                         </div>
                                         <div className="flex flex-col">
-                                            {isMacOs ? (
+                                            {isMounted && isMacOs ? (
                                                 <a href="https://d36xgupx7xb4yr.cloudfront.net/public/TheHU.app.zip" target="_blank" rel="noreferrer" className="md:w-[450px]">
                                                     <div className="bg-white w-full text-black text-opacity-[0.93] bg-opacity-[0.93] text-sm md:text-[20px] py-[14px] px-6 md:py-[14px] rounded-xl font-bold text-center">
                                                         <span>Download (MacOS)</span>

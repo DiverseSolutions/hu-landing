@@ -63,7 +63,7 @@ function Navbar({ }: Props) {
                                 </span>
                             </li>
                             <li>
-                                <Link href="/profile" className='text-[#FF00A8] hover:bg-transparent focus:bg-transparent text-opacity-[0.93] text-base font-bold hover:text-opacity-[1]'>
+                                <Link href="/profile?action=play" className='text-[#FF00A8] hover:bg-transparent focus:bg-transparent text-opacity-[0.93] text-base font-bold hover:text-opacity-[1]'>
                                     Watch Live Concert
                                 </Link>
                             </li>

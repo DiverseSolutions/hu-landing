@@ -24,6 +24,7 @@ import BiUserSvg from './img/BiUser.svg'
 import BiUserDesktop from './img/BiUserDesktop.svg'
 import { isMacOs } from 'react-device-detect'
 import DirectorCutVideo from '@/components/video/DirectorCutVideo'
+import { useRouter } from 'next/router'
 
 type Props = {
 
@@ -49,6 +50,7 @@ const ProfileFeature = ({ }: Props) => {
     const accountId = useAppSelector(state => state.auth.ardArt.accountId)
     const profile = useAppSelector(state => state.auth.profile)
     const dispatch = useAppDispatch()
+    const router = useRouter()
 
     const [callMyNftCount, { data: myNftCountData, isFetching: isMyNftCountFetching }] = useLazyMyNftCountQuery()
     const [callMyOwnedNft, { data: myNftData, isLoading: isMyNftLoading, isFetching: isMyNftFetching }] = useLazyMyOwnedNftQuery()
@@ -144,6 +146,19 @@ const ProfileFeature = ({ }: Props) => {
         }
     }
 
+    useEffect(() => {
+        if (!router.isReady) {
+            return
+        }
+        if (!isLoggedIn) {
+            return
+        }
+        const action = router.query.action as string | undefined
+        if (action === 'play') {
+            handleWatchConcert()
+        }
+    }, [router, isLoggedIn])
+
     const handleWatchConcert = async () => {
         const r = await callHelperLive().unwrap()
     }
@@ -201,7 +216,7 @@ const ProfileFeature = ({ }: Props) => {
                                             <span className='mr-2 text-xs opacity-[0.65]'>Balance</span>
                                             {isBalanceLoading ? (<ClipLoader size={14} />) : (<p className="text-sm font-bold">ARDX{ardxBalance?.amount || 0}</p>)}
                                         </div>
-                                        <button onClick={handleWatchConcert} className={classNames("h-full max-h-full ml-2 btn btn-black text-[20px]", { 'loading': isHelperLiveFetching })}>
+                                        <button onClick={handleWatchConcert} className={classNames("h-full hidden md:block max-h-full ml-2 btn btn-black text-[20px]", { 'loading': isHelperLiveFetching })}>
                                             <div className="flex flex-col items-start">
                                                 {helperLiveData?.result ? <div className='text-[#FF00A8] text-xs font-bold block'>Live</div> : <></>}
                                                 <div>Watch Concert</div>
@@ -219,6 +234,12 @@ const ProfileFeature = ({ }: Props) => {
                                         <p className='text-xs opacity-[0.65]'>Sent</p>
                                     </div>
                                 </div>
+                                <button onClick={handleWatchConcert} className={classNames("h-full block md:hidden mt-2 max-h-full py-3 ml-2 btn btn-black text-[20px]", { 'loading': isHelperLiveFetching })}>
+                                    <div className="flex flex-col items-start">
+                                        {helperLiveData?.result ? <div className='text-[#FF00A8] text-xs font-bold block'>Live</div> : <></>}
+                                        <div>Watch Concert</div>
+                                    </div>
+                                </button>
                             </div>
                             {helperLiveData?.result ? (
                                 <div className="relative mt-8">

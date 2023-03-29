@@ -216,10 +216,13 @@ const ProfileFeature = ({ }: Props) => {
                                             <span className='mr-2 text-xs opacity-[0.65]'>Balance</span>
                                             {isBalanceLoading ? (<ClipLoader size={14} />) : (<p className="text-sm font-bold">ARDX{ardxBalance?.amount || 0}</p>)}
                                         </div>
-                                        <button onClick={handleWatchConcert} className={classNames("h-full hidden md:block max-h-full ml-2 btn btn-black text-[20px]", { 'loading': isHelperLiveFetching })}>
-                                            <div className="flex flex-col items-start">
-                                                {helperLiveData?.result ? <div className='text-[#FF00A8] text-xs font-bold block'>Live</div> : <></>}
-                                                <div>Watch Concert</div>
+                                        <button onClick={handleWatchConcert} className={classNames("h-full hidden md:block max-h-full ml-2 btn btn-black text-[20px]")}>
+                                            <div className="flex items-center">
+                                                {isHelperLiveFetching ? <ClipLoader size={24} color="white" /> : <></>}
+                                                <div className="flex flex-col items-start ml-2">
+                                                    {helperLiveData?.result ? <div className='text-[#FF00A8] text-xs font-bold block'>Live</div> : <></>}
+                                                    <div>Watch Concert</div>
+                                                </div>
                                             </div>
                                         </button>
                                     </div>
@@ -234,10 +237,13 @@ const ProfileFeature = ({ }: Props) => {
                                         <p className='text-xs opacity-[0.65]'>Sent</p>
                                     </div>
                                 </div>
-                                <button onClick={handleWatchConcert} className={classNames("h-full block md:hidden mt-2 max-h-full py-3 ml-2 btn btn-black text-[20px]", { 'loading': isHelperLiveFetching })}>
-                                    <div className="flex flex-col items-start">
-                                        {helperLiveData?.result ? <div className='text-[#FF00A8] text-xs font-bold block'>Live</div> : <></>}
-                                        <div>Watch Concert</div>
+                                <button onClick={handleWatchConcert} className={classNames("h-full block md:hidden mt-2 max-h-full py-3 ml-2 btn btn-black text-[20px]")}>
+                                    <div className="flex items-center justify-between">
+                                        <div className="flex flex-col items-start ml-2">
+                                            {helperLiveData?.result ? <div className='text-[#FF00A8] text-xs font-bold block'>Live</div> : <></>}
+                                            <div>Watch Concert</div>
+                                        </div>
+                                        {isHelperLiveFetching ? <ClipLoader size={24} color="white" /> : <></>}
                                     </div>
                                 </button>
                             </div>

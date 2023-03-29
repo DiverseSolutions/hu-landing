@@ -54,9 +54,7 @@ const ProfileFeature = ({ }: Props) => {
 
     const [callMyNftCount, { data: myNftCountData, isFetching: isMyNftCountFetching }] = useLazyMyNftCountQuery()
     const [callMyOwnedNft, { data: myNftData, isLoading: isMyNftLoading, isFetching: isMyNftFetching }] = useLazyMyOwnedNftQuery()
-    const { isFetching: isHelperLiveFetching, data: helperLiveData, error: helperLiveError } = useHelperLiveQuery(undefined, {
-        skip: !isLoggedIn
-    })
+    const [callHelperLive, { isFetching: isHelperLiveFetching, data: helperLiveData, error: helperLiveError }] = useLazyHelperLiveQuery()
 
     useEffect(() => {
         setIsMounted(true)
@@ -149,6 +147,27 @@ const ProfileFeature = ({ }: Props) => {
         }
     }
 
+    useEffect(() => {
+        if (!router.isReady) {
+            return
+        }
+        if (!isLoggedIn) {
+            return
+        }
+        handleWatchConcert()
+    }, [router, isLoggedIn])
+
+    const handleWatchConcert = async () => {
+        if (helperLiveData?.result) {
+            return
+        }
+        const r = await callHelperLive()
+        if (r.data?.code) {
+            setLiveErrorCode(r.data.code)
+        }
+    }
+
+
     if (isLoginLoading) {
         return <PageLoader />
     }
@@ -203,11 +222,11 @@ const ProfileFeature = ({ }: Props) => {
                                             <span className='mr-2 text-xs opacity-[0.65]'>Balance</span>
                                             {isBalanceLoading ? (<ClipLoader size={14} />) : (<p className="text-sm font-bold">ARDX{ardxBalance?.amount || 0}</p>)}
                                         </div>
-                                        <button className={classNames("h-full hidden md:block max-h-full ml-2 btn btn-black text-[20px]")}>
+                                        <button onClick={handleWatchConcert} className={classNames("h-full hidden md:block max-h-full ml-2 btn btn-black text-[20px]")}>
                                             <div className="flex items-center">
                                                 {isHelperLiveFetching ? <ClipLoader size={24} color="white" /> : <></>}
                                                 <div className="flex flex-col items-start ml-2">
-                                                    {helperLiveData?.result ? <div className='text-[#FF00A8] text-xs font-bold block'>Live</div> : <></>}
+                                                    {helperLiveData?.result ? <div className='text-[#FF00A8] text-xs font-bold block'>Live</div> : <div className='text-[#FF00A8] text-xs font-bold block'>Soon</div>}
                                                     <div>Watch Concert</div>
                                                 </div>
                                             </div>
@@ -224,10 +243,10 @@ const ProfileFeature = ({ }: Props) => {
                                         <p className='text-xs opacity-[0.65]'>Sent</p>
                                     </div>
                                 </div>
-                                <button className={classNames("h-full block md:hidden mt-2 max-h-full py-3 ml-2 btn btn-black text-[20px]")}>
+                                <button onClick={handleWatchConcert} className={classNames("h-full block md:hidden mt-2 max-h-full py-3 ml-2 btn btn-black text-[20px]")}>
                                     <div className="flex items-center justify-between">
                                         <div className="flex flex-col items-start ml-2">
-                                            {helperLiveData?.result ? <div className='text-[#FF00A8] text-xs font-bold block'>Live</div> : <></>}
+                                            {helperLiveData?.result ? <div className='text-[#FF00A8] text-xs font-bold block'>Live</div> : <div className='text-[#FF00A8] text-xs font-bold block'>Soon</div>}
                                             <div>Watch Concert</div>
                                         </div>
                                         {isHelperLiveFetching ? <ClipLoader size={24} color="white" /> : <></>}
@@ -237,8 +256,13 @@ const ProfileFeature = ({ }: Props) => {
                             {helperLiveData?.result ? (
                                 <div className="relative mt-8">
                                     <DirectorCutVideo live={helperLiveData.result} />
-                                    <div className="absolute top-4 right-4">
-                                        <p className="text-[#FF00A8] bg-black rounded-xl px-4 py-2">Live</p>
+                                    <div className="absolute top-4 left-4">
+                                        <div className="flex items-center px-4 py-2 bg-black rounded-xl">
+                                            <span className="w-2.5 h-2.5 mr-2 bg-red-600 rounded-full">
+
+                                            </span>
+                                            <p className="font-bold text-white uppercase ">Live</p>
+                                        </div>
                                     </div>
                                 </div>
                             ) : (<></>)}

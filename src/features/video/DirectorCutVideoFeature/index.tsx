@@ -1,16 +1,24 @@
 import DirectorCutVideo from '@/components/video/DirectorCutVideo'
-import React, { useState } from 'react'
+import { useHelperLiveQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
 
 type Props = {}
 
 function DirectorCutVideoFeature({ }: Props) {
 
-    const [isVisible, setIsVisible] = useState(false)
+    const { data, error } = useHelperLiveQuery()
+
+    if (error) {
+        return <p>{`${error}`}</p>
+    }
+
+    if (!data?.result) {
+        return <></>
+    }
 
     return (
         <>
             <div className='flex flex-col items-center w-full mt-8'>
-                <DirectorCutVideo />
+                <DirectorCutVideo live={data?.result} />
             </div>
         </>
     )

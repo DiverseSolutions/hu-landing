@@ -42,8 +42,8 @@ function DirectorCutVideo({
             controls
             playing
             muted
-            width="100%"
-            height={"auto"}
+            width={'100%'}
+            height={'auto'}
             url={live.url} config={{
                 file: {
                     attributes: {

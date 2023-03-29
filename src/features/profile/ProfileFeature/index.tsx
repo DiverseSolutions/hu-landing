@@ -22,6 +22,7 @@ import SendNftModal from '@/components/modals/SendNftModal'
 import WarningSvg from './img/warning.svg'
 import BiUserSvg from './img/BiUser.svg'
 import BiUserDesktop from './img/BiUserDesktop.svg'
+import { isMacOs } from 'react-device-detect'
 
 type Props = {
 
@@ -210,9 +211,18 @@ const ProfileFeature = ({ }: Props) => {
                                             <p className='md:text-base text-sm mt-4 text-black opacity-[0.65]'>Please download and install this file on a computer that meets the system requirement and runs on Windows OS. By meeting the system requirements you will be able to enjoy the concert in high quality. The HU in the Metaverse concert package will be available for worldwide download on March 28th, 2023.</p>
                                         </div>
                                         <div className="flex flex-col">
-                                            <div className='md:w-[450px] text-sm md:text-[20px] text-black text-opacity-[0.65] py-[14px] bg-white rounded-xl font-bold text-center cursor-pointer dropdown dropdown-top dropdown-hover' tabIndex={0}>
-                                                Download
-                                            </div>
+                                            {isMacOs ? (
+                                                <a href="https://d36xgupx7xb4yr.cloudfront.net/public/TheHU.app.zip" target="_blank" rel="noreferrer" className="md:w-[450px]">
+                                                    <div className="bg-white w-full text-black text-opacity-[0.93] bg-opacity-[0.93] text-sm md:text-[20px] py-[14px] px-6 md:py-[14px] rounded-xl font-bold text-center">
+                                                        <span>Download (MacOS)</span>
+                                                    </div>
+                                                </a>
+                                            ) : (<a href="https://d36xgupx7xb4yr.cloudfront.net/public/TheHU.rar" target="_blank" rel="noreferrer" className="md:w-[450px]">
+                                                <div className="bg-white w-full text-black text-opacity-[0.93] bg-opacity-[0.93] text-sm md:text-base px-6 py-2.5 md:py-[14px] rounded-xl font-bold text-center">
+                                                    <span>Download (Windows)</span>
+                                                </div>
+                                            </a>)}
+
                                             <div tabIndex={0} className="mt-4 z-50 dropdown bg-black bg-opacity-[0.04] md:dropdown-hover md:dropdown-bottom dropdown-top cursor-pointer items-center flex w-full justify-center py-[14px] backdrop-blur-[7.5px] rounded-xl">
                                                 <InfoGreySvg />
                                                 <span className="ml-2  text-black text-opacity-[0.65] text-sm md:text-[20px] font-bold">System Requirements</span>

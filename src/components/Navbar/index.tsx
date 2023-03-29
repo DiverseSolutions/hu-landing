@@ -62,6 +62,11 @@ function Navbar({ }: Props) {
                                     Use Coupon Code
                                 </span>
                             </li>
+                            <li>
+                                <Link href="/profile" className='text-[#FF00A8] hover:bg-transparent focus:bg-transparent text-opacity-[0.93] text-base font-bold hover:text-opacity-[1]'>
+                                    Watch Live Concert
+                                </Link>
+                            </li>
                         </ul>
                     </div>
                     <div className="navbar-end">

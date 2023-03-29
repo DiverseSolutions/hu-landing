@@ -2,7 +2,7 @@ import MyNftCard from '@/components/card/MyNftCard'
 import { times as _times } from 'lodash'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { showAuthModal } from '@/store/reducer/auth-reducer/actions'
-import { useLazyMyNftCountQuery, useLazyMyOwnedNftQuery, useMyNftCountQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
+import { useHelperLiveQuery, useLazyHelperLiveQuery, useLazyMyNftCountQuery, useLazyMyOwnedNftQuery, useMyNftCountQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
 import { BiHide } from 'react-icons/bi'
 import React, { useEffect, useState, useMemo } from 'react'
 import { ClipLoader } from 'react-spinners'
@@ -23,6 +23,7 @@ import WarningSvg from './img/warning.svg'
 import BiUserSvg from './img/BiUser.svg'
 import BiUserDesktop from './img/BiUserDesktop.svg'
 import { isMacOs } from 'react-device-detect'
+import DirectorCutVideo from '@/components/video/DirectorCutVideo'
 
 type Props = {
 
@@ -51,6 +52,7 @@ const ProfileFeature = ({ }: Props) => {
 
     const [callMyNftCount, { data: myNftCountData, isFetching: isMyNftCountFetching }] = useLazyMyNftCountQuery()
     const [callMyOwnedNft, { data: myNftData, isLoading: isMyNftLoading, isFetching: isMyNftFetching }] = useLazyMyOwnedNftQuery()
+    const [callHelperLive, { isFetching: isHelperLiveFetching, data: helperLiveData, error: helperLiveError }] = useLazyHelperLiveQuery()
 
     useEffect(() => {
         setIsMounted(true)
@@ -142,6 +144,10 @@ const ProfileFeature = ({ }: Props) => {
         }
     }
 
+    const handleWatchConcert = async () => {
+        const r = await callHelperLive().unwrap()
+    }
+
     if (isLoginLoading) {
         return <PageLoader />
     }
@@ -171,7 +177,7 @@ const ProfileFeature = ({ }: Props) => {
                         <div className="container">
                             <div className="flex flex-col justify-center w-full md:justify-between md:flex-row">
                                 <div className="mt-12">
-                                    <div className="flex justify-start w-full">
+                                    <div className="flex justify-start w-full h-full">
                                         <div className="w-10 md:w-[68px] md:h-[68px] overflow-hidden relative h-10 rounded-xl bg-black bg-opacity-[0.04]">
                                             <div className='transform md:hidden flex translate-y-[8px]'><BiUserSvg /></div>
                                             <div className='transform hidden md:flex translate-y-[16px]'><BiUserDesktop /></div>
@@ -195,6 +201,12 @@ const ProfileFeature = ({ }: Props) => {
                                             <span className='mr-2 text-xs opacity-[0.65]'>Balance</span>
                                             {isBalanceLoading ? (<ClipLoader size={14} />) : (<p className="text-sm font-bold">ARDX{ardxBalance?.amount || 0}</p>)}
                                         </div>
+                                        <button onClick={handleWatchConcert} className={classNames("h-full max-h-full ml-2 btn btn-black text-[20px]", { 'loading': isHelperLiveFetching })}>
+                                            <div className="flex flex-col items-start">
+                                                {helperLiveData?.result ? <div className='text-[#FF00A8] text-xs font-bold block'>Live</div> : <></>}
+                                                <div>Watch Concert</div>
+                                            </div>
+                                        </button>
                                     </div>
                                 </div>
                                 <div className="flex mt-2 md:hidden">
@@ -208,6 +220,14 @@ const ProfileFeature = ({ }: Props) => {
                                     </div>
                                 </div>
                             </div>
+                            {helperLiveData?.result ? (
+                                <div className="relative mt-8">
+                                    <DirectorCutVideo live={helperLiveData.result} />
+                                    <div className="absolute top-4 right-4">
+                                        <p className="text-[#FF00A8] bg-black rounded-xl px-4 py-2">Live</p>
+                                    </div>
+                                </div>
+                            ) : (<></>)}
                             <div className="mt-8">
                                 <div className="md:p-8 p-4 rounded-xl w-ful bg-black bg-opacity-[0.04]">
                                     <div className="flex flex-col justify-between w-full space-y-4 md:space-y-0 md:flex-row">

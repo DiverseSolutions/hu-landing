@@ -225,7 +225,9 @@ const ProfileFeature = ({ }: Props) => {
                                             <span className='mr-2 text-xs opacity-[0.65]'>Balance</span>
                                             {isBalanceLoading ? (<ClipLoader size={14} />) : (<p className="text-sm font-bold">ARDX{ardxBalance?.amount || 0}</p>)}
                                         </div>
-                                        <button onClick={handleWatchConcert} className={classNames("h-full hidden md:block max-h-full ml-2 btn btn-black text-[20px]")}>
+                                        <button onClick={handleWatchConcert} className={classNames("h-full hidden md:block max-h-full ml-2 btn btn-black text-[20px]", {
+                                            'pointer-events-none': true,
+                                        })}>
                                             <div className="flex items-center">
                                                 {isHelperLiveFetching ? <ClipLoader size={24} color="white" /> : <></>}
                                                 <div className="flex flex-col items-start ml-2">

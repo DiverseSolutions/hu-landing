@@ -71,6 +71,7 @@ const ProfileFeature = ({ }: Props) => {
         }
     }, [isLoggedIn, accountId])
 
+    const [liveErrorCode, setLiveErrorCode] = useState(0)
     const [selectedNftId, setSelectedNftId] = useState<number>()
     const [selectedNftIdIdx, setSelectedNftIdIdx] = useState<string>()
     const [selectedSendNft, setSelectedSendNft] = useState<ArdArtMyOwnedNftRecord>()
@@ -160,12 +161,24 @@ const ProfileFeature = ({ }: Props) => {
     }, [router, isLoggedIn])
 
     const handleWatchConcert = async () => {
-        const r = await callHelperLive().unwrap()
+        const r = await callHelperLive()
+        if (r.data?.code) {
+            setLiveErrorCode(r.data.code)
+        }
     }
+
+    useEffect(() => {
+        if (helperLiveError) {
+            console.log(`live err:`)
+            console.log(JSON.stringify(helperLiveError))
+        }
+    }, [helperLiveError])
+
 
     if (isLoginLoading) {
         return <PageLoader />
     }
+
 
     if (!isLoggedIn && !isLoginLoading) {
         return (
@@ -253,6 +266,12 @@ const ProfileFeature = ({ }: Props) => {
                                     <div className="absolute top-4 right-4">
                                         <p className="text-[#FF00A8] bg-black rounded-xl px-4 py-2">Live</p>
                                     </div>
+                                </div>
+                            ) : (<></>)}
+                            {liveErrorCode === 1066 ? (
+                                <div className="flex p-4 mt-4 w-f8ll rounded-xl itms-start" style={{ background: 'rgba(255, 140, 0, 0.05)' }}>
+                                    <div><WarningSvg /></div>
+                                    <span className='text-xs ml-[18px]'>The LIVE Concert has not started yet. It will start in your chosen time zone.</span>
                                 </div>
                             ) : (<></>)}
                             <div className="mt-8">

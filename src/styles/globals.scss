@@ -90,3 +90,10 @@ model-viewer {
 .vjs-theme-fantasy .vjs-play-progress::before {
     background-color: #D63333 !important;
 }
+
+@font-face {
+    font-family: VideoJS;
+    src: ur("/videojs-icons.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+}

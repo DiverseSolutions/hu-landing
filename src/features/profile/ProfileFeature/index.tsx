@@ -167,9 +167,14 @@ const ProfileFeature = ({ }: Props) => {
         if (!isLoggedIn) {
             return
         }
-        (async () => {
-            await callHelperLive()
-        })()
+        try {
+            (async () => {
+                await callHelperLive()
+            })()
+        } catch (e) {
+            console.log('initical call err:')
+            console.error(e);
+        }
         const intervalId = setInterval(() => {
             (async () => {
                 await callHelperLive()

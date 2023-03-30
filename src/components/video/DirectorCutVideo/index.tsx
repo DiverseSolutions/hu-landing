@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import { useVideoJS } from "react-hook-videojs";
 import "video.js/dist/video-js.css";
 import { ArdArtHelperLiveResult } from "@/store/rtk-query/hux-ard-art/types";
+import "@videojs/themes/dist/fantasy/index.css";
+import Head from "next/head";
 
 type Props = {
     live: ArdArtHelperLiveResult
@@ -42,7 +44,16 @@ const DirectorCutVideoDemo = (props: Props) => {
         // Do something with the video.js player object.
     }
     return (
-        <Video />
+        <>
+            <Video />
+            <Head>
+                <style global jsx>{`
+        body {
+          background: black;
+        }
+      `}</style>
+            </Head>
+        </>
     );
 };
 

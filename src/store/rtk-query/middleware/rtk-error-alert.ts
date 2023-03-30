@@ -42,17 +42,16 @@ export const rtkErrorAlert: Middleware =
         }
         if (`${action.payload?.status}`.toLowerCase() === 'error') {
             const endpointName = action.meta?.arg?.endpointName
-            if (HIDDEN_MSG_ENDPOINT.includes(endpointName)) {
-                return;
-            }
-            const metalandErr = action.payload?.message;
-            console.log(`show metaland err: ${metalandErr}`)
-            if (metalandErr) {
-                if (api.getState()?.alert?.isArtArtVisible) {
+            if (!HIDDEN_MSG_ENDPOINT.includes(endpointName)) {
+                const metalandErr = action.payload?.message;
+                console.log(`show metaland err: ${metalandErr}`)
+                if (metalandErr) {
+                    if (api.getState()?.alert?.isArtArtVisible) {
 
-                    toast(metalandErr, {
-                        type: 'error'
-                    })
+                        toast(metalandErr, {
+                            type: 'error'
+                        })
+                    }
                 }
             }
         }

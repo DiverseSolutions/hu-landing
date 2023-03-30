@@ -197,8 +197,9 @@ const ProfileFeature = ({ }: Props) => {
     }, [router, isLoggedIn])
 
     const handleWatchConcert = () => {
-
+        console.log('handle watch concert');
         (async () => {
+            console.log('fetch')
             setIsLiveFetchLoading(true)
             try {
                 const r = await callHelperLive()

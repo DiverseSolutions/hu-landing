@@ -58,7 +58,7 @@ const ProfileFeature = ({ }: Props) => {
 
     const { isFetching: isHelperLiveFetching, data: helperLiveData, error: helperLiveError } = useHelperLiveQuery(undefined, {
         skip: !router.isReady || !isLoggedIn,
-        pollingInterval: 10000
+        pollingInterval: helperLiveData?.result ? 0 : 10000
     })
 
     useEffect(() => {

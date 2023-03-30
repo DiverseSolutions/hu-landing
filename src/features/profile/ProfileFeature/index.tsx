@@ -198,8 +198,10 @@ const ProfileFeature = ({ }: Props) => {
         setIsLiveFetchLoading(true)
         try {
             const r = await callHelperLive(Date.now(), true).unwrap()
+            console.log('resp:')
+            console.log(r)
             if (!r?.result) {
-                const errorMessage = r?.message
+                const errorMessage = r.message
                 if (errorMessage) {
                     toast(errorMessage, {
                         type: 'error'

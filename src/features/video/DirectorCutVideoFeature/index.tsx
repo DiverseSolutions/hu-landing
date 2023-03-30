@@ -5,7 +5,7 @@ type Props = {}
 
 function DirectorCutVideoFeature({ }: Props) {
 
-    const { data, error } = useHelperLiveQuery()
+    const { data, error } = useHelperLiveQuery(Date.now())
 
     if (error) {
         return <p>{`${error}`}</p>

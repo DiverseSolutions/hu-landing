@@ -44,16 +44,6 @@ const DirectorCutVideoDemo = ({ live, ...props }: Props) => {
 
     useEffect(() => {
         if (ready && player) {
-            if (live.cookie?.length) {
-                live.cookie.forEach((c) => {
-                    Cookies.remove(c.Name, {
-                        domain: '.hu.rocks',
-                    })
-                    Cookies.set(c.Name, c.Value, {
-                        domain: '.hu.rocks',
-                    })
-                })
-            }
             (async () => {
                 try {
                     player.play()

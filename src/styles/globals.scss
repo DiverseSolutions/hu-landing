@@ -93,3 +93,8 @@ model-viewer {
     font-weight: normal !important;
     font-style: normal !important;
 }
+
+.vjs-theme-fantasy .vjs-play-progress,
+.vjs-theme-fantasy .vjs-play-progress::before {
+    background-color: #D63333 !important;
+}

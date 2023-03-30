@@ -279,7 +279,7 @@ const ProfileFeature = ({ }: Props) => {
                                             'pointer-events-none': helperLiveData?.result ? true : false,
                                         })}>
                                             <div className="flex items-center">
-                                                {isHelperLiveFetching ? <ClipLoader size={24} color="white" /> : <></>}
+                                                {isLiveFetchLoading ? <ClipLoader size={24} color="white" /> : <></>}
                                                 <div className="flex flex-col items-start ml-2">
                                                     {helperLiveData?.result ? <div className='text-[#FF00A8] text-xs font-bold block'>Live</div> : <div className='text-[#FF00A8] text-xs font-bold block'>Soon</div>}
                                                     <div>Watch Concert</div>
@@ -306,7 +306,7 @@ const ProfileFeature = ({ }: Props) => {
                                             {helperLiveData?.result ? <div className='text-[#FF00A8] text-xs font-bold block'>Live</div> : <div className='text-[#FF00A8] text-xs font-bold block'>Soon</div>}
                                             <div>Watch Concert</div>
                                         </div>
-                                        {isHelperLiveFetching ? <ClipLoader size={24} color="white" /> : <></>}
+                                        {isLiveFetchLoading ? <ClipLoader size={24} color="white" /> : <></>}
                                     </div>
                                 </button>
                             </div>

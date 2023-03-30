@@ -196,26 +196,24 @@ const ProfileFeature = ({ }: Props) => {
         };
     }, [router, isLoggedIn])
 
-    const handleWatchConcert = () => {
+    const handleWatchConcert = async () => {
         console.log('handle watch concert');
-        (async () => {
-            console.log('fetch')
-            setIsLiveFetchLoading(true)
-            try {
-                const r = await callHelperLive()
-                if (!r.data?.result) {
-                    const errorMessage = r.data?.message
-                    if (errorMessage) {
-                        toast(errorMessage, {
-                            type: 'error'
-                        })
-                    }
+        setIsLiveFetchLoading(true)
+        try {
+            const r = await callHelperLive()
+            if (!r.data?.result) {
+                const errorMessage = r.data?.message
+                if (errorMessage) {
+                    toast(errorMessage, {
+                        type: 'error'
+                    })
                 }
-            } catch (e) {
-                console.error(e);
             }
+        } catch (e) {
+            console.error(e);
+        } finally {
             setIsLiveFetchLoading(false)
-        })()
+        }
     }
 
     if (isLoginLoading) {

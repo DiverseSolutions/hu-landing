@@ -88,9 +88,10 @@ model-viewer {
 
 @font-face {
     font-family: VideoJS;
-    src: url("./VideoJS.ttf") format("truetype"),
+    src: url("./VideoJS.woff") format("woff"),
+        url("./VideoJS.ttf") format("truetype"),
         url("./VideoJS.otf") format("opentype"),
-        url("./VideoJS.woff") format("woff") !important;
+        url("./VideoJS.eot") format("embedded-opentype") !important;
     font-weight: normal !important;
     font-style: normal !important;
 }

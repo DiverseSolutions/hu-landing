@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useVideoJS } from "react-hook-videojs";
 import "video.js/dist/video-js.css";
-import '@videojs/themes/dist/fantasy/index.css';
 import { ArdArtHelperLiveResult } from "@/store/rtk-query/hux-ard-art/types";
 
 type Props = {

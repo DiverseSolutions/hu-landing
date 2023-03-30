@@ -171,7 +171,7 @@ const ProfileFeature = ({ }: Props) => {
             (async () => {
                 await callHelperLive()
             })()
-        }, 3000)
+        }, 10000)
         setLiveCheckIntervalId(intervalId)
         return () => {
             try {

@@ -203,9 +203,6 @@ const ProfileFeature = ({ }: Props) => {
     }, [helperLiveData])
 
     const handleWatchConcert = () => {
-        if (helperLiveData?.result) {
-            return
-        }
 
         (async () => {
             setIsLiveFetchLoading(true)

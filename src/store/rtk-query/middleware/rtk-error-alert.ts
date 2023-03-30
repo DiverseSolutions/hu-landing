@@ -7,6 +7,8 @@ const COGNITO_OTP_ALREADY_SENT = 'PreSignUp failed with error Email address exis
 const COGNITO_TOKEN_EXPIRED = 'Access Token has expired'
 const COGNITO_INVALID_TOKEN = 'Could not verify signature for Access Token'
 
+const HIDDEN_MSG_ENDPOINT = ['helperLive']
+
 /**
  * Log a warning and show a toast!
  */
@@ -39,13 +41,17 @@ export const rtkErrorAlert: Middleware =
             }
         }
         if (`${action.payload?.status}`.toLowerCase() === 'error') {
-            const metalandErr = action.payload?.message;
-            console.log(`show metaland err: ${metalandErr}`)
-            if (metalandErr) {
-                if (api.getState()?.alert?.isArtArtVisible) {
-                    toast(metalandErr, {
-                        type: 'error'
-                    })
+            const endpointName = action.meta?.arg?.endpointName
+            if (!HIDDEN_MSG_ENDPOINT.includes(endpointName)) {
+                const metalandErr = action.payload?.message;
+                console.log(`show metaland err: ${metalandErr}`)
+                if (metalandErr) {
+                    if (api.getState()?.alert?.isArtArtVisible) {
+
+                        toast(metalandErr, {
+                            type: 'error'
+                        })
+                    }
                 }
             }
         }

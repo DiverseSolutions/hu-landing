@@ -1,64 +1,54 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { isSafari } from 'react-device-detect'
-import { ClipLoader } from 'react-spinners'
-import Cookies from 'js-cookie'
-import ReactPlayer from 'react-player'
-import { ArdArtHelperLiveResult } from '@/store/rtk-query/hux-ard-art/types'
+import React, { useEffect } from "react";
+import { useVideoJS } from "react-hook-videojs";
+import "video.js/dist/video-js.css";
+import { ArdArtHelperLiveResult } from "@/store/rtk-query/hux-ard-art/types";
+import "@videojs/themes/dist/fantasy/index.css";
 
 type Props = {
     live: ArdArtHelperLiveResult
 }
 
-function DirectorCutVideo({
-    live
-}: Props) {
+const DirectorCutVideoDemo = (props: Props) => {
 
-    const player = useRef<ReactPlayer>(null)
-    const [isLoading, setIsLoading] = useState(true)
+    const videoUrl = props.live.url
+
+    const className = "w-full h-auto vjs-theme-fantasy video-js vjs-big-play-centered aspect-video";
+    const { Video, player, ready } = useVideoJS(
+        {
+            sources: [{ src: videoUrl, type: 'application/x-mpegURL' }],
+            controls: true,
+            autoplay: 'muted',
+            html5: {
+                hls: {
+                    withCredentials: true,
+                }
+            }
+        },
+        className
+    );
 
     useEffect(() => {
-        if (live) {
-            if (live.cookie?.length) {
-                live.cookie.forEach((c) => {
-                    Cookies.remove(c.Name, {
-                        domain: '.hu.rocks',
-                    })
-                    Cookies.set(c.Name, c.Value, {
-                        domain: '.hu.rocks',
-                    })
-                })
-            }
-            setIsLoading(false)
-        }
-    }, [live])
-
-    if (isLoading) {
-        return <ClipLoader />
-    }
-
-    return (
-        <ReactPlayer
-            ref={player}
-            controls
-            playing
-            muted
-            width={'100%'}
-            height={'auto'}
-            url={live.url} config={{
-                file: {
-                    attributes: {
-                        preload: 'none',
-                    },
-                    forceHLS: !isSafari,
-                    forceVideo: true,
-                    hlsOptions: {
-                        xhrSetup: function (xhr: any, url: any) {
-                            xhr.withCredentials = true
-                        }
-                    }
+        if (ready && player) {
+            (async () => {
+                try {
+                    player.play()
+                    await player.requestFullscreen()
+                } catch (e) {
+                    console.error('fullscreen request err')
+                    console.error(e)
                 }
-            }} />
-    )
-}
+            })()
+        }
+    }, [player])
 
-export default DirectorCutVideo
+    if (ready) {
+        // Do something with the video.js player object.
+    }
+    return (
+        <>
+            <Video />
+        </>
+    );
+};
+
+export default DirectorCutVideoDemo;

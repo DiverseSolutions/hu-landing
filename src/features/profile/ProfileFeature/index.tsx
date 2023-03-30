@@ -2,14 +2,11 @@ import MyNftCard from '@/components/card/MyNftCard'
 import { times as _times } from 'lodash'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { showAuthModal } from '@/store/reducer/auth-reducer/actions'
-import { useHelperLiveQuery, useLazyHelperLiveQuery, useLazyMyNftCountQuery, useLazyMyOwnedNftQuery, useMyNftCountQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
-import { BiHide } from 'react-icons/bi'
+import { useHelperLiveQuery, useLazyHelperLiveQuery, useLazyMyNftCountQuery, useLazyMyOwnedNftQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
 import React, { useEffect, useState, useMemo } from 'react'
 import { ClipLoader } from 'react-spinners'
-import Avatar from '@/components/avatar/Avatar'
 import PageLoader from '@/components/loader/PageLoader'
 import classNames from 'classnames'
-import Link from 'next/link'
 import { useArdxBalanceQuery } from '@/store/rtk-query/ard-art/ard-art-api'
 import InfoGreySvg from './img/info-grey.svg'
 import SystemRequirementsContent from '@/components/common/SystemRequirementsContent'
@@ -17,7 +14,7 @@ import { toast } from 'react-toastify'
 import { ASSET_CATEGORY, BUNDLE_CATEGORY } from '@/lib/consts'
 import { CategoryItemType } from '@/components/common/CategorySelectList/types'
 import CategorySelectList from '@/components/common/CategorySelectList'
-import { ArdArtMyOwnedNftRecord } from '@/store/rtk-query/hux-ard-art/types'
+import { ArdArtHelperLiveResult, ArdArtMyOwnedNftRecord } from '@/store/rtk-query/hux-ard-art/types'
 import SendNftModal from '@/components/modals/SendNftModal'
 import WarningSvg from './img/warning.svg'
 import BiUserSvg from './img/BiUser.svg'
@@ -42,6 +39,7 @@ const tagList = ASSET_CATEGORY.map((b) => ({
 
 const ProfileFeature = ({ }: Props) => {
 
+    const [isLiveFetchLoading, setIsLiveFetchLoading] = useState(false)
     const [isMounted, setIsMounted] = useState(false)
     const [activeCategory, setActiveCategory] = useState<CategoryItemType[]>([])
     const [activeTag, setActiveTag] = useState<CategoryItemType[]>([])
@@ -54,7 +52,20 @@ const ProfileFeature = ({ }: Props) => {
 
     const [callMyNftCount, { data: myNftCountData, isFetching: isMyNftCountFetching }] = useLazyMyNftCountQuery()
     const [callMyOwnedNft, { data: myNftData, isLoading: isMyNftLoading, isFetching: isMyNftFetching }] = useLazyMyOwnedNftQuery()
-    const [callHelperLive, { isFetching: isHelperLiveFetching, data: helperLiveData, error: helperLiveError }] = useLazyHelperLiveQuery()
+    const [helperLiveDataLatest, setHelperLiveDataLatest] = useState<ArdArtHelperLiveResult>()
+
+    const [callHelperLive, { isFetching: isHelperLiveFetching, data: helperLiveData, error: helperLiveError }] = useLazyHelperLiveQuery(undefined)
+
+    useEffect(() => {
+        if (helperLiveError) {
+            console.log(`live err:`)
+            console.log(helperLiveError)
+        }
+    }, [helperLiveError])
+
+    useEffect(() => {
+        setHelperLiveDataLatest(helperLiveData?.result || undefined)
+    }, [helperLiveData])
 
     useEffect(() => {
         setIsMounted(true)
@@ -154,22 +165,55 @@ const ProfileFeature = ({ }: Props) => {
         if (!isLoggedIn) {
             return
         }
-        handleWatchConcert()
+        try {
+            (async () => {
+                setIsLiveFetchLoading(true)
+                try {
+                    await callHelperLive(Date.now())
+                } finally {
+                    setIsLiveFetchLoading(false)
+                }
+            })()
+        } catch (e) {
+            console.log('initical call err:')
+            console.error(e);
+        }
+        const intervalId = setInterval(() => {
+            (async () => {
+                await callHelperLive(Date.now())
+            })()
+        }, 10000)
+        return () => {
+            try {
+                clearInterval(intervalId)
+            } catch (e) {
+                console.error('clear interval err')
+                console.error(e)
+            }
+        };
     }, [router, isLoggedIn])
 
     const handleWatchConcert = async () => {
-        if (process.env.NEXT_PUBLIC_DEPLOYMENT_ENV === 'prod') {
-            return
-        }
-        if (helperLiveData?.result) {
-            return
-        }
-        const r = await callHelperLive()
-        if (r.data?.code) {
-            setLiveErrorCode(r.data.code)
+        console.log('handle watch concert');
+        setIsLiveFetchLoading(true)
+        try {
+            const resp = await callHelperLive(Date.now()).unwrap();
+            console.log('resp:')
+            console.log(resp)
+            if (!resp?.result) {
+                const errorMessage = resp?.message
+                if (errorMessage?.length) {
+                    toast(errorMessage, {
+                        type: 'error'
+                    })
+                }
+            }
+        } catch (e) {
+            console.error(e);
+        } finally {
+            setIsLiveFetchLoading(false)
         }
     }
-
 
     if (isLoginLoading) {
         return <PageLoader />
@@ -226,10 +270,10 @@ const ProfileFeature = ({ }: Props) => {
                                             {isBalanceLoading ? (<ClipLoader size={14} />) : (<p className="text-sm font-bold">ARDX{ardxBalance?.amount || 0}</p>)}
                                         </div>
                                         <button onClick={handleWatchConcert} className={classNames("h-full hidden md:block max-h-full ml-2 btn btn-black text-[20px]", {
-                                            'pointer-events-none': true,
+                                            'pointer-events-none': helperLiveData?.result ? true : false,
                                         })}>
                                             <div className="flex items-center">
-                                                {isHelperLiveFetching ? <ClipLoader size={24} color="white" /> : <></>}
+                                                {isLiveFetchLoading ? <ClipLoader size={24} color="white" /> : <></>}
                                                 <div className="flex flex-col items-start ml-2">
                                                     {helperLiveData?.result ? <div className='text-[#FF00A8] text-xs font-bold block'>Live</div> : <div className='text-[#FF00A8] text-xs font-bold block'>Soon</div>}
                                                     <div>Watch Concert</div>
@@ -248,13 +292,15 @@ const ProfileFeature = ({ }: Props) => {
                                         <p className='text-xs opacity-[0.65]'>Sent</p>
                                     </div>
                                 </div>
-                                <button onClick={handleWatchConcert} className={classNames("h-full block md:hidden mt-2 max-h-full py-3 ml-2 btn btn-black text-[20px]")}>
+                                <button onClick={handleWatchConcert} className={classNames("h-full block md:hidden mt-2 max-h-full py-3 ml-2 btn btn-black text-[20px]", {
+                                    'pointer-events-none': helperLiveData?.result ? true : false,
+                                })}>
                                     <div className="flex items-center justify-between">
                                         <div className="flex flex-col items-start ml-2">
                                             {helperLiveData?.result ? <div className='text-[#FF00A8] text-xs font-bold block'>Live</div> : <div className='text-[#FF00A8] text-xs font-bold block'>Soon</div>}
                                             <div>Watch Concert</div>
                                         </div>
-                                        {isHelperLiveFetching ? <ClipLoader size={24} color="white" /> : <></>}
+                                        {isLiveFetchLoading ? <ClipLoader size={24} color="white" /> : <></>}
                                     </div>
                                 </button>
                             </div>
@@ -271,7 +317,7 @@ const ProfileFeature = ({ }: Props) => {
                                     </div>
                                 </div>
                             ) : (<></>)}
-                            {!isHelperLiveFetching && !helperLiveData?.result ? (
+                            {!helperLiveData?.result ? (
                                 <div className="flex p-4 mt-4 w-f8ll rounded-xl itms-start" style={{ background: 'rgba(255, 140, 0, 0.05)' }}>
                                     <div><WarningSvg /></div>
                                     <span className='text-xs ml-[18px]'>The live concert has not yet begun. The start time of the concert will depend on the region you have chosen and the timezone that is currently set. We want to remind all users with entry tickets that they will have access to the concert as soon as it begins in their respective region.</span>

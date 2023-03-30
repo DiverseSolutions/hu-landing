@@ -86,14 +86,14 @@ model-viewer {
     }
 }
 
-
-
-audio::-webkit-media-controls-timeline,
-video::-webkit-media-controls-timeline {
-    display: none !important;
+.vjs-theme-fantasy .vjs-play-progress,
+.vjs-theme-fantasy .vjs-play-progress::before {
+    background-color: #D63333 !important;
 }
 
-audio::-webkit-media-controls,
-video::-webkit-media-controls {
-    display: none !important;
+@font-face {
+    font-family: VideoJS;
+    src: url("./videojs-icons.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
 }

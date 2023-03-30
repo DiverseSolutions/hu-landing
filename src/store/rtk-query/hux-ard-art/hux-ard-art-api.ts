@@ -318,8 +318,8 @@ export const huxArdArtApi = createApi({
                 body: d,
             })
         }),
-        helperLive: builder.query<ArdArtResponse<ArdArtHelperLiveResult>, void>({
-            query: () => ({
+        helperLive: builder.query<ArdArtResponse<ArdArtHelperLiveResult>, number>({
+            query: (id) => ({
                 url: `/api/v1/helper/live`,
                 method: 'GET',
             })

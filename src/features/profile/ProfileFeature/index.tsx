@@ -22,7 +22,6 @@ import BiUserDesktop from './img/BiUserDesktop.svg'
 import { isMacOs } from 'react-device-detect'
 import DirectorCutVideo from '@/components/video/DirectorCutVideo'
 import { useRouter } from 'next/router'
-import Head from 'next/head'
 
 type Props = {
 
@@ -40,6 +39,7 @@ const tagList = ASSET_CATEGORY.map((b) => ({
 
 const ProfileFeature = ({ }: Props) => {
 
+    const [isLiveFetchLoading, setIsLiveFetchLoading] = useState(false)
     const [isMounted, setIsMounted] = useState(false)
     const [activeCategory, setActiveCategory] = useState<CategoryItemType[]>([])
     const [activeTag, setActiveTag] = useState<CategoryItemType[]>([])
@@ -201,16 +201,23 @@ const ProfileFeature = ({ }: Props) => {
         if (helperLiveData?.result) {
             return
         }
+
         (async () => {
-            const r = await callHelperLive()
-            if (!r.data?.result) {
-                const errorMessage = r.data?.message
-                if (errorMessage) {
-                    toast(errorMessage, {
-                        type: 'error'
-                    })
+            setIsLiveFetchLoading(true)
+            try {
+                const r = await callHelperLive()
+                if (!r.data?.result) {
+                    const errorMessage = r.data?.message
+                    if (errorMessage) {
+                        toast(errorMessage, {
+                            type: 'error'
+                        })
+                    }
                 }
+            } catch (e) {
+                console.error(e);
             }
+            setIsLiveFetchLoading(false)
         })()
     }
 

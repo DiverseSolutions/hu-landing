@@ -202,7 +202,7 @@ const ProfileFeature = ({ }: Props) => {
             console.log(r)
             if (!r?.result) {
                 const errorMessage = r.message
-                if (errorMessage) {
+                if (errorMessage?.length) {
                     toast(errorMessage, {
                         type: 'error'
                     })

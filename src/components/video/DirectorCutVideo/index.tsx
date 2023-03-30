@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useVideoJS } from "react-hook-videojs";
 import "video.js/dist/video-js.css";
-import '@videojs/themes/dist/city/index.css';
+import '@videojs/themes/dist/fantasy/index.css';
 import { ArdArtHelperLiveResult } from "@/store/rtk-query/hux-ard-art/types";
 
 type Props = {
@@ -12,7 +12,7 @@ const DirectorCutVideoDemo = (props: Props) => {
 
     const videoUrl = props.live.url
 
-    const className = "w-full h-auto vjs-theme-city video-js vjs-big-play-centered aspect-video";
+    const className = "w-full h-auto vjs-theme-fantasy video-js vjs-big-play-centered aspect-video";
     const { Video, player, ready } = useVideoJS(
         {
             sources: [{ src: videoUrl, type: 'application/x-mpegURL' }],

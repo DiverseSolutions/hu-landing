@@ -2,14 +2,11 @@ import MyNftCard from '@/components/card/MyNftCard'
 import { times as _times } from 'lodash'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { showAuthModal } from '@/store/reducer/auth-reducer/actions'
-import { useHelperLiveQuery, useLazyHelperLiveQuery, useLazyMyNftCountQuery, useLazyMyOwnedNftQuery, useMyNftCountQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
-import { BiHide } from 'react-icons/bi'
+import { useHelperLiveQuery, useLazyMyNftCountQuery, useLazyMyOwnedNftQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
 import React, { useEffect, useState, useMemo } from 'react'
 import { ClipLoader } from 'react-spinners'
-import Avatar from '@/components/avatar/Avatar'
 import PageLoader from '@/components/loader/PageLoader'
 import classNames from 'classnames'
-import Link from 'next/link'
 import { useArdxBalanceQuery } from '@/store/rtk-query/ard-art/ard-art-api'
 import InfoGreySvg from './img/info-grey.svg'
 import SystemRequirementsContent from '@/components/common/SystemRequirementsContent'
@@ -17,7 +14,7 @@ import { toast } from 'react-toastify'
 import { ASSET_CATEGORY, BUNDLE_CATEGORY } from '@/lib/consts'
 import { CategoryItemType } from '@/components/common/CategorySelectList/types'
 import CategorySelectList from '@/components/common/CategorySelectList'
-import { ArdArtMyOwnedNftRecord } from '@/store/rtk-query/hux-ard-art/types'
+import { ArdArtHelperLiveResult, ArdArtMyOwnedNftRecord } from '@/store/rtk-query/hux-ard-art/types'
 import SendNftModal from '@/components/modals/SendNftModal'
 import WarningSvg from './img/warning.svg'
 import BiUserSvg from './img/BiUser.svg'
@@ -25,7 +22,6 @@ import BiUserDesktop from './img/BiUserDesktop.svg'
 import { isMacOs } from 'react-device-detect'
 import DirectorCutVideo from '@/components/video/DirectorCutVideo'
 import { useRouter } from 'next/router'
-import DirectorCutVideoDemo from '@/components/video/DirectorCutVideoDemo'
 
 type Props = {
 
@@ -55,10 +51,11 @@ const ProfileFeature = ({ }: Props) => {
 
     const [callMyNftCount, { data: myNftCountData, isFetching: isMyNftCountFetching }] = useLazyMyNftCountQuery()
     const [callMyOwnedNft, { data: myNftData, isLoading: isMyNftLoading, isFetching: isMyNftFetching }] = useLazyMyOwnedNftQuery()
+    const [helperLiveDataLatest, setHelperLiveDataLatest] = useState<ArdArtHelperLiveResult>()
 
     const { isFetching: isHelperLiveFetching, data: helperLiveData, error: helperLiveError } = useHelperLiveQuery(undefined, {
         skip: !router.isReady || !isLoggedIn,
-        pollingInterval: helperLiveData?.result ? 0 : 10000
+        pollingInterval: helperLiveDataLatest ? 0 : 10000
     })
 
     useEffect(() => {
@@ -68,6 +65,9 @@ const ProfileFeature = ({ }: Props) => {
         }
     }, [helperLiveError])
 
+    useEffect(() => {
+        setHelperLiveDataLatest(helperLiveData?.result || undefined)
+    }, [helperLiveData])
 
     useEffect(() => {
         setIsMounted(true)

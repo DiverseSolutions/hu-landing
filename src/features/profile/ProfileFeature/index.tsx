@@ -2,7 +2,7 @@ import MyNftCard from '@/components/card/MyNftCard'
 import { times as _times } from 'lodash'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { showAuthModal } from '@/store/reducer/auth-reducer/actions'
-import { useHelperLiveQuery, useLazyMyNftCountQuery, useLazyMyOwnedNftQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
+import { useHelperLiveQuery, useLazyHelperLiveQuery, useLazyMyNftCountQuery, useLazyMyOwnedNftQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
 import React, { useEffect, useState, useMemo } from 'react'
 import { ClipLoader } from 'react-spinners'
 import PageLoader from '@/components/loader/PageLoader'
@@ -50,14 +50,13 @@ const ProfileFeature = ({ }: Props) => {
     const dispatch = useAppDispatch()
     const router = useRouter()
 
+    const [liveCheckIntervalId, setLiveCheckIntervalId] = useState<NodeJS.Timer>()
+
     const [callMyNftCount, { data: myNftCountData, isFetching: isMyNftCountFetching }] = useLazyMyNftCountQuery()
     const [callMyOwnedNft, { data: myNftData, isLoading: isMyNftLoading, isFetching: isMyNftFetching }] = useLazyMyOwnedNftQuery()
     const [helperLiveDataLatest, setHelperLiveDataLatest] = useState<ArdArtHelperLiveResult>()
 
-    const { isFetching: isHelperLiveFetching, data: helperLiveData, error: helperLiveError } = useHelperLiveQuery(undefined, {
-        skip: !router.isReady || !isLoggedIn,
-        pollingInterval: helperLiveDataLatest ? 0 : 10000
-    })
+    const [callHelperLive, { isFetching: isHelperLiveFetching, data: helperLiveData, error: helperLiveError }] = useLazyHelperLiveQuery(undefined)
 
     useEffect(() => {
         if (helperLiveError) {
@@ -161,13 +160,55 @@ const ProfileFeature = ({ }: Props) => {
         }
     }
 
-    const handleWatchConcert = () => {
-        if (!helperLiveData?.result) {
-            toast('Live stream is not ready', {
-                type: 'warning'
-            })
+    useEffect(() => {
+        if (!router.isReady) {
             return
         }
+        if (!isLoggedIn) {
+            return
+        }
+        const intervalId = setInterval(() => {
+            (async () => {
+                await callHelperLive()
+            })()
+        }, 3000)
+        setLiveCheckIntervalId(intervalId)
+        return () => {
+            try {
+                clearInterval(intervalId)
+            } catch (e) {
+                console.error('clear interval err')
+                console.error(e)
+            }
+        };
+    }, [router, isLoggedIn])
+
+    useEffect(() => {
+        if (helperLiveData?.result && liveCheckIntervalId) {
+            try {
+                clearInterval(liveCheckIntervalId)
+            } catch (e) {
+                console.error('clear interval error (when succeed)')
+                console.error(e)
+            }
+        }
+    }, [helperLiveData])
+
+    const handleWatchConcert = () => {
+        if (helperLiveData?.result) {
+            return
+        }
+        (async () => {
+            const r = await callHelperLive()
+            if (!r.data?.result) {
+                const errorMessage = r.data?.message
+                if (errorMessage) {
+                    toast(errorMessage, {
+                        type: 'error'
+                    })
+                }
+            }
+        })()
     }
 
     if (isLoginLoading) {
@@ -247,7 +288,9 @@ const ProfileFeature = ({ }: Props) => {
                                         <p className='text-xs opacity-[0.65]'>Sent</p>
                                     </div>
                                 </div>
-                                <button onClick={handleWatchConcert} className={classNames("h-full block md:hidden mt-2 max-h-full py-3 ml-2 btn btn-black text-[20px] pointer-events-none")}>
+                                <button onClick={handleWatchConcert} className={classNames("h-full block md:hidden mt-2 max-h-full py-3 ml-2 btn btn-black text-[20px]", {
+                                    'pointer-events-none': helperLiveData?.result ? true : false,
+                                })}>
                                     <div className="flex items-center justify-between">
                                         <div className="flex flex-col items-start ml-2">
                                             {helperLiveData?.result ? <div className='text-[#FF00A8] text-xs font-bold block'>Live</div> : <div className='text-[#FF00A8] text-xs font-bold block'>Soon</div>}

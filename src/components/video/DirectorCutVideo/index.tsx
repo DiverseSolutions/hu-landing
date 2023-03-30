@@ -11,6 +11,21 @@ type Props = {
 
 const DirectorCutVideoDemo = ({ live, ...props }: Props) => {
 
+    const [isLoaded, setIsLoaded] = useState(() => {
+        if (live.cookie?.length) {
+            live.cookie.forEach((c) => {
+                Cookies.remove(c.Name, {
+                    domain: '.hu.rocks',
+                })
+                Cookies.set(c.Name, c.Value, {
+                    domain: '.hu.rocks',
+                })
+            })
+            return true;
+        }
+        return false;
+    })
+
     const videoUrl = live.url
     const className = "w-full h-auto vjs-theme-fantasy video-js vjs-big-play-centered aspect-video";
     const { Video, player, ready } = useVideoJS(
@@ -28,20 +43,17 @@ const DirectorCutVideoDemo = ({ live, ...props }: Props) => {
     );
 
     useEffect(() => {
-        if (live.cookie?.length) {
-            live.cookie.forEach((c) => {
-                Cookies.remove(c.Name, {
-                    domain: '.hu.rocks',
-                })
-                Cookies.set(c.Name, c.Value, {
-                    domain: '.hu.rocks',
-                })
-            })
-        }
-    }, [live.cookie])
-
-    useEffect(() => {
         if (ready && player) {
+            if (live.cookie?.length) {
+                live.cookie.forEach((c) => {
+                    Cookies.remove(c.Name, {
+                        domain: '.hu.rocks',
+                    })
+                    Cookies.set(c.Name, c.Value, {
+                        domain: '.hu.rocks',
+                    })
+                })
+            }
             (async () => {
                 try {
                     player.play()

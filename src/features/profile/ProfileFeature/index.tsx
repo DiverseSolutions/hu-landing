@@ -167,6 +167,9 @@ const ProfileFeature = ({ }: Props) => {
         if (!isLoggedIn) {
             return
         }
+        (async () => {
+            await callHelperLive()
+        })()
         const intervalId = setInterval(() => {
             (async () => {
                 await callHelperLive()

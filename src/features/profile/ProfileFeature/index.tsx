@@ -197,11 +197,11 @@ const ProfileFeature = ({ }: Props) => {
         console.log('handle watch concert');
         setIsLiveFetchLoading(true)
         try {
-            const r = await callHelperLive(Date.now(), true)
+            const resp = await callHelperLive(Date.now()).unwrap();
             console.log('resp:')
-            console.log(r)
-            if (!r?.data?.result) {
-                const errorMessage = r.data?.message
+            console.log(resp)
+            if (!resp?.result) {
+                const errorMessage = resp?.message
                 if (errorMessage?.length) {
                     toast(errorMessage, {
                         type: 'error'

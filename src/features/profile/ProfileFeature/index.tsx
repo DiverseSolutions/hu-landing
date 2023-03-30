@@ -55,7 +55,19 @@ const ProfileFeature = ({ }: Props) => {
 
     const [callMyNftCount, { data: myNftCountData, isFetching: isMyNftCountFetching }] = useLazyMyNftCountQuery()
     const [callMyOwnedNft, { data: myNftData, isLoading: isMyNftLoading, isFetching: isMyNftFetching }] = useLazyMyOwnedNftQuery()
-    const [callHelperLive, { isFetching: isHelperLiveFetching, data: helperLiveData, error: helperLiveError }] = useLazyHelperLiveQuery()
+
+    const { isFetching: isHelperLiveFetching, data: helperLiveData, error: helperLiveError } = useHelperLiveQuery(undefined, {
+        skip: !router.isReady || !isLoggedIn,
+        pollingInterval: 10000
+    })
+
+    useEffect(() => {
+        if (helperLiveError) {
+            console.log(`live err:`)
+            console.log(helperLiveError)
+        }
+    }, [helperLiveError])
+
 
     useEffect(() => {
         setIsMounted(true)
@@ -148,30 +160,6 @@ const ProfileFeature = ({ }: Props) => {
         }
     }
 
-    useEffect(() => {
-        if (!router.isReady) {
-            return
-        }
-        if (!isLoggedIn) {
-            return
-        }
-        handleWatchConcert()
-    }, [router, isLoggedIn])
-
-    const handleWatchConcert = async () => {
-        if (process.env.NEXT_PUBLIC_DEPLOYMENT_ENV === 'prod') {
-            return
-        }
-        if (helperLiveData?.result) {
-            return
-        }
-        const r = await callHelperLive()
-        if (r.data?.code) {
-            setLiveErrorCode(r.data.code)
-        }
-    }
-
-
     if (isLoginLoading) {
         return <PageLoader />
     }
@@ -226,7 +214,7 @@ const ProfileFeature = ({ }: Props) => {
                                             <span className='mr-2 text-xs opacity-[0.65]'>Balance</span>
                                             {isBalanceLoading ? (<ClipLoader size={14} />) : (<p className="text-sm font-bold">ARDX{ardxBalance?.amount || 0}</p>)}
                                         </div>
-                                        <button onClick={handleWatchConcert} className={classNames("h-full hidden md:block max-h-full ml-2 btn btn-black text-[20px]", {
+                                        <button className={classNames("h-full hidden md:block max-h-full ml-2 btn btn-black text-[20px]", {
                                             'pointer-events-none': true,
                                         })}>
                                             <div className="flex items-center">
@@ -249,7 +237,7 @@ const ProfileFeature = ({ }: Props) => {
                                         <p className='text-xs opacity-[0.65]'>Sent</p>
                                     </div>
                                 </div>
-                                <button onClick={handleWatchConcert} className={classNames("h-full block md:hidden mt-2 max-h-full py-3 ml-2 btn btn-black text-[20px]")}>
+                                <button className={classNames("h-full block md:hidden mt-2 max-h-full py-3 ml-2 btn btn-black text-[20px] pointer-events-none")}>
                                     <div className="flex items-center justify-between">
                                         <div className="flex flex-col items-start ml-2">
                                             {helperLiveData?.result ? <div className='text-[#FF00A8] text-xs font-bold block'>Live</div> : <div className='text-[#FF00A8] text-xs font-bold block'>Soon</div>}

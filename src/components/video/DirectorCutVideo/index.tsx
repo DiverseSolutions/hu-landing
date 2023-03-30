@@ -28,7 +28,14 @@ const DirectorCutVideoDemo = (props: Props) => {
 
     useEffect(() => {
         if (ready && player) {
-            player.requestFullscreen()
+            (async () => {
+                try {
+                    await player.requestFullscreen()
+                } catch (e) {
+                    console.error('fullscreen request err')
+                    console.error(e)
+                }
+            })()
         }
     }, [player])
 

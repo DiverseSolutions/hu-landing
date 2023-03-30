@@ -83,6 +83,11 @@ function MobileDrawer({ children, drawerContent }: Props) {
                                                 Use Coupon Code
                                             </span>
                                         </li>
+                                        <li>
+                                            <Link href="/profile?action=play" className='text-[#FF00A8] hover:bg-transparent focus:bg-transparent text-opacity-[0.93] text-xl font-bold hover:text-opacity-[1]'>
+                                                Watch Live Concert
+                                            </Link>
+                                        </li>
                                     </ul>
                                     <div className='mt-6'>
                                         {!isLoggedIn ? (

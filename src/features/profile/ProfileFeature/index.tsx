@@ -2,14 +2,11 @@ import MyNftCard from '@/components/card/MyNftCard'
 import { times as _times } from 'lodash'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { showAuthModal } from '@/store/reducer/auth-reducer/actions'
-import { useLazyMyNftCountQuery, useLazyMyOwnedNftQuery, useMyNftCountQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
-import { BiHide } from 'react-icons/bi'
+import { useHelperLiveQuery, useLazyHelperLiveQuery, useLazyMyNftCountQuery, useLazyMyOwnedNftQuery } from '@/store/rtk-query/hux-ard-art/hux-ard-art-api'
 import React, { useEffect, useState, useMemo } from 'react'
 import { ClipLoader } from 'react-spinners'
-import Avatar from '@/components/avatar/Avatar'
 import PageLoader from '@/components/loader/PageLoader'
 import classNames from 'classnames'
-import Link from 'next/link'
 import { useArdxBalanceQuery } from '@/store/rtk-query/ard-art/ard-art-api'
 import InfoGreySvg from './img/info-grey.svg'
 import SystemRequirementsContent from '@/components/common/SystemRequirementsContent'
@@ -17,11 +14,14 @@ import { toast } from 'react-toastify'
 import { ASSET_CATEGORY, BUNDLE_CATEGORY } from '@/lib/consts'
 import { CategoryItemType } from '@/components/common/CategorySelectList/types'
 import CategorySelectList from '@/components/common/CategorySelectList'
-import { ArdArtMyOwnedNftRecord } from '@/store/rtk-query/hux-ard-art/types'
+import { ArdArtHelperLiveResult, ArdArtMyOwnedNftRecord } from '@/store/rtk-query/hux-ard-art/types'
 import SendNftModal from '@/components/modals/SendNftModal'
 import WarningSvg from './img/warning.svg'
 import BiUserSvg from './img/BiUser.svg'
 import BiUserDesktop from './img/BiUserDesktop.svg'
+import { isMacOs } from 'react-device-detect'
+import DirectorCutVideo from '@/components/video/DirectorCutVideo'
+import { useRouter } from 'next/router'
 
 type Props = {
 
@@ -39,6 +39,8 @@ const tagList = ASSET_CATEGORY.map((b) => ({
 
 const ProfileFeature = ({ }: Props) => {
 
+    const [isLiveFetchLoading, setIsLiveFetchLoading] = useState(false)
+    const [isMounted, setIsMounted] = useState(false)
     const [activeCategory, setActiveCategory] = useState<CategoryItemType[]>([])
     const [activeTag, setActiveTag] = useState<CategoryItemType[]>([])
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
@@ -46,9 +48,28 @@ const ProfileFeature = ({ }: Props) => {
     const accountId = useAppSelector(state => state.auth.ardArt.accountId)
     const profile = useAppSelector(state => state.auth.profile)
     const dispatch = useAppDispatch()
+    const router = useRouter()
 
     const [callMyNftCount, { data: myNftCountData, isFetching: isMyNftCountFetching }] = useLazyMyNftCountQuery()
     const [callMyOwnedNft, { data: myNftData, isLoading: isMyNftLoading, isFetching: isMyNftFetching }] = useLazyMyOwnedNftQuery()
+    const [helperLiveDataLatest, setHelperLiveDataLatest] = useState<ArdArtHelperLiveResult>()
+
+    const [callHelperLive, { isFetching: isHelperLiveFetching, data: helperLiveData, error: helperLiveError }] = useLazyHelperLiveQuery(undefined)
+
+    useEffect(() => {
+        if (helperLiveError) {
+            console.log(`live err:`)
+            console.log(helperLiveError)
+        }
+    }, [helperLiveError])
+
+    useEffect(() => {
+        setHelperLiveDataLatest(helperLiveData?.result || undefined)
+    }, [helperLiveData])
+
+    useEffect(() => {
+        setIsMounted(true)
+    }, [])
 
     useEffect(() => {
         if (isLoggedIn && accountId) {
@@ -61,6 +82,7 @@ const ProfileFeature = ({ }: Props) => {
         }
     }, [isLoggedIn, accountId])
 
+    const [liveErrorCode, setLiveErrorCode] = useState(0)
     const [selectedNftId, setSelectedNftId] = useState<number>()
     const [selectedNftIdIdx, setSelectedNftIdIdx] = useState<string>()
     const [selectedSendNft, setSelectedSendNft] = useState<ArdArtMyOwnedNftRecord>()
@@ -136,9 +158,67 @@ const ProfileFeature = ({ }: Props) => {
         }
     }
 
+    useEffect(() => {
+        if (!router.isReady) {
+            return
+        }
+        if (!isLoggedIn) {
+            return
+        }
+        try {
+            (async () => {
+                setIsLiveFetchLoading(true)
+                try {
+                    await callHelperLive(Date.now())
+                } finally {
+                    setIsLiveFetchLoading(false)
+                }
+            })()
+        } catch (e) {
+            console.log('initical call err:')
+            console.error(e);
+        }
+        const intervalId = setInterval(() => {
+            (async () => {
+                await callHelperLive(Date.now())
+            })()
+        }, 10000)
+        return () => {
+            try {
+                clearInterval(intervalId)
+            } catch (e) {
+                console.error('clear interval err')
+                console.error(e)
+            }
+        };
+    }, [router, isLoggedIn])
+
+    const handleWatchConcert = async () => {
+        console.log('handle watch concert');
+        setIsLiveFetchLoading(true)
+        try {
+            const resp = await callHelperLive(Date.now()).unwrap();
+            console.log('resp:')
+            console.log(resp)
+            if (!resp?.result) {
+                const errorMessage = resp?.message
+                if (errorMessage?.length) {
+                    toast(errorMessage, {
+                        type: 'error'
+                    })
+                }
+            }
+        } catch (e) {
+            console.error(e);
+        } finally {
+            setIsLiveFetchLoading(false)
+        }
+    }
+
     if (isLoginLoading) {
         return <PageLoader />
     }
+
 
     if (!isLoggedIn && !isLoginLoading) {
         return (
@@ -165,7 +245,7 @@ const ProfileFeature = ({ }: Props) => {
                         <div className="container">
                             <div className="flex flex-col justify-center w-full md:justify-between md:flex-row">
                                 <div className="mt-12">
-                                    <div className="flex justify-start w-full">
+                                    <div className="flex justify-start w-full h-full">
                                         <div className="w-10 md:w-[68px] md:h-[68px] overflow-hidden relative h-10 rounded-xl bg-black bg-opacity-[0.04]">
                                             <div className='transform md:hidden flex translate-y-[8px]'><BiUserSvg /></div>
                                             <div className='transform hidden md:flex translate-y-[16px]'><BiUserDesktop /></div>
@@ -189,6 +269,17 @@ const ProfileFeature = ({ }: Props) => {
                                             <span className='mr-2 text-xs opacity-[0.65]'>Balance</span>
                                             {isBalanceLoading ? (<ClipLoader size={14} />) : (<p className="text-sm font-bold">ARDX{ardxBalance?.amount || 0}</p>)}
                                         </div>
+                                        <button onClick={handleWatchConcert} className={classNames("h-full hidden md:block max-h-full ml-2 btn btn-black text-[20px]", {
+                                            'pointer-events-none': helperLiveData?.result ? true : false,
+                                        })}>
+                                            <div className="flex items-center">
+                                                {isLiveFetchLoading ? <ClipLoader size={24} color="white" /> : <></>}
+                                                <div className="flex flex-col items-start ml-2">
+                                                    {helperLiveData?.result ? <div className='text-[#FF00A8] text-xs font-bold block'>Live</div> : <div className='text-[#FF00A8] text-xs font-bold block'>Soon</div>}
+                                                    <div>Watch Concert</div>
+                                                </div>
+                                            </div>
+                                        </button>
                                     </div>
                                 </div>
                                 <div className="flex mt-2 md:hidden">
@@ -201,18 +292,57 @@ const ProfileFeature = ({ }: Props) => {
                                         <p className='text-xs opacity-[0.65]'>Sent</p>
                                     </div>
                                 </div>
+                                <button onClick={handleWatchConcert} className={classNames("h-full block md:hidden mt-2 max-h-full py-3 ml-2 btn btn-black text-[20px]", {
+                                    'pointer-events-none': helperLiveData?.result ? true : false,
+                                })}>
+                                    <div className="flex items-center justify-between">
+                                        <div className="flex flex-col items-start ml-2">
+                                            {helperLiveData?.result ? <div className='text-[#FF00A8] text-xs font-bold block'>Live</div> : <div className='text-[#FF00A8] text-xs font-bold block'>Soon</div>}
+                                            <div>Watch Concert</div>
+                                        </div>
+                                        {isLiveFetchLoading ? <ClipLoader size={24} color="white" /> : <></>}
+                                    </div>
+                                </button>
                             </div>
+                            {helperLiveData?.result ? (
+                                <div className="relative mt-8">
+                                    <DirectorCutVideo live={helperLiveData.result} />
+                                    <div className="absolute top-4 left-4">
+                                        <div className="flex items-center px-4 py-2 bg-black rounded-xl">
+                                            <span className="w-2.5 h-2.5 mr-2 bg-red-600 rounded-full">
+
+                                            </span>
+                                            <p className="font-bold text-white uppercase ">Live</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            ) : (<></>)}
+                            {!helperLiveData?.result ? (
+                                <div className="flex p-4 mt-4 w-f8ll rounded-xl itms-start" style={{ background: 'rgba(255, 140, 0, 0.05)' }}>
+                                    <div><WarningSvg /></div>
+                                    <span className='text-xs ml-[18px]'>The live concert has not yet begun. The start time of the concert will depend on the region you have chosen and the timezone that is currently set. We want to remind all users with entry tickets that they will have access to the concert as soon as it begins in their respective region.</span>
+                                </div>
+                            ) : (<></>)}
                             <div className="mt-8">
                                 <div className="md:p-8 p-4 rounded-xl w-ful bg-black bg-opacity-[0.04]">
                                     <div className="flex flex-col justify-between w-full space-y-4 md:space-y-0 md:flex-row">
                                         <div className="flex flex-col">
                                             <p className="text-base font-bold md:text-lg">How to watch the concert?</p>
-                                            <p className='md:text-base text-sm mt-4 text-black opacity-[0.65]'>Please download and install this file on a computer that meets the system requirement and runs on Windows OS. By meeting the system requirements you will be able to enjoy the concert in high quality. The HU in the Metaverse concert package will be available for worldwide download on March 28th, 2023.</p>
+                                            <p className='md:text-base text-sm mt-4 text-black opacity-[0.65]'>Please download and install this file on a computer that meets the system requirement and runs on Windows OS or MacOS. By meeting the system requirements you will be able to enjoy the concert in high quality. The HU in the Metaverse concert is now available for worldwide download.</p>
                                         </div>
                                         <div className="flex flex-col">
-                                            <div className='md:w-[450px] text-sm md:text-[20px] text-black text-opacity-[0.65] py-[14px] bg-white rounded-xl font-bold text-center cursor-pointer dropdown dropdown-top dropdown-hover' tabIndex={0}>
-                                                Download
-                                            </div>
+                                            {isMounted && isMacOs ? (
+                                                <a href="https://d36xgupx7xb4yr.cloudfront.net/public/TheHU.zip" target="_blank" rel="noreferrer" className="md:w-[450px]">
+                                                    <div className="bg-white w-full text-black text-opacity-[0.93] bg-opacity-[0.93] text-sm md:text-[20px] py-[14px] px-6 md:py-[14px] rounded-xl font-bold text-center">
+                                                        <span>Download (MacOS)</span>
+                                                    </div>
+                                                </a>
+                                            ) : (<a href="https://d36xgupx7xb4yr.cloudfront.net/public/TheHU.rar" target="_blank" rel="noreferrer" className="md:w-[450px]">
+                                                <div className="bg-white w-full text-black text-opacity-[0.93] bg-opacity-[0.93] text-sm md:text-base px-6 py-2.5 md:py-[14px] rounded-xl font-bold text-center">
+                                                    <span>Download (Windows)</span>
+                                                </div>
+                                            </a>)}
+
                                             <div tabIndex={0} className="mt-4 z-50 dropdown bg-black bg-opacity-[0.04] md:dropdown-hover md:dropdown-bottom dropdown-top cursor-pointer items-center flex w-full justify-center py-[14px] backdrop-blur-[7.5px] rounded-xl">
                                                 <InfoGreySvg />
                                                 <span className="ml-2  text-black text-opacity-[0.65] text-sm md:text-[20px] font-bold">System Requirements</span>

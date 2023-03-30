@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import BundlesSection from './components/BundlesSection'
+import { isMacOs, isWindows } from 'react-device-detect'
 
 import ItemsSection from './components/ItemsSection'
 import SystemRequirementsTransparent from './components/SystemRequirementsTransparent'
@@ -16,6 +17,11 @@ function HomePageV2({ }: Props) {
 
     const router = useRouter()
     const dispatch = useAppDispatch()
+    const [isMounted, setIsMounted] = useState(false)
+
+    useEffect(() => {
+        setIsMounted(true)
+    }, [])
 
     useEffect(() => {
         if (!router.isReady) {
@@ -78,16 +84,22 @@ function HomePageV2({ }: Props) {
                                                         <div className="flex flex-col">
                                                             <p className="text-base font-bold text-white md:text-xl">How to watch the concert?</p>
                                                             <p className="mt-4 text-xs md:text-base text-white text-opacity-[0.65]">
-                                                                Please download and install this file on a computer that meets the system requirement and runs on Windows OS. By meeting the system requirements you will be able to enjoy the concert in high quality. The HU in the Metaverse concert package will be available for worldwide download on March 28th, 2023.
+                                                                Please download and install this file on a computer that meets the system requirement and runs on Windows OS or MacOS. By meeting the system requirements you will be able to enjoy the concert in high quality. The HU in the Metaverse concert is now available for worldwide download.
                                                             </p>
                                                         </div>
                                                         <div className="flex flex-col mt-4 md:mt-0 md:min-w-[300px] md:ml-6">
                                                             <SystemRequirementsTransparent />
-                                                            <div className="mt-4">
-                                                                <div className="bg-white text-black text-opacity-[0.65] bg-opacity-[0.04] text-sm md:text-base px-6 py-2.5 md:py-[14px] rounded-xl font-bold text-center">
-                                                                    <span>Download</span>
+                                                            {isMounted && isMacOs ? (
+                                                                <a href="https://d36xgupx7xb4yr.cloudfront.net/public/TheHU.zip" target="_blank" rel="noreferrer" className="mt-4">
+                                                                    <div className="bg-white w-full text-black text-opacity-[0.93] bg-opacity-[0.93] text-sm md:text-base px-6 py-2.5 md:py-[14px] rounded-xl font-bold text-center">
+                                                                        <span>Download (MacOS)</span>
+                                                                    </div>
+                                                                </a>
+                                                            ) : (<a href="https://d36xgupx7xb4yr.cloudfront.net/public/TheHU.rar" target="_blank" rel="noreferrer" className="mt-4">
+                                                                <div className="bg-white w-full text-black text-opacity-[0.93] bg-opacity-[0.93] text-sm md:text-base px-6 py-2.5 md:py-[14px] rounded-xl font-bold text-center">
+                                                                    <span>Download (Windows)</span>
                                                                 </div>
-                                                            </div>
+                                                            </a>)}
                                                         </div>
                                                     </div>
                                                 </div>

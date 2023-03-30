@@ -85,3 +85,15 @@ model-viewer {
         max-width: 100%;
     }
 }
+
+.vjs-theme-fantasy .vjs-play-progress,
+.vjs-theme-fantasy .vjs-play-progress::before {
+    background-color: #D63333 !important;
+}
+
+@font-face {
+    font-family: VideoJS;
+    src: url("./videojs-icons.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+}

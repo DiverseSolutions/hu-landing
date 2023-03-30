@@ -330,7 +330,7 @@ function PaymentMethodCard({ item, priceToUsdrate, region, ...props }: Props) {
                         </div>
                         <div className="mt-4">
                             <PaymentTypeCard onClick={() => {
-                                window.open('https://hu.idax.exchange', '_blank')?.focus()
+                                window.open('https://idax.exchange', '_blank')?.focus()
                             }} icon={<Image src={"/idax-payment.svg"} width={32} height={32} alt="IDAX" />}
                                 name="IDAX (available with ARDX)" active={selected === 'idax'} />
                         </div>

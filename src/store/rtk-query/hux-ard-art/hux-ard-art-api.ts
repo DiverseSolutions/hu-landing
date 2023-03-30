@@ -2,10 +2,20 @@ import { ArdArtResponse } from './../ard-art/types';
 import { ArdArtBundleResponse, ArdArtBundleInvoiceResponse, ArdArtAssetDetailByIDResult, ArdArtTicketOrAssetResponse, ArdArtMyOwnedNftResponse, ArdArtCreateSocialpayInvoiceResult, ArdArtCreateQpayInvoiceResult, ArdArtCreateQposInvoiceResult, ArdArtGetInvoiceByIdResult, ArdArtCheckInvoiceResult, ArdArtAssetDetailEarlyResult, ArdArtCognitoUserDetailResult, ArdArtMyNftCountResult, ArdArtArdxUsdRateResult, ArdArtIdaxInvoiceResult, ArdArtBundleDetailResult, ArdArtAssetDetailResult, ArdArtPromoResult, ArdArtCheckPromoResult, ArdArtCheckCouponResult, ArdArtPaypalInvoiceResult, ArdArtHelperLiveResult } from './types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { MonXanshRateResponse } from '../monxansh/types';
+import { getArdArdAccessToken } from '@/lib/cookie';
+
+const AUTH_REQUIRED_ENDPOINT = ['helperLive']
 
 export const huxArdArtApi = createApi({
     reducerPath: 'huxArdArt',
-    baseQuery: fetchBaseQuery({ baseUrl: `${process.env.NEXT_PUBLIC_HUX_ARD_ART_API_HOST_URL}` }),
+    baseQuery: fetchBaseQuery({
+        baseUrl: `${process.env.NEXT_PUBLIC_HUX_ARD_ART_API_HOST_URL}`, prepareHeaders(headers, api) {
+            const accessToken = getArdArdAccessToken()
+            if (accessToken && AUTH_REQUIRED_ENDPOINT.includes(api.endpoint)) {
+                headers.set('Authorization', `Bearer ${accessToken}`)
+            }
+        }
+    }),
     endpoints: (builder) => ({
         getTicketOrAsset: builder.query<ArdArtTicketOrAssetResponse, {
             type?: "asset" | "ticket",
@@ -308,8 +318,8 @@ export const huxArdArtApi = createApi({
                 body: d,
             })
         }),
-        helperLive: builder.query<ArdArtResponse<ArdArtHelperLiveResult>, void>({
-            query: () => ({
+        helperLive: builder.query<ArdArtResponse<ArdArtHelperLiveResult>, number>({
+            query: (id) => ({
                 url: `/api/v1/helper/live`,
                 method: 'GET',
             })

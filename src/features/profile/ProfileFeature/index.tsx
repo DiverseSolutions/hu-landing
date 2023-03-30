@@ -110,7 +110,6 @@ const ProfileFeature = ({ }: Props) => {
 
         head.appendChild(style);
 
-        style.type = 'text/css';
         if (style.stylesheet) {
             // This is required for IE8 and below.
             style.styleSheet.cssText = css;

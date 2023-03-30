@@ -183,7 +183,7 @@ const ProfileFeature = ({ }: Props) => {
         setLiveCheckIntervalId(intervalId)
         return () => {
             try {
-                clearInterval(intervalId)
+                if 
             } catch (e) {
                 console.error('clear interval err')
                 console.error(e)
@@ -192,12 +192,14 @@ const ProfileFeature = ({ }: Props) => {
     }, [router, isLoggedIn])
 
     useEffect(() => {
-        if (helperLiveData?.result && liveCheckIntervalId) {
-            try {
-                clearInterval(liveCheckIntervalId)
-            } catch (e) {
-                console.error('clear interval error (when succeed)')
-                console.error(e)
+        return () => {
+            if (helperLiveData?.result && liveCheckIntervalId) {
+                try {
+                    clearInterval(liveCheckIntervalId)
+                } catch (e) {
+                    console.error('clear interval error (when succeed)')
+                    console.error(e)
+                }
             }
         }
     }, [helperLiveData])

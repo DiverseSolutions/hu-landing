@@ -22,6 +22,7 @@ import BiUserDesktop from './img/BiUserDesktop.svg'
 import { isMacOs } from 'react-device-detect'
 import DirectorCutVideo from '@/components/video/DirectorCutVideo'
 import { useRouter } from 'next/router'
+import Head from 'next/head'
 
 type Props = {
 

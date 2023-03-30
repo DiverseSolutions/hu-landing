@@ -59,8 +59,8 @@ function CouponModal({ }: Props) {
                         ) : (<></>)}
                         {isSuccess ? (
                             <div>
-                                <p className='font-bold text-[#5DD200] text-[24px]'>Successfully!</p>
-                                <p className="mt-2">Your Coupon code has been successfully activated.</p>
+                                <p className='font-bold text-[#5DD200] text-[24px]'>Your coupon code is active</p>
+                                <p className="mt-2">Please choose your item.</p>
                             </div>
                         ) : (<></>)}
                     </div>

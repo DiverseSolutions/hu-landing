@@ -17,6 +17,7 @@ const DirectorCutVideoDemo = (props: Props) => {
         {
             sources: [{ src: videoUrl, type: 'application/x-mpegURL' }],
             controls: true,
+            autoplay: 'muted',
             html5: {
                 hls: {
                     withCredentials: true,

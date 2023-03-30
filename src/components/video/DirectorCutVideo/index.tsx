@@ -31,6 +31,7 @@ const DirectorCutVideoDemo = (props: Props) => {
         if (ready && player) {
             (async () => {
                 try {
+                    player.play()
                     await player.requestFullscreen()
                 } catch (e) {
                     console.error('fullscreen request err')

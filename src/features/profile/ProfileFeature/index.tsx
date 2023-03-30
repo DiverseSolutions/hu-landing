@@ -169,7 +169,12 @@ const ProfileFeature = ({ }: Props) => {
         }
         try {
             (async () => {
-                await callHelperLive()
+                setIsLiveFetchLoading(true)
+                try {
+                    await callHelperLive()
+                } finally {
+                    setIsLiveFetchLoading(false)
+                }
             })()
         } catch (e) {
             console.log('initical call err:')

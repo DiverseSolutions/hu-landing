@@ -50,8 +50,6 @@ const ProfileFeature = ({ }: Props) => {
     const dispatch = useAppDispatch()
     const router = useRouter()
 
-    const [liveCheckIntervalId, setLiveCheckIntervalId] = useState<NodeJS.Timer>()
-
     const [callMyNftCount, { data: myNftCountData, isFetching: isMyNftCountFetching }] = useLazyMyNftCountQuery()
     const [callMyOwnedNft, { data: myNftData, isLoading: isMyNftLoading, isFetching: isMyNftFetching }] = useLazyMyOwnedNftQuery()
     const [helperLiveDataLatest, setHelperLiveDataLatest] = useState<ArdArtHelperLiveResult>()
@@ -171,7 +169,7 @@ const ProfileFeature = ({ }: Props) => {
             (async () => {
                 setIsLiveFetchLoading(true)
                 try {
-                    await callHelperLive()
+                    await callHelperLive(Date.now())
                 } finally {
                     setIsLiveFetchLoading(false)
                 }
@@ -182,10 +180,9 @@ const ProfileFeature = ({ }: Props) => {
         }
         const intervalId = setInterval(() => {
             (async () => {
-                await callHelperLive()
+                await callHelperLive(Date.now())
             })()
         }, 10000)
-        setLiveCheckIntervalId(intervalId)
         return () => {
             try {
                 clearInterval(intervalId)
@@ -200,7 +197,7 @@ const ProfileFeature = ({ }: Props) => {
         console.log('handle watch concert');
         setIsLiveFetchLoading(true)
         try {
-            const r = await callHelperLive()
+            const r = await callHelperLive(Date.now())
             if (!r.data?.result) {
                 const errorMessage = r.data?.message
                 if (errorMessage) {

@@ -54,9 +54,6 @@ const DirectorCutVideoDemo = ({ live, ...props }: Props) => {
         }
     }, [player])
 
-    if (!ready) {
-        return <></>
-    }
     return (
         <>
             <Video />
